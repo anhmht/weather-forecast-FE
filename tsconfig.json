@@ -1,0 +1,37 @@
+{
+  "compilerOptions": {
+    "pretty": true,
+    "target": "es5",
+    "lib": [
+      "dom",
+      "es6",
+      "es2015",
+      "es2015.promise",
+      "esnext.asynciterable"
+    ],
+    "module": "esnext",
+    "sourceMap": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": false,
+    "noImplicitReturns": false,
+    "noFallthroughCasesInSwitch": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "jsx": "preserve",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    },
+    "moduleResolution": "node"
+  },
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts"
+  ],
+  "compileOnSave": true,
+  "experimentalDecorators": true,
+
+}
