@@ -1,72 +1,45 @@
 import Vue from 'vue';
 import Component from "vue-class-component";
-// import html2canvas from 'html2canvas';
-const GIF = require('gif.js.optimized');
-//@ts-nocheck
-require('../../static/js/gif.js');
-//@ts-nocheck
-require('../../static/js/gif.worker.js');
-
 @Component({
   template: require('./template.html').default,
   components: {}
 })
 export default class HelloWorld extends Vue {
 
+  map: any;
   clearInterval: any = null;
   gif: any;
-
+  windy: any;
+  print: any;
+  media: any = null;
+  test: string = "test"
   stop() {
       clearInterval(this.clearInterval);
   }
 
-  capture() {
-    // let i = 0;
-    //   let temp = [];
+  async capture() {
+    console.log(this.windy);
     //@ts-ignore
-    console.log($('#capture').html());
+      let stream = await navigator.mediaDevices.getDisplayMedia({
+        video: { mediaSource: "screen" }
+      });
+      //@ts-ignore
+      let recorder = new MediaRecorder(stream);
+      const vm = this;
+      const chunks = [];
+      recorder.ondataavailable = e => chunks.push(e.data);
+      recorder.onstop = e => {
+        const completeBlob = new Blob(chunks, { type: chunks[0].type });
+        //@ts-ignore
+        document.querySelector("video").src = URL.createObjectURL(completeBlob)
+        vm.media = URL.createObjectURL(completeBlob)
+        // window.open(URL.createObjectURL(completeBlob));
+      };
 
-
-      // this.clearInterval =  setInterval(() => {
-      //     if(i >= 10) {
-      //       debugger
-      //     temp.forEach(element => {
-      //         // add an image element
-      //       this.gif.addFrame(element, {delay: 200});
-      //     });
-
-      //     this.gif.on('finished', function(blob) {
-      //       debugger
-      //       window.open(URL.createObjectURL(blob));
-      //     });
-
-      //       this.gif.render();
-
-      //       this.stop();
-      //       return
-      //     }
-      //     html2canvas(document.querySelector("#capture"), {
-      //       width: 1800,
-      //       height: 800
-      //     }).then(canvas => {
-      //         var img  = canvas.toDataURL("image/png");
-      //         var myImage = new Image(1800, 800);
-      //         myImage.src = img;
-      //         temp.push(myImage);
-      //         i+= 1;
-      //     });
-
-      // }, 1000);
+      recorder.start();
   }
 
   mounted() {
-    this.gif = new GIF({
-            workers: 6,
-            quality: 1,
-            workerScript: './static/js/gif.worker.js',
-            width: 1800,
-            height: 800
-      })
     const options = {
       // Required: API key
       key: 'PsLAtXpsPTZexBwUkO7Mx5I', // REPLACE WITH YOUR KEY !!!
@@ -81,11 +54,11 @@ export default class HelloWorld extends Vue {
     };
 
     // @ts-ignore
-    windyInit(options, windyAPI => {
+    this.windy = windyInit(options, windyAPI => {
         // windyAPI is ready, and contain 'map', 'store',
         // 'picker' and other usefull stuff
 
-        // const { store  } = windyAPI;
+        const {  map  } = windyAPI;
         // const levels = store.getAllowed('availLevels');
         // let i = 0;
         // setInterval(() => {
@@ -95,11 +68,18 @@ export default class HelloWorld extends Vue {
         //     store.set('level', levels[i]);
         // }, 300);
         // .map is instance of Leaflet map
-        //@ts-ignore
-        // L.popup()
-        //     .setLatLng([10.781,106.640])
-        //     .setContent('Hello World')
-        //     .openOn(map);
+        this.map = map;
+
+        // @ts-ignore
+        L.popup()
+            .setLatLng([10.781,106.640])
+            .setContent('Hello World')
+            .openOn(map);
+          this.map.on('easyPrint-finished', (eventArgument) => {
+            console.log(eventArgument);
+
+        });
     });
+
   }
 }

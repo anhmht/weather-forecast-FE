@@ -1,5 +1,9 @@
 <div class="hello">
   <div id="windy"></div>
   <button @click="capture">test</button>
-  <!-- <div id="test"></div> -->
+  {{test}} {{media}}
+  <a :href="media" download>Download</a>
+  <video autoplay loop>
+    <source :src="media" type="application/x-mpegurl">
+  </video>
 </div>
