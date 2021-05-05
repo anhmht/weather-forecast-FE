@@ -1,6 +1,7 @@
 {
   "name": "temp",
   "version": "0.1.0",
+  "homepage": "https://anhmht.github.io/weather-forecast-FE/",
   "private": true,
   "scripts": {
     "dev": "webpack serve --inline --progress --config build/webpack.dev.conf.js --mode development",
