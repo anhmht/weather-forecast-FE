@@ -75,7 +75,6 @@ const webpackConfig = merge(baseWebpackConfig, {
     new HtmlWebpackPlugin({
       filename: path.resolve(__dirname, "../dist/index.html"),
       template: 'index.html',
-      favicon: 'favicon.ico',
       inject: true,
       minify: {
         removeComments: true,
@@ -88,12 +87,11 @@ const webpackConfig = merge(baseWebpackConfig, {
       chunksSortMode: 'none'
     }),
     // keep module.id stable when vender modules does not change
-    new webpack.HashedModuleIdsPlugin(),
-    new CopyWebpackPlugin([{
+    new CopyWebpackPlugin({
+      patterns: [{
       from: path.resolve(__dirname, '../static'),
       to: 'static',
-      ignore: ['.*']
-    }]),
+    }]}),
     new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /fr|nl-be|uk|en-gb/),
   ]
 })
