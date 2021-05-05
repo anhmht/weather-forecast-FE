@@ -64,6 +64,7 @@ const webpackConfig = merge(baseWebpackConfig, {
   devtool: config.build.productionSourceMap ? config.build.devtool : false,
   output: {
     path: config.build.assetsRoot,
+    publicPath: "/weather-forecast-FE/",
     filename: utils.assetsPath('js/[name].[chunkhash].'+random+'.js'),
     chunkFilename: utils.assetsPath('js/[name].[chunkhash].'+random+'.js')
   },
@@ -72,8 +73,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     // you can customize output by editing /index.html
     // see https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin({
-      filename: process.env.NODE_ENV === 'testing' ?
-        'index.html' : config.build.index,
+      filename: path.resolve(__dirname, "../dist/index.html"),
       template: 'index.html',
       favicon: 'favicon.ico',
       inject: true,

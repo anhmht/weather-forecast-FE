@@ -7,7 +7,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "bundle": "webpack  --progress --devtool eval-source-map --config build/webpack.dev.conf.js --mode development"
+    "bundle": "webpack  --progress --devtool eval-source-map --config build/webpack.dev.conf.js --mode production",
+    "deploy": "gh-pages -d dist -b master"
   },
   "dependencies": {
     "autoprefixer": "^10.2.5",
