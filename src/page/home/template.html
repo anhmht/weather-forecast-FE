@@ -1,0 +1,40 @@
+<div class="home-page-container">
+    <div class="" id="windy"></div>
+    <div v-if="!isRecording" class="record-btn">
+        <v-btn @click="capture" color="primary" depressed elevation="7" rounded x-large>
+            Xuất Tất Cả
+        </v-btn>
+        <v-btn style="margin-left: 20px;" @click="capture" color="primary" depressed elevation="7" rounded x-large>
+            Xuất Video
+        </v-btn>
+    </div>
+
+    <v-dialog  v-model="isDisplayDialog" persistent max-width="1400">
+        <div class="preview-dialog">
+            <div class="preview-dialog-header">
+                <div class="preview-dialog-header--title">
+                    Nội Dung Tải Xuống
+                </div>
+                <div class="preview-dialog-header--action">
+                    <v-btn @click="isDisplayDialog = false" icon color="white">
+                        <v-icon>mdi-close</v-icon>
+                    </v-btn>
+                </div>
+            </div>
+            <div class="preview-dialog-body">
+                <div class="preview-dialog-body--video">
+                    <video :src="media" autoplay loop>
+                        <source :src="media" type="application/x-mpegurl">
+                    </video>
+                </div>
+                <div class="preview-dialog-body--action">
+                    <v-btn @click="handleDownload()" color="primary">
+                        Tải Xuống
+                        <v-icon color="white">mdi-download</v-icon>
+                    </v-btn>
+                </div>
+            </div>
+        </div>
+    </v-dialog>
+
+</div>

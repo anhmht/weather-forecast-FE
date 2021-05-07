@@ -13,25 +13,31 @@ let rules = utils.styleLoaders({
   usePostCSS: true
 });
 rules.push({
-  test: /\.(scss)$/,
-  use: [{
-    loader: 'style-loader', // inject CSS to page
-  }, {
-    loader: 'css-loader', // translates CSS into CommonJS modules
-  }, {
-    loader: 'postcss-loader', // Run post css actions
-    options: {
-      plugins: function () { // post css plugins, can be exported to postcss.config.js
-        return [
-          require('precss'),
-          require('autoprefixer')
-        ];
-      }
-    }
-  }, {
-    loader: 'sass-loader' // compiles Sass to CSS
-  }]
-})
+    test: /\.s[ac]ss$/i,
+    use: [
+        {
+            loader: "postcss-loader", // Run post css actions
+            options: {
+                postcssOptions: {
+                    plugins: function() {
+                        // post css plugins, can be exported to postcss.config.js
+                        return [require("precss"), require("autoprefixer")];
+                    }
+                }
+            }
+        },
+        {
+            loader: "sass-loader", // compiles Sass to CSS
+            options: {
+                implementation: require("sass"),
+                sassOptions: {
+                    includePaths: [`${__dirname}/src/theme/main.scss`]
+                },
+                additionalData: '@import "~@/theme/main.scss";'
+            }
+        }
+    ]
+});
 const devWebpackConfig = merge(baseWebpackConfig, {
   module: {
     // rules: utils.styleLoaders({ sourceMap: config.dev.cssSourceMap, usePostCSS: true })
@@ -56,7 +62,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     proxy: config.dev.proxyTable,
     quiet: true, // necessary for FriendlyErrorsPlugin
     watchOptions: {
-      poll: config.dev.poll,
+      poll: true,
     }
   },
   plugins: [
@@ -92,7 +98,7 @@ module.exports = new Promise((resolve, reject) => {
       // Add FriendlyErrorsPlugin
       devWebpackConfig.plugins.push(new FriendlyErrorsPlugin({
         compilationSuccessInfo: {
-          messages: [`Your application is running here: http://${config.dev.host}:${port}`],
+          messages: [`Your application is running here: https://${config.dev.host}:${port}`],
         },
         onErrors: config.dev.notifyOnErrors ?
           utils.createNotifierCallback() : undefined

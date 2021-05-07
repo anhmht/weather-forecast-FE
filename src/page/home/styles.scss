@@ -1,0 +1,48 @@
+.home-page-container {
+    #windy {
+        width: 100%;
+        height: 100vh;
+    }
+    #logo {
+        display: none;
+    }
+    position: relative;
+    .record-btn {
+        position: absolute;
+        right: 2vw;
+        bottom: 4vw;
+    }
+}
+
+.preview-dialog {
+    background: #fff;
+    &-header {
+        background: map-get($red, 'base');
+        color: map-get($shades, 'white');
+        padding: 1vw 2vw;
+        display: flex;
+        font-size: 20px;
+        font-weight: map-get($font-weights,'medium');
+        &--title {
+            flex: 1;
+        }
+    }
+    &-body {
+        padding: 2vw;
+        display: flex;
+        &--video {
+            width: 70%;
+            video {
+                width: 90%;
+            }
+        }
+        &--action {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 2vw;
+        }
+    }
+
+}

@@ -19,8 +19,9 @@ const random = new Date().getTime();
 module.exports = {
   context: path.resolve(__dirname, "../"),
   entry: {
-    app: "./src/main.ts"
+    app: "./src/main.ts",
   },
+  target:'web',
   output: {
     path: config.build.assetsRoot,
     filename: "[name].[contenthash].js",

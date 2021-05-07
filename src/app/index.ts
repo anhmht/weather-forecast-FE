@@ -1,12 +1,7 @@
-import Vue from 'vue';
-import Component from 'vue-class-component';
+import Vue from "vue";
+import Component from "vue-class-component";
 
 @Component({
-  template: require('./template.html').default,
-  components: {
-    "hell": () => import('../components')
-  }
+    template: require("./template.html").default,
 })
-export default class App extends Vue {
-
-}
+export default class App extends Vue {}
