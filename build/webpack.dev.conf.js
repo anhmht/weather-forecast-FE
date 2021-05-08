@@ -16,17 +16,6 @@ rules.push({
     test: /\.s[ac]ss$/i,
     use: [
         {
-            loader: "postcss-loader", // Run post css actions
-            options: {
-                postcssOptions: {
-                    plugins: function() {
-                        // post css plugins, can be exported to postcss.config.js
-                        return [require("precss"), require("autoprefixer")];
-                    }
-                }
-            }
-        },
-        {
             loader: "sass-loader", // compiles Sass to CSS
             options: {
                 implementation: require("sass"),
