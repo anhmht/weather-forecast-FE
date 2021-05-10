@@ -16,85 +16,91 @@ const env = process.env.NODE_ENV === 'testing' ?
   require('../config/prod.env')
 
 const webpackConfig = merge(baseWebpackConfig, {
-  mode: 'production',
-  module: {
-    rules: [...utils.styleLoaders({
-      sourceMap: config.build.productionSourceMap,
-      extract: false,
-      usePostCSS: true
-    }), {
-      test: /\.(scss)$/,
-      use: [{
-        loader: 'style-loader', // inject CSS to page
-      }, {
-        loader: 'css-loader', // translates CSS into CommonJS modules
-      }, {
-        loader: 'postcss-loader', // Run post css actions
-        options: {
-          plugins: function () { // post css plugins, can be exported to postcss.config.js
-            return [
-              require('precss'),
-              require('autoprefixer')
-            ];
-          }
-        }
-      }, {
-        loader: 'sass-loader' // compiles Sass to CSS
-      }]
-    }]
-  },
-  optimization: {
-    runtimeChunk: 'single',
-    splitChunks: {
-      chunks: 'all',
-      maxInitialRequests: Infinity,
-      minSize: 0,
-      cacheGroups: {
-        elementui: {
-          test: /[\\/]node_modules[\\/](element-ui)[\\/]/,
-          name: "element-ui"
-        }
-      },
+    mode: "production",
+    module: {
+        rules: [
+            ...utils.styleLoaders({
+                sourceMap: config.build.productionSourceMap,
+                extract: false,
+                usePostCSS: true
+            }),
+            {
+                test: /\.(scss)$/,
+                use: [
+                    {
+                        loader: "sass-loader", // compiles Sass to CSS
+                        options: {
+                            implementation: require("sass"),
+                            sassOptions: {
+                                includePaths: [
+                                    `${__dirname}/src/theme/main.scss`
+                                ]
+                            },
+                            additionalData: '@import "~@/theme/main.scss";'
+                        }
+                    }
+                ]
+            }
+        ]
     },
-    minimizer: [new TerserJSPlugin({}), new OptimizeCSSPlugin({})],
-  },
-  plugins: [
-    env
-  ],
-  devtool: config.build.productionSourceMap ? config.build.devtool : false,
-  output: {
-    path: config.build.assetsRoot,
-    publicPath: "/weather-forecast-FE/",
-    filename: utils.assetsPath('js/[name].[chunkhash].'+random+'.js'),
-    chunkFilename: utils.assetsPath('js/[name].[chunkhash].'+random+'.js')
-  },
-  plugins: [
-    // generate dist index.html with correct asset hash for caching.
-    // you can customize output by editing /index.html
-    // see https://github.com/ampedandwired/html-webpack-plugin
-    new HtmlWebpackPlugin({
-      filename: path.resolve(__dirname, "../dist/index.html"),
-      template: 'index.html',
-      inject: true,
-      minify: {
-        removeComments: true,
-        collapseWhitespace: true,
-        removeAttributeQuotes: true
-        // more options:
-        // https://github.com/kangax/html-minifier#options-quick-reference
-      },
-      // necessary to consistently work with multiple chunks via CommonsChunkPlugin
-      chunksSortMode: 'none'
-    }),
-    // keep module.id stable when vender modules does not change
-    new CopyWebpackPlugin({
-      patterns: [{
-      from: path.resolve(__dirname, '../static'),
-      to: 'static',
-    }]}),
-    new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /fr|nl-be|uk|en-gb/),
-  ]
-})
+    optimization: {
+        runtimeChunk: "single",
+        splitChunks: {
+            chunks: "all",
+            maxInitialRequests: Infinity,
+            minSize: 0,
+            cacheGroups: {
+                elementui: {
+                    test: /[\\/]node_modules[\\/](element-ui)[\\/]/,
+                    name: "element-ui"
+                }
+            }
+        },
+        minimizer: [new TerserJSPlugin({}), new OptimizeCSSPlugin({})]
+    },
+    plugins: [env],
+    devtool: config.build.productionSourceMap ? config.build.devtool : false,
+    output: {
+        path: config.build.assetsRoot,
+        publicPath: "/weather-forecast-FE/",
+        filename: utils.assetsPath("js/[name].[chunkhash]." + random + ".js"),
+        chunkFilename: utils.assetsPath(
+            "js/[name].[chunkhash]." + random + ".js"
+        )
+    },
+    plugins: [
+        // generate dist index.html with correct asset hash for caching.
+        // you can customize output by editing /index.html
+        // see https://github.com/ampedandwired/html-webpack-plugin
+        new HtmlWebpackPlugin({
+            filename: path.resolve(__dirname, "../dist/index.html"),
+            template: "index.html",
+            inject: true,
+            minify: {
+                removeComments: true,
+                collapseWhitespace: true,
+                removeAttributeQuotes: true
+                // more options:
+                // https://github.com/kangax/html-minifier#options-quick-reference
+            },
+            // necessary to consistently work with multiple chunks via CommonsChunkPlugin
+            chunksSortMode: "none"
+        }),
+        // keep module.id stable when vender modules does not change
+        new CopyWebpackPlugin({
+            patterns: [
+                {
+                    from: path.resolve(__dirname, "../static"),
+                    to: "static"
+                }
+            ]
+        }),
+        new webpack.ContextReplacementPlugin(
+            /moment[/\\]locale$/,
+            /fr|nl-be|uk|en-gb/
+        )
+    ]
+});
 
 if (process.env.NODE_ENV === 'production') {
   const CompressionWebpackPlugin = require('compression-webpack-plugin')

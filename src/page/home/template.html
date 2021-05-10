@@ -8,7 +8,7 @@
             Xuất Video
         </v-btn>
     </div>
-    <icon-picker />
+    <icon-picker :is-recording="isRecording" />
 
     <v-dialog  v-model="isDisplayDialog" persistent max-width="1400">
         <div class="preview-dialog">

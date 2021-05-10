@@ -1,3 +1,10 @@
-<div id="icon-wrapper" class="icon-weather-wrapper">
-    <img :id="item.name" :class="item.name" v-for="(item, index) in listIcon" :src="item.src" width="50" height="50" alt="" />
+<div id="icon-wrapper" class="icon-weather-wrapper" :class="isRecording ? 'is-record' : null">
+    <v-hover v-if="item.name" v-slot="{ hover }" v-for="(item, index) in listIcon" :key="index">
+        <div :id="item.name" :class="item.class">
+            <img :id="`${item.name}header`" :src="item.src" width="50" height="50" alt="" />
+            <v-btn v-if="hover && checkDisplayDelete(item.name)" @click="handleRemoveIcon(item.name)" icon color="white">
+                <v-icon>mdi-close</v-icon>
+            </v-btn>
+        </div>
+    </v-hover>
 </div>
