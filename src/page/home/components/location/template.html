@@ -1,0 +1,12 @@
+<div class="location-picker">
+    <div class="location-picker-title">Vị trí</div>
+    <div class="location-picker-content" >
+        <div @click="handleClick(index)"
+            :class="isActive === index ? 'active' : null"
+            class="location-picker-content--item"
+            v-for="(item, index) in locations"
+            :key="index">
+            {{item.name}}
+        </div>
+    </div>
+</div>

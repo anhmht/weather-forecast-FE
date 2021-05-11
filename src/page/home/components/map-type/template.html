@@ -1,0 +1,11 @@
+<div class="map-type">
+    <div class="map-type-content" >
+        <div @click="handleClick(index)"
+            :class="isActive === index ? 'active' : null"
+            class="map-type-content--item"
+            v-for="(item, index) in mapTypes"
+            :key="index">
+            {{item.name}}
+        </div>
+    </div>
+</div>

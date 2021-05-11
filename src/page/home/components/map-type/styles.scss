@@ -1,0 +1,26 @@
+.map-type {
+    position: absolute;
+    left: 20px;
+    top: 35%;
+    background: #000;
+    width: 170px;
+    background: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5)), rgba(121, 120, 120, 0.5);
+    color: #fff;
+    padding: 10px;
+    &-title {
+        font-size: 16px;
+        font-weight: 500;
+        margin-bottom: 10px;
+        padding: 0 10px;
+    }
+    &-content {
+        &--item {
+            padding: 5px 10px;
+            cursor: pointer;
+            &.active {
+                background: map-get($red, 'base');
+                border-radius: 20px;
+            }
+        }
+    }
+}

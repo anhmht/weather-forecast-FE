@@ -3,13 +3,16 @@ import Component from "vue-class-component";
 @Component({
     template: require("./template.html").default,
     components: {
-        "icon-picker": () => import("./components/icon-drag-drop/IconDragDropComponent.vue")
+        "icon-picker": () => import("./components/icon-drag-drop/IconDragDropComponent.vue"),
+        "location-picker": () => import("./components/location/LocationComponent.vue"),
+        "map-type-picker": () => import("./components/map-type/MapTypeComponent.vue"),
     }
 })
 export default class HomePageComponent extends Vue {
     windy: any;
     media: any = null;
     isRecording: boolean = false;
+    isHideIconPicker: boolean = true;
     isDisplayDialog: boolean = false;
 
     handleDownload() {
@@ -19,6 +22,18 @@ export default class HomePageComponent extends Vue {
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
+    }
+
+    handleChangeMap(mapData) {
+        console.log(mapData);
+        const {store} = this.windy;
+        store.set("overlay", mapData.type);
+    }
+
+    handleChangeLocation(mapData) {
+        console.log(mapData);
+        const {map} = this.windy;
+        map.flyTo([mapData.lat, mapData.lon], mapData.zoom );
     }
 
     async capture() {
@@ -66,32 +81,16 @@ export default class HomePageComponent extends Vue {
             verbose: true,
 
             // Optional: Initial state of the map
-            lat: 10.781,
-            lon: 106.64,
+            lat: 16.06778,
+            lon: 108.22083,
             zoom: 5
         };
 
         // @ts-ignore
-        this.windy = windyInit(options, windyAPI => {
+        windyInit(options, windyAPI => {
             // windyAPI is ready, and contain 'map', 'store',
             // 'picker' and other usefull stuff
-
-            const { map } = windyAPI;
-            // const levels = store.getAllowed('availLevels');
-            // let i = 0;
-            // setInterval(() => {
-            //     i = i === levels.length - 1 ? 0 : i + 1;
-
-            //     // Changing Windy params at runtime
-            //     store.set('level', levels[i]);
-            // }, 300);
-            // .map is instance of Leaflet map
-
-            // @ts-ignore
-            L.popup()
-                .setLatLng([10.781, 106.64])
-                .setContent("Hello World")
-                .openOn(map);
+            this.windy  = windyAPI;
         });
     }
 }

@@ -31,6 +31,7 @@ module.exports = {
                 ? config.build.assetsPublicPath
                 : config.dev.assetsPublicPath
     },
+
     resolve: {
         extensions: [".js", ".ts", ".vue", ".json"],
         alias: {
@@ -63,7 +64,7 @@ module.exports = {
             },
             {
                 test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-                loader: "url-loader",
+                loader: "file-loader",
                 options: {
                     name: "[path]/[name].[ext]",
                     esModule: false
