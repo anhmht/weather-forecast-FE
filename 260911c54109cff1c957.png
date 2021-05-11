@@ -1,0 +1,1 @@
+module.exports = __webpack_public_path__ + "src/assets/img//day_rain_thunder.png";
