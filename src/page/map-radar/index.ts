@@ -1,11 +1,15 @@
 import Vue from 'vue';
 import Component from "vue-class-component";
+import day_rain_thunder from "../../assets/img/day_rain_thunder.png";
 @Component({
     template: require("./template.html").default,
     components: {
-        "icon-picker": () => import("./components/icon-drag-drop/IconDragDropComponent.vue"),
-        "location-picker": () => import("./components/location/LocationComponent.vue"),
-        "map-type-picker": () => import("./components/map-type/MapTypeComponent.vue"),
+        "icon-picker": () =>
+            import("./components/icon-drag-drop/IconDragDropComponent.vue"),
+        "location-picker": () =>
+            import("./components/location/LocationComponent.vue"),
+        "map-type-picker": () =>
+            import("./components/map-type/MapTypeComponent.vue")
     }
 })
 export default class HomePageComponent extends Vue {
@@ -14,6 +18,11 @@ export default class HomePageComponent extends Vue {
     isRecording: boolean = false;
     isHideIconPicker: boolean = true;
     isDisplayDialog: boolean = false;
+
+    get iconButton() {
+        return day_rain_thunder;
+    }
+
 
     handleDownload() {
         const link = document.createElement("a");
@@ -26,14 +35,14 @@ export default class HomePageComponent extends Vue {
 
     handleChangeMap(mapData) {
         console.log(mapData);
-        const {store} = this.windy;
+        const { store } = this.windy;
         store.set("overlay", mapData.type);
     }
 
     handleChangeLocation(mapData) {
         console.log(mapData);
-        const {map} = this.windy;
-        map.flyTo([mapData.lat, mapData.lon], mapData.zoom );
+        const { map } = this.windy;
+        map.flyTo([mapData.lat, mapData.lon], mapData.zoom);
     }
 
     async capture() {
@@ -57,10 +66,8 @@ export default class HomePageComponent extends Vue {
                         vm.media = URL.createObjectURL(completeBlob);
                         vm.isRecording = false;
                     }, 500);
-                };;
-                recorder.onended = e => {
-
                 };
+                recorder.onended = e => {};
                 recorder.onerror = () => {
                     vm.isRecording = false;
                 };
@@ -72,6 +79,11 @@ export default class HomePageComponent extends Vue {
     }
 
     mounted() {
+        let apiKey = "d4a2aee090ae49548d4133121211205";
+        //@ts-ignore
+        $.getJSON("https://api.weatherapi.com/v1/ip.json?lang=vi&key=" + apiKey + "&q=42.117.31.144", function(data) {
+            console.log(JSON.stringify(data, null, 2));
+        });
         const options = {
             // Required: API key
             key: "PsLAtXpsPTZexBwUkO7Mx5I", // REPLACE WITH YOUR KEY !!!
@@ -90,7 +102,7 @@ export default class HomePageComponent extends Vue {
         windyInit(options, windyAPI => {
             // windyAPI is ready, and contain 'map', 'store',
             // 'picker' and other usefull stuff
-            this.windy  = windyAPI;
+            this.windy = windyAPI;
         });
     }
 }

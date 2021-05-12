@@ -26,19 +26,19 @@ export default class LocationComponent extends Vue {
                 lat: 10.25369,
                 lon: 105.9722,
                 name: "Vĩnh Long",
-                zoom: 8
+                zoom: 11
             },
             {
                 lat: 21.0245,
                 lon: 105.84117,
                 name: "Hà Nội",
-                zoom: 8
+                zoom: 11
             },
             {
                 lat: 10.82302,
                 lon: 106.62965,
                 name: "TP.HCM",
-                zoom: 8
+                zoom: 11
             }
         ];
     }
