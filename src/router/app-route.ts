@@ -6,6 +6,7 @@ const DataPageComponent = () => import("../page/data/DataPageComponent.vue");
 const TimePageComponent = () => import("../page/time/TimePageComponent.vue");
 const IconPageComponent = () => import("../page/icon/IconPageComponent.vue");
 const SocialPageComponent = () => import("../page/social/SocialPageComponent.vue");
+const LoginPageComponent = () => import("../page/login/LoginPageComponent.vue");
 const PageNotFoundComponent = () => import("../page/not-found/PageNotFoundComponent.vue");
 
 export default [
@@ -44,6 +45,12 @@ export default [
         path: "/social",
         name: ROUTER.SOCIAL,
         component: SocialPageComponent,
+        props: {}
+    },
+    {
+        path: "/login",
+        name: ROUTER.LOGIN,
+        component: LoginPageComponent,
         props: {}
     },
 

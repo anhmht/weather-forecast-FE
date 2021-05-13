@@ -31,6 +31,10 @@ export default class MenuComponent extends Vue {
             {
                 name: "Cộng Đồng",
                 path: "/social"
+            },
+            {
+                name: "Đăng Nhập",
+                path: "/login"
             }
         ];
     }
