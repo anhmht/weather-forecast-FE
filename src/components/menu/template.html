@@ -1,5 +1,5 @@
 <div class="base-header-menu">
-    <div v-for="(item,index) in menuItems" @click="handleClick(index)">
+    <div class="base-header-menu-item" :class="isActive === index ? 'active' : ''" v-for="(item,index) in menuItems" @click="handleClick(index)">
         {{item.name}}
     </div>
 </div>

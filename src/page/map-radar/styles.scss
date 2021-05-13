@@ -32,12 +32,12 @@
 .preview-dialog {
     background: #fff;
     &-header {
-        background: map-get($red, 'base');
-        color: map-get($shades, 'white');
+        background: $primary-color;
+        color: #fff;
         padding: 1vw 2vw;
         display: flex;
         font-size: 20px;
-        font-weight: map-get($font-weights,'medium');
+        font-weight: $medium-font-weight;
         &--title {
             flex: 1;
         }

@@ -1,4 +1,17 @@
 .base-header-menu {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
+    flex: 1;
+    align-items: center;
+    &-item {
+        cursor: pointer;
+        transition: $primary-transition;
+        &.active {
+            font-weight: $medium-font-weight;
+            border-bottom: 1px solid $primary-color;
+        }
+        &:hover {
+            color: $primary-color;
+        }
+    }
 }

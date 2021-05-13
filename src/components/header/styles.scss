@@ -1,0 +1,15 @@
+.base-container-header {
+    display: flex;
+    max-width: $container-width-xl;
+    margin: auto;
+    justify-content: space-between;
+    padding: 20px 0;
+    &-logo {
+        margin-right: 400px;
+        display: flex;
+        align-items: center;
+        img {
+            max-width: 300px;
+        }
+    }
+}
