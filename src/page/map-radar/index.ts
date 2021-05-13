@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import Component from "vue-class-component";
-import day_rain_thunder from "../../assets/img/day_rain_thunder.png";
 @Component({
     template: require("./template.html").default,
     components: {
@@ -18,10 +17,6 @@ export default class HomePageComponent extends Vue {
     isRecording: boolean = false;
     isHideIconPicker: boolean = true;
     isDisplayDialog: boolean = false;
-
-    get iconButton() {
-        return day_rain_thunder;
-    }
 
 
     handleDownload() {

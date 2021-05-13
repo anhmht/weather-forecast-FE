@@ -29,7 +29,8 @@ module.exports = {
         publicPath:
             process.env.NODE_ENV === "production"
                 ? config.build.assetsPublicPath
-                : config.dev.assetsPublicPath
+                : config.dev.assetsPublicPath,
+        assetModuleFilename: "static/[hash][ext][query]"
     },
 
     resolve: {
@@ -64,19 +65,24 @@ module.exports = {
             },
             {
                 test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-                loader: "file-loader",
-                options: {
-                    name: "[path]/[name].[ext]",
-                    esModule: false
+                type: "asset/resource",
+                generator: {
+                    filename: "static/img/[hash][ext][query]"
                 }
             },
             {
                 test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
-                loader: "file-loader"
+                type: "asset/resource",
+                generator: {
+                    filename: "static/media/[hash][ext][query]"
+                }
             },
             {
                 test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-                loader: "file-loader"
+                type: "asset/resource",
+                generator: {
+                    filename: "static/font/[hash][ext][query]"
+                }
             },
             {
                 test: /\.html$/i,
