@@ -10,7 +10,7 @@
     }
     &_section_2 {
         background-color: #ddd;
-        height: 300px;
+        height: 500px;
     }
     &-wrapper {
         max-width: $container-width-xl;
@@ -89,6 +89,17 @@
                 }
             }
         }
+    }
+
+    .owl-carousel .owl-stage-outer {
+        width: $container-width-xl;
+    }
+
+    .owl-carousel .owl-item img {
+        display: block;
+        width: 65%;
+        margin-left: auto;
+        margin-right: auto;
     }
 
 }
