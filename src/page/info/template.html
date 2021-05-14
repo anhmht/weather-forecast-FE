@@ -61,28 +61,20 @@
                     <v-col auto>
                         <h1>Thông tin khuyến cáo</h1>
                         <div class="recommend-info">
-                            <carousel items="4">
-                                <div>
-                                    <img src="/static/img/info-page/polute1.jpg">
-                                    <h4>Ô nhiễm không khí tại một số đô thị lớn có xu hướng gia tăng</h4>
-                                </div>
-                                <div>
-                                    <img src="/static/img/info-page/polute1.jpg">
-                                    <h4>Ô nhiễm không khí tại một số đô thị lớn có xu hướng gia tăng</h4>
-                                </div>
-                                <div>
-                                    <img src="/static/img/info-page/polute1.jpg">
-                                    <h4>Ô nhiễm không khí tại một số đô thị lớn có xu hướng gia tăng</h4>
-                                </div>
-                                <div>
-                                    <img src="/static/img/info-page/polute1.jpg">
-                                    <h4>Ô nhiễm không khí tại một số đô thị lớn có xu hướng gia tăng</h4>
-                                </div>
-                                <div>
-                                    <img src="/static/img/info-page/polute1.jpg">
-                                    <h4>Ô nhiễm không khí tại một số đô thị lớn có xu hướng gia tăng</h4>
-                                </div>
+                            <carousel :per-page="4" :navigate-to="navigateTo" :pagination-enabled="false">
+                                <slide v-for="(item,index) in posts" :key="index">
+                                    <div class="recommend-info-carousel-slide">
+                                        <img :src="item.imageUrl">
+                                        <h4>{{item.title}}</h4>
+                                    </div>
+                                </slide>
                             </carousel>
+                            <v-btn class="recommend-info-prev-btn" color="primary" elevation="10" icon @click="handlePrev()">
+                                <v-icon>mdi-arrow-left-bold-circle-outline</v-icon>
+                            </v-btn>
+                            <v-btn class="recommend-info-next-btn" color="primary" elevation="10" icon @click="handleNext()">
+                                <v-icon>mdi-arrow-right-bold-circle-outline</v-icon>
+                            </v-btn>
                         </div>
                     </v-col>
                 </v-row>
