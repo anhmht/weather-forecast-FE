@@ -91,15 +91,34 @@
         }
     }
 
-    .owl-carousel .owl-stage-outer {
-        width: $container-width-xl;
+    .recommend-info {
+        position: relative;
+        &-prev-btn {
+            position: absolute;
+            top: 22%;
+            left: -50px;
+        }
+        &-next-btn {
+            position: absolute;
+            top: 22%;
+            right: -50px;
+        }
+        .VueCarousel-wrapper {
+            height: 290px;
+            width: $container-width-xl;
+            .VueCarousel-slide {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+        &-carousel {
+            &-slide {
+                text-align: center;
+                img {
+                    width: 300px;
+                }
+            }
+        }
     }
-
-    .owl-carousel .owl-item img {
-        display: block;
-        width: 65%;
-        margin-left: auto;
-        margin-right: auto;
-    }
-
 }

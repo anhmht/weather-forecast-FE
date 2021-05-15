@@ -1,14 +1,16 @@
 <div class="login-page-container">
     <div class="login-page-container-wrapper">
         <div class="login-page-container-wrapper--title">Đăng nhập</div>
-        <div>
-            <v-text-field label="Tài Khoản" />
-        </div>
-        <div style="margin-top: 20px;">
-            <v-text-field type="password" label="Mật Khẩu" />
-        </div>
+        <v-form ref="loginForm" v-model="valid" lazy-validation >
+            <div>
+                <v-text-field label="Tài Khoản" v-model="data.userName" :rules="rules.nameRules"/>
+            </div>
+            <div style="margin-top: 20px;">
+                <v-text-field type="password" label="Mật Khẩu" v-model="data.password" :rules="rules.passRules"/>
+            </div>
+        </v-form>
         <div class="login-page-container-wrapper--btn-login">
-            <v-btn>
+            <v-btn @click="handleLogin()">
                 Đặng nhập
             </v-btn>
         </div>
