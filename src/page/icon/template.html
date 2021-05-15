@@ -1,5 +1,55 @@
 <base-container>
-    <div class="data-page-container">
-        <div>Biểu tượng thời tiét</div>
+    <div class="icon-page-container">
+        <v-row class="icon-page-container-wrapper">
+            <v-col cols="12" md="6">
+                    <div class="icon-page-container-wrapper-col">
+                        <div>
+                            <div v-for="(item,index) in listIcon_1" :key="index" :class="index === 0 ? 'first-item' : ''"
+                                class="icon-page-container-wrapper--item">
+                                <img :src="item.url">
+                                <span>{{item.description}}</span>
+                            </div>
+                        </div>
+
+                    </div>
+            </v-col>
+            <v-col cols="12" md="6">
+                <div class="icon-page-container-wrapper-col">
+                    <div>
+                        <div v-for="(item,index) in listIcon_2" :key="index" :class="index === 0 ? 'first-item' : ''"
+                            class="icon-page-container-wrapper--item">
+                            <img :src="item.url">
+                            <span>{{item.description}}</span>
+                        </div>
+                    </div>
+                </div>
+            </v-col>
+        </v-row>
+        <v-row class="icon-page-container-wrapper" style="padding-top: 0;padding-bottom: 2vw;">
+            <v-col cols="12" md="6">
+                <div class="icon-page-container-wrapper-col">
+                    <div>
+                        <div v-for="(item,index) in listIcon_3" :key="index" :class="index === 0 ? 'first-item' : ''"
+                            class="icon-page-container-wrapper--item">
+                            <img :src="item.url">
+                            <span>{{item.description}}</span>
+                        </div>
+                    </div>
+
+                </div>
+            </v-col>
+            <v-col cols="12" md="6">
+                <div class="icon-page-container-wrapper-col">
+                    <div>
+                        <div v-for="(item,index) in listIcon_4" :key="index" :class="index === 0 ? 'first-item' : ''"
+                            class="icon-page-container-wrapper--item">
+                            <img :src="item.url">
+                            <span>{{item.description}}</span>
+                        </div>
+                    </div>
+
+                </div>
+            </v-col>
+        </v-row>
     </div>
 </base-container>

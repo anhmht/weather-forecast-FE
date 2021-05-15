@@ -18,6 +18,9 @@ export default class HomePageComponent extends Vue {
     isHideIconPicker: boolean = true;
     isDisplayDialog: boolean = false;
 
+    handleBack() {
+        this.$router.go(-1);
+    }
 
     handleDownload() {
         const link = document.createElement("a");

@@ -1,7 +1,11 @@
 <v-app>
     <v-main>
-        <base-header></base-header>
-        <router-view></router-view>
-        <base-footer></base-footer>
+        <base-header v-show="visibleHeaderFooter"></base-header>
+        <transition>
+            <keep-alive>
+                <router-view></router-view>
+            </keep-alive>
+        </transition>
+        <base-footer v-show="visibleHeaderFooter"></base-footer>
     </v-main>
 </v-app>

@@ -1,4 +1,4 @@
-import ROUTER from "../constant/route-constant";
+import { ROUTE_NAME, PATH } from "../constant/route-constant";
 
 const MapRadarComponent = () => import("../page/map-radar/MapRadarComponent.vue");
 const InfoPageComponent = () => import("../page/info/InfoPageComponent.vue");
@@ -11,52 +11,52 @@ const LoginPageComponent = () => import("../page/login/LoginPageComponent.vue");
 const PageNotFoundComponent = () => import("../page/not-found/PageNotFoundComponent.vue");
 
 export default [
-    { path: "/", redirect: { path: "/info" } },
+    { path: "/", redirect: { path: PATH.INFO } },
     {
-        path: "/radar",
-        name: ROUTER.RADAR,
+        path: PATH.RADAR,
+        name: ROUTE_NAME.RADAR,
         component: MapRadarComponent,
         props: {}
     },
     {
-        path: "/info",
-        name: ROUTER.INFO,
+        path: PATH.INFO,
+        name: ROUTE_NAME.INFO,
         component: InfoPageComponent,
         props: {}
     },
     {
-        path: "/info/*",
-        name: ROUTER.INFO_DETAIL,
+        path: PATH.INFO_DETAIL,
+        name: ROUTE_NAME.INFO_DETAIL,
         component: InfoDetailPageComponent,
         props: {}
     },
     {
-        path: "/data",
-        name: ROUTER.DATA,
+        path: PATH.DATA,
+        name: ROUTE_NAME.DATA,
         component: DataPageComponent,
         props: {}
     },
     {
-        path: "/time",
-        name: ROUTER.TIME,
+        path: PATH.TIME,
+        name: ROUTE_NAME.TIME,
         component: TimePageComponent,
         props: {}
     },
     {
-        path: "/icon",
-        name: ROUTER.ICON,
+        path: PATH.ICON,
+        name: ROUTE_NAME.ICON,
         component: IconPageComponent,
         props: {}
     },
     {
-        path: "/social",
-        name: ROUTER.SOCIAL,
+        path: PATH.SOCIAL,
+        name: ROUTE_NAME.SOCIAL,
         component: SocialPageComponent,
         props: {}
     },
     {
-        path: "/login",
-        name: ROUTER.LOGIN,
+        path: PATH.LOGIN,
+        name: ROUTE_NAME.LOGIN,
         component: LoginPageComponent,
         props: {}
     },
@@ -64,7 +64,7 @@ export default [
     //#page not found
     {
         path: "*",
-        name: ROUTER.NOT_FOUND,
+        name: ROUTE_NAME.NOT_FOUND,
         component: PageNotFoundComponent
     }
 ];

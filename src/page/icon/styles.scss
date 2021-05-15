@@ -1,0 +1,59 @@
+.icon-page-container {
+    background: url(/static/img/icon-page/bg.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    color: #fff;
+    &-wrapper {
+        width: $container-width-xl;
+        margin: auto;
+        padding-top: 2vw;
+        &-col {
+            background: linear-gradient(
+                    rgb(0 114 255 / 30%),
+                    rgb(0 43 255 / 46%)
+                ),
+                rgb(0 0 0 / 22%);
+            border-radius: 10px;
+            padding: 10px;
+            > div {
+                padding: 10px;
+                overflow: auto;
+                max-height: 355px;
+                /* width */
+                &::-webkit-scrollbar {
+                    width: 5px;
+                    position: absolute;
+
+                }
+                /* Track */
+                &::-webkit-scrollbar-track {
+                    display: none;
+                }
+                /* Handle */
+                &::-webkit-scrollbar-thumb {
+                    background: #ddd;
+                    border-radius: 10px;
+                }
+                /* Handle on hover */
+                &::-webkit-scrollbar-thumb:hover {
+                    background: #fff;
+                }
+            }
+
+        }
+        &--item {
+            display: flex;
+            align-items: center;
+            padding: 5px 0;
+            border-top: 1px solid;
+            &.first-item {
+                border: none;
+            }
+            img {
+                width: 50px;
+                margin-right: 40px;
+            }
+        }
+    }
+}

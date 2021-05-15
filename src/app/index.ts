@@ -1,3 +1,4 @@
+import { PATH } from "@/constant/route-constant";
 import Vue from "vue";
 import Component from "vue-class-component";
 
@@ -8,4 +9,17 @@ import Component from "vue-class-component";
         "base-footer": () => import("../components/footer/FooterComponent.vue")
     }
 })
-export default class App extends Vue {}
+export default class App extends Vue {
+    get visibleHeaderFooter(): boolean {
+        return this.visblepath(this.$route.path);
+    }
+
+    visblepath(path: string): boolean {
+        switch (path) {
+            case PATH.RADAR:
+                return false;
+            default:
+                return true;
+        }
+    }
+}
