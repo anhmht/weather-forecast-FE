@@ -2,6 +2,7 @@ import ROUTER from "../constant/route-constant";
 
 const MapRadarComponent = () => import("../page/map-radar/MapRadarComponent.vue");
 const InfoPageComponent = () => import("../page/info/InfoPageComponent.vue");
+const InfoDetailPageComponent = () => import("../page/info-detail/InfoDetailPageComponent.vue");
 const DataPageComponent = () => import("../page/data/DataPageComponent.vue");
 const TimePageComponent = () => import("../page/time/TimePageComponent.vue");
 const IconPageComponent = () => import("../page/icon/IconPageComponent.vue");
@@ -21,6 +22,12 @@ export default [
         path: "/info",
         name: ROUTER.INFO,
         component: InfoPageComponent,
+        props: {}
+    },
+    {
+        path: "/info/*",
+        name: ROUTER.INFO_DETAIL,
+        component: InfoDetailPageComponent,
         props: {}
     },
     {
