@@ -75,6 +75,12 @@
         &-left {
             width: 430px;
             padding: 15px;
+            cursor: pointer;
+            &:hover {
+                h4 {
+                    color: $primary-color;
+                }
+            }
         }
         &-right {
             padding: 15px 0;
@@ -84,6 +90,12 @@
                 margin-bottom: 10px;
                 h4 {
                     padding: 0 10px;
+                }
+                cursor: pointer;
+                &:hover {
+                    h4 {
+                        color: $primary-color;
+                    }
                 }
             }
         }

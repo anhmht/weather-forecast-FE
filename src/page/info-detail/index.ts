@@ -7,6 +7,6 @@ import Component from "vue-class-component";
         "base-container": () => import("../../components/base-container/BaseContainerComponent.vue"),
     }
 })
-export default class InfoPageComponent extends Vue {
+export default class InfoDetailPageComponent extends Vue {
     
 }

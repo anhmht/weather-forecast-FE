@@ -1,0 +1,110 @@
+.time-page-container {
+    background-image: url(/static/img/time-page/bg.png);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    font-family: 'Roboto', sans-serif;
+    overflow: hidden;
+
+    &_section_1 {
+        background: rgba(90, 66, 245, 0.75);
+        height: 310px;
+        margin: 75px 150px;
+        border-radius: 25px;
+
+        &_main {
+            margin: 20px 50px;
+            color: #fff;
+            display: flex;
+
+            &--current {
+                flex-basis: 75%;
+
+                &_day {
+                    font-weight: bold;
+                }
+
+                &_temp {
+                    &_left {
+                        font-size: 50px;
+                        float: left;
+                        transform: translateY(50%);
+                    }
+                    
+                    &_right {
+                        img {
+                            margin: 20px;
+                            width: 35%;
+                        }
+                    }
+                }
+            }
+
+            &--next {
+
+                &_day {
+                    font-weight: bold;
+                    text-align: center;
+                }
+
+                &_icon {
+                    img {
+                        margin: 20px auto;
+                        display: block;
+                        width: 70%;
+                    }
+                    
+                }
+
+                &_temp {
+                    margin-top: 25px;
+                    text-align: center;
+                    font-size: 25px;
+                }
+            }
+
+            &--divider {
+                border-left: 3px solid white;
+                height: 250px;
+                margin-left: 15px;
+            }
+        }
+    }
+
+    &_section_2 {
+        background: rgba(90, 66, 245, 0.75);
+        height: 250px;
+        margin: 75px 150px;
+        border-radius: 25px;
+
+        &_main {
+            margin: 20px 50px;
+            color: #fff;
+
+            &--title {
+                font-weight: bold;
+            }
+
+            &--time {
+                margin-top: 20px;
+
+                &_detail {
+                    &_hour {
+                        text-align: center;
+                    }
+                    &_icon {
+                        img {
+                            margin: 20px auto;
+                            display: block;
+                            width: 50%;
+                        }
+                    }
+                    &_temp {
+                        text-align: center;
+                    }
+                }
+            }
+        }
+    }
+}
