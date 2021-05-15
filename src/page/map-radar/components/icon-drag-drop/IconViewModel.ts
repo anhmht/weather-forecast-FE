@@ -1,24 +1,24 @@
 
 import { Vue } from "vue-property-decorator";
 import day_rain_thunder from "../../../../../static/img/icon/day_rain_thunder.png";
-import angry_clouds from "../../../../../static/img/angry_clouds.png";
-import cloudy from "../../../../../static/img/cloudy.png";
-import day_clear from "../../../../../static/img/day_clear.png";
-import day_partial_cloud from "../../../../../static/img/day_partial_cloud.png";
-import day_rain from "../../../../../static/img/day_rain.png";
-import day_sleet from "../../../../../static/img/day_sleet.png";
-import day_snow_thunder from "../../../../../static/img/day_snow_thunder.png";
-import day_snow from "../../../../../static/img/day_snow.png";
-import fog from "../../../../../static/img/fog.png";
-import mist from "../../../../../static/img/mist.png";
-import night_full_moon_clear from "../../../../../static/img/night_full_moon_clear.png";
-import night_full_moon_partial_cloud from "../../../../../static/img/night_full_moon_partial_cloud.png";
-import night_full_moon_rain_thunder from "../../../../../static/img/night_full_moon_rain_thunder.png";
-import night_full_moon_rain from "../../../../../static/img/night_full_moon_rain.png";
-import night_full_moon_sleet from "../../../../../static/img/night_full_moon_sleet.png";
-import night_full_moon_snow_thunder from "../../../../../static/img/night_full_moon_snow_thunder.png";
-import night_full_moon_snow from "../../../../../static/img/night_full_moon_snow.png";
-import night_half_moon_clear from "../../../../../static/img/night_half_moon_clear.png";
+import angry_clouds from "../../../../../static/img/icon/angry_clouds.png";
+import cloudy from "../../../../../static/img/icon/cloudy.png";
+import day_clear from "../../../../../static/img/icon/day_clear.png";
+import day_partial_cloud from "../../../../../static/img/icon/day_partial_cloud.png";
+import day_rain from "../../../../../static/img/icon/day_rain.png";
+import day_sleet from "../../../../../static/img/icon/day_sleet.png";
+import day_snow_thunder from "../../../../../static/img/icon/day_snow_thunder.png";
+import day_snow from "../../../../../static/img/icon/day_snow.png";
+import fog from "../../../../../static/img/icon/fog.png";
+import mist from "../../../../../static/img/icon/mist.png";
+import night_full_moon_clear from "../../../../../static/img/icon/night_full_moon_clear.png";
+import night_full_moon_partial_cloud from "../../../../../static/img/icon/night_full_moon_partial_cloud.png";
+import night_full_moon_rain_thunder from "../../../../../static/img/icon/night_full_moon_rain_thunder.png";
+import night_full_moon_rain from "../../../../../static/img/icon/night_full_moon_rain.png";
+import night_full_moon_sleet from "../../../../../static/img/icon/night_full_moon_sleet.png";
+import night_full_moon_snow_thunder from "../../../../../static/img/icon/night_full_moon_snow_thunder.png";
+import night_full_moon_snow from "../../../../../static/img/icon/night_full_moon_snow.png";
+import night_half_moon_clear from "../../../../../static/img/icon/night_half_moon_clear.png";
 
 export default class IconDragDropViewModel extends Vue {
     listIcon = [
