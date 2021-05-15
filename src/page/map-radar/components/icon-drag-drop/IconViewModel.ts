@@ -1,100 +1,121 @@
+
 import { Vue } from "vue-property-decorator";
+import day_rain_thunder from "../../../../../static/img/icon/day_rain_thunder.png";
+import angry_clouds from "../../../../../static/img/angry_clouds.png";
+import cloudy from "../../../../../static/img/cloudy.png";
+import day_clear from "../../../../../static/img/day_clear.png";
+import day_partial_cloud from "../../../../../static/img/day_partial_cloud.png";
+import day_rain from "../../../../../static/img/day_rain.png";
+import day_sleet from "../../../../../static/img/day_sleet.png";
+import day_snow_thunder from "../../../../../static/img/day_snow_thunder.png";
+import day_snow from "../../../../../static/img/day_snow.png";
+import fog from "../../../../../static/img/fog.png";
+import mist from "../../../../../static/img/mist.png";
+import night_full_moon_clear from "../../../../../static/img/night_full_moon_clear.png";
+import night_full_moon_partial_cloud from "../../../../../static/img/night_full_moon_partial_cloud.png";
+import night_full_moon_rain_thunder from "../../../../../static/img/night_full_moon_rain_thunder.png";
+import night_full_moon_rain from "../../../../../static/img/night_full_moon_rain.png";
+import night_full_moon_sleet from "../../../../../static/img/night_full_moon_sleet.png";
+import night_full_moon_snow_thunder from "../../../../../static/img/night_full_moon_snow_thunder.png";
+import night_full_moon_snow from "../../../../../static/img/night_full_moon_snow.png";
+import night_half_moon_clear from "../../../../../static/img/night_half_moon_clear.png";
+
 export default class IconDragDropViewModel extends Vue {
     listIcon = [
         {
             name: "day_rain_thunder",
             class: "day_rain_thunder",
-            src: "/static/img/icon/day_rain_thunder.png"
+            src: day_rain_thunder
         },
         {
             name: "angry_clouds",
             class: "angry_clouds",
-            src: "/static/img/icon/angry_clouds.png"
+            src: angry_clouds
         },
         {
             name: "cloudy",
             class: "cloudy",
-            src: "/static/img/icon/cloudy.png"
+            src: cloudy
         },
         {
             name: "day_clear",
             class: "day_clear",
-            src: "/static/img/icon/day_clear.png"
+            src: day_clear
         },
         {
             name: "day_partial_cloud",
             class: "day_partial_cloud",
-            src: "/static/img/icon/day_partial_cloud.png"
+            src: day_partial_cloud
         },
         {
             name: "day_rain",
             class: "day_rain",
-            src: "/static/img/icon/day_rain.png"
+            src: day_rain
         },
         {
             name: "day_sleet",
             class: "day_sleet",
-            src: "/static/img/icon/day_sleet.png"
+            src: day_sleet
         },
         {
             name: "day_snow_thunder",
             class: "day_snow_thunder",
-            src: "/static/img/icon/day_snow_thunder.png"
+            src: day_snow_thunder
         },
         {
             name: "day_snow",
             class: "day_snow",
-            src: "/static/img/icon/day_snow.png"
+            src: day_snow
         },
         {
             name: "fog",
             class: "fog",
-            src: "/static/img/icon/fog.png"
+            src: fog
         },
         {
             name: "mist",
             class: "mist",
-            src: "/static/img/icon/mist.png"
+            src: mist
         },
         {
             name: "night_full_moon_clear",
             class: "night_full_moon_clear",
-            src: "/static/img/icon/night_full_moon_clear.png"
+            src: night_full_moon_clear
         },
         {
             name: "night_full_moon_partial_cloud",
             class: "night_full_moon_partial_cloud",
-            src: "/static/img/icon/night_full_moon_partial_cloud.png"
+            src: night_full_moon_partial_cloud
         },
         {
             name: "night_full_moon_rain_thunder",
             class: "night_full_moon_rain_thunder",
-            src: "/static/img/icon/night_full_moon_rain_thunder.png"
+            src: night_full_moon_rain_thunder
         },
         {
             name: "night_full_moon_rain",
             class: "night_full_moon_rain",
-            src: "/static/img/icon/night_full_moon_rain.png"
+            src: night_full_moon_rain
         },
         {
             name: "night_full_moon_sleet",
             class: "night_full_moon_sleet",
-            src: "/static/img/icon/night_full_moon_sleet.png"
+            src: night_full_moon_sleet
         },
         {
             name: "night_full_moon_snow_thunder",
             class: "night_full_moon_snow_thunder",
-            src: "/static/img/icon/night_full_moon_snow_thunder.png"
+            src: night_full_moon_snow_thunder
         },
         {
             name: "night_full_moon_snow",
             class: "night_full_moon_snow",
-            src: "/static/img/icon/night_full_moon_snow.png"
+            src: night_full_moon_snow
         },
         {
             name: "night_half_moon_clear",
             class: "night_half_moon_clear",
-            src: "/static/img/icon/night_half_moon_clear.png"
-        }
+            src: night_half_moon_clear
+        },
     ];
 }
