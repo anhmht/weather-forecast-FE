@@ -4,13 +4,11 @@
         background-size: cover;
         background-repeat: no-repeat;
         background-position: bottom;
-        height: 600px;
         color: #fff;
 
     }
     &_section_2 {
         background-color: #ddd;
-        height: 500px;
     }
     &-wrapper {
         max-width: $container-width-xl;
@@ -114,9 +112,15 @@
         }
         &-carousel {
             &-slide {
+                cursor: pointer;
                 text-align: center;
                 img {
                     width: 300px;
+                }
+                &:hover {
+                    h4 {
+                        color: $primary-color;
+                    }
                 }
             }
         }

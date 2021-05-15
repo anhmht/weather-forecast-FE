@@ -16,35 +16,43 @@ export default class InfoPageComponent extends Vue {
     posts: any = [
         {
             imageUrl: polute,
-            title: 'Ô nhiễm không khí tại một số đô thị lớn có xu hướng gia tăng'
+            title: 'Ô nhiễm không khí tại một số đô thị lớn có xu hướng gia tăng',
+            id: 1
         },
         {
             imageUrl: polute,
-            title: 'Ô nhiễm không khí tại một số đô thị lớn có xu hướng gia tăng'
+            title: 'Ô nhiễm không khí tại một số đô thị lớn có xu hướng gia tăng',
+            id: 2
         },
         {
             imageUrl: polute,
-            title: 'Ô nhiễm không khí tại một số đô thị lớn có xu hướng gia tăng'
+            title: 'Ô nhiễm không khí tại một số đô thị lớn có xu hướng gia tăng',
+            id: 3
         },
         {
             imageUrl: polute,
-            title: 'Ô nhiễm không khí tại một số đô thị lớn có xu hướng gia tăng'
+            title: 'Ô nhiễm không khí tại một số đô thị lớn có xu hướng gia tăng',
+            id: 4
         },
         {
             imageUrl: polute,
-            title: 'Ô nhiễm không khí tại một số đô thị lớn có xu hướng gia tăng'
+            title: 'Ô nhiễm không khí tại một số đô thị lớn có xu hướng gia tăng',
+            id: 5
         },
         {
             imageUrl: polute,
-            title: 'Ô nhiễm không khí tại một số đô thị lớn có xu hướng gia tăng'
+            title: 'Ô nhiễm không khí tại một số đô thị lớn có xu hướng gia tăng',
+            id: 6
         },
         {
             imageUrl: polute,
-            title: 'Ô nhiễm không khí tại một số đô thị lớn có xu hướng gia tăng'
+            title: 'Ô nhiễm không khí tại một số đô thị lớn có xu hướng gia tăng',
+            id: 7
         },
         {
             imageUrl: polute,
-            title: 'Ô nhiễm không khí tại một số đô thị lớn có xu hướng gia tăng'
+            title: 'Ô nhiễm không khí tại một số đô thị lớn có xu hướng gia tăng',
+            id: 8
         },
     ];
 
@@ -60,5 +68,9 @@ export default class InfoPageComponent extends Vue {
         if (this.navigateTo < totalPage) {
             this.navigateTo += 1
         }
+    }
+
+    handleViewDetail(postId) {
+        this.$router.push('/info/' + postId)
     }
 }

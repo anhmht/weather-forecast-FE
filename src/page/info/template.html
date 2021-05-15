@@ -63,7 +63,7 @@
                         <div class="recommend-info">
                             <carousel :per-page="4" :navigate-to="navigateTo" :pagination-enabled="false">
                                 <slide v-for="(item,index) in posts" :key="index">
-                                    <div class="recommend-info-carousel-slide">
+                                    <div @click="handleViewDetail(item.id)" class="recommend-info-carousel-slide">
                                         <img :src="item.imageUrl">
                                         <h4>{{item.title}}</h4>
                                     </div>

@@ -4,23 +4,22 @@
         background-size: cover;
         background-repeat: no-repeat;
         background-position: bottom;
-        height: 150px;
         color: #fff;
     }
 
     &_section_2 {
         background-color: #ddd;
-        height: 800px;
 
         &_main {
             background-color: #fff;
-            height: 700px;
             padding: 30px 50px;
+            img {
+                width: 100%;
+            }
         }
 
         &_relative {
             background-color: #fff;
-            height: 400px;
             padding: 10px 10px;
         }
     }
