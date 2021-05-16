@@ -22,76 +22,18 @@
                                 Nhiệt độ cao nhất: 34-36 độ, có nơi trên 36 độ
                             </div>
                         </div>
-                        <div class="time-page-container_section_1_main--divider"></div>
-                        <div class="time-page-container_section_1_main--next">
-                            <div class="time-page-container_section_1_main--next_day">
-                                Thứ Năm
-                            </div>
-                            <div class="time-page-container_section_1_main--next_icon">
-                                <img src="../../../static/img/icon/day_partial_cloud.png">
-                            </div>
-                            <div class="time-page-container_section_1_main--next_temp">
-                                27° - 32°
-                            </div>
-                        </div>
-                        <div class="time-page-container_section_1_main--divider"></div>
-                        <div class="time-page-container_section_1_main--next">
-                            <div class="time-page-container_section_1_main--next_day">
-                                Thứ Sáu
-                            </div>
-                            <div class="time-page-container_section_1_main--next_icon">
-                                <img src="../../../static/img/icon/day_partial_cloud.png">
-                            </div>
-                            <div class="time-page-container_section_1_main--next_temp">
-                                27° - 32°
-                            </div>
-                        </div>
-                        <div class="time-page-container_section_1_main--divider"></div>
-                        <div class="time-page-container_section_1_main--next">
-                            <div class="time-page-container_section_1_main--next_day">
-                                Thứ Bảy
-                            </div>
-                            <div class="time-page-container_section_1_main--next_icon">
-                                <img src="../../../static/img/icon/day_partial_cloud.png">
-                            </div>
-                            <div class="time-page-container_section_1_main--next_temp">
-                                27° - 32°
-                            </div>
-                        </div>
-                        <div class="time-page-container_section_1_main--divider"></div>
-                        <div class="time-page-container_section_1_main--next">
-                            <div class="time-page-container_section_1_main--next_day">
-                                Chủ Nhật
-                            </div>
-                            <div class="time-page-container_section_1_main--next_icon">
-                                <img src="../../../static/img/icon/day_partial_cloud.png">
-                            </div>
-                            <div class="time-page-container_section_1_main--next_temp">
-                                27° - 32°
-                            </div>
-                        </div>
-                        <div class="time-page-container_section_1_main--divider"></div>
-                        <div class="time-page-container_section_1_main--next">
-                            <div class="time-page-container_section_1_main--next_day">
-                                Thứ Hai
-                            </div>
-                            <div class="time-page-container_section_1_main--next_icon">
-                                <img src="../../../static/img/icon/day_partial_cloud.png">
-                            </div>
-                            <div class="time-page-container_section_1_main--next_temp">
-                                27° - 32°
-                            </div>
-                        </div>
-                        <div class="time-page-container_section_1_main--divider"></div>
-                        <div class="time-page-container_section_1_main--next">
-                            <div class="time-page-container_section_1_main--next_day">
-                                Thứ Ba
-                            </div>
-                            <div class="time-page-container_section_1_main--next_icon">
-                                <img src="../../../static/img/icon/day_partial_cloud.png">
-                            </div>
-                            <div class="time-page-container_section_1_main--next_temp">
-                                27° - 32°
+                        <div class="time-page-container_section_1_wrapper" v-for="(item,index) in weatherByDay" :key="index">
+                            <div class="time-page-container_section_1_main--divider"></div>
+                            <div class="time-page-container_section_1_main--next">
+                                <div class="time-page-container_section_1_main--next_day">
+                                    {{item.day}}
+                                </div>
+                                <div class="time-page-container_section_1_main--next_icon">
+                                    <img :src="item.imageUrl">
+                                </div>
+                                <div class="time-page-container_section_1_main--next_temp">
+                                    {{item.temp}}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -107,159 +49,16 @@
                         </div>
                         <div class="time-page-container_section_2_main--time">
                             <v-row justify="center">
-                                <v-col auto>
+                                <v-col auto v-for="(item,index) in weatherByTime" :key="index">
                                     <div class="time-page-container_section_2_main--time_detail">
                                         <div class="time-page-container_section_2_main--time_detail_hour">
-                                            1:00 AM
+                                            {{item.time}}
                                         </div>
                                         <div class="time-page-container_section_2_main--time_detail_icon">
-                                            <img src="../../../static/img/icon/day_partial_cloud.png">
+                                            <img :src="item.imageUrl">
                                         </div>
                                         <div class="time-page-container_section_2_main--time_detail_temp">
-                                            27° - 32°
-                                        </div>
-                                    </div>
-                                </v-col>
-                                <v-col auto>
-                                    <div class="time-page-container_section_2_main--time_detail">
-                                        <div class="time-page-container_section_2_main--time_detail_hour">
-                                            2:00 AM
-                                        </div>
-                                        <div class="time-page-container_section_2_main--time_detail_icon">
-                                            <img src="../../../static/img/icon/day_partial_cloud.png">
-                                        </div>
-                                        <div class="time-page-container_section_2_main--time_detail_temp">
-                                            27° - 32°
-                                        </div>
-                                    </div>
-                                </v-col>
-                                <v-col auto>
-                                    <div class="time-page-container_section_2_main--time_detail">
-                                        <div class="time-page-container_section_2_main--time_detail_hour">
-                                            3:00 AM
-                                        </div>
-                                        <div class="time-page-container_section_2_main--time_detail_icon">
-                                            <img src="../../../static/img/icon/day_partial_cloud.png">
-                                        </div>
-                                        <div class="time-page-container_section_2_main--time_detail_temp">
-                                            27° - 32°
-                                        </div>
-                                    </div>
-                                </v-col>
-                                <v-col auto>
-                                    <div class="time-page-container_section_2_main--time_detail">
-                                        <div class="time-page-container_section_2_main--time_detail_hour">
-                                            4:00 AM
-                                        </div>
-                                        <div class="time-page-container_section_2_main--time_detail_icon">
-                                            <img src="../../../static/img/icon/day_partial_cloud.png">
-                                        </div>
-                                        <div class="time-page-container_section_2_main--time_detail_temp">
-                                            27° - 32°
-                                        </div>
-                                    </div>
-                                </v-col>
-                                <v-col auto>
-                                    <div class="time-page-container_section_2_main--time_detail">
-                                        <div class="time-page-container_section_2_main--time_detail_hour">
-                                            5:00 AM
-                                        </div>
-                                        <div class="time-page-container_section_2_main--time_detail_icon">
-                                            <img src="../../../static/img/icon/day_partial_cloud.png">
-                                        </div>
-                                        <div class="time-page-container_section_2_main--time_detail_temp">
-                                            27° - 32°
-                                        </div>
-                                    </div>
-                                </v-col>
-                                <v-col auto>
-                                    <div class="time-page-container_section_2_main--time_detail">
-                                        <div class="time-page-container_section_2_main--time_detail_hour">
-                                            6:00 AM
-                                        </div>
-                                        <div class="time-page-container_section_2_main--time_detail_icon">
-                                            <img src="../../../static/img/icon/day_partial_cloud.png">
-                                        </div>
-                                        <div class="time-page-container_section_2_main--time_detail_temp">
-                                            27° - 32°
-                                        </div>
-                                    </div>
-                                </v-col>
-                                <v-col auto>
-                                    <div class="time-page-container_section_2_main--time_detail">
-                                        <div class="time-page-container_section_2_main--time_detail_hour">
-                                            7:00 AM
-                                        </div>
-                                        <div class="time-page-container_section_2_main--time_detail_icon">
-                                            <img src="../../../static/img/icon/day_partial_cloud.png">
-                                        </div>
-                                        <div class="time-page-container_section_2_main--time_detail_temp">
-                                            27° - 32°
-                                        </div>
-                                    </div>
-                                </v-col>
-                                <v-col auto>
-                                    <div class="time-page-container_section_2_main--time_detail">
-                                        <div class="time-page-container_section_2_main--time_detail_hour">
-                                            8:00 AM
-                                        </div>
-                                        <div class="time-page-container_section_2_main--time_detail_icon">
-                                            <img src="../../../static/img/icon/day_partial_cloud.png">
-                                        </div>
-                                        <div class="time-page-container_section_2_main--time_detail_temp">
-                                            27° - 32°
-                                        </div>
-                                    </div>
-                                </v-col>
-                                <v-col auto>
-                                    <div class="time-page-container_section_2_main--time_detail">
-                                        <div class="time-page-container_section_2_main--time_detail_hour">
-                                            9:00 AM
-                                        </div>
-                                        <div class="time-page-container_section_2_main--time_detail_icon">
-                                            <img src="../../../static/img/icon/day_partial_cloud.png">
-                                        </div>
-                                        <div class="time-page-container_section_2_main--time_detail_temp">
-                                            27° - 32°
-                                        </div>
-                                    </div>
-                                </v-col>
-                                <v-col auto>
-                                    <div class="time-page-container_section_2_main--time_detail">
-                                        <div class="time-page-container_section_2_main--time_detail_hour">
-                                            10:00 AM
-                                        </div>
-                                        <div class="time-page-container_section_2_main--time_detail_icon">
-                                            <img src="../../../static/img/icon/day_partial_cloud.png">
-                                        </div>
-                                        <div class="time-page-container_section_2_main--time_detail_temp">
-                                            27° - 32°
-                                        </div>
-                                    </div>
-                                </v-col>
-                                <v-col auto>
-                                    <div class="time-page-container_section_2_main--time_detail">
-                                        <div class="time-page-container_section_2_main--time_detail_hour">
-                                            11:00 AM
-                                        </div>
-                                        <div class="time-page-container_section_2_main--time_detail_icon">
-                                            <img src="../../../static/img/icon/day_partial_cloud.png">
-                                        </div>
-                                        <div class="time-page-container_section_2_main--time_detail_temp">
-                                            27° - 32°
-                                        </div>
-                                    </div>
-                                </v-col>
-                                <v-col auto>
-                                    <div class="time-page-container_section_2_main--time_detail">
-                                        <div class="time-page-container_section_2_main--time_detail_hour">
-                                            12:00 PM
-                                        </div>
-                                        <div class="time-page-container_section_2_main--time_detail_icon">
-                                            <img src="../../../static/img/icon/day_partial_cloud.png">
-                                        </div>
-                                        <div class="time-page-container_section_2_main--time_detail_temp">
-                                            27° - 32°
+                                            {{item.temp}}
                                         </div>
                                     </div>
                                 </v-col>
@@ -271,4 +70,3 @@
         </div>
     </base-container>
 </div>
-
