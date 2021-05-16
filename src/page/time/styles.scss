@@ -13,6 +13,10 @@
         margin: 75px 150px;
         border-radius: 25px;
 
+        &_wrapper {
+            display: flex;
+        }
+
         &_main {
             margin: 20px 50px;
             color: #fff;

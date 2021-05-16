@@ -13,7 +13,7 @@ import { Carousel, Slide } from 'vue-carousel';
 })
 export default class InfoPageComponent extends Vue {
     navigateTo: number = 0;
-    posts: any = [
+    recommendPosts: any = [
         {
             imageUrl: polute,
             title: 'Ô nhiễm không khí tại một số đô thị lớn có xu hướng gia tăng',
@@ -55,6 +55,23 @@ export default class InfoPageComponent extends Vue {
             id: 8
         },
     ];
+    warningPosts: any = [
+        {
+            imageUrl: polute,
+            title: 'Ô nhiễm không khí tại một số đô thị lớn có xu hướng gia tăng',
+            id: 1
+        },
+        {
+            imageUrl: polute,
+            title: 'Ô nhiễm không khí tại một số đô thị lớn có xu hướng gia tăng',
+            id: 2
+        },
+        {
+            imageUrl: polute,
+            title: 'Ô nhiễm không khí tại một số đô thị lớn có xu hướng gia tăng',
+            id: 3
+        }
+    ];
 
     handlePrev() {
         if(this.navigateTo) {
@@ -62,7 +79,7 @@ export default class InfoPageComponent extends Vue {
         }
     }
     handleNext() {
-        const totalPage = Math.ceil(this.posts.length / 4);
+        const totalPage = Math.ceil(this.recommendPosts.length / 4);
         console.log(totalPage);
 
         if (this.navigateTo < totalPage) {

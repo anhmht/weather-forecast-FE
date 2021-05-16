@@ -33,17 +33,9 @@
                                     <h4>Ô nhiễm không khí tại một số đô thị lớn có xu hướng gia tăng</h4>
                                 </div>
                                 <div class="warning-info-right">
-                                    <div @click="handleViewDetail(2)" class="warning-info-right--item">
-                                        <img width="150" src="/static/img/info-page/polute1.jpg" />
-                                        <h4>Ô nhiễm không khí tại một số đô thị lớn có xu hướng gia tăng</h4>
-                                    </div>
-                                    <div @click="handleViewDetail(3)" class="warning-info-right--item">
-                                        <img width="150" src="/static/img/info-page/polute1.jpg" />
-                                        <h4>Ô nhiễm không khí tại một số đô thị lớn có xu hướng gia tăng</h4>
-                                    </div>
-                                    <div @click="handleViewDetail(4)" class="warning-info-right--item">
-                                        <img width="150" src="/static/img/info-page/polute1.jpg" />
-                                        <h4>Ô nhiễm không khí tại một số đô thị lớn có xu hướng gia tăng</h4>
+                                    <div v-for="(item,index) in warningPosts" :key="index" @click="handleViewDetail(item.id)" class="warning-info-right--item">
+                                        <img width="150" :src="item.imageUrl" />
+                                        <h4>{{item.title}}</h4>
                                     </div>
                                 </div>
                             </div>
@@ -62,7 +54,7 @@
                         <h1>Thông tin khuyến cáo</h1>
                         <div class="recommend-info">
                             <carousel :per-page="4" :navigate-to="navigateTo" :pagination-enabled="false">
-                                <slide v-for="(item,index) in posts" :key="index">
+                                <slide v-for="(item,index) in recommendPosts" :key="index">
                                     <div @click="handleViewDetail(item.id)" class="recommend-info-carousel-slide">
                                         <img :src="item.imageUrl">
                                         <h4>{{item.title}}</h4>
