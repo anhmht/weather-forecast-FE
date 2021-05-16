@@ -84,8 +84,8 @@ export default class HomePageComponent extends Vue {
         });
         const options = {
             // Required: API key
-            key: "PsLAtXpsPTZexBwUkO7Mx5I", // REPLACE WITH YOUR KEY !!!
-            // key: 'yw7vbuA1PQmaUPe0SNECjxmOIv5AJ4FC', // Production !!!
+            // key: "PsLAtXpsPTZexBwUkO7Mx5I", // REPLACE WITH YOUR KEY !!!
+            key: 'yw7vbuA1PQmaUPe0SNECjxmOIv5AJ4FC', // Production !!!
 
             // Put additional console output
             verbose: true,

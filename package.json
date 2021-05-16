@@ -6,9 +6,9 @@
   "scripts": {
     "dev": "webpack serve --inline --progress --config build/webpack.dev.conf.js --mode development --env development --hot",
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build": "webpack  --progress --devtool eval-source-map --config build/webpack.prod.conf.js --mode production",
     "lint": "vue-cli-service lint",
-    "bundle": "webpack  --progress --devtool eval-source-map --config build/webpack.prod.conf.js --mode production ",
+    "bundle": "webpack  --progress --devtool eval-source-map --config build/webpack.prod.conf.js --mode production",
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
