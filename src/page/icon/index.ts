@@ -39,10 +39,17 @@ import cloud_rain7 from '../../../static/img/icon/new/cloud_rain7.png';
 @Component({
     template: require("./template.html").default,
     components: {
-        "base-container": () => import("../../components/base-container/BaseContainerComponent.vue")
+        "base-container": () => import("../../components/base-container/BaseContainerComponent.vue"),
+        "weaher-status": () => import("./components/weather-status/WeatherStatusComponent.vue")
     }
 })
 export default class IconPageComponent extends Vue {
+    activeTab: number = 0
+
+    handleChangeTab(tab) {
+        this.activeTab = tab;
+    }
+
     get listIcon_1() {
         return [
             {

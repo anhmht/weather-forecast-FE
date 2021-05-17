@@ -1,5 +1,112 @@
 <base-container>
     <div class="data-page-container">
-        <div>Dữ liệu khí tượng thuỷ văn</div>
+        <v-row class="data-page-container-wrapper">
+            <div class="data-page-container-wrapper--tab" :class="activeTab === 0 ? 'active' : ''" @click="handleChangeTab(0)">
+                Tổng thể</div>
+            <div class="data-page-container-wrapper--tab" :class="activeTab === 1 ? 'active' : ''" @click="handleChangeTab(1)">
+                Nam Bộ</div>
+            <div class="data-page-container-wrapper--tab" :class="activeTab === 2 ? 'active' : ''" @click="handleChangeTab(2)">
+                Vĩnh Long</div>
+        </v-row>
+        <v-row v-if="activeTab === 0" class="data-page-container-wrapper" style="padding: 2vw 0">
+            <div class="data-page-container-wrapper-col">
+                <div>
+                    <template>
+                        <v-simple-table fixed-header height="500px">
+                            <template v-slot:default>
+                                <thead>
+                                    <tr>
+                                        <th class="text-left">
+                                            Tên tỉnh thành
+                                        </th>
+                                        <th class="text-left">
+                                            Nhiệt độ thấp nhất
+                                        </th>
+                                        <th class="text-left">
+                                            Nhiệt độ cao nhất
+                                        </th>
+                                        <th class="text-left">
+                                            Trạng thái đặc biệt
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="item in province" :key="item.name">
+                                        <td>{{ item.name }}</td>
+                                        <td>{{ getRandomArbitrary(17, 25) }}</td>
+                                        <td>{{ getRandomArbitrary(35, 40) }}</td>
+                                        <td>{{ status[getStatus()] }}</td>
+                                    </tr>
+                                </tbody>
+                            </template>
+                        </v-simple-table>
+                    </template>
+                </div>
+            </div>
+        </v-row>
+        <v-row v-if="activeTab === 1" class="data-page-container-wrapper" style="padding: 2vw 0">
+            <div class="data-page-container-wrapper-col">
+                <div>
+                    <template>
+                        <v-simple-table fixed-header height="500px">
+                            <template v-slot:default>
+                                <thead>
+                                    <tr>
+                                        <th class="text-left">
+
+                                        </th>
+                                        <th class="text-left">
+                                            Thấp nhất
+                                        </th>
+                                        <th class="text-left">
+                                            Cao Nhất
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="item in weatherInfo" :key="item.name">
+                                        <td>{{ item.name }}</td>
+                                        <td>{{ getRandomArbitrary(17, 25) }}</td>
+                                        <td>{{ getRandomArbitrary(35, 40) }}</td>
+                                    </tr>
+                                </tbody>
+                            </template>
+                        </v-simple-table>
+                    </template>
+                </div>
+            </div>
+        </v-row>
+        <v-row v-if="activeTab === 2" class="data-page-container-wrapper" style="padding: 2vw 0">
+            <div class="data-page-container-wrapper-col">
+                <div>
+                    <template>
+                        <v-simple-table fixed-header height="500px">
+                            <template v-slot:default>
+                                <thead>
+                                    <tr>
+                                        <th class="text-left">
+
+                                        </th>
+                                        <th class="text-left">
+                                            Thấp nhất
+                                        </th>
+                                        <th class="text-left">
+                                            Cao Nhất
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="item in wardInfo" :key="item.name">
+                                        <td>{{ item.name }}</td>
+                                        <td>{{ getRandomArbitrary(17, 25) }}</td>
+                                        <td>{{ getRandomArbitrary(35, 40) }}</td>
+                                    </tr>
+                                </tbody>
+                            </template>
+                        </v-simple-table>
+                    </template>
+                </div>
+            </div>
+        </v-row>
     </div>
 </base-container>

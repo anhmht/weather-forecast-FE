@@ -1,0 +1,31 @@
+.data-page-container {
+    background: url(/static/img/icon-page/bg.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    color: #fff;
+    &-wrapper {
+        width: $container-width-xl;
+        margin: auto;
+        padding-top: 2vw;
+        &--tab {
+            margin-right: 20px;
+            cursor: pointer;
+            font-size: 20px;
+            &.active {
+                border-bottom: 1px solid;
+                font-weight: 700;
+            }
+        }
+        &-col {
+            background: linear-gradient(
+                    rgb(0 114 255 / 30%),
+                    rgb(0 43 255 / 46%)
+                ),
+                rgb(0 0 0 / 22%);
+            border-radius: 10px;
+            padding: 20px;
+            width: 100%;
+        }
+    }
+}

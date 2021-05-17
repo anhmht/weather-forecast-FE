@@ -8,6 +8,15 @@
         width: $container-width-xl;
         margin: auto;
         padding-top: 2vw;
+        &--tab {
+            margin-right: 20px;
+            cursor: pointer;
+            font-size: 20px;
+            &.active {
+                border-bottom: 1px solid;
+                font-weight: 700;
+            }
+        }
         &-col {
             background: linear-gradient(
                     rgb(0 114 255 / 30%),

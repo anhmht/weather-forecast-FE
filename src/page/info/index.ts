@@ -1,6 +1,13 @@
 import Vue from "vue";
 import Component from "vue-class-component";
 import polute from '../../../static/img/info-page/polute1.jpg';
+import img_2 from '../../../static/img/info-page/2.jpg';
+import img_3 from '../../../static/img/info-page/3.jpg';
+import img_4 from '../../../static/img/info-page/4.jpg';
+import img_5 from '../../../static/img/info-page/5.jpg';
+import img_6 from '../../../static/img/info-page/6.png';
+import img_7 from '../../../static/img/info-page/7.png';
+import img_8 from '../../../static/img/info-page/8.jpg';
 import { Carousel, Slide } from 'vue-carousel';
 
 @Component({
@@ -15,28 +22,28 @@ export default class InfoPageComponent extends Vue {
     navigateTo: number = 0;
     recommendPosts: any = [
         {
-            imageUrl: polute,
-            title: 'Ô nhiễm không khí tại một số đô thị lớn có xu hướng gia tăng',
+            imageUrl: img_2,
+            title: 'Trung tâm Dự báo Khí tượng Thủy văn Quốc gia nhận định, từ ngày 16-18/5, ngưỡng chỉ số tia cực tím (UV) tại các thành phố ở ngưỡng rất cao.',
             id: 1
         },
         {
-            imageUrl: polute,
-            title: 'Ô nhiễm không khí tại một số đô thị lớn có xu hướng gia tăng',
+            imageUrl: img_3,
+            title: 'BẢN TIN CẬP NHẬT VỀ HIỆN TƯỢNG ENSO VÀ NHẬN ĐỊNH XU THẾ KHÍ TƯỢNG THỦY VĂN TỪ THÁNG 6 ĐẾN THÁNG 11 NĂM 2021',
             id: 2
         },
         {
-            imageUrl: polute,
-            title: 'Ô nhiễm không khí tại một số đô thị lớn có xu hướng gia tăng',
+            imageUrl: img_4,
+            title: 'DỰ BÁO THỜI TIẾT 10 NGÀY (Từ đêm 17 đến ngày 27/5/2021)',
             id: 3
         },
         {
-            imageUrl: polute,
-            title: 'Ô nhiễm không khí tại một số đô thị lớn có xu hướng gia tăng',
+            imageUrl: img_5,
+            title: 'THÔNG TIN CẢNH BÁO CHỈ SỐ CỰC ĐẠI BỨC XẠ TIA CỰC TÍM VÀ TIỀM NĂNG NHIỆT',
             id: 4
         },
         {
-            imageUrl: polute,
-            title: 'Ô nhiễm không khí tại một số đô thị lớn có xu hướng gia tăng',
+            imageUrl: img_6,
+            title: 'NHẬN ĐỊNH XU THẾ THỜI TIẾT TỪ NGÀY 11THÁNG 5 ĐẾN NGÀY 10 THÁNG 6 NĂM 2021 CÁC KHU VỰC TRÊN PHẠM',
             id: 5
         },
         {
@@ -57,18 +64,18 @@ export default class InfoPageComponent extends Vue {
     ];
     warningPosts: any = [
         {
-            imageUrl: polute,
-            title: 'Ô nhiễm không khí tại một số đô thị lớn có xu hướng gia tăng',
+            imageUrl: img_6,
+            title: 'NHẬN ĐỊNH XU THẾ THỜI TIẾT TỪ NGÀY 11THÁNG 5 ĐẾN NGÀY 10 THÁNG 6 NĂM 2021 CÁC KHU VỰC TRÊN PHẠM',
             id: 1
         },
         {
-            imageUrl: polute,
-            title: 'Ô nhiễm không khí tại một số đô thị lớn có xu hướng gia tăng',
+            imageUrl: img_7,
+            title: 'Bản đồ cảnh báo nguy cơ lũ quét, sạc lỡ trong 24 giờ tới',
             id: 2
         },
         {
-            imageUrl: polute,
-            title: 'Ô nhiễm không khí tại một số đô thị lớn có xu hướng gia tăng',
+            imageUrl: img_8,
+            title: 'Dự báo năm 2021 sẽ có nhiều cơn bão mạnh và đợt mưa lớn cực đoan',
             id: 3
         }
     ];
