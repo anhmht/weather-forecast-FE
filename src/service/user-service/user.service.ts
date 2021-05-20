@@ -4,19 +4,15 @@ import  Uri  from "@/constant/uri/user-constant";
 import IUser from "@/model/user/user-authenticate.model";
 
 export class UserServices extends GenericServices {
-    checkLogin(loginInfo) {
+    checkLogin(loginInfo): Promise<ApiResponse> {
         return this.executeSelectingPost(loginInfo, Uri.login).then((response: ApiResponse) => {
-                return response.isSuccess
-                    ? Promise.resolve(response.data)
-                    : Promise.reject(response)
+            return Promise.resolve(response)
             }).catch(error => Promise.reject(error))
     }
 
-    register(userInfo : IUser) {
+    register(userInfo: IUser): Promise<ApiResponse> {
         return this.executeSelectingPost(userInfo, Uri.login).then((response: ApiResponse) => {
-            return response.isSuccess
-                ? Promise.resolve(response.data)
-                : Promise.reject(response)
+            return Promise.resolve(response)
         }).catch(error => Promise.reject(error))
     }
 }

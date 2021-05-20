@@ -10,7 +10,10 @@ const SocialPageComponent = () => import("../page/social/SocialPageComponent.vue
 const LoginPageComponent = () => import("../page/login/LoginPageComponent.vue");
 const PageNotFoundComponent = () => import("../page/not-found/PageNotFoundComponent.vue");
 
-export default [
+const AdminComponent = () => import("../page/cms/CMSComponent.vue");
+const ListPostComponent = () => import("../page/cms/components/list-posts/ListPostComponent.vue")
+
+const homeRoutes = [
     { path: "/", redirect: { path: PATH.INFO } },
     {
         path: PATH.RADAR,
@@ -58,7 +61,10 @@ export default [
         path: PATH.LOGIN,
         name: ROUTE_NAME.LOGIN,
         component: LoginPageComponent,
-        props: {}
+        props: {},
+        meta: {
+            guest: true
+        }
     },
 
     //#page not found
@@ -68,3 +74,32 @@ export default [
         component: PageNotFoundComponent
     }
 ];
+
+const adminRoutes = [
+    {
+        path: PATH.ADMIN,
+        name: ROUTE_NAME.MANAGEMENT,
+        component: AdminComponent,
+        props: {},
+        meta: {
+            requiresAuth: true
+        },
+        children: [
+            {
+                path: PATH.LIST_POST,
+                name: ROUTE_NAME.LIST_POST,
+                component: ListPostComponent,
+                meta: {
+                    requiresAuth: true
+                },
+                props: {}
+            },
+            { path: "/admin", redirect: { path: PATH.LIST_POST } },
+        ]
+    },
+]
+
+export default [
+    ...homeRoutes,
+    ...adminRoutes
+]

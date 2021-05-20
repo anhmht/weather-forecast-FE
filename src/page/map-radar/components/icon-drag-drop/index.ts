@@ -19,8 +19,6 @@ export default class IconDragDropComponent extends IconViewModel {
     }
 
     checkDisplayDelete(id) {
-        console.log(id);
-
         let icon = document.getElementById(id);
         return icon && icon.getAttribute("style") ? true : false;
     }

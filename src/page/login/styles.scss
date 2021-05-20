@@ -4,7 +4,7 @@
     background-size: cover;
     background-repeat: no-repeat;
     min-height: 100vh;
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
     overflow: hidden;
     &-wrapper {
         background: #fff;
@@ -56,7 +56,6 @@
                 left: -50px;
                 background: #ed2553;
             }
-
         }
         &::before {
             content: "";
@@ -73,8 +72,44 @@
     .v-input {
         display: block;
     }
-}
 
+    .custom-loader {
+        animation: loader 1s infinite;
+        display: flex;
+    }
+}
+@-moz-keyframes loader {
+    from {
+        transform: rotate(0);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+@-webkit-keyframes loader {
+    from {
+        transform: rotate(0);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+@-o-keyframes loader {
+    from {
+        transform: rotate(0);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+@keyframes loader {
+    from {
+        transform: rotate(0);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
 // .materialContainer {
 //     width: 100%;
 //     max-width: 460px;

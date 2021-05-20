@@ -18,6 +18,8 @@ export default class App extends Vue {
         switch (path) {
             case PATH.RADAR:
                 return false;
+            case `${PATH.ADMIN}/${PATH.LIST_POST}`:
+                return false;
             default:
                 return true;
         }

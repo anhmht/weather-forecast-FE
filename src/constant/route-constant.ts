@@ -9,18 +9,21 @@ export const ROUTE_NAME = {
     SOCIAL: 'social',
     NOT_FOUND: 'not-found',
     LOGIN: 'login',
-    MANAGEMENT: 'management'
+    MANAGEMENT: 'management',
+    LIST_POST: 'listPost'
 }
 
 export const PATH = {
     RADAR: '/radar',
     INFO: '/info',
-    INFO_DETAIL: '/info/*',
+    INFO_DETAIL: '/info/:id',
     DATA: '/data',
     TIME: '/time',
     ICON: '/icon',
     SOCIAL: '/social',
     NOT_FOUND: '/not-found',
     LOGIN: '/login',
-    MANAGEMENT: '/management'
+    MANAGEMENT: '/management',
+    ADMIN: '/admin',
+    LIST_POST: 'list-post'
 }

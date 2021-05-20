@@ -87,8 +87,6 @@ export default class InfoPageComponent extends Vue {
     }
     handleNext() {
         const totalPage = Math.ceil(this.recommendPosts.length / 4);
-        console.log(totalPage);
-
         if (this.navigateTo < totalPage) {
             this.navigateTo += 1
         }

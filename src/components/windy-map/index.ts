@@ -8,8 +8,6 @@ export default class WindyMapComponent extends Vue {
     windy: any = null;
 
     mounted() {
-        console.log(123);
-
         const options = {
             // Required: API key
             key: "PsLAtXpsPTZexBwUkO7Mx5I", // REPLACE WITH YOUR KEY !!!

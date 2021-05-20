@@ -1,0 +1,60 @@
+.base-cms {
+    display: flex;
+    &-left {
+        position: relative;
+        color: #ddd;
+        width: 400px;
+        height: 100vh;
+        background: #000;
+        &--header {
+            padding: 20px;
+            border-bottom: 1px solid #ddd;
+            img {
+                width: 100%;
+            }
+            span {
+                font-size: 18px;
+                font-weight: 600;
+            }
+        }
+        &--body {
+            padding: 1.5vw 0;
+        }
+        &--footer {
+            position: absolute;
+            bottom: 0;
+            padding: 20px;
+            border-top: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            width: 100%;
+            i {
+                margin-right: 15px;
+            }
+            span {
+                font-size: 16px;
+                font-weight: 500;
+            }
+        }
+    }
+    &-right {
+        flex: 1;
+        &--header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 112px;
+            padding: 0 20px;
+            .v-icon.v-icon {
+                color: #ddd;
+                font-size: 70px;
+            }
+        }
+        &--body {
+            background: #ddd;
+            height: calc(100% - 112px);
+            padding: 1.5vw;
+        }
+    }
+}

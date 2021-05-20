@@ -1,5 +1,4 @@
 import axios, { AxiosPromise } from "axios";
-
 export class GenericServices {
     protected executeSelecting<TValue, TResult>(
         params?: TValue,
@@ -23,7 +22,7 @@ export class GenericServices {
                 cancelToken: cancelTokenSource && cancelTokenSource.token
             })
             .then(response => response.data)
-            .catch(error => () => {
+            .catch(error => {
                 console.log(error);
             });
     }
