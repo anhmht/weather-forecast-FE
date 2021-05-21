@@ -2,11 +2,15 @@
     <div class="data-page-container">
         <v-row class="data-page-container-wrapper">
             <div class="data-page-container-wrapper--tab" :class="activeTab === 0 ? 'active' : ''" @click="handleChangeTab(0)">
-                Tổng thể</div>
+                TOÀN QUỐC</div>
             <div class="data-page-container-wrapper--tab" :class="activeTab === 1 ? 'active' : ''" @click="handleChangeTab(1)">
-                Nam Bộ</div>
+                NAM BỘ</div>
             <div class="data-page-container-wrapper--tab" :class="activeTab === 2 ? 'active' : ''" @click="handleChangeTab(2)">
-                Vĩnh Long</div>
+                ĐBSCL</div>
+            <div class="data-page-container-wrapper--tab" :class="activeTab === 3 ? 'active' : ''" @click="handleChangeTab(3)">
+                VĨNH LONG</div>
+            <div class="data-page-container-wrapper--tab" :class="activeTab === 4 ? 'active' : ''" @click="handleChangeTab(4)">
+                DỰ BÁO THỦY VĂN</div>    
         </v-row>
         <v-row v-if="activeTab === 0" class="data-page-container-wrapper" style="padding: 2vw 0">
             <div class="data-page-container-wrapper-col">
@@ -96,8 +100,104 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <tr v-for="item in mekongDeltaProvinces" :key="item.name">
+                                        <td>{{ item.name }}</td>
+                                        <td>{{ getRandomArbitrary(17, 25) }}</td>
+                                        <td>{{ getRandomArbitrary(35, 40) }}</td>
+                                    </tr>
+                                </tbody>
+                            </template>
+                        </v-simple-table>
+                    </template>
+                </div>
+            </div>
+        </v-row>
+        <v-row v-if="activeTab === 3" class="data-page-container-wrapper" style="padding: 2vw 0">
+            <div class="data-page-container-wrapper-col">
+                <div>
+                    <template>
+                        <v-simple-table fixed-header height="500px">
+                            <template v-slot:default>
+                                <thead>
+                                    <tr>
+                                        <th class="text-left">
+
+                                        </th>
+                                        <th class="text-left">
+                                            Thấp nhất
+                                        </th>
+                                        <th class="text-left">
+                                            Cao Nhất
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
                                     <tr v-for="item in wardInfo" :key="item.name">
                                         <td>{{ item.name }}</td>
+                                        <td>{{ getRandomArbitrary(17, 25) }}</td>
+                                        <td>{{ getRandomArbitrary(35, 40) }}</td>
+                                    </tr>
+                                </tbody>
+                            </template>
+                        </v-simple-table>
+                    </template>
+                </div>
+            </div>
+        </v-row>
+        <v-row v-if="activeTab === 4" class="data-page-container-wrapper" style="padding: 2vw 0">
+            <div class="data-page-container-wrapper-col">
+                <div>
+                    <template>
+                        <v-simple-table fixed-header height="250px">
+                            <template v-slot:default>
+                                <thead>
+                                    <tr>
+                                        <th class="text-left">
+                                            Mực nước tại các con sông lớn
+                                        </th>
+                                        <th class="text-left">
+                                            Thấp nhất
+                                        </th>
+                                        <th class="text-left">
+                                            Cao Nhất
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="item in mainRivers" :key="item.name">
+                                        <td>{{ item.name }}</td>
+                                        <td>{{ getRandomArbitrary(17, 25) }}</td>
+                                        <td>{{ getRandomArbitrary(35, 40) }}</td>
+                                    </tr>
+                                </tbody>
+                            </template>
+                        </v-simple-table>
+                        <v-simple-table fixed-header height="500px">
+                            <template v-slot:default>
+                                <thead>
+                                    <tr>
+                                        <th class="text-left">
+                                            Hiện tượng thời tiết cực đoan
+                                        </th>
+                                        <th class="text-left">
+                                            Xâm nhập mặn
+                                        </th>
+                                        <th class="text-left">
+                                            Hạn hán
+                                        </th>
+                                        <th class="text-left">
+                                            Cấp độ gió
+                                        </th>
+                                        <th class="text-left">
+                                            Độ ẩm
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="item in wardInfo" :key="item.name">
+                                        <td>{{ item.name }}</td>
+                                        <td>{{ harshStatus[getHarshStatus()] }}</td>
+                                        <td>{{ harshStatus[getHarshStatus()] }}</td>
                                         <td>{{ getRandomArbitrary(17, 25) }}</td>
                                         <td>{{ getRandomArbitrary(35, 40) }}</td>
                                     </tr>

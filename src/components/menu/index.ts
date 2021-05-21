@@ -10,31 +10,31 @@ export default class MenuComponent extends Vue {
     get menuItems() {
         return [
             {
-                name: "Giới Thiệu",
+                name: "GIỚI THIỆU",
                 path: PATH.INFO
             },
             {
-                name: "Dữ Liệu KTTV",
+                name: "DỮ LIỆU KTTV",
                 path: PATH.DATA
             },
             {
-                name: "Thời Gian",
+                name: "THỜI GIAN",
                 path: PATH.TIME
             },
             {
-                name: "Biểu Tượng Thời Tiết",
+                name: "BIỂU TƯỢNG THỜI TIẾT",
                 path: PATH.ICON
             },
             {
-                name: "Bản Đồ",
+                name: "BẢN ĐỒ",
                 path: PATH.RADAR
             },
             {
-                name: "Cộng Đồng",
+                name: "CỘNG ĐỒNG",
                 path: PATH.SOCIAL
             },
             {
-                name: "Đăng Nhập",
+                name: "ĐĂNG NHẬP",
                 path: PATH.LOGIN
             }
         ];

@@ -61,6 +61,64 @@ export default class DataPageComponent extends Vue {
         },
     ]
 
+    mekongDeltaProvinces = [
+        {
+            name: 'Tiền Giang',
+        },
+        {
+            name: 'Bến Tre',
+        },
+        {
+            name: 'Trà Vinh',
+        },
+        {
+            name: 'Sóc Trăng',
+        },
+        {
+            name: 'Bạc Liêu',
+        },
+        {
+            name: 'Kiên Giang',
+        },
+        {
+            name: 'Cà Mau',
+        },
+        {
+            name: 'Long An',
+        },
+        {
+            name: 'Đồng Tháp',
+        },
+        {
+            name: 'Vĩnh Long',
+        },
+        {
+            name: 'Cần Thơ',
+        },
+        {
+            name: 'Hậu Giang',
+        },
+        {
+            name: 'An Giang',
+        }
+    ]
+
+    mainRivers = [
+        {
+            name: 'Sông Tiền',
+        },
+        {
+            name: 'Sông Hậu',
+        },
+        {
+            name: 'Sông Cổ Chiên',
+        }
+    ]
+    
+    harshStatus = [
+        'X', 'O'
+    ]
+
     handleChangeTab(tab) {
         this.activeTab = tab;
     }
@@ -71,6 +129,11 @@ export default class DataPageComponent extends Vue {
 
     getStatus() {
         const num = this.getRandomArbitrary(0, 6);
+        return num
+    }
+
+    getHarshStatus() {
+        const num = this.getRandomArbitrary(0, 1);
         return num
     }
 }
