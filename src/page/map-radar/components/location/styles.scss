@@ -3,14 +3,13 @@
     left: 20px;
     top: 5%;
     background: #000;
-    width: 170px;
+    width: 200px;
     background: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5)), rgba(121, 120, 120, 0.5);
     color: #fff;
     padding: 10px;
     &-title {
         font-size: 16px;
         font-weight: 500;
-        margin-bottom: 10px;
         padding: 0 10px;
     }
     &-content {
@@ -22,10 +21,9 @@
                 border-radius: 20px;
             }
         }
-
         padding: 10px;
         overflow: auto;
-        max-height: 170px;
+        max-height: 200px;
         /* width */
         &::-webkit-scrollbar {
             width: 5px;

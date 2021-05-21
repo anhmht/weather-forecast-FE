@@ -73,18 +73,6 @@ export default class LocationComponent extends Vue {
     get locations() {
         return [
             {
-                lat: 16.06778,
-                lon: 108.22083,
-                name: "Toàn Quốc",
-                zoom: 6
-            },
-            {
-                lat: 10.82302,
-                lon: 106.62965,
-                name: "Nam Bộ",
-                zoom: 7
-            },
-            {
                 lat: 10.25369,
                 lon: 105.9722,
                 name: "Vĩnh Long",

@@ -1,3 +1,4 @@
+import { displayLocation } from '@/utils/location-helper';
 import Vue from 'vue';
 import Component from "vue-class-component";
 
@@ -21,6 +22,8 @@ export default class HomePageComponent extends Vue {
 
     layerGroup: any;
     layerProvice: any;
+
+    currentPosition = null;
 
     handleBack() {
         this.$router.go(-1);
@@ -92,17 +95,13 @@ export default class HomePageComponent extends Vue {
     }
 
     async mounted() {
-        let apiKey = "d4a2aee090ae49548d4133121211205";
-        //@ts-ignore
-        $.getJSON("https://api.weatherapi.com/v1/ip.json?lang=vi&key=" + apiKey + "&q=42.117.31.144", function (data) {
-            console.log(JSON.stringify(data, null, 2));
-        });
+        this.currentPosition = await displayLocation() as any;
         const options = {
             // Required: API key
             key: "PsLAtXpsPTZexBwUkO7Mx5I", // REPLACE WITH YOUR KEY !!!
             // key: 'yw7vbuA1PQmaUPe0SNECjxmOIv5AJ4FC', // Production !!!
             // Put additional console output
-            verbose: true,
+            // verbose: true,
             // Optional: Initial state of the map
             lat: 16.06778,
             lon: 108.22083,
@@ -146,6 +145,12 @@ export default class HomePageComponent extends Vue {
             //@ts-ignore
             this.layerGroup = new L.LayerGroup();
             this.layerGroup.addTo(map);
+
+            //@ts-ignore
+            L.popup()
+                .setLatLng([this.currentPosition.lat, this.currentPosition.lon])
+                .setContent(this.currentPosition.data.results[5].formatted_address)
+                .openOn(map);
         });
     }
 }

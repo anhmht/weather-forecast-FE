@@ -3,7 +3,7 @@
     left: 20px;
     top: 35%;
     background: #000;
-    width: 170px;
+    width: 200px;
     background: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5)), rgba(121, 120, 120, 0.5);
     color: #fff;
     padding: 10px;
@@ -14,6 +14,7 @@
         padding: 0 10px;
     }
     &-content {
+        padding: 10px;
         &--item {
             padding: 5px 10px;
             cursor: pointer;
