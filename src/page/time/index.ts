@@ -9,6 +9,7 @@ import icon from '../../../static/img/icon/day_partial_cloud.png';
     }
 })
 export default class TimePageComponent extends Vue {
+
     weatherByDay: any = [
         {
             day: 'Thứ Năm',
@@ -104,4 +105,9 @@ export default class TimePageComponent extends Vue {
             temp: '27° - 32°'
         }
     ];
+    activeTab: number = 1
+    handleChangeTab(tab) {
+        this.activeTab = tab;
+    }
+
 }

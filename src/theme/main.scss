@@ -2,7 +2,7 @@ $color-pack: false;
 
 @import '~vuetify/src/styles/main.sass';
 
-$primary-color: map-get($red, 'base');
+$primary-color: map-get($blue, 'base');
 
 
 $medium-font-weight: map-get($font-weights,'medium');
@@ -11,4 +11,4 @@ $medium-font-weight: map-get($font-weights,'medium');
 $primary-transition: 300ms cubic-bezier(0.4, 0, 0.2, 1);
 
 
-$container-width-xl: 1600px;
+$container-width-xl: 1200px;

@@ -4,60 +4,76 @@
     &_header {
         height: 50px;
     }
-
     &_section_1 {
         background-color: #fff;
-        height: 700px;
-        margin: 0px 150px;
-
-        &--main {
+        padding: 20px;
+        .box-bg-n {
+            position: relative;
             cursor: pointer;
-
             img {
-                margin: 25px;
-                width: 1050px;
-                height: 630px;
-                object-fit: fill;
+                width: 100%;
+                object-fit: cover;
+                height: 500px;
+                display: block;
             }
-
-            h4, p {
-                margin-left: 50px;
-                transform: translateY(-400%);
+            .content-bg-n {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                padding: 15px;
                 color: #fff;
+                background: rgb(0,0,0);
+                background: linear-gradient(0deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+                p {
+                    margin: 0;
+                }
             }
         }
-
         &--sub {
             cursor: pointer;
 
             img {
-                margin: 25px 25px 0px 25px;
-                width: 470px;
-                height: 220px;
-                object-fit: fill;
+                width: 100%;
+                height: 160px;
+                object-fit: cover;
+                display: block;
             }
 
-            h4, p {
-                margin-left: 25px;
+            h4{
+               height: 50px;
+               overflow: hidden;
             }
         }
     }
 
     &_section_2 {
-        height: 700px;
-        margin: 25px 150px 0px 150px;
-
-        &--item {
-            cursor: pointer;
-
+        padding: 30px 0 50px 0;
+        .box-item-n {
             img {
-                width: 380px;
+                width: 100%;
+                height: 180px;
+                object-fit: cover;
+                display: block;
             }
-
-            h4 {
-                background-color: #fff;
-                margin-top: -7px;
-                padding: 10px;
+            .content-item-n {
+                padding: 15px;
+                background: #fff;
+                cursor: pointer;
+                h4 {
+                    font-size: 15px;
+                    height: 43px;
+                    overflow: hidden;
+                    
+                    &:hover {
+                        color: $primary-color;
+                    }
+                }
+                &:hover {
+                    h4 {
+                        color: $primary-color;
+                    }
+                }
             }
         }
     }

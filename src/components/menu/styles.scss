@@ -1,11 +1,13 @@
 .base-header-menu {
-    display: flex;
-    justify-content: space-between;
-    flex: 1;
-    align-items: center;
+    float: right;
+    margin-top: 26px;
     &-item {
         cursor: pointer;
         transition: $primary-transition;
+        float: left;
+        margin: 0 0 0 20px;
+        text-transform: uppercase;
+        font-size: 14px;
         &.active {
             font-weight: $medium-font-weight;
             border-bottom: 1px solid $primary-color;

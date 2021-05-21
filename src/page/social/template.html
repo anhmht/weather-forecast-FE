@@ -1,16 +1,18 @@
 <div class="social-page-container">
-    <base-container>
+    <base-container class="container">
         <div class="social-page-container_header"></div>
         <div class="social-page-container_section_1">
             <v-row justify="center">
-                <v-col cols=8>
-                    <div class="social-page-container_section_1--main">
+                <v-col cols=9>
+                    <div class="box-bg-n">
                         <img src="../../../static/img/social-page/item.jpg">
-                        <h4>Chiều tối và đêm 13/5, các khu vực đều mưa dông, đề phòng thời tiết nguy hiểm</h4>
-                        <p>16.05.2021</p>
+                        <div class="content-bg-n">
+                            <h4>Chiều tối và đêm 13/5, các khu vực đều mưa dông, đề phòng thời tiết nguy hiểm</h4>
+                            <p>16.05.2021</p>
+                        </div>
                     </div>
                 </v-col>
-                <v-col cols=4>
+                <v-col cols=3>
                     <div v-for="(item,index) in mainPosts" :key="index" class="social-page-container_section_1--sub">
                         <img :src="item.imageUrl" />
                         <h4>{{item.title}}</h4>
@@ -22,18 +24,22 @@
 
         <div class="social-page-container_section_2">
             <v-row justify="center">
-                <v-col v-for="(item,index) in subPostsFirstRow" :key="index" auto>
-                    <div class="social-page-container_section_2--item">
+                <v-col cols="3" v-for="(item,index) in subPostsFirstRow" :key="index" auto>
+                    <div class="box-item-n">
                         <img :src="item.imageUrl">
-                        <h4>{{item.title}}</h4>
+                        <div class="content-item-n">
+                            <h4>{{item.title}}</h4>
+                        </div>
                     </div>
                 </v-col>
             </v-row>
             <v-row justify="center">
-                <v-col v-for="(item,index) in subPostsSecondRow" :key="index" auto>
-                    <div class="social-page-container_section_2--item">
+                <v-col cols="3" v-for="(item,index) in subPostsSecondRow" :key="index" auto>
+                    <div class="box-item-n">
                         <img :src="item.imageUrl">
-                        <h4>{{item.title}}</h4>
+                        <div class="content-item-n">
+                                <h4>{{item.title}}</h4>
+                            </div>
                     </div>
                 </v-col>
             </v-row>

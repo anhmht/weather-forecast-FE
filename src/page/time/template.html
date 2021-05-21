@@ -1,72 +1,74 @@
 <div class="time-page-container">
-    <base-container>
+    <base-container class="container padding-main">
         <div class="time-page-container_section_1">
-            <v-row justify="center">
-                <v-col auto>
-                    <div class="time-page-container_section_1_main">
-                        <div class="time-page-container_section_1_main--current">
-                            <div class="time-page-container_section_1_main--current_day">
-                                Hồ Chí Minh - Hôm nay Thứ Tư
-                            </div>
-                            <div class="time-page-container_section_1_main--current_temp">
-                                <div class="time-page-container_section_1_main--current_temp_left">
-                                    32°
+            <h2>Dự báo thời tiết - Hồ Chí Minh</h2>
+            <div class="time-page-container_section_1_content">
+             <div class="tabs">
+                <div class="item-tab" :class="activeTab === 1 ? 'active' : ''" @click="handleChangeTab(1)">
+                    7 ngày trong tuần</div>
+                <div class="item-tab" :class="activeTab === 2 ? 'active' : ''" @click="handleChangeTab(2)">
+                    24 H/ngày</div>
+            </div>
+            <div class="content-tab">
+                <div class="li-tab" v-if="activeTab === 1">
+                    <v-row justify="center">
+                        <v-col cols=3>
+                            <div class="time-page-container_section_1_main--current">
+                                <div class="time-page-container_section_1_main--current_day">
+                                    Hôm nay Thứ Tư
                                 </div>
-                                <div class="time-page-container_section_1_main--current_temp_right">
-                                    <img src="../../../static/img/icon/day_partial_cloud.png">
-                                </div>
-                            </div>
-                            <div class="time-page-container_section_1_main--current_info">
-                                Nhiệt độ thấp nhất: 24-27 độ
-                                <br>
-                                Nhiệt độ cao nhất: 34-36 độ, có nơi trên 36 độ
-                            </div>
-                        </div>
-                        <div class="time-page-container_section_1_wrapper" v-for="(item,index) in weatherByDay" :key="index">
-                            <div class="time-page-container_section_1_main--divider"></div>
-                            <div class="time-page-container_section_1_main--next">
-                                <div class="time-page-container_section_1_main--next_day">
-                                    {{item.day}}
-                                </div>
-                                <div class="time-page-container_section_1_main--next_icon">
-                                    <img :src="item.imageUrl">
-                                </div>
-                                <div class="time-page-container_section_1_main--next_temp">
-                                    {{item.temp}}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </v-col>
-            </v-row>
-        </div>
-        <div class="time-page-container_section_2">
-            <v-row justify="center">
-                <v-col auto>
-                    <div class="time-page-container_section_2_main">
-                        <div class="time-page-container_section_2_main--title">
-                            Nhiệt độ theo giờ: Hồ Chí Minh - Thứ tư
-                        </div>
-                        <div class="time-page-container_section_2_main--time">
-                            <v-row justify="center">
-                                <v-col auto v-for="(item,index) in weatherByTime" :key="index">
-                                    <div class="time-page-container_section_2_main--time_detail">
-                                        <div class="time-page-container_section_2_main--time_detail_hour">
-                                            {{item.time}}
-                                        </div>
-                                        <div class="time-page-container_section_2_main--time_detail_icon">
-                                            <img :src="item.imageUrl">
-                                        </div>
-                                        <div class="time-page-container_section_2_main--time_detail_temp">
-                                            {{item.temp}}
-                                        </div>
+                                <div class="time-page-container_section_1_main--current_temp">
+                                    <div class="time-page-container_section_1_main--current_temp_left">
+                                        32°
                                     </div>
-                                </v-col>
-                            </v-row>
-                        </div>
+                                    <div class="time-page-container_section_1_main--current_temp_right">
+                                        <img src="../../../static/img/icon/day_partial_cloud.png">
+                                    </div>
+                                </div>
+                                <div class="time-page-container_section_1_main--current_info">
+                                    Nhiệt độ thấp nhất: 24-27 độ
+                                    <br>
+                                    Nhiệt độ cao nhất: 34-36 độ, có nơi trên 36 độ
+                                </div>
+                            </div>
+                        </v-col>
+                        <v-col cols=9> 
+                            <div class="flex-row">
+                            <div class="time-page-container_section_1_wrapper" v-for="(item,index) in weatherByDay" :key="index">
+                                <div class="time-page-container_section_1_main--next">
+                                    <div class="time-page-container_section_1_main--next_day">
+                                        {{item.day}}
+                                    </div>
+                                    <div class="time-page-container_section_1_main--next_icon">
+                                        <img :src="item.imageUrl">
+                                    </div>
+                                    <div class="time-page-container_section_1_main--next_temp">
+                                        {{item.temp}}
+                                    </div>
+                                </div>
+                            </div> 
+                            </div>
+                        </v-col>
+                    </v-row>
+                </div>
+           
+            <div class="li-tab" v-if="activeTab === 2">
+                    <div class="time-page-container_section_2_main--time">
+                                <div class="time-page-container_section_2_main--time_detail" v-for="(item,index) in weatherByTime" :key="index">
+                                    <div class="time-page-container_section_2_main--time_detail_hour">
+                                        {{item.time}}
+                                    </div>
+                                    <div class="time-page-container_section_2_main--time_detail_icon">
+                                        <img :src="item.imageUrl">
+                                    </div>
+                                    <div class="time-page-container_section_2_main--time_detail_temp">
+                                        {{item.temp}}
+                                    </div>
+                                </div>
                     </div>
-                </v-col>
-            </v-row>
+                </div>
         </div>
+    </div>
+    </div>
     </base-container>
 </div>
