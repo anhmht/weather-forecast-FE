@@ -3,18 +3,30 @@
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    min-height: 100vh;
     font-family: 'Roboto', sans-serif;
     overflow: hidden;
 
     &_section_1 {
         background: linear-gradient(rgba(0, 114, 255, 0.3), rgba(0, 43, 255, 0.46)), rgba(0, 0, 0, 0.22);
-        height: 310px;
-        margin: 75px 150px;
         border-radius: 25px;
-
+        margin-bottom: 40px;
+        color: #fff;
+        
+        h2 {
+            padding: 16px 30px;
+            border-bottom: 1px solid rgba(255,255,255,0.5);
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            font-size: 18px;
+        }
+        .li-tab {
+            display: flex
+        }
+        &_content {
+            padding: 30px;
+        }
         &_wrapper {
-            display: flex;
+            border-left: 1px solid #fff;
         }
 
         &_main {
@@ -78,22 +90,44 @@
 
     &_section_2 {
         background: linear-gradient(rgba(0, 114, 255, 0.3), rgba(0, 43, 255, 0.46)), rgba(0, 0, 0, 0.22);
-        height: 250px;
-        margin: 75px 150px;
         border-radius: 25px;
 
         &_main {
             margin: 20px 50px;
             color: #fff;
-
+            overflow: auto;
             &--title {
                 font-weight: bold;
             }
 
             &--time {
                 margin-top: 20px;
-
+                white-space: nowrap;
+                overflow: auto;
+                padding-bottom: 15px;
+                /* width */
+                &::-webkit-scrollbar {
+                    width: 5px;
+                    position: absolute;
+                    height: 5px;
+                }
+                /* Track */
+                &::-webkit-scrollbar-track {
+                    display: none;
+                }
+                /* Handle */
+                &::-webkit-scrollbar-thumb {
+                    background: #ddd;
+                    border-radius: 10px;
+                }
+                /* Handle on hover */
+                &::-webkit-scrollbar-thumb:hover {
+                    background: #fff;
+                }
                 &_detail {
+                    display: inline-block;
+                    width: 100px;
+                    border-left: 1px solid #fff;
                     &_hour {
                         text-align: center;
                     }

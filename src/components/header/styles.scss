@@ -2,19 +2,50 @@
     position: sticky;
     top: 0;
     background: #fff;
-    > div {
-        display: flex;
-        margin: auto;
-        justify-content: space-between;
-        padding: 20px 0;
-        max-width: $container-width-xl;
-    }
+    padding: 9px 0;
+    height: 90px;
+    z-index: 99;
     &-logo {
-        margin-right: 400px;
-        display: flex;
         align-items: center;
+        float: left;
+        margin-top: 1px;
         img {
-            max-width: 300px;
+            max-width: 342px;
         }
     }
+}
+.v-main {
+    display: block;
+    flex:none;
+    .v-main__wrap, .v-application--wrap {
+        flex: none;
+    }
+}
+
+.container {
+    margin: auto;
+    padding:  0 20px;
+    width: $container-width-xl;
+    max-width: 100%;
+}
+.padding-main {
+    padding-top: 60px;
+    padding-bottom: 60px;
+}
+.tabs {
+    margin-bottom: 20px;
+}
+.item-tab {
+    display: inline-block;
+    text-transform: uppercase;
+    border-bottom: 1px solid transparent;
+    font-weight: bold;
+    opacity: 0.5;
+    transition: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    margin-right: 20px;
+    cursor: pointer;
+}
+.item-tab.active {
+    border-color: #fff;
+    opacity: 1;
 }
