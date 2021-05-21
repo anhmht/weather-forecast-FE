@@ -22,5 +22,27 @@
                 border-radius: 20px;
             }
         }
+
+        padding: 10px;
+        overflow: auto;
+        max-height: 170px;
+        /* width */
+        &::-webkit-scrollbar {
+            width: 5px;
+            position: absolute;
+        }
+        /* Track */
+        &::-webkit-scrollbar-track {
+            display: none;
+        }
+        /* Handle */
+        &::-webkit-scrollbar-thumb {
+            background: #ddd;
+            border-radius: 10px;
+        }
+        /* Handle on hover */
+        &::-webkit-scrollbar-thumb:hover {
+            background: #fff;
+        }
     }
 }

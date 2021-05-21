@@ -116,7 +116,7 @@ export default class DataPageComponent extends Vue {
     ]
     
     harshStatus = [
-        'X', 'O'
+        '', 'O'
     ]
 
     handleChangeTab(tab) {
@@ -133,7 +133,7 @@ export default class DataPageComponent extends Vue {
     }
 
     getHarshStatus() {
-        const num = this.getRandomArbitrary(0, 1);
+        const num = this.getRandomArbitrary(0, 2);
         return num
     }
 }
