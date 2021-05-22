@@ -1,4 +1,4 @@
-import { displayLocation } from '@/utils/location-helper';
+// import { displayLocation } from '@/utils/location-helper';
 import Vue from 'vue';
 import Component from "vue-class-component";
 
@@ -65,7 +65,7 @@ export default class HomePageComponent extends Vue {
         this.isRecording = true;
         const vm = this as any;
         //@ts-ignore
-        navigator.mediaDevices.getDisplayMedia({ video: { mediaSource: "screen" } })
+        navigator.mediaDevices.getDisplayMedia({ video: { mediaSource: "screen", cursor: false } })
             .then(function (stream) {
                 //@ts-ignore
                 let recorder = new MediaRecorder(stream);
@@ -95,7 +95,7 @@ export default class HomePageComponent extends Vue {
     }
 
     async mounted() {
-        this.currentPosition = await displayLocation() as any;
+        // this.currentPosition = await displayLocation() as any;
         const options = {
             // Required: API key
             key: "PsLAtXpsPTZexBwUkO7Mx5I", // REPLACE WITH YOUR KEY !!!
@@ -147,10 +147,10 @@ export default class HomePageComponent extends Vue {
             this.layerGroup.addTo(map);
 
             //@ts-ignore
-            L.popup()
-                .setLatLng([this.currentPosition.lat, this.currentPosition.lon])
-                .setContent(this.currentPosition.data.results[5].formatted_address)
-                .openOn(map);
+            // L.popup()
+            //     .setLatLng([this.currentPosition.lat, this.currentPosition.lon])
+            //     .setContent(this.currentPosition.data.results[5].formatted_address)
+            //     .openOn(map);
         });
     }
 }

@@ -9,6 +9,9 @@ import img_6 from '../../../static/img/info-page/6.png';
 import img_7 from '../../../static/img/info-page/7.png';
 import img_8 from '../../../static/img/info-page/8.jpg';
 import { Carousel, Slide } from 'vue-carousel';
+import { ForecastServices } from "@/service/forecast-service/forecast.service";
+import { displayLocation } from "@/utils/location-helper";
+import { STATION } from "@/constant/forcast-station-constant";
 
 @Component({
     template: require("./template.html").default,
@@ -19,7 +22,12 @@ import { Carousel, Slide } from 'vue-carousel';
     }
 })
 export default class InfoPageComponent extends Vue {
+    forecastService: ForecastServices = new ForecastServices()
+    currentPosition: any = null;
     navigateTo: number = 0;
+    timestamp: any = null;
+    temparatureData = null;
+
     recommendPosts: any = [
         {
             imageUrl: img_2,
@@ -80,8 +88,16 @@ export default class InfoPageComponent extends Vue {
         }
     ];
 
+    get address() {
+        return this.currentPosition ? this.currentPosition.data.results[5].formatted_address : null
+    }
+
+    get currentTemp() {
+        return this.temparatureData ? this.temparatureData.current : null;
+    }
+
     handlePrev() {
-        if(this.navigateTo) {
+        if (this.navigateTo) {
             this.navigateTo -= 1
         }
     }
@@ -94,5 +110,37 @@ export default class InfoPageComponent extends Vue {
 
     handleViewDetail(postId) {
         this.$router.push('/info/' + postId)
+    }
+
+    getNow() {
+        const today = new Date();
+        const date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
+        const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        const dateTime = date + ' ' + time;
+        this.timestamp = dateTime;
+    }
+
+    async getTemperature() {
+        const placeId = this.currentPosition.data.results[7].place_id
+        const station = STATION.find(x => x.place_id === placeId);
+        if(station) {
+            await this.forecastService.getTemperatureByStation(station.id).then((res) => {
+                this.temparatureData = {
+                    current: res[`_${new Date().getHours()}`]
+                }
+            }).catch(err => {
+                console.log(err);
+            })
+        } else {
+            this.temparatureData = {
+                current: '32'
+            }
+        }
+    }
+
+    async mounted() {
+        setInterval(this.getNow, 1000);
+        this.currentPosition = await displayLocation() as any;
+        await this.getTemperature();
     }
 }

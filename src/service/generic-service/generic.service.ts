@@ -3,7 +3,7 @@ export class GenericServices {
     protected executeSelecting<TValue, TResult>(
         params?: TValue,
         path?: string,
-        encodeURI: boolean = true
+        encodeURI: boolean = false
     ): AxiosPromise<TResult> {
         var uri = encodeURI ? encodeURIComponent(path) : path;
         return axios
