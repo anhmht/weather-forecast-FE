@@ -12,6 +12,7 @@ const PageNotFoundComponent = () => import("../page/not-found/PageNotFoundCompon
 
 const AdminComponent = () => import("../page/cms/CMSComponent.vue");
 const ListPostComponent = () => import("../page/cms/components/list-posts/ListPostComponent.vue")
+const CreatePostComponent = () => import("../page/cms/components/create-post/CreatePostComponent.vue")
 
 const homeRoutes = [
     { path: "/", redirect: { path: PATH.INFO } },
@@ -95,6 +96,15 @@ const adminRoutes = [
                 props: {}
             },
             { path: "/admin", redirect: { path: PATH.LIST_POST } },
+            {
+                path: PATH.CREATE_POST,
+                name: ROUTE_NAME.CREATE_POST,
+                component: CreatePostComponent,
+                meta: {
+                    requiresAuth: true
+                },
+                props: {}
+            },
         ]
     },
 ]

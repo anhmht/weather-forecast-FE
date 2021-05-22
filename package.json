@@ -12,6 +12,8 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^27.1.0",
+    "@ckeditor/ckeditor5-vue2": "^1.0.5",
     "autoprefixer": "^10.2.5",
     "axios": "^0.21.1",
     "babel-loader": "^8.2.2",

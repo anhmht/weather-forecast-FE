@@ -10,7 +10,8 @@ export const ROUTE_NAME = {
     NOT_FOUND: 'not-found',
     LOGIN: 'login',
     MANAGEMENT: 'management',
-    LIST_POST: 'listPost'
+    LIST_POST: 'listPost',
+    CREATE_POST: 'createPost',
 }
 
 export const PATH = {
@@ -25,5 +26,6 @@ export const PATH = {
     LOGIN: '/login',
     MANAGEMENT: '/management',
     ADMIN: '/admin',
-    LIST_POST: 'list-post'
+    LIST_POST: 'list-post',
+    CREATE_POST: 'create-post'
 }

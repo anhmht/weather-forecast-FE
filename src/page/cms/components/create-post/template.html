@@ -1,0 +1,13 @@
+<div class="base-cms-right--body_wrapper">
+    <div class="base-cms-right--body_top">
+        <p>Tạo tin mới</p>
+    </div>
+    <div class="base-cms-right--body_title">
+        <div>Tiêu đề</div>
+        <v-text-field solo></v-text-field>
+    </div>
+    <div class="base-cms-right--body_editor">
+        <div>Nội dung</div>
+        <ckeditor :editor="editor" v-model="editorData" :config="editorConfig"></ckeditor>
+    </div>
+</div>

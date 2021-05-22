@@ -1,0 +1,17 @@
+.base-cms-right--body {
+    &_top {
+        p {
+            font-size: 30px;
+        }
+    }
+
+    &_title {
+        background-color: #fff;
+        padding: 20px;
+    }
+
+    &_editor {
+        background-color: #fff;
+        padding: 20px;
+    }
+}

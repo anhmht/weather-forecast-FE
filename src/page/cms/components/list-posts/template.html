@@ -1,1 +1,75 @@
-<div>aaaaaaaa</div>
+<div class="base-cms-right--body_wrapper">
+    <div class="base-cms-right--body_top">
+        <p>Cảnh báo thiên tai</p>
+        <v-text-field
+            label="Tìm kiếm"
+            append-icon="mdi-magnify"
+            solo
+            hide-details>
+        </v-text-field>
+        <v-btn
+          depressed
+          color="primary"
+          height="50px"
+		  @click="toCreatePost()">
+          + Tạo tin mới
+        </v-btn>
+    </div>
+    <div class="base-cms-right--body_table">
+		<template>
+			<v-simple-table fixed-header height="350px">
+				<template v-slot:default>
+					<thead>
+						<tr>
+							<th class="base-cms-right--body_table_header_checkbox">
+								<v-checkbox color="primary" hide-details>
+								</v-checkbox>
+							</th>
+							<th class="base-cms-right--body_table_header">
+								TIÊU ĐỀ
+							</th>
+							<th class="base-cms-right--body_table_header">
+								NGÀY ĐĂNG
+							</th>
+							<th class="base-cms-right--body_table_header">
+								DANH MỤC
+							</th>
+							<th class="base-cms-right--body_table_header">
+								TRẠNG THÁI
+							</th>
+							<th class="base-cms-right--body_table_header">
+								
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr v-for="(item, index) in posts" :key="index">
+							<td><v-checkbox color="primary" hide-details></v-checkbox></td>
+							<td><img width="50px" :src="item.image" > {{ item.title }}</td>
+							<td>{{ item.postedDate }}</td>
+							<td>{{ item.category }}</td>
+							<td>{{ item.status }}</td>
+							<td>
+								<v-icon>mdi-delete</v-icon>
+								<v-icon>mdi-square-edit-outline</v-icon>
+							</td>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td colspan="4">5/20 tin</td>
+							<td colspan="2">
+								<v-icon>mdi-arrow-left-drop-circle-outline</v-icon>
+								<span class="base-cms-right--body_table_footer_page_num_selected">1</span>
+								<span class="base-cms-right--body_table_footer_page_num">2</span>
+								<span class="base-cms-right--body_table_footer_page_num">3</span>
+								<span class="base-cms-right--body_table_footer_page_num">4</span>
+								<v-icon>mdi-arrow-right-drop-circle-outline</v-icon>
+							</td>
+						</tr>
+					</tfoot>
+				</template>
+			</v-simple-table>
+		</template>
+    </div>
+</div>

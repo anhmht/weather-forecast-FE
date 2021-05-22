@@ -1,0 +1,40 @@
+.base-cms-right--body {
+    &_top {
+        display: flex;
+
+        // title
+        p {
+            font-size: 30px;
+        }
+
+        // search input
+        .v-input__control {
+            margin-left: 500px;
+        }
+
+        // create new button
+        button {
+            margin-left: 50px;
+        }
+    }
+
+    &_table {
+        background-color: #fff;
+
+        &_footer_page_num {
+            display: inline-block;
+            width: 30px;
+            border: 2px solid #000;
+            text-align: center;
+
+            &_selected {
+                display: inline-block;
+                width: 30px;
+                border: 2px solid #000;
+                text-align: center;
+                background-color: darkblue;
+                color: #fff;
+            }
+        }
+    }
+}
