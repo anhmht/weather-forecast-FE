@@ -1,1 +1,0 @@
-(self.webpackChunktemp=self.webpackChunktemp||[]).push([[970],{9970:(e,p,s)=>{"use strict";e.exports=s.p+"static/img/664b7ea67d544d800677.png"}}]);
