@@ -3,19 +3,22 @@ export const STATION = [
         "id": "DiemNB10_1",
         "ten": "Bình Phước",
         "x": 106.908,
-        "y": 11.754
+        "y": 11.754,
+        "place_id": "aaaa",
     },
     {
         "id": "DiemNB10_10",
         "ten": "Đồng Tháp",
         "x": 105.608,
-        "y": 10.5642
+        "y": 10.5642,
+        "place_id": "aaaa",
     },
     {
         "id": "DiemNB10_11",
         "ten": "An Giang",
         "x": 105.139,
-        "y": 10.5904
+        "y": 10.5904,
+        "place_id": "aaaa",
     },
     {
         "id": "DiemNB10_12",
@@ -28,61 +31,71 @@ export const STATION = [
         "id": "DiemNB10_13",
         "ten": "Cần Thơ",
         "x": 105.623,
-        "y": 10.1002
+        "y": 10.1002,
+        "place_id": "aaaa",
     },
     {
         "id": "DiemNB10_14",
         "ten": "Trà Vinh",
         "x": 106.228,
-        "y": 9.91032
+        "y": 9.91032,
+        "place_id": "aaaa",
     },
     {
         "id": "DiemNB10_15",
         "ten": "Hậu Giang",
         "x": 105.553,
-        "y": 9.77708
+        "y": 9.77708,
+        "place_id": "aaaa",
     },
     {
         "id": "DiemNB10_16",
         "ten": "Kiên Giang",
         "x": 105.046,
-        "y": 9.97044
+        "y": 9.97044,
+        "place_id": "aaaa",
     },
     {
         "id": "DiemNB10_17",
         "ten": "Bạc Liêu",
         "x": 105.605,
-        "y": 9.30571
+        "y": 9.30571,
+        "place_id": "aaaa",
     },
     {
         "id": "DiemNB10_18",
         "ten": "Sóc Trăng",
         "x": 105.924,
-        "y": 9.55832
+        "y": 9.55832,
+        "place_id": "aaaa",
     },
     {
         "id": "DiemNB10_19",
         "ten": "Cà Mau",
         "x": 105.062,
-        "y": 9.12369
+        "y": 9.12369,
+        "place_id": "aaaa",
     },
     {
         "id": "DiemNB10_2",
         "ten": "Bình Dương",
         "x": 106.643,
-        "y": 11.0521
+        "y": 11.0521,
+        "place_id": "aaaa",
     },
     {
         "id": "DiemNB10_3",
         "ten": "Tây Ninh",
         "x": 106.082,
-        "y": 11.361
+        "y": 11.361,
+        "place_id": "aaaa",
     },
     {
         "id": "DiemNB10_4",
         "ten": "Đồng Nai",
         "x": 106.908,
-        "y": 10.9235
+        "y": 10.9235,
+        "place_id": "aaaa",
     },
     {
         "id": "DiemNB10_5",
@@ -95,24 +108,28 @@ export const STATION = [
         "id": "DiemNB10_6",
         "ten": "Bà Rịa-Vũng Tàu",
         "x": 107.208,
-        "y": 10.5056
+        "y": 10.5056,
+        "place_id": "aaaa",
     },
     {
         "id": "DiemNB10_7",
         "ten": "Long An",
         "x": 106.314,
-        "y": 10.6942
+        "y": 10.6942,
+        "place_id": "aaaa",
     },
     {
         "id": "DiemNB10_8",
         "ten": "Tiền Giang",
         "x": 106.334,
-        "y": 10.383
+        "y": 10.383,
+        "place_id": "aaaa",
     },
     {
         "id": "DiemNB10_9",
         "ten": "Bến Tre",
         "x": 106.407,
-        "y": 10.1377
+        "y": 10.1377,
+        "place_id": "aaaa",
     }
 ]

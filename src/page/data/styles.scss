@@ -52,4 +52,12 @@
     &::-webkit-scrollbar-thumb:hover {
         background: #808080;
     }
+    thead {
+        text-transform: uppercase;
+
+    }
+    .text-left {
+        font-size: 16px !important;
+        color: $primary-color !important;
+    }
 }

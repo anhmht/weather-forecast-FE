@@ -10,14 +10,14 @@
         font-weight: 500;
         padding: 0 10px;
         font-weight: 800;
-        color: map-get($red, 'base');
+        color: $primary-color;
     }
     &-content {
         &--item {
             padding: 5px 10px;
             cursor: pointer;
             &.active {
-                background: map-get($red, 'base');
+                background: $primary-color;
                 border-radius: 20px;
             }
         }

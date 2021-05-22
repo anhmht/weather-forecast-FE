@@ -73,10 +73,17 @@ export default class LocationComponent extends Vue {
     get locations() {
         return [
             {
+                lat: 16.06778,
+                lon: 108.22083,
+                name: "Toàn Quốc",
+                zoom: 6
+            },
+            {
                 lat: 10.25369,
                 lon: 105.9722,
                 name: "Vĩnh Long",
                 zoom: 12,
+                placeId: 'ChIJR8ONdLqCCjERJ00Xm4aX9fQ',
                 geojson: JSON.stringify(vinh_long),
                 style: {
                     color: "#ff7800",
