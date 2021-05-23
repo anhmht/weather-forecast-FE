@@ -20,6 +20,8 @@ export default class App extends Vue {
                 return false;
             case `${PATH.ADMIN}/${PATH.LIST_POST}`:
                 return false;
+                case `${PATH.ADMIN}/${PATH.CREATE_POST}`:
+                    return false;
             default:
                 return true;
         }
