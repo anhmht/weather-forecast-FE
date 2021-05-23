@@ -1,68 +1,6 @@
+import { DataHelper } from "@/utils/data-helper";
 import Vue from "vue";
 import Component from "vue-class-component";
-import vinh_long from '../../../../asset/geoJson/vinh_long.geojson';
-import ho_chi_minh_city from '../../../../asset/geoJson/ho_chi_minh_city.geojson';
-import ha_noi from '../../../../asset/geoJson/ha_noi.geojson';
-import an_giang from '../../../../asset/geoJson/an_giang.geojson';
-import ba_ria_vung_tau from '../../../../asset/geoJson/ba_ria_vung_tau.geojson';
-import bac_giang from '../../../../asset/geoJson/bac_giang.geojson';
-import bac_kan from '../../../../asset/geoJson/bac_kan.geojson';
-import bac_lieu from '../../../../asset/geoJson/bac_lieu.geojson';
-import bac_ninh from '../../../../asset/geoJson/bac_ninh.geojson';
-import ben_tre from '../../../../asset/geoJson/ben_tre.geojson';
-import binh_dinh from '../../../../asset/geoJson/binh_dinh.geojson';
-import binh_duong from '../../../../asset/geoJson/binh_duong.geojson';
-import binh_phuoc from '../../../../asset/geoJson/binh_phuoc.geojson';
-import binh_thuan from '../../../../asset/geoJson/binh_thuan.geojson';
-import ca_mau from '../../../../asset/geoJson/ca_mau.geojson';
-import can_tho from '../../../../asset/geoJson/can_tho.geojson';
-import cao_bang from '../../../../asset/geoJson/cao_bang.geojson';
-import da_nang from '../../../../asset/geoJson/da_nang.geojson';
-import dak_lak from '../../../../asset/geoJson/dak_lak.geojson';
-import dak_nong from '../../../../asset/geoJson/dak_nong.geojson';
-import dien_bien from '../../../../asset/geoJson/dien_bien.geojson';
-import dong_nai from '../../../../asset/geoJson/dong_nai.geojson';
-import dong_thap from '../../../../asset/geoJson/dong_thap.geojson';
-import gia_lai from '../../../../asset/geoJson/gia_lai.geojson';
-import ha_giang from '../../../../asset/geoJson/ha_giang.geojson';
-import ha_nam from '../../../../asset/geoJson/ha_nam.geojson';
-import ha_tinh from '../../../../asset/geoJson/ha_tinh.geojson';
-import hai_duong from '../../../../asset/geoJson/hai_duong.geojson';
-import hai_phong from '../../../../asset/geoJson/hai_phong.geojson';
-import hau_giang from '../../../../asset/geoJson/hau_giang.geojson';
-import hoa_binh from '../../../../asset/geoJson/hoa_binh.geojson';
-import hung_yen from '../../../../asset/geoJson/hung_yen.geojson';
-import khanh_hoa from '../../../../asset/geoJson/khanh_hoa.geojson';
-import kien_giang from '../../../../asset/geoJson/kien_giang.geojson';
-import kon_tum from '../../../../asset/geoJson/kon_tum.geojson';
-import lai_chau from '../../../../asset/geoJson/lai_chau.geojson';
-import lam_dong from '../../../../asset/geoJson/lam_dong.geojson';
-import lang_son from '../../../../asset/geoJson/lang_son.geojson';
-import lao_cai from '../../../../asset/geoJson/lao_cai.geojson';
-import long_an from '../../../../asset/geoJson/long_an.geojson';
-import nam_dinh from '../../../../asset/geoJson/nam_dinh.geojson';
-import nghe_an from '../../../../asset/geoJson/nghe_an.geojson';
-import ninh_binh from '../../../../asset/geoJson/ninh_binh.geojson';
-import ninh_thuan from '../../../../asset/geoJson/ninh_thuan.geojson';
-import phu_tho from '../../../../asset/geoJson/phu_tho.geojson';
-import phu_yen from '../../../../asset/geoJson/phu_yen.geojson';
-import quang_binh from '../../../../asset/geoJson/quang_binh.geojson';
-import quang_nam from '../../../../asset/geoJson/quang_nam.geojson';
-import quang_ngai from '../../../../asset/geoJson/quang_ngai.geojson';
-import quang_ninh from '../../../../asset/geoJson/quang_ninh.geojson';
-import quang_tri from '../../../../asset/geoJson/quang_tri.geojson';
-import soc_trang from '../../../../asset/geoJson/soc_trang.geojson';
-import son_la from '../../../../asset/geoJson/son_la.geojson';
-import tay_ninh from '../../../../asset/geoJson/tay_ninh.geojson';
-import thai_binh from '../../../../asset/geoJson/thai_binh.geojson';
-import thai_nguyen from '../../../../asset/geoJson/thai_nguyen.geojson';
-import thanh_hoa from '../../../../asset/geoJson/thanh_hoa.geojson';
-import thua_thien_hue from '../../../../asset/geoJson/thua_thien_hue.geojson';
-import tien_giang from '../../../../asset/geoJson/tien_giang.geojson';
-import tra_vinh from '../../../../asset/geoJson/tra_vinh.geojson';
-import tuyen_quang from '../../../../asset/geoJson/tuyen_quang.geojson';
-import vinh_phuc from '../../../../asset/geoJson/vinh_phuc.geojson';
-import yen_bai from '../../../../asset/geoJson/yen_bai.geojson';
 
 @Component({
     template: require("./template.html").default,
@@ -70,6 +8,7 @@ import yen_bai from '../../../../asset/geoJson/yen_bai.geojson';
 })
 export default class LocationComponent extends Vue {
     isActive: Number = 0;
+    vinhlong = null;
     get locations() {
         return [
             {
@@ -84,7 +23,7 @@ export default class LocationComponent extends Vue {
                 name: "Vĩnh Long",
                 zoom: 12,
                 placeId: 'ChIJR8ONdLqCCjERJ00Xm4aX9fQ',
-                geojson: JSON.stringify(vinh_long),
+                geojson: 'vinh_long',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -96,7 +35,7 @@ export default class LocationComponent extends Vue {
                 lon: 105.84117,
                 name: "Hà Nội",
                 zoom: 12,
-                geojson: JSON.stringify(ha_noi),
+                geojson: 'ha_noi',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -108,7 +47,7 @@ export default class LocationComponent extends Vue {
                 lon: 106.62965,
                 name: "TP.HCM",
                 zoom: 12,
-                geojson: JSON.stringify(ho_chi_minh_city),
+                geojson: 'ho_chi_minh_city',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -118,7 +57,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "An Giang",
                 zoom: 12,
-                geojson: JSON.stringify(an_giang),
+                geojson: 'an_giang',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -128,7 +67,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Bà Rịa – Vũng Tàu",
                 zoom: 12,
-                geojson: JSON.stringify(ba_ria_vung_tau),
+                geojson: 'ba_ria_vung_tau',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -138,7 +77,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Bắc Giang",
                 zoom: 12,
-                geojson: JSON.stringify(bac_giang),
+                geojson: 'bac_giang',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -148,7 +87,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Bắc Kạn",
                 zoom: 12,
-                geojson: JSON.stringify(bac_kan),
+                geojson: 'bac_kan',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -158,7 +97,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Bạc Liêu",
                 zoom: 12,
-                geojson: JSON.stringify(bac_lieu),
+                geojson: 'bac_lieu',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -168,7 +107,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Bắc Ninh",
                 zoom: 12,
-                geojson: JSON.stringify(bac_ninh),
+                geojson: 'bac_ninh',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -178,7 +117,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Bến Tre",
                 zoom: 12,
-                geojson: JSON.stringify(ben_tre),
+                geojson: 'ben_tre',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -188,7 +127,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Bình Định",
                 zoom: 12,
-                geojson: JSON.stringify(binh_dinh),
+                geojson: 'binh_dinh',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -198,7 +137,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Bình Dương",
                 zoom: 12,
-                geojson: JSON.stringify(binh_duong),
+                geojson: 'binh_duong',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -208,7 +147,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Bình Phước",
                 zoom: 12,
-                geojson: JSON.stringify(binh_phuoc),
+                geojson: 'binh_phuoc',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -218,7 +157,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Bình Thuận",
                 zoom: 12,
-                geojson: JSON.stringify(binh_thuan),
+                geojson: 'binh_thuan',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -228,7 +167,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Cà Mau",
                 zoom: 12,
-                geojson: JSON.stringify(ca_mau),
+                geojson: 'ca_mau',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -238,7 +177,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Cần Thơ",
                 zoom: 12,
-                geojson: JSON.stringify(can_tho),
+                geojson: 'can_tho',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -248,7 +187,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Cao Bằng",
                 zoom: 12,
-                geojson: JSON.stringify(cao_bang),
+                geojson: 'cao_bang',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -258,7 +197,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Đà Nẵng",
                 zoom: 12,
-                geojson: JSON.stringify(da_nang),
+                geojson: 'da_nang',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -268,7 +207,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Đắk Lắk",
                 zoom: 12,
-                geojson: JSON.stringify(dak_lak),
+                geojson: 'dak_lak',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -278,7 +217,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Đắk Nông",
                 zoom: 12,
-                geojson: JSON.stringify(dak_nong),
+                geojson: 'dak_nong',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -288,7 +227,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Điện Biên",
                 zoom: 12,
-                geojson: JSON.stringify(dien_bien),
+                geojson: 'dien_bien',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -298,7 +237,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Đồng Nai",
                 zoom: 12,
-                geojson: JSON.stringify(dong_nai),
+                geojson: 'dong_nai',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -308,7 +247,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Đồng Tháp",
                 zoom: 12,
-                geojson: JSON.stringify(dong_thap),
+                geojson: 'dong_thap',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -318,7 +257,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Gia Lai",
                 zoom: 12,
-                geojson: JSON.stringify(gia_lai),
+                geojson: 'gia_lai',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -328,7 +267,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Hà Giang",
                 zoom: 12,
-                geojson: JSON.stringify(ha_giang),
+                geojson: 'ha_giang',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -338,7 +277,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Hà Nam",
                 zoom: 12,
-                geojson: JSON.stringify(ha_nam),
+                geojson: 'ha_nam',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -348,7 +287,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Hà Tĩnh",
                 zoom: 12,
-                geojson: JSON.stringify(ha_tinh),
+                geojson: 'ha_tinh',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -358,7 +297,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Hải Dương",
                 zoom: 12,
-                geojson: JSON.stringify(hai_duong),
+                geojson: 'hai_duong',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -368,7 +307,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Hải Phòng",
                 zoom: 12,
-                geojson: JSON.stringify(hai_phong),
+                geojson: 'hai_phong',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -378,7 +317,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Hậu Giang",
                 zoom: 12,
-                geojson: JSON.stringify(hau_giang),
+                geojson: 'hau_giang',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -388,7 +327,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Hòa Bình",
                 zoom: 12,
-                geojson: JSON.stringify(hoa_binh),
+                geojson: 'hoa_binh',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -398,7 +337,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Hưng Yên",
                 zoom: 12,
-                geojson: JSON.stringify(hung_yen),
+                geojson: 'hung_yen',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -408,7 +347,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Khánh Hòa",
                 zoom: 12,
-                geojson: JSON.stringify(khanh_hoa),
+                geojson: 'khanh_hoa',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -418,7 +357,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Kiên Giang",
                 zoom: 12,
-                geojson: JSON.stringify(kien_giang),
+                geojson: 'kien_giang',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -428,7 +367,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Kon Tum",
                 zoom: 12,
-                geojson: JSON.stringify(kon_tum),
+                geojson: 'kon_tum',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -438,7 +377,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Lai Châu",
                 zoom: 12,
-                geojson: JSON.stringify(lai_chau),
+                geojson: 'lai_chau',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -448,7 +387,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Lâm Đồng",
                 zoom: 12,
-                geojson: JSON.stringify(lam_dong),
+                geojson: 'lam_dong',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -458,7 +397,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Lạng Sơn",
                 zoom: 12,
-                geojson: JSON.stringify(lang_son),
+                geojson: 'lang_son',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -468,7 +407,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Lào Cai",
                 zoom: 12,
-                geojson: JSON.stringify(lao_cai),
+                geojson: 'lao_cai',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -478,7 +417,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Long An",
                 zoom: 12,
-                geojson: JSON.stringify(long_an),
+                geojson: 'long_an',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -488,7 +427,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Nam Định",
                 zoom: 12,
-                geojson: JSON.stringify(nam_dinh),
+                geojson: 'nam_dinh',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -498,7 +437,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Nghệ An",
                 zoom: 12,
-                geojson: JSON.stringify(nghe_an),
+                geojson: 'nghe_an',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -508,7 +447,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Ninh Bình",
                 zoom: 12,
-                geojson: JSON.stringify(ninh_binh),
+                geojson: 'ninh_binh',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -518,7 +457,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Ninh Thuận",
                 zoom: 12,
-                geojson: JSON.stringify(ninh_thuan),
+                geojson: 'ninh_thuan',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -528,7 +467,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Phú Thọ",
                 zoom: 12,
-                geojson: JSON.stringify(phu_tho),
+                geojson: 'phu_tho',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -538,7 +477,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Phú Yên",
                 zoom: 12,
-                geojson: JSON.stringify(phu_yen),
+                geojson: 'phu_yen',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -548,7 +487,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Quảng Bình",
                 zoom: 12,
-                geojson: JSON.stringify(quang_binh),
+                geojson: 'quang_binh',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -558,7 +497,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Quảng Nam",
                 zoom: 12,
-                geojson: JSON.stringify(quang_nam),
+                geojson: 'quang_nam',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -568,7 +507,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Quảng Ngãi",
                 zoom: 12,
-                geojson: JSON.stringify(quang_ngai),
+                geojson: 'quang_ngai',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -578,7 +517,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Quảng Ninh",
                 zoom: 12,
-                geojson: JSON.stringify(quang_ninh),
+                geojson: 'quang_ninh',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -588,7 +527,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Quảng Trị",
                 zoom: 12,
-                geojson: JSON.stringify(quang_tri),
+                geojson: 'quang_tri',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -598,7 +537,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Sóc Trăng",
                 zoom: 12,
-                geojson: JSON.stringify(soc_trang),
+                geojson: 'soc_trang',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -608,7 +547,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Sơn La",
                 zoom: 12,
-                geojson: JSON.stringify(son_la),
+                geojson: 'son_la',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -618,7 +557,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Tây Ninh",
                 zoom: 12,
-                geojson: JSON.stringify(tay_ninh),
+                geojson: 'tay_ninh',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -628,7 +567,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Thái Bình",
                 zoom: 12,
-                geojson: JSON.stringify(thai_binh),
+                geojson: 'thai_binh',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -638,7 +577,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Thái Nguyên",
                 zoom: 12,
-                geojson: JSON.stringify(thai_nguyen),
+                geojson: 'thai_nguyen',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -648,7 +587,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Thanh Hóa",
                 zoom: 12,
-                geojson: JSON.stringify(thanh_hoa),
+                geojson: 'thanh_hoa',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -658,7 +597,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Thừa Thiên Huế",
                 zoom: 12,
-                geojson: JSON.stringify(thua_thien_hue),
+                geojson: 'thua_thien_hue',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -668,7 +607,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Tiền Giang",
                 zoom: 12,
-                geojson: JSON.stringify(tien_giang),
+                geojson: 'tien_giang',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -678,7 +617,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Trà Vinh",
                 zoom: 12,
-                geojson: JSON.stringify(tra_vinh),
+                geojson: 'tra_vinh',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -688,7 +627,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Tuyên Quang",
                 zoom: 12,
-                geojson: JSON.stringify(tuyen_quang),
+                geojson: 'tuyen_quang',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -698,7 +637,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Vĩnh Phúc",
                 zoom: 12,
-                geojson: JSON.stringify(vinh_phuc),
+                geojson: 'vinh_phuc',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -708,7 +647,7 @@ export default class LocationComponent extends Vue {
             {
                 name: "Yên Bái",
                 zoom: 12,
-                geojson: JSON.stringify(yen_bai),
+                geojson: 'yen_bai',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -718,9 +657,15 @@ export default class LocationComponent extends Vue {
         ];
     }
 
-    handleClick(index) {
+    async handleClick(index) {
         this.isActive = index;
-        const mapLocation = this.locations[index];
+        const mapLocation = DataHelper.deepClone(this.locations[index]) as any;
+        const geojson = await import(`../../../../asset/geoJson/${mapLocation.geojson}.geojson`);
+        mapLocation.geojson = JSON.stringify(geojson);
         this.$emit("change-map", mapLocation);
+    }
+
+    async mounted() {
+
     }
 }

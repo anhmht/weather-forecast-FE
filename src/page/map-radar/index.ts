@@ -10,10 +10,9 @@ import img from '../../../static/img/icon/new/day_rain_thunder.png';
     components: {
         "icon-picker": () =>
             import("./components/icon-drag-drop/IconDragDropComponent.vue"),
-        "location-picker": () =>
-            import("./components/location/LocationComponent.vue"),
         "map-type-picker": () =>
-            import("./components/map-type/MapTypeComponent.vue")
+            import("./components/map-type/MapTypeComponent.vue"),
+        "location-picker": () => import("./components/location/LocationComponent.vue"),
     }
 })
 export default class HomePageComponent extends Vue {

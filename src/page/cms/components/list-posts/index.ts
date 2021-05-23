@@ -7,7 +7,29 @@ import { PATH } from "../../../../constant/route-constant";
     template: require("./template.html").default,
 })
 export default class ListPostComponent extends Vue {
+    page: number = 1;
     posts = [
+        {
+            image: image,
+            title: 'Không khí lạnh gây mưa rét ở miền Bắc từ đêm nay',
+            postedDate: '22/5/2021',
+            category: 'Thời tiết',
+            status: 'Public'
+        },
+        {
+            image: image,
+            title: 'Không khí lạnh gây mưa rét ở miền Bắc từ đêm nay',
+            postedDate: '22/5/2021',
+            category: 'Thời tiết',
+            status: 'Public'
+        },
+        {
+            image: image,
+            title: 'Không khí lạnh gây mưa rét ở miền Bắc từ đêm nay',
+            postedDate: '22/5/2021',
+            category: 'Thời tiết',
+            status: 'Public'
+        },
         {
             image: image,
             title: 'Không khí lạnh gây mưa rét ở miền Bắc từ đêm nay',
@@ -48,4 +70,6 @@ export default class ListPostComponent extends Vue {
     toCreatePost() {
         this.$router.push(PATH.CREATE_POST)
     }
+
+
 }

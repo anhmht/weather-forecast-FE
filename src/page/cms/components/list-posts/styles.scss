@@ -14,27 +14,63 @@
 
         // create new button
         button {
-            margin-left: 50px;
+            margin-left: 20px;
         }
     }
 
     &_table {
         background-color: #fff;
+        &_header {
+            font-size: 16px !important;
+            &_checkbox {
+                display: flex;
+                align-items: center;
+                > div {
+                    height: 100%;
+                    .v-input__control {
+                        width: 0px !important;
+                    }
+                }
+            }
+        }
+        &_checkbox {
+            display: flex;
+            align-items: center;
+            height: 100px !important;
+            .v-input--selection-controls {
+                margin-top: 0;
+                padding-top: 0;
+            }
+            > div {
+                height: 100%;
+                display: flex;
+                align-items: center;
+                .v-input__control {
+                    width: 0px !important;
+                }
+                .v-input__slot {
+                    width: 0px !important;
+                }
+            }
+        }
+        &_title {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            font-weight: 600;
+            img {
+                margin-right: 20px;
+                width: 70px;
+                height: 70px;
+                border-radius: 4px;
+            }
+        }
 
         &_footer_page_num {
-            display: inline-block;
-            width: 30px;
-            border: 2px solid #000;
-            text-align: center;
-
-            &_selected {
-                display: inline-block;
-                width: 30px;
-                border: 2px solid #000;
-                text-align: center;
-                background-color: darkblue;
-                color: #fff;
-            }
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
         }
     }
 }

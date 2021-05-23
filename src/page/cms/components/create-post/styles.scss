@@ -2,6 +2,7 @@
     &_wrapper_inner {
         display: flex;
         flex-wrap: wrap;
+        justify-content: space-between;
     }
 
     &_top {
@@ -22,7 +23,6 @@
         padding: 20px;
         order: 3;
         flex: 0 0 65%;
-        transform: translateY(-345px);
     }
 
     &_setting {
