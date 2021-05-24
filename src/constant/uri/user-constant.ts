@@ -1,4 +1,5 @@
 export default {
     login: '/api/Account/authenticate',
-    register: '/api/Account/register'
+    register: '/api/Account/register',
+    post: '/api/Event',
 }

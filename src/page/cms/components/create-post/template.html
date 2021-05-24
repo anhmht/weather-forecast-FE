@@ -2,27 +2,29 @@
     <div class="base-cms-right--body_top">
         <p>Tạo tin mới</p>
     </div>
-    <div class="base-cms-right--body_wrapper_inner">
-        <div class="base-cms-right--body_title">
-            <div>Tiêu đề</div>
-            <v-text-field solo></v-text-field>
-            <div class="base-cms-right--body_editor">
-                <div>Nội dung</div>
-                <ckeditor :editor="CKEditorOptions.editor" v-model="CKEditorOptions.editorData"
-                    :config="CKEditorOptions.editorConfig"></ckeditor>
+    <v-form ref="postForm" v-model="valid" lazy-validation>
+        <div class="base-cms-right--body_wrapper_inner">
+            <div class="base-cms-right--body_title">
+                <div>Tiêu đề</div>
+                <v-text-field solo v-model="postModel.title"></v-text-field>
+                <div class="base-cms-right--body_editor">
+                    <div>Nội dung</div>
+                    <ckeditor :editor="CKEditorOptions.editor" v-model="postModel.content"
+                        :config="CKEditorOptions.editorConfig"></ckeditor>
+                </div>
+            </div>
+    
+            <div class="base-cms-right--body_setting">
+                <div>Hình ảnh</div>
+                <v-file-input filled prepend-icon="mdi-camera" v-model="postModel.imageUrl"></v-file-input>
+                <div>Ngày đăng</div>
+                <v-text-field solo :rules="rules.dateRules" v-model="postModel.datePosted"></v-text-field>
+                <div>Trạng thái</div>
+                <v-select :items="status" solo :rules="rules.statusRules" v-model="postModel.status"></v-select>
+                <div>Danh mục</div>
+                <v-select :items="category" solo :rules="rules.categoryRules" v-model="postModel.categoryId"></v-select>
+                <v-btn depressed color="primary" @click="createPost()">Lưu tin</v-btn>
             </div>
         </div>
-
-        <div class="base-cms-right--body_setting">
-            <div>Hình ảnh</div>
-            <v-file-input filled prepend-icon="mdi-camera"></v-file-input>
-            <div>Ngày đăng</div>
-            <v-text-field solo></v-text-field>
-            <div>Trạng thái</div>
-            <v-select :items="status" solo></v-select>
-            <div>Danh mục</div>
-            <v-select :items="category" solo></v-select>
-            <v-btn depressed color="primary">Lưu tin</v-btn>
-        </div>
-    </div>
+    </v-form>
 </div>
