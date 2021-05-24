@@ -31,9 +31,28 @@
         order: 2;
         flex: 0 0 30%;
         margin-left: 20px;
-
+        .progress-bar {
+            height: 100px;
+            width: 100px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
         button {
             float: right;
+        }
+        &--upload {
+            display: flex;
+            img {
+                width: 150px;
+            }
+            &_btn {
+                flex: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
         }
     }
 }

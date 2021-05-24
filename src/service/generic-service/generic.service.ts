@@ -15,12 +15,10 @@ export class GenericServices {
     protected executeSelectingPost<TValue, TResult>(
         value: TValue,
         path?: string,
-        cancelTokenSource?: any
+        config?: any
     ): AxiosPromise<TResult> {
         return axios
-            .post(path, value, {
-                cancelToken: cancelTokenSource && cancelTokenSource.token
-            })
+            .post(path, value, config)
             .then(response => response.data)
             .catch(error => {
                 console.log(error);

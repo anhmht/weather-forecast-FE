@@ -1,8 +1,8 @@
 export const getCurrentLocation = () => {
     var options = {
         enableHighAccuracy: true,
-        timeout: 1000,
-        maximumAge: 0
+        timeout: 5000,
+        maximumAge: 60000
     };
     return new Promise((res, rej) => {
         navigator.geolocation.getCurrentPosition(res, rej, options);
