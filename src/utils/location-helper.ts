@@ -26,7 +26,7 @@ export const displayLocation = (coordinate = null)  => new Promise( async (resol
         resolve(JSON.parse(cached));
     } else {
         var method = 'GET';
-        var url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lon + '&key=AIzaSyDS2Betn68MyNGRTuBFgP5sYtTl4irvl-0';
+        var url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lon + '&key=AIzaSyCzHAjh3QPNyB097xrBsITXLr125vJxsc0';
         var async = true;
         request.open(method, url, async);
         request.onreadystatechange = function () {

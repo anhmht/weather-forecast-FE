@@ -1,11 +1,12 @@
-import { Post } from './../../../../model/post/post.model';
+import { ROUTE_NAME } from './../../../../constant/route-constant';
+import { Post, ICategory } from './../../../../model/post/post.model';
 import Vue from "vue";
 import Component from "vue-class-component";
 import CKEditor from '@ckeditor/ckeditor5-vue2';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
 import { PostServices } from '../../../../service/post-service/post.service';
 import IPost from "../../../../model/post/post.model";
-import { PATH } from '@/constant/route-constant';
 import { UploadServices } from "@/service/upload-service/upload.service";
 import NO_IMAGE from '../../../../../static/img/no-image/no-image.png';
 
@@ -27,8 +28,9 @@ export default class CreatePostComponent extends Vue {
 
     CKEditorOptions: any = {
         editor: ClassicEditor,
+
         editorConfig: {
-            // The configuration of the editor.
+            height:500
         }
     }
 
@@ -43,16 +45,7 @@ export default class CreatePostComponent extends Vue {
         },
     ]
 
-    category: any = [
-        {
-            text: 'Cảnh Báo Thiên Tai',
-            value: 'e78c78b7-80d1-4f3b-3014-08d91e5e4dfa'
-        },
-        {
-            text: 'Tin tức',
-            value: 2
-        },
-    ]
+    category: ICategory[] = []
 
     rules = {
         title: [v => !!v || 'Vui lòng nhập tiêu đề'],
@@ -67,7 +60,7 @@ export default class CreatePostComponent extends Vue {
         if (this.valid) {
             this.postModel.datePosted = new Date().toISOString();
             this.postService.createPost(this.postModel).then(res => {
-                vm.$router.push(PATH.LIST_POST);
+                vm.$router.push({ name: ROUTE_NAME.LIST_POST });
             }).catch(err => {
                 console.log(err);
             })
@@ -150,5 +143,14 @@ export default class CreatePostComponent extends Vue {
         const formData = new FormData();
         formData.append('file', document.Data, document.FileName);
         return formData;
+    }
+
+    mounted() {
+        // Get category
+        this.postService.getPostCategory().then((res: any) => {
+            this.category = res;
+        }).catch(error => {
+            console.log(error);
+        })
     }
 }

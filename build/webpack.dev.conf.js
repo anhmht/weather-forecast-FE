@@ -10,7 +10,7 @@ const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
 let rules = utils.styleLoaders({
     sourceMap: config.dev.cssSourceMap,
-    usePostCSS: true
+    // usePostCSS: true
 });
 rules.push({
     test: /\.s[ac]ss$/i,

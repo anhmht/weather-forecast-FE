@@ -31,7 +31,7 @@
                 <div>Trạng thái</div>
                 <v-select :items="status" solo :rules="rules.statusRules" v-model="postModel.status"></v-select>
                 <div>Danh mục</div>
-                <v-select :items="category" solo :rules="rules.categoryRules" v-model="postModel.categoryId"></v-select>
+                <v-select :items="category" item-text="name" item-value="categoryId" solo :rules="rules.categoryRules" v-model="postModel.categoryId"></v-select>
                 <v-btn depressed color="primary" @click="editPost()">Sửa tin</v-btn>
             </div>
         </div>

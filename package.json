@@ -38,7 +38,7 @@
     "portfinder": "^1.0.28",
     "postcss-loader": "^5.2.0",
     "precss": "^4.0.0",
-    "sass": "^1.32.12",
+    "sass": "1.32.12",
     "sass-loader": "^11.0.1",
     "style-loader": "^2.0.0",
     "ts-loader": "^9.1.1",

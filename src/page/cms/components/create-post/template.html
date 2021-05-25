@@ -19,19 +19,22 @@
                     <div style="position: relative;">
                         <div>Hình ảnh</div>
                         <img :src="uploadedDocs" />
-                        <v-progress-circular v-if="progress > 0" class="progress-bar" :rotate="-90" :size="100" :width="15" :value="progress" color="primary">
+                        <v-progress-circular v-if="progress > 0" class="progress-bar" :rotate="-90" :size="100"
+                            :width="15" :value="progress" color="primary">
                             {{ progress }}
                         </v-progress-circular>
                     </div>
                     <div class="base-cms-right--body_setting--upload_btn">
-                        <input ref="upload" type="file" @change="onChangeDocuments($event.target.files)" title="" hidden accept="image/*" />
+                        <input ref="upload" type="file" @change="onChangeDocuments($event.target.files)" title="" hidden
+                            accept="image/*" />
                         <v-btn elevation="2" @click="handleClickBrowse">Upload</v-btn>
                     </div>
                 </div>
                 <div>Trạng thái</div>
                 <v-select :items="status" solo :rules="rules.statusRules" v-model="postModel.status"></v-select>
                 <div>Danh mục</div>
-                <v-select :items="category" solo :rules="rules.categoryRules" v-model="postModel.categoryId"></v-select>
+                <v-select :items="category" item-text="name" item-value="categoryId" solo :rules="rules.categoryRules"
+                    v-model="postModel.categoryId"></v-select>
                 <v-btn depressed color="primary" @click="createPost()">Lưu tin</v-btn>
             </div>
         </div>

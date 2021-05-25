@@ -28,4 +28,10 @@ export class PostServices extends GenericServices {
             return Promise.resolve(response)
             }).catch(error => Promise.reject(error))
     }
+
+    getPostCategory(): Promise<ApiResponse> {
+        return this.executeSelecting(null, Uri.category).then((response: ApiResponse) => {
+            return Promise.resolve(response)
+        }).catch(error => Promise.reject(error))
+    }
 }
