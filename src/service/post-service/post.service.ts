@@ -10,8 +10,21 @@ export class PostServices extends GenericServices {
             }).catch(error => Promise.reject(error))
     }
 
+    getPostById(id: string): Promise<ApiResponse> {
+        const uri = Uri.postId.replace(":id", id)
+        return this.executeSelecting(null, uri).then((response: ApiResponse) => {
+            return Promise.resolve(response)
+            }).catch(error => Promise.reject(error))
+    }
+
     createPost(postInfo: IPost): Promise<ApiResponse> {
         return this.executeSelectingPost(postInfo, Uri.post).then((response: ApiResponse) => {
+            return Promise.resolve(response)
+            }).catch(error => Promise.reject(error))
+    }
+
+    editPost(postInfo: IPost): Promise<ApiResponse> {
+        return this.executeSelectingPut(postInfo, Uri.post).then((response: ApiResponse) => {
             return Promise.resolve(response)
             }).catch(error => Promise.reject(error))
     }

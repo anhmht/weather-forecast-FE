@@ -25,6 +25,19 @@ export class GenericServices {
             });
     }
 
+    protected executeSelectingPut<TValue, TResult>(
+        value: TValue,
+        path?: string,
+        config?: any
+    ): AxiosPromise<TResult> {
+        return axios
+            .put(path, value, config)
+            .then(response => response.data)
+            .catch(error => {
+                console.log(error);
+            });
+    }
+
     protected executeDeleting<TResult>(path?: string): AxiosPromise<TResult> {
         return axios
             .delete(path)

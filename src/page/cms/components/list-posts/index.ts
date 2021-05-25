@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Component from "vue-class-component";
-import { PATH } from "../../../../constant/route-constant";
+import { PATH, ROUTE_NAME } from "../../../../constant/route-constant";
 import { PostServices } from '../../../../service/post-service/post.service';
 
 @Component({
@@ -13,15 +13,15 @@ export default class ListPostComponent extends Vue {
     page: number = 1;
 
     toCreatePost() {
-        this.$router.push(PATH.CREATE_POST)
+        this.$router.push(PATH.CREATE_POST);
     }
 
-    editPost() {
-        this.$router.push(PATH.CREATE_POST)
+    editPost(id) {
+        this.$router.push({ name: ROUTE_NAME.EDIT_POST , params: { id } })
     }
 
-    deletePost() {
-        this.$router.push(PATH.CREATE_POST)
+    deletePost(id) {
+        this.$router.push(PATH.CREATE_POST);
     }
 
     async mounted() {

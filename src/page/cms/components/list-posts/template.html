@@ -55,8 +55,8 @@
 							<td>{{ item.categoryName }}</td>
 							<td>{{ item.status }}</td>
 							<td class="base-cms-right--body_table_action">
-								<v-icon @click.native="deletePost()">mdi-delete</v-icon>
-								<v-icon @click.native="editPost()">mdi-square-edit-outline</v-icon>
+								<v-icon @click.native="deletePost(item.eventId)">mdi-delete</v-icon>
+								<v-icon @click.native="editPost(item.eventId)">mdi-square-edit-outline</v-icon>
 							</td>
 						</tr>
 					</tbody>
