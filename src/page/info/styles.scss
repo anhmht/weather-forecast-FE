@@ -12,7 +12,7 @@
     }
     &-wrapper {
         margin: auto;
-        padding:  0 20px;
+        padding: 0 20px;
         width: $container-width-xl;
         max-width: 100%;
         h1 {
@@ -27,7 +27,11 @@
 
     .info-current-forecast {
         height: 428px;
-        background: linear-gradient(rgb(255 255 255 / 23%), rgb(255 255 255 / 22%)), rgb(255 255 255 / 0%);
+        background: linear-gradient(
+                rgb(255 255 255 / 23%),
+                rgb(255 255 255 / 22%)
+            ),
+            rgb(255 255 255 / 0%);
         border-radius: 10px;
         color: #fff;
         @media all and (min-width: 320px) and (max-width: 900px) {
@@ -93,7 +97,7 @@
             padding: 15px 0;
             width: 33.33%;
             &--item {
-                 display: flex;
+                display: flex;
                 align-items: center;
                 justify-content: center;
                 margin-bottom: 10px;
@@ -133,66 +137,85 @@
             cursor: pointer;
             &:hover {
                 color: $primary-color;
-            }
-        }
-        img {
-            width: 100%;
-            height: 260px;
-            object-fit: cover;
-            object-position: center;
-        }
-        h4 {
-            text-align: center;
-        }
-        position: relative;
-        // @media all and (min-width: 320px) and (max-width: 1200px) {
-        //     display: none;
-        // }
 
-    }
-    &_section_3 {
-        background-color: #ddd;
-    }
-    .box-overview {
-        background: #fff;
-        padding: 10px;
-        .content-overview {
-            padding: 20px;
-            overflow:auto;
-            height: 578px;
-            /* width */
-            &::-webkit-scrollbar {
-                width: 5px;
-                position: absolute;
+                position: relative;
+                @media all and (min-width: 320px) and (max-width: 1200px) {
+                    display: none;
+                }
+                &-prev-btn {
+                    position: absolute;
+                    top: 115px;
+                    left: -50px;
+                }
+                &-next-btn {
+                    position: absolute;
+                    top: 115px;
+                    right: -50px;
+                }
+                .VueCarousel-wrapper {
+                    .VueCarousel-slide {
+                        padding: 10px;
+                    }
+                }
+                img {
+                    width: 100%;
+                    height: 260px;
+                    object-fit: cover;
+                    object-position: center;
+                }
+                h4 {
+                    text-align: center;
+                }
+                position: relative;
+                // @media all and (min-width: 320px) and (max-width: 1200px) {
+                //     display: none;
+                // }
             }
-            /* Track */
-            &::-webkit-scrollbar-track {
-                display: none;
+            &_section_3 {
+                background-color: #ddd;
             }
-            /* Handle */
-            &::-webkit-scrollbar-thumb {
-                background: #666;
-                border-radius: 10px;
-            }
-            /* Handle on hover */
-            &::-webkit-scrollbar-thumb:hover {
-                background: #666;
+            .box-overview {
+                background: #fff;
+                padding: 10px;
+                .content-overview {
+                    padding: 20px;
+                    overflow: auto;
+                    height: 578px;
+                    /* width */
+                    &::-webkit-scrollbar {
+                        width: 5px;
+                        position: absolute;
+                    }
+                    /* Track */
+                    &::-webkit-scrollbar-track {
+                        display: none;
+                    }
+                    /* Handle */
+                    &::-webkit-scrollbar-thumb {
+                        background: #666;
+                        border-radius: 10px;
+                    }
+                    /* Handle on hover */
+                    &::-webkit-scrollbar-thumb:hover {
+                        background: #666;
+                    }
+                }
             }
         }
+        .bg-cover {
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+        .img-news img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            pointer-events: none;
+        }
+        .flex-row {
+            display: flex;
+        }
     }
-}
-.bg-cover {
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-}
-.img-news img{
-    position: absolute;
-    top: 0;
-    left: 0;
-    opacity: 0;
-    pointer-events: none
-}
-.flex-row {
-    display: flex;
 }
