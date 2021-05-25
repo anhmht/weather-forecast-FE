@@ -29,7 +29,9 @@
                         <div class="warning-info">
                             <div class="warning-info-wrapper">
                                 <div @click="handleViewDetail(firstWarningPost.eventId)" class="warning-info-left">
-                                    <img width="400" :src="firstWarningPost.imageUrl" />
+                                    <div class="img-news" :style="transformImage(firstWarningPost.imageUrl)">
+                                        <img width="400" :src="firstWarningPost.imageUrl" />
+                                    </div>
                                     <h4>{{firstWarningPost.title}}</h4>
                                 </div>
                                 <div class="warning-info-right">

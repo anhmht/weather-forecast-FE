@@ -38,25 +38,24 @@ export default class SocialPageComponent extends Vue {
         {
             imageUrl: image,
             title: "Chiều tối và đêm 13/5, các khu vực đều mưa dông, đề phòng thời tiết nguy hiểm",
+        },
+        {
+            imageUrl: image,
+            title: "Chiều tối và đêm 13/5, các khu vực đều mưa dông, đề phòng thời tiết nguy hiểm",
+        },
+        {
+            imageUrl: image,
+            title: "Chiều tối và đêm 13/5, các khu vực đều mưa dông, đề phòng thời tiết nguy hiểm",
+        },
+        {
+            imageUrl: image,
+            title: "Chiều tối và đêm 13/5, các khu vực đều mưa dông, đề phòng thời tiết nguy hiểm",
+        },
+        {
+            imageUrl: image,
+            title: "Chiều tối và đêm 13/5, các khu vực đều mưa dông, đề phòng thời tiết nguy hiểm",
         }
     ];
 
-    subPostsSecondRow: any = [
-        {
-            imageUrl: image,
-            title: "Chiều tối và đêm 13/5, các khu vực đều mưa dông, đề phòng thời tiết nguy hiểm",
-        },
-        {
-            imageUrl: image,
-            title: "Chiều tối và đêm 13/5, các khu vực đều mưa dông, đề phòng thời tiết nguy hiểm",
-        },
-        {
-            imageUrl: image,
-            title: "Chiều tối và đêm 13/5, các khu vực đều mưa dông, đề phòng thời tiết nguy hiểm",
-        },
-        {
-            imageUrl: image,
-            title: "Chiều tối và đêm 13/5, các khu vực đều mưa dông, đề phòng thời tiết nguy hiểm",
-        }
-    ];
+
 }
