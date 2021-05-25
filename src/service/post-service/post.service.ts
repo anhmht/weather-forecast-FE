@@ -4,6 +4,12 @@ import Uri from "@/constant/uri/user-constant";
 import IPost from "@/model/post/post.model";
 
 export class PostServices extends GenericServices {
+    getAllPosts(): Promise<ApiResponse> {
+        return this.executeSelecting("", Uri.post).then((response: ApiResponse) => {
+            return Promise.resolve(response)
+            }).catch(error => Promise.reject(error))
+    }
+
     createPost(postInfo: IPost): Promise<ApiResponse> {
         return this.executeSelectingPost(postInfo, Uri.post).then((response: ApiResponse) => {
             return Promise.resolve(response)

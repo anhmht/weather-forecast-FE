@@ -47,16 +47,16 @@
 							<td class="base-cms-right--body_table_checkbox"><v-checkbox color="primary" hide-details></v-checkbox></td>
 							<td>
                                 <div class="base-cms-right--body_table_title">
-                                    <img :src="item.image">
+                                    <img :src="item.imageUrl">
                                     {{ item.title }}
                                 </div>
                                 </td>
-							<td>{{ item.postedDate }}</td>
-							<td>{{ item.category }}</td>
+							<td>{{ item.datePosted }}</td>
+							<td>{{ item.categoryName }}</td>
 							<td>{{ item.status }}</td>
-							<td>
-								<v-icon>mdi-delete</v-icon>
-								<v-icon>mdi-square-edit-outline</v-icon>
+							<td class="base-cms-right--body_table_action">
+								<v-icon @click.native="deletePost()">mdi-delete</v-icon>
+								<v-icon @click.native="editPost()">mdi-square-edit-outline</v-icon>
 							</td>
 						</tr>
 					</tbody>

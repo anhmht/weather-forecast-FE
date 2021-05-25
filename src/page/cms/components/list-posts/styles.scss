@@ -66,6 +66,10 @@
             }
         }
 
+        &_action {
+            cursor: pointer;
+        }
+
         &_footer_page_num {
             display: flex;
             align-items: center;
