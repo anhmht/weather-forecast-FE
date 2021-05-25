@@ -20,7 +20,25 @@
             font-size: 18px;
         }
         .li-tab {
-            display: flex
+            display: flex;
+            @media all and (min-width: 320px) and (max-width: 900px) {
+                overflow: auto;
+                .row {
+                    display: block;
+                    flex: none;
+                    .col-3 {
+                        width: 260px;
+                        float: left;
+                        flex: none;
+                    }
+                    .col-9 {
+                        width: 800px;
+                        float: left;
+                        flex: none;
+                    }
+                }
+                
+            }
         }
         &_content {
             padding: 30px;
