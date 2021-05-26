@@ -20,8 +20,9 @@ export default class ListPostComponent extends Vue {
         this.$router.push({ name: ROUTE_NAME.EDIT_POST , params: { id } })
     }
 
-    deletePost(id) {
-        this.$router.push(PATH.CREATE_POST);
+    async deletePost(id) {
+        // this.$router.push({ name: ROUTE_NAME.DELETE_POST , params: { id } })
+        await this.postService.deletePostById(id);
     }
 
     async mounted() {

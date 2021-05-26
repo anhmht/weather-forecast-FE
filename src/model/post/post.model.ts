@@ -28,7 +28,3 @@ export class Post implements IPost {
 
     }
 }
-export interface ICategory {
-    name: string,
-    categoryId: string
-}

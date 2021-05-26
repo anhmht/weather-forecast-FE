@@ -12,7 +12,8 @@ export const ROUTE_NAME = {
     MANAGEMENT: 'management',
     LIST_POST: 'listPost',
     CREATE_POST: 'createPost',
-    EDIT_POST: 'editPost'
+    EDIT_POST: 'editPost',
+    DELETE_POST: 'deletePost'
 }
 
 export const PATH = {
@@ -29,5 +30,6 @@ export const PATH = {
     ADMIN: '/admin',
     LIST_POST: 'list-post',
     CREATE_POST: 'create-post',
-    EDIT_POST: 'edit-post/:id'
+    EDIT_POST: 'edit-post/:id',
+    DELETE_POST: 'delete-post/:id'
 }

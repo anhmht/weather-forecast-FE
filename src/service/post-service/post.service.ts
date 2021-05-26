@@ -29,9 +29,10 @@ export class PostServices extends GenericServices {
             }).catch(error => Promise.reject(error))
     }
 
-    getPostCategory(): Promise<ApiResponse> {
-        return this.executeSelecting(null, Uri.category).then((response: ApiResponse) => {
+    deletePostById(id: string): Promise<ApiResponse> {
+        const uri = Uri.postId.replace(":id", id)
+        return this.executeDeletingWith(id, uri).then((response: ApiResponse) => {
             return Promise.resolve(response)
-        }).catch(error => Promise.reject(error))
+            }).catch(error => Promise.reject(error))
     }
 }

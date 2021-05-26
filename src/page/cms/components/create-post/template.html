@@ -31,7 +31,8 @@
                     </div>
                 </div>
                 <div>Trạng thái</div>
-                <v-select :items="status" solo :rules="rules.statusRules" v-model="postModel.status"></v-select>
+                <v-select :items="status" item-text="name" item-value="statusId" solo :rules="rules.statusRules"
+                    v-model="postModel.statusId"></v-select>
                 <div>Danh mục</div>
                 <v-select :items="category" item-text="name" item-value="categoryId" solo :rules="rules.categoryRules"
                     v-model="postModel.categoryId"></v-select>

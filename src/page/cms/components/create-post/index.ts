@@ -1,5 +1,5 @@
 import { ROUTE_NAME } from './../../../../constant/route-constant';
-import { Post, ICategory } from './../../../../model/post/post.model';
+import { Post } from './../../../../model/post/post.model';
 import Vue from "vue";
 import Component from "vue-class-component";
 import CKEditor from '@ckeditor/ckeditor5-vue2';
@@ -9,6 +9,10 @@ import { PostServices } from '../../../../service/post-service/post.service';
 import IPost from "../../../../model/post/post.model";
 import { UploadServices } from "@/service/upload-service/upload.service";
 import NO_IMAGE from '../../../../../static/img/no-image/no-image.png';
+import { CategoryServices } from '../../../../service/category-service/category.service';
+import ICategory from './../../../../model/category/category.model';
+import { StatusServices } from '../../../../service/status-service/status.service';
+import IStatus from './../../../../model/status/status.model';
 
 @Component({
     template: require("./template.html").default,
@@ -20,6 +24,8 @@ export default class CreatePostComponent extends Vue {
     isUploading: boolean = false;
     postService: PostServices = new PostServices();
     uploadservice: UploadServices = new UploadServices();
+    categoryService: CategoryServices = new CategoryServices();
+    statusService: StatusServices = new StatusServices();
     valid: boolean = true;
     uploadedDocs: any = NO_IMAGE;
     progress: number = 0
@@ -34,7 +40,7 @@ export default class CreatePostComponent extends Vue {
         }
     }
 
-    status: any = [
+    /* status: any = [
         {
             text: 'Public',
             value: 1
@@ -43,9 +49,10 @@ export default class CreatePostComponent extends Vue {
             text: 'Private',
             value: 2
         },
-    ]
+    ] */
 
     category: ICategory[] = []
+    status: IStatus[] = []
 
     rules = {
         title: [v => !!v || 'Vui lòng nhập tiêu đề'],
@@ -147,8 +154,15 @@ export default class CreatePostComponent extends Vue {
 
     mounted() {
         // Get category
-        this.postService.getPostCategory().then((res: any) => {
+        this.categoryService.getAllCategories().then((res: any) => {
             this.category = res;
+        }).catch(error => {
+            console.log(error);
+        })
+
+        // Get status
+        this.statusService.getAllStatuses().then((res: any) => {
+            this.status = res;
         }).catch(error => {
             console.log(error);
         })
