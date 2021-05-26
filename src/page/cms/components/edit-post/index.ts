@@ -40,17 +40,6 @@ export default class EditPostComponent extends Vue {
         }
     }
 
-    /* status: any = [
-        {
-            text: 'Public',
-            value: 1
-        },
-        {
-            text: 'Private',
-            value: 2
-        },
-    ] */
-
     category: ICategory[] = []
     status: IStatus[] = []
 

@@ -4,7 +4,7 @@ export default interface IPost {
     content: string;
     imageUrl: string;
     datePosted: string;
-    status: Number;
+    statusId: string;
     categoryId: string;
 }
 
@@ -14,7 +14,7 @@ export class Post implements IPost {
     content: string;
     imageUrl: string;
     datePosted: string;
-    status: Number;
+    statusId: string;
     categoryId: string;
 
     constructor(option?: any) {
@@ -23,7 +23,7 @@ export class Post implements IPost {
         this.content = option.content || null
         this.imageUrl = option.imageUrl || null
         this.datePosted = option.datePosted || null
-        this.status = option.status || null
+        this.statusId = option.statusId || null
         this.categoryId = option.categoryId || null
 
     }

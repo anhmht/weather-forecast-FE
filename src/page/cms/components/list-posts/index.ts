@@ -9,8 +9,19 @@ import { PostServices } from '../../../../service/post-service/post.service';
 export default class ListPostComponent extends Vue {
     postService: PostServices = new PostServices();
     posts: any = []
+    totalItems: number = 0;
+    totalPages: number = 0;
+    currentPage: number = 1;
+    limitPerPage: number[] = [5, 10, 15, 20];
+    pageSize: number = 5;
+    numPostsInPage: number = 0;
 
-    page: number = 1;
+    get TotalPageVisible() {
+        if (this.totalPages < 7)
+            return this.totalPages
+        else
+            return 7
+    }
 
     toCreatePost() {
         this.$router.push(PATH.CREATE_POST);
@@ -21,15 +32,52 @@ export default class ListPostComponent extends Vue {
     }
 
     async deletePost(id) {
-        // this.$router.push({ name: ROUTE_NAME.DELETE_POST , params: { id } })
         await this.postService.deletePostById(id);
     }
 
-    async mounted() {
-        try {
-            this.posts = await this.postService.getAllPosts();
-        } catch (error) {
+    getPostsByLimit(value) {
+        this.postService.getAllPosts(value, 1).then((res: any) => {
+            this.posts = res.events;
+            this.totalItems = res.totalItems;
+            this.totalPages = res.totalPages;
+            this.currentPage = 1;
+            if (this.pageSize <= res.totalItems) {
+                this.numPostsInPage = this.pageSize;
+            } else {
+                this.numPostsInPage = res.totalItems;
+            }
+        }).catch(error => {
             console.log(error);
-        }
+        })
+    }
+
+    getPostsByPaging() {
+        this.postService.getAllPosts(this.pageSize, this.currentPage).then((res: any) => {
+            this.posts = res.events;
+            this.totalItems = res.totalItems;
+            this.totalPages = res.totalPages;
+            if (this.pageSize * this.currentPage <= res.totalItems) {
+                this.numPostsInPage = this.pageSize * this.currentPage;
+            } else {
+                this.numPostsInPage = res.totalItems;
+            }
+        }).catch(error => {
+            console.log(error);
+        })
+    }
+
+    mounted() {
+        this.postService.getAllPosts(this.pageSize, this.currentPage).then((res: any) => {
+            this.posts = res.events;
+            this.totalItems = res.totalItems;
+            this.totalPages = res.totalPages;
+            if (this.pageSize <= res.totalItems) {
+                this.numPostsInPage = this.pageSize;
+            } else {
+                this.numPostsInPage = res.totalItems;
+            }
+        }).catch(error => {
+            console.log(error);
+        })
     }
 }
