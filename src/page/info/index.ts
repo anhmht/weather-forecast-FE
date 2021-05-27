@@ -1,17 +1,13 @@
 import Vue from "vue";
 import Component from "vue-class-component";
-import polute from '../../../static/img/info-page/polute1.jpg';
-import img_2 from '../../../static/img/info-page/2.jpg';
-import img_3 from '../../../static/img/info-page/3.jpg';
-import img_4 from '../../../static/img/info-page/4.jpg';
-import img_5 from '../../../static/img/info-page/5.jpg';
-import img_6 from '../../../static/img/info-page/6.png';
-import img_7 from '../../../static/img/info-page/7.png';
-import img_8 from '../../../static/img/info-page/8.jpg';
 import { Carousel, Slide } from 'vue-carousel';
 import { ForecastServices } from "@/service/forecast-service/forecast.service";
-import { displayLocation } from "@/utils/location-helper";
+// import { displayLocation } from "@/utils/location-helper";
 import { STATION } from "@/constant/forcast-station-constant";
+import { ROUTE_NAME } from "../../constant/route-constant";
+import { PostServices } from '../../service/post-service/post.service';
+import { CategoryServices } from '../../service/category-service/category.service';
+import { StatusServices } from '../../service/status-service/status.service';
 
 @Component({
     template: require("./template.html").default,
@@ -22,71 +18,22 @@ import { STATION } from "@/constant/forcast-station-constant";
     }
 })
 export default class InfoPageComponent extends Vue {
-    forecastService: ForecastServices = new ForecastServices()
+    forecastService: ForecastServices = new ForecastServices();
+    postService: PostServices = new PostServices();
+    categoryService: CategoryServices = new CategoryServices();
+    statusService: StatusServices = new StatusServices();
     currentPosition: any = null;
     navigateTo: number = 0;
     timestamp: any = null;
     temparatureData = null;
-
-    recommendPosts: any = [
-        {
-            imageUrl: img_2,
-            title: 'Trung tâm Dự báo Khí tượng Thủy văn Quốc gia nhận định, từ ngày 16-18/5, ngưỡng chỉ số tia cực tím (UV) tại các thành phố ở ngưỡng rất cao.',
-            id: 1
-        },
-        {
-            imageUrl: img_3,
-            title: 'BẢN TIN CẬP NHẬT VỀ HIỆN TƯỢNG ENSO VÀ NHẬN ĐỊNH XU THẾ KHÍ TƯỢNG THỦY VĂN TỪ THÁNG 6 ĐẾN THÁNG 11 NĂM 2021',
-            id: 2
-        },
-        {
-            imageUrl: img_4,
-            title: 'DỰ BÁO THỜI TIẾT 10 NGÀY (Từ đêm 17 đến ngày 27/5/2021)',
-            id: 3
-        },
-        {
-            imageUrl: img_5,
-            title: 'THÔNG TIN CẢNH BÁO CHỈ SỐ CỰC ĐẠI BỨC XẠ TIA CỰC TÍM VÀ TIỀM NĂNG NHIỆT',
-            id: 4
-        },
-        {
-            imageUrl: img_6,
-            title: 'NHẬN ĐỊNH XU THẾ THỜI TIẾT TỪ NGÀY 11THÁNG 5 ĐẾN NGÀY 10 THÁNG 6 NĂM 2021 CÁC KHU VỰC TRÊN PHẠM',
-            id: 5
-        },
-        {
-            imageUrl: polute,
-            title: 'Ô nhiễm không khí tại một số đô thị lớn có xu hướng gia tăng',
-            id: 6
-        },
-        {
-            imageUrl: polute,
-            title: 'Ô nhiễm không khí tại một số đô thị lớn có xu hướng gia tăng',
-            id: 7
-        },
-        {
-            imageUrl: polute,
-            title: 'Ô nhiễm không khí tại một số đô thị lớn có xu hướng gia tăng',
-            id: 8
-        },
-    ];
-    warningPosts: any = [
-        {
-            imageUrl: img_6,
-            title: 'NHẬN ĐỊNH XU THẾ THỜI TIẾT TỪ NGÀY 11THÁNG 5 ĐẾN NGÀY 10 THÁNG 6 NĂM 2021 CÁC KHU VỰC TRÊN PHẠM',
-            id: 1
-        },
-        {
-            imageUrl: img_7,
-            title: 'Bản đồ cảnh báo nguy cơ lũ quét, sạc lỡ trong 24 giờ tới',
-            id: 2
-        },
-        {
-            imageUrl: img_8,
-            title: 'Dự báo năm 2021 sẽ có nhiều cơn bão mạnh và đợt mưa lớn cực đoan',
-            id: 3
-        }
-    ];
+    recommendCategoryId: string = "";
+    recommendCategoryName: string = "Thông tin khuyến cáo";
+    warningCategoryId: string = "";
+    warningCategoryName: string = "Cảnh báo thiên tai";
+    publishStatusId: string = "";
+    publishStatusName: string = "Publish";
+    warningPosts: any = [];
+    recommendPosts: any = [];
 
     get address() {
         return this.currentPosition ? this.currentPosition.data.results[5].formatted_address : null
@@ -109,7 +56,7 @@ export default class InfoPageComponent extends Vue {
     }
 
     handleViewDetail(postId) {
-        this.$router.push('/info/' + postId)
+        this.$router.push({ name: ROUTE_NAME.INFO_DETAIL , params: { id: postId } })
     }
 
     getNow() {
@@ -139,8 +86,47 @@ export default class InfoPageComponent extends Vue {
     }
 
     async mounted() {
-        setInterval(this.getNow, 1000);
+        /* setInterval(this.getNow, 1000);
         this.currentPosition = await displayLocation() as any;
-        await this.getTemperature();
+        await this.getTemperature(); */
+
+        // Get category
+        await this.categoryService.getAllCategories().then((res: any) => {
+            for (let obj of res) {
+                if (obj.name === this.warningCategoryName) {
+                    this.warningCategoryId = obj.categoryId;
+                }
+                if (obj.name === this.recommendCategoryName) {
+                    this.recommendCategoryId = obj.categoryId;
+                }
+            }
+        }).catch(error => {
+            console.log(error);
+        })
+
+        // Get status
+        await this.statusService.getAllStatuses().then((res: any) => {
+            for (let obj of res) {
+                if (obj.name === this.publishStatusName) {
+                    this.publishStatusId = obj.statusId;
+                }
+            }
+        }).catch(error => {
+            console.log(error);
+        })
+        
+        // Get warning posts
+        await this.postService.getPostByCategoryAndStatus(this.warningCategoryId, this.publishStatusId).then((res: any) => {
+            this.warningPosts = res;
+        }).catch(error => {
+            console.log(error);
+        })
+
+        // Get recommend posts
+        await this.postService.getPostByCategoryAndStatus(this.recommendCategoryId, this.publishStatusId).then((res: any) => {
+            this.recommendPosts = res;
+        }).catch(error => {
+            console.log(error);
+        })
     }
 }
