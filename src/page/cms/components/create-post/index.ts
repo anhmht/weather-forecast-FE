@@ -17,7 +17,8 @@ import IStatus from './../../../../model/status/status.model';
 @Component({
     template: require("./template.html").default,
     components: {
-        ckeditor: CKEditor.component
+        ckeditor: CKEditor.component,
+        "custom-ckeditor": () => import("../../../../components/ckeditor")
     }
 })
 export default class CreatePostComponent extends Vue {

@@ -1,3 +1,4 @@
+import { BASE_URL } from './constant/common-constant';
 import Vue from "vue";
 import App from "./app/App.vue";
 import Component from "vue-class-component";
@@ -8,7 +9,7 @@ import { getLocalStorage, setAxiosHeader } from "./utils/appConfig";
 
 Vue.config.productionTip = false;
 
-axios.defaults.baseURL = 'https://weathermanagement.azurewebsites.net/';
+axios.defaults.baseURL = BASE_URL;
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 axios.defaults.headers.post['Access-Control-Allow-Methods'] = 'GET, POST, PATCH, PUT, DELETE, OPTIONS';
