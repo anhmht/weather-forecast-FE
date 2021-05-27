@@ -3,7 +3,7 @@ import { Post } from './../../../../model/post/post.model';
 import Vue from "vue";
 import Component from "vue-class-component";
 import CKEditor from '@ckeditor/ckeditor5-vue2';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor';
 
 import { PostServices } from '../../../../service/post-service/post.service';
 import IPost from "../../../../model/post/post.model";

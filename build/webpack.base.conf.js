@@ -8,6 +8,8 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const WorkerPlugin = require('worker-plugin');
 var webpack = require("webpack");
+const CKEditorWebpackPlugin = require("@ckeditor/ckeditor5-dev-webpack-plugin");
+const { styles } = require("@ckeditor/ckeditor5-dev-utils");
 function resolve(dir) {
   return path.join(__dirname, "..", dir);
 }
@@ -61,7 +63,10 @@ module.exports = {
             },
             {
                 test: /\.(js|jsx)$/,
-                loader: "babel-loader"
+                loader: "babel-loader",
+                options: {
+                    presets: [require("@babel/preset-env")]
+                }
             },
             {
                 test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
@@ -98,6 +103,80 @@ module.exports = {
             {
                 test: /\.(json|geojson)$/,
                 loader: "json-loader"
+            },
+            {
+                test: /ckeditor5-[^/\\]+[/\\]theme[/\\]icons[/\\][^/\\]+\.svg$/,
+                use: ["raw-loader"]
+            },
+            {
+                test: /\.css$/i,
+                use: [
+                    {
+                        loader: "style-loader",
+                        options: {
+                            injectType: "singletonStyleTag",
+                            attributes: {
+                                "data-cke": true
+                            }
+                        }
+                    },
+                    "css-loader",
+                    {
+                        loader: "postcss-loader",
+                        options: styles.getPostCssConfig({
+                            themeImporter: {
+                                themePath: require.resolve(
+                                    "@ckeditor/ckeditor5-theme-lark"
+                                )
+                            },
+                            minify: true
+                        })
+                    }
+                ]
+            },
+            // {
+            //     test: /ckeditor5-[^/\\]+[/\\]theme[/\\].+\.css$/,
+            //     use: [
+            //         {
+            //             loader: "style-loader",
+            //             options: {
+            //                 injectType: "singletonStyleTag",
+            //                 attributes: {
+            //                     "data-cke": true
+            //                 }
+            //             }
+            //         },
+            //         {
+            //             loader: "postcss-loader",
+            //             options: styles.getPostCssConfig({
+            //                 themeImporter: {
+            //                     themePath: require.resolve(
+            //                         "@ckeditor/ckeditor5-theme-lark"
+            //                     )
+            //                 },
+            //                 minify: true
+            //             })
+            //         }
+            //     ]
+            // },
+            {
+                test: /\.s[ac]ss$/i,
+                use: [
+                    "style-loader",
+                    "css-loader",
+                    {
+                        loader: "sass-loader", // compiles Sass to CSS
+                        options: {
+                            implementation: require("sass"),
+                            sassOptions: {
+                                includePaths: [
+                                    `${__dirname}/src/theme/main.scss`
+                                ]
+                            },
+                            additionalData: '@import "~@/theme/main.scss";'
+                        }
+                    }
+                ]
             }
         ]
     },
@@ -105,6 +184,10 @@ module.exports = {
         new CleanWebpackPlugin(),
         new WorkerPlugin(),
         new VueLoaderPlugin({}),
+        new CKEditorWebpackPlugin({
+            // See https://ckeditor.com/docs/ckeditor5/latest/features/ui-language.html
+            language: "en"
+        }),
         new MiniCssExtractPlugin({
             filename: devMode
                 ? "app/css/[name]." + random + ".css"
