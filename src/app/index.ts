@@ -20,6 +20,7 @@ export default class App extends Vue {
             case ROUTE_NAME.EDIT_POST:
             case ROUTE_NAME.LIST_POST:
             case ROUTE_NAME.CREATE_POST:
+            case ROUTE_NAME.LIST_ICON:
                 return false;
             default:
                 return true;

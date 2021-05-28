@@ -29,7 +29,7 @@ export default class MenuCMSComponent extends Vue {
         {
             title: 'Biểu tượng thời tiết',
             icon: 'mdi-home-account',
-            path: PATH.LIST_POST,
+            path: PATH.LIST_ICON,
         },
         {
             title: 'Cộng đồng',
