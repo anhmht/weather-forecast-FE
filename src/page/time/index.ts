@@ -1,6 +1,8 @@
 import Vue from "vue";
 import Component from "vue-class-component";
 import icon from '../../../static/img/icon/day_partial_cloud.png';
+import { displayLocation } from "@/utils/location-helper";
+import { STATION } from "../../constant/forcast-station-constant";
 
 @Component({
     template: require("./template.html").default,
@@ -9,6 +11,9 @@ import icon from '../../../static/img/icon/day_partial_cloud.png';
     }
 })
 export default class TimePageComponent extends Vue {
+    currentPosition: string = "";
+    currentPositionCode: string = "";
+    currentForecastStationId: string = "";
 
     weatherByDay: any = [
         {
@@ -110,4 +115,14 @@ export default class TimePageComponent extends Vue {
         this.activeTab = tab;
     }
 
+    async mounted() {
+        await displayLocation();
+        this.currentPosition = JSON.parse(sessionStorage.getItem('position')).region;
+        this.currentPositionCode = JSON.parse(sessionStorage.getItem('position')).regionCode;
+        STATION.forEach((element) => {
+            if (element.place_id === this.currentPositionCode) {
+                this.currentForecastStationId = element.id;
+            }
+        });
+    }
 }
