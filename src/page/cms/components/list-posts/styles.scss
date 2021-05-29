@@ -1,85 +1,85 @@
-.base-cms-right--body {
-    &_top {
-        display: flex;
+.list-post-container {
+    .base-cms-right--body {
+        &_top {
+            display: flex;
 
-        // title
-        p {
-            font-size: 30px;
+            // title
+            p {
+                font-size: 30px;
+            }
+
+            // search input
+            .v-input__control {
+                margin-left: 500px;
+            }
+
+            // create new button
+            button {
+                margin-left: 20px;
+            }
         }
 
-        // search input
-        .v-input__control {
-            margin-left: 500px;
-        }
-
-        // create new button
-        button {
-            margin-left: 20px;
-        }
-    }
-
-    &_table {
-        background-color: #fff;
-        &_header {
-            font-size: 16px !important;
+        &_table {
+            background-color: #fff;
+            &_header {
+                font-size: 16px !important;
+                &_checkbox {
+                    display: flex;
+                    align-items: center;
+                    > div {
+                        height: 100%;
+                        .v-input__control {
+                            width: 0px !important;
+                        }
+                    }
+                }
+            }
             &_checkbox {
                 display: flex;
                 align-items: center;
+                height: 100px !important;
+                .v-input--selection-controls {
+                    margin-top: 0;
+                    padding-top: 0;
+                }
                 > div {
                     height: 100%;
+                    display: flex;
+                    align-items: center;
                     .v-input__control {
+                        width: 0px !important;
+                    }
+                    .v-input__slot {
                         width: 0px !important;
                     }
                 }
             }
-        }
-        &_checkbox {
-            display: flex;
-            align-items: center;
-            height: 100px !important;
-            .v-input--selection-controls {
-                margin-top: 0;
-                padding-top: 0;
-            }
-            > div {
-                height: 100%;
+            &_title {
                 display: flex;
                 align-items: center;
-                .v-input__control {
-                    width: 0px !important;
-                }
-                .v-input__slot {
-                    width: 0px !important;
+                padding: 10px 0;
+                font-weight: 600;
+                img {
+                    margin-right: 20px;
+                    width: 70px;
+                    height: 70px;
+                    border-radius: 4px;
                 }
             }
-        }
-        &_title {
-            display: flex;
-            align-items: center;
-            padding: 10px 0;
-            font-weight: 600;
-            img {
-                margin-right: 20px;
-                width: 70px;
-                height: 70px;
-                border-radius: 4px;
+
+            &_action {
+                cursor: pointer;
             }
-        }
 
-        &_action {
-            cursor: pointer;
-        }
-
-        &_footer_page_num {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 20px;
-
-            &_limit {
+            &_footer_page_num {
                 display: flex;
                 align-items: center;
-                justify-content: space-between;
+                padding: 20px;
+                &_limit {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                }
             }
         }
     }

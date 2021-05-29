@@ -27,10 +27,10 @@ export const displayLocation = (coordinate = null)  => new Promise( async (resol
     if (cached) {
         resolve(JSON.parse(cached));
     } else {
-
         locationService.getCurrentLocation(lat, lon).then((res: any) => {
             let regionCode = res.data[0].region_code;
             sessionStorage.setItem('position', JSON.stringify({ lat, lon, regionCode }));
+            resolve({ lat, lon, regionCode });
         }).catch(error => {
             console.log(error);
         })
