@@ -5,7 +5,7 @@
             <div class="time-page-container_section_1_content">
              <div class="tabs">
                 <div class="item-tab" :class="activeTab === 1 ? 'active' : ''" @click="handleChangeTab(1)">
-                    7 ngày trong tuần</div>
+                    5 ngày trong tuần</div>
                 <div class="item-tab" :class="activeTab === 2 ? 'active' : ''" @click="handleChangeTab(2)">
                     24 H/ngày</div>
             </div>
@@ -15,7 +15,7 @@
                         <v-col cols=3>
                             <div class="time-page-container_section_1_main--current">
                                 <div class="time-page-container_section_1_main--current_day">
-                                    Hôm nay Thứ Tư
+                                    Hôm nay {{currentDay}}
                                 </div>
                                 <div class="time-page-container_section_1_main--current_temp">
                                     <div class="time-page-container_section_1_main--current_temp_left">

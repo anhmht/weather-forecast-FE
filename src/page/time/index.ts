@@ -3,6 +3,8 @@ import Component from "vue-class-component";
 import icon from '../../../static/img/icon/day_partial_cloud.png';
 import { displayLocation } from "@/utils/location-helper";
 import { STATION } from "../../constant/forcast-station-constant";
+import { ForecastServices } from "../../service/forecast-service/forecast.service";
+import moment from "moment";
 
 @Component({
     template: require("./template.html").default,
@@ -14,8 +16,11 @@ export default class TimePageComponent extends Vue {
     currentPosition: string = "";
     currentPositionCode: string = "";
     currentForecastStationId: string = "";
+    currentDay: string = "";
+    forecastService: ForecastServices = new ForecastServices();
 
-    weatherByDay: any = [
+    weatherByDay: any = [];
+    /* weatherByDay: any = [
         {
             day: 'Thứ Năm',
             imageUrl: icon,
@@ -46,7 +51,7 @@ export default class TimePageComponent extends Vue {
             imageUrl: icon,
             temp: '27° - 32°'
         }
-    ];
+    ]; */
 
     weatherByTime: any = [
         {
@@ -117,12 +122,25 @@ export default class TimePageComponent extends Vue {
 
     async mounted() {
         await displayLocation();
-        this.currentPosition = JSON.parse(sessionStorage.getItem('position')).region;
         this.currentPositionCode = JSON.parse(sessionStorage.getItem('position')).regionCode;
         STATION.forEach((element) => {
             if (element.place_id === this.currentPositionCode) {
                 this.currentForecastStationId = element.id;
+                this.currentPosition = element.ten;
             }
         });
+
+        this.forecastService.getTemperatureByStation(this.currentForecastStationId).then((res: any) => {
+            console.log(res);
+        }).catch(error => {
+            console.log(error);
+        })
+
+        moment.locale('vi');
+        this.currentDay = moment().format('dddd');
+        console.log(moment().add(1, 'days').format('dddd'));
+        console.log(moment().add(2, 'days').format('dddd'));
+        console.log(moment().add(3, 'days').format('dddd'));
+        console.log(moment().add(4, 'days').format('dddd'));
     }
 }
