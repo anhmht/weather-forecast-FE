@@ -8,6 +8,9 @@ import { ROUTE_NAME } from "../../constant/route-constant";
 import { PostServices } from '../../service/post-service/post.service';
 import { CategoryServices } from '../../service/category-service/category.service';
 import { StatusServices } from '../../service/status-service/status.service';
+import { displayLocation } from "@/utils/location-helper";
+import { DataHelper } from "@/utils/data-helper";
+import { DATE } from "@/constant/common-constant";
 
 @Component({
     template: require("./template.html").default,
@@ -36,11 +39,22 @@ export default class InfoPageComponent extends Vue {
     recommendPosts: any = [];
 
     get address() {
-        return this.currentPosition ? this.currentPosition.data.results[5].formatted_address : null
+        return this.currentPosition ? this.currentPosition.region : null
     }
 
     get currentTemp() {
         return this.temparatureData ? this.temparatureData.current : null;
+    }
+
+    get minTemp() {
+        return this.temparatureData ? this.temparatureData.min : null;
+    }
+    get maxTemp() {
+        return this.temparatureData ? this.temparatureData.max : null;
+    }
+
+    get firstWarningPost() {
+        return this.warningPosts.length > 0 ? this.warningPosts[0] : {}
     }
 
     handlePrev() {
@@ -68,12 +82,15 @@ export default class InfoPageComponent extends Vue {
     }
 
     async getTemperature() {
-        const placeId = this.currentPosition.data.results[7].place_id
+        const placeId = this.currentPosition.regionCode;
         const station = STATION.find(x => x.place_id === placeId);
         if(station) {
             await this.forecastService.getTemperatureByStation(station.id).then((res) => {
+                const minMaxTemp = DataHelper.getMinMaxTemp(res, DATE.CURRENT);
                 this.temparatureData = {
-                    current: res[`_${new Date().getHours()}`]
+                    current: res[`_${new Date().getHours()}`],
+                    min: minMaxTemp.min,
+                    max: minMaxTemp.max
                 }
             }).catch(err => {
                 console.log(err);
@@ -86,9 +103,9 @@ export default class InfoPageComponent extends Vue {
     }
 
     async mounted() {
-        /* setInterval(this.getNow, 1000);
+        setInterval(this.getNow, 1000);
         this.currentPosition = await displayLocation() as any;
-        await this.getTemperature(); */
+        await this.getTemperature();
 
         // Get category
         await this.categoryService.getAllCategories().then((res: any) => {
@@ -114,7 +131,7 @@ export default class InfoPageComponent extends Vue {
         }).catch(error => {
             console.log(error);
         })
-        
+
         // Get warning posts
         await this.postService.getPostByCategoryAndStatus(this.warningCategoryId, this.publishStatusId).then((res: any) => {
             this.warningPosts = res;

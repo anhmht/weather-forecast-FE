@@ -7,6 +7,7 @@ const { VueLoaderPlugin } = require('vue-loader')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const WorkerPlugin = require('worker-plugin');
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 var webpack = require("webpack");
 const CKEditorWebpackPlugin = require("@ckeditor/ckeditor5-dev-webpack-plugin");
 const { styles } = require("@ckeditor/ckeditor5-dev-utils");
@@ -154,6 +155,15 @@ module.exports = {
                     }
                 ]
             }
+        ]
+    },
+    optimization: {
+        minimizer: [
+            new UglifyJsPlugin({
+                test: /\.js(\?.*)?$/i,
+                cache: true,
+                parallel: true
+            })
         ]
     },
     plugins: [

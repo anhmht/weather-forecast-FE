@@ -116,9 +116,10 @@ export default class TimePageComponent extends Vue {
     }
 
     async mounted() {
-        await displayLocation();
-        this.currentPosition = JSON.parse(sessionStorage.getItem('position')).region;
-        this.currentPositionCode = JSON.parse(sessionStorage.getItem('position')).regionCode;
+        const data = await displayLocation() as any;
+
+        this.currentPosition = data.region;
+        this.currentPositionCode = data.regionCode;
         STATION.forEach((element) => {
             if (element.place_id === this.currentPositionCode) {
                 this.currentForecastStationId = element.id;

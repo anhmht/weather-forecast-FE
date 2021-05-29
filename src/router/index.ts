@@ -1,4 +1,4 @@
-import { PATH } from "@/constant/route-constant";
+import { PATH, ROUTE_NAME } from "@/constant/route-constant";
 import { getLocalStorage } from "@/utils/appConfig";
 import Vue from "vue";
 import VueRouter, { RouterOptions } from "vue-router";
@@ -38,7 +38,7 @@ router.beforeEach((to, from, next) => {
     } else if (to.matched.some(record => record.meta.guest)) { // Each route required Guest
         let user = getLocalStorage('auth');
         if (user) {
-            next({ path: PATH.ADMIN })
+            next({ name: ROUTE_NAME.LIST_POST, query: { categoryId: 'e78c78b7-80d1-4f3b-3014-08d91e5e4dfa' } })
         }
         else {
             next();

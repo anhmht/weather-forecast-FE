@@ -43,7 +43,11 @@ export default class MenuComponent extends Vue {
     handleClick(index) {
         this.isActive = index;
         const type = this.menuItems[index];
-        if (this.$route.path !== type.path) this.$router.push(type.path)
+        if (this.$route.path !== type.path) {
+            this.$router.push(type.path).catch(_ => {
+                console.log("You have already logged in");
+            })
+        }
     }
 
     setActiveMenu() {

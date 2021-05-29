@@ -4,6 +4,7 @@ import { ROUTE_NAME } from "../../constant/route-constant";
 import { PostServices } from '../../service/post-service/post.service';
 import IPost from "../../model/post/post.model";
 import { Post } from '../../model/post/post.model';
+import { Watch } from "vue-property-decorator";
 
 @Component({
     template: require("./template.html").default,
@@ -20,7 +21,7 @@ export default class InfoDetailPageComponent extends Vue {
         this.$router.push({ name: ROUTE_NAME.INFO_DETAIL , params: { id: postId } })
     }
 
-    async mounted() {
+    async fetchData() {
         // Get post
         await this.postService.getPostById(this.$route.params.id)
             .then(res => {
@@ -30,6 +31,10 @@ export default class InfoDetailPageComponent extends Vue {
             }).catch(err => {
                 console.log(err);
             });
+    }
+
+    async mounted() {
+        await this.fetchData();
 
         // Get relative posts
         await this.postService.getPostByCategoryAndStatus(this.postModel.categoryId, this.postModel.statusId).then((res: any) => {
@@ -37,5 +42,10 @@ export default class InfoDetailPageComponent extends Vue {
         }).catch(error => {
             console.log(error);
         })
+    }
+
+    @Watch("$route.params.id")
+    handleChangeRoute(val) {
+        this.fetchData();
     }
 }

@@ -97,7 +97,7 @@ const adminRoutes = [
                 },
                 props: {}
             },
-            { path: "/admin", redirect: { path: PATH.LIST_POST } },
+            { path: "/admin", redirect: { path: PATH.LIST_POST, query: { categoryId: 'e78c78b7-80d1-4f3b-3014-08d91e5e4dfa' } } },
             {
                 path: PATH.CREATE_POST,
                 name: ROUTE_NAME.CREATE_POST,
