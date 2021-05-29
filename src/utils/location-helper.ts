@@ -27,8 +27,6 @@ export const displayLocation = (coordinate = null)  => new Promise( async (resol
     if (cached) {
         resolve(JSON.parse(cached));
     } else {
-        lon = 105.623;
-        lat = 10.1002;
 
         locationService.getCurrentLocation(lat, lon).then((res: any) => {
             let regionCode = res.data[0].region_code;
@@ -36,5 +34,5 @@ export const displayLocation = (coordinate = null)  => new Promise( async (resol
         }).catch(error => {
             console.log(error);
         })
-    }    
+    }
 })

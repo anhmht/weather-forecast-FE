@@ -16,7 +16,7 @@
                         <div class="info-detail-page-container_section_2_main">
                             <h4>{{postModel.title}}</h4>
                             <br>
-                            <div>{{postModel.content}}</div>
+                            <div v-html="postModel.content"></div>
                         </div>
                     </v-col>
                     <v-col cols=3>

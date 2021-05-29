@@ -4,8 +4,8 @@
         position: relative;
         color: #ddd;
         width: 400px;
-        height: 100vh;
         background: #000;
+        height: 100vh;
         &--header {
             padding: 20px;
             border-bottom: 1px solid #ddd;
@@ -44,7 +44,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 112px;
+            height: 125px;
             padding: 0 20px;
             .v-icon.v-icon {
                 color: #ddd;
@@ -53,7 +53,6 @@
         }
         &--body {
             background: #ddd;
-            height: calc(100% - 112px);
             padding: 1.5vw;
         }
     }

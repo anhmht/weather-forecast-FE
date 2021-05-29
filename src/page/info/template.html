@@ -19,8 +19,8 @@
                                     </v-col>
 
                                 </v-row>
-                                <div class="info-current-forecast-body--info">Nhiệt độ thấp nhất: 24℃</div>
-                                <div class="info-current-forecast-body--info">Nhiệt độ cao nhất: 37℃</div>
+                                <div class="info-current-forecast-body--info">Nhiệt độ thấp nhất: {{minTemp}}℃</div>
+                                <div class="info-current-forecast-body--info">Nhiệt độ cao nhất: {{maxTemp}}℃</div>
                             </div>
                         </div>
                     </v-col>
@@ -28,9 +28,9 @@
                         <h1>Cảnh báo thiên tai</h1>
                         <div class="warning-info">
                             <div class="warning-info-wrapper">
-                                <div @click="handleViewDetail(warningPosts[0].eventId)" class="warning-info-left">
-                                    <img width="400" :src="warningPosts[0].imageUrl" />
-                                    <h4>{{warningPosts[0].title}}</h4>
+                                <div @click="handleViewDetail(firstWarningPost.eventId)" class="warning-info-left">
+                                    <img width="400" :src="firstWarningPost.imageUrl" />
+                                    <h4>{{firstWarningPost.title}}</h4>
                                 </div>
                                 <div class="warning-info-right">
                                     <div v-for="(item,index) in warningPosts" v-if="index >= 1 && index <= 3" :key="index" @click="handleViewDetail(item.eventId)" class="warning-info-right--item">
@@ -56,7 +56,7 @@
                             <carousel :per-page="4" :navigate-to="navigateTo" :pagination-enabled="false">
                                 <slide v-for="(item,index) in recommendPosts" :key="index">
                                     <div @click="handleViewDetail(item.eventId)" class="recommend-info-carousel-slide">
-                                        <img :src="item.imageUrl">
+                                        <img :src="item.imageUrl? item.imageUrl : null">
                                         <div class="content-new-s">
                                             <h4>{{item.title}}</h4>
                                         </div>
