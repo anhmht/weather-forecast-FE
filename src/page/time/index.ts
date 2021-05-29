@@ -2,7 +2,9 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import icon from '../../../static/img/icon/day_partial_cloud.png';
 import { displayLocation } from "@/utils/location-helper";
+import { DataHelper } from "@/utils/data-helper";
 import { STATION } from "../../constant/forcast-station-constant";
+import { DATE, HOUR } from "@/constant/common-constant";
 import { ForecastServices } from "../../service/forecast-service/forecast.service";
 import moment from "moment";
 
@@ -17,104 +19,13 @@ export default class TimePageComponent extends Vue {
     currentPositionCode: string = "";
     currentForecastStationId: string = "";
     currentDay: string = "";
+    currentTemp: number = 0;
+    currentDayMinTemp: number = 0;
+    currentDayMaxTemp: number = 0;
     forecastService: ForecastServices = new ForecastServices();
 
     weatherByDay: any = [];
-    /* weatherByDay: any = [
-        {
-            day: 'Thứ Năm',
-            imageUrl: icon,
-            temp: '27° - 32°'
-        },
-        {
-            day: 'Thứ Sáu',
-            imageUrl: icon,
-            temp: '27° - 32°'
-        },
-        {
-            day: 'Thứ Bảy',
-            imageUrl: icon,
-            temp: '27° - 32°'
-        },
-        {
-            day: 'Chủ Nhật',
-            imageUrl: icon,
-            temp: '27° - 32°'
-        },
-        {
-            day: 'Thứ Hai',
-            imageUrl: icon,
-            temp: '27° - 32°'
-        },
-        {
-            day: 'Thứ Ba',
-            imageUrl: icon,
-            temp: '27° - 32°'
-        }
-    ]; */
-
-    weatherByTime: any = [
-        {
-            time: '1:00 AM',
-            imageUrl: icon,
-            temp: '27° - 32°'
-        },
-        {
-            time: '2:00 AM',
-            imageUrl: icon,
-            temp: '27° - 32°'
-        },
-        {
-            time: '3:00 AM',
-            imageUrl: icon,
-            temp: '27° - 32°'
-        },
-        {
-            time: '4:00 AM',
-            imageUrl: icon,
-            temp: '27° - 32°'
-        },
-        {
-            time: '5:00 AM',
-            imageUrl: icon,
-            temp: '27° - 32°'
-        },
-        {
-            time: '6:00 AM',
-            imageUrl: icon,
-            temp: '27° - 32°'
-        },
-        {
-            time: '7:00 AM',
-            imageUrl: icon,
-            temp: '27° - 32°'
-        },
-        {
-            time: '8:00 AM',
-            imageUrl: icon,
-            temp: '27° - 32°'
-        },
-        {
-            time: '9:00 AM',
-            imageUrl: icon,
-            temp: '27° - 32°'
-        },
-        {
-            time: '10:00 AM',
-            imageUrl: icon,
-            temp: '27° - 32°'
-        },
-        {
-            time: '11:00 AM',
-            imageUrl: icon,
-            temp: '27° - 32°'
-        },
-        {
-            time: '12:00 PM',
-            imageUrl: icon,
-            temp: '27° - 32°'
-        }
-    ];
+    weatherByTime: any = [];
     activeTab: number = 1
     handleChangeTab(tab) {
         this.activeTab = tab;
@@ -130,17 +41,167 @@ export default class TimePageComponent extends Vue {
             }
         });
 
-        this.forecastService.getTemperatureByStation(this.currentForecastStationId).then((res: any) => {
-            console.log(res);
+        moment.locale('vi');
+        this.currentDay = moment().format('dddd');
+
+        await this.forecastService.getTemperatureByStation(this.currentForecastStationId).then((res: any) => {
+            const minMaxTempCurrentDate = DataHelper.getMinMaxTemp(res, DATE.CURRENT);
+            const minMaxTempNextDate = DataHelper.getMinMaxTemp(res, DATE.NEXT_DAY);
+            const minMaxTempNext2Date = DataHelper.getMinMaxTemp(res, DATE.NEXT_2_DAY);
+            const minMaxTempNext3Date = DataHelper.getMinMaxTemp(res, DATE.NEXT_3_DAY);
+            const minMaxTempNext4Date = DataHelper.getMinMaxTemp(res, DATE.NEXT_4_DAY);
+
+            this.currentTemp = DataHelper.getCurrentDayTempByHour(res, moment().format('LT').split(":")[0]);
+            this.currentDayMinTemp = minMaxTempCurrentDate.min;
+            this.currentDayMaxTemp = minMaxTempCurrentDate.max;
+
+            this.weatherByDay = [
+                {
+                    day: moment().add(DATE.NEXT_DAY, 'days').format('dddd'),
+                    imageUrl: icon,
+                    temp: minMaxTempNextDate.min + '°C - ' + minMaxTempNextDate.max + '°C'
+                },
+                {
+                    day: moment().add(DATE.NEXT_2_DAY, 'days').format('dddd'),
+                    imageUrl: icon,
+                    temp: minMaxTempNext2Date.min + '°C - ' + minMaxTempNext2Date.max + '°C'
+                },
+                {
+                    day: moment().add(DATE.NEXT_3_DAY, 'days').format('dddd'),
+                    imageUrl: icon,
+                    temp: minMaxTempNext3Date.min + '°C - ' + minMaxTempNext3Date.max + '°C'
+                },
+                {
+                    day: moment().add(DATE.NEXT_4_DAY, 'days').format('dddd'),
+                    imageUrl: icon,
+                    temp: minMaxTempNext4Date.min + '°C - ' + minMaxTempNext4Date.max + '°C'
+                },
+            ];
+
+            this.weatherByTime = [
+                {
+                    time: HOUR._1AM + ':00',
+                    imageUrl: icon,
+                    temp: DataHelper.getCurrentDayTempByHour(res, HOUR._1AM)
+                },
+                {
+                    time: HOUR._2AM + ':00',
+                    imageUrl: icon,
+                    temp: DataHelper.getCurrentDayTempByHour(res, HOUR._2AM)
+                },
+                {
+                    time: HOUR._3AM + ':00',
+                    imageUrl: icon,
+                    temp: DataHelper.getCurrentDayTempByHour(res, HOUR._3AM)
+                },
+                {
+                    time: HOUR._4AM + ':00',
+                    imageUrl: icon,
+                    temp: DataHelper.getCurrentDayTempByHour(res, HOUR._4AM)
+                },
+                {
+                    time: HOUR._5AM + ':00',
+                    imageUrl: icon,
+                    temp: DataHelper.getCurrentDayTempByHour(res, HOUR._5AM)
+                },
+                {
+                    time: HOUR._6AM + ':00',
+                    imageUrl: icon,
+                    temp: DataHelper.getCurrentDayTempByHour(res, HOUR._6AM)
+                },
+                {
+                    time: HOUR._7AM + ':00',
+                    imageUrl: icon,
+                    temp: DataHelper.getCurrentDayTempByHour(res, HOUR._7AM)
+                },
+                {
+                    time: HOUR._8AM + ':00',
+                    imageUrl: icon,
+                    temp: DataHelper.getCurrentDayTempByHour(res, HOUR._8AM)
+                },
+                {
+                    time: HOUR._9AM + ':00',
+                    imageUrl: icon,
+                    temp: DataHelper.getCurrentDayTempByHour(res, HOUR._9AM)
+                },
+                {
+                    time: HOUR._10AM + ':00',
+                    imageUrl: icon,
+                    temp: DataHelper.getCurrentDayTempByHour(res, HOUR._10AM)
+                },
+                {
+                    time: HOUR._11AM + ':00',
+                    imageUrl: icon,
+                    temp: DataHelper.getCurrentDayTempByHour(res, HOUR._11AM)
+                },
+                {
+                    time: HOUR._12AM + ':00',
+                    imageUrl: icon,
+                    temp: DataHelper.getCurrentDayTempByHour(res, HOUR._12AM)
+                },
+                {
+                    time: HOUR._1PM + ':00',
+                    imageUrl: icon,
+                    temp: DataHelper.getCurrentDayTempByHour(res, HOUR._1PM)
+                },
+                {
+                    time: HOUR._2PM + ':00',
+                    imageUrl: icon,
+                    temp: DataHelper.getCurrentDayTempByHour(res, HOUR._2PM)
+                },
+                {
+                    time: HOUR._3PM + ':00',
+                    imageUrl: icon,
+                    temp: DataHelper.getCurrentDayTempByHour(res, HOUR._3PM)
+                },
+                {
+                    time: HOUR._4PM + ':00',
+                    imageUrl: icon,
+                    temp: DataHelper.getCurrentDayTempByHour(res, HOUR._4PM)
+                },
+                {
+                    time: HOUR._5PM + ':00',
+                    imageUrl: icon,
+                    temp: DataHelper.getCurrentDayTempByHour(res, HOUR._5PM)
+                },
+                {
+                    time: HOUR._6PM + ':00',
+                    imageUrl: icon,
+                    temp: DataHelper.getCurrentDayTempByHour(res, HOUR._6PM)
+                },
+                {
+                    time: HOUR._7PM + ':00',
+                    imageUrl: icon,
+                    temp: DataHelper.getCurrentDayTempByHour(res, HOUR._7PM)
+                },
+                {
+                    time: HOUR._8PM + ':00',
+                    imageUrl: icon,
+                    temp: DataHelper.getCurrentDayTempByHour(res, HOUR._8PM)
+                },
+                {
+                    time: HOUR._9PM + ':00',
+                    imageUrl: icon,
+                    temp: DataHelper.getCurrentDayTempByHour(res, HOUR._9PM)
+                },
+                {
+                    time: HOUR._10PM + ':00',
+                    imageUrl: icon,
+                    temp: DataHelper.getCurrentDayTempByHour(res, HOUR._10PM)
+                },
+                {
+                    time: HOUR._11PM + ':00',
+                    imageUrl: icon,
+                    temp: DataHelper.getCurrentDayTempByHour(res, HOUR._11PM)
+                },
+                {
+                    time: HOUR._12PM + ':00',
+                    imageUrl: icon,
+                    temp: DataHelper.getCurrentDayTempByHour(res, HOUR._12PM)
+                },
+            ];
         }).catch(error => {
             console.log(error);
         })
-
-        moment.locale('vi');
-        this.currentDay = moment().format('dddd');
-        console.log(moment().add(1, 'days').format('dddd'));
-        console.log(moment().add(2, 'days').format('dddd'));
-        console.log(moment().add(3, 'days').format('dddd'));
-        console.log(moment().add(4, 'days').format('dddd'));
     }
 }

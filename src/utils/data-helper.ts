@@ -17,4 +17,14 @@ export class DataHelper {
             max: Math.max(...tempValue),
         }
     }
+
+    static getCurrentDayTempByHour(temp, currentHour) {
+        const hours = Object.keys(temp).filter(x => x.includes('_'));
+        const currentHourModified = '_' + currentHour;
+        for (let index = 0; index < 24; index++) {
+            if (hours[index] === currentHourModified) {
+                return temp[hours[index]];
+            }
+        }
+    }
 }

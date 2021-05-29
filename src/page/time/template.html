@@ -19,16 +19,16 @@
                                 </div>
                                 <div class="time-page-container_section_1_main--current_temp">
                                     <div class="time-page-container_section_1_main--current_temp_left">
-                                        32°
+                                        {{currentTemp}}°C
                                     </div>
                                     <div class="time-page-container_section_1_main--current_temp_right">
                                         <img src="../../../static/img/icon/day_partial_cloud.png">
                                     </div>
                                 </div>
                                 <div class="time-page-container_section_1_main--current_info">
-                                    Nhiệt độ thấp nhất: 24-27 độ
+                                    Nhiệt độ thấp nhất: {{currentDayMinTemp}}°C
                                     <br>
-                                    Nhiệt độ cao nhất: 34-36 độ, có nơi trên 36 độ
+                                    Nhiệt độ cao nhất: {{currentDayMaxTemp}}°C
                                 </div>
                             </div>
                         </v-col>
@@ -62,7 +62,7 @@
                                         <img :src="item.imageUrl">
                                     </div>
                                     <div class="time-page-container_section_2_main--time_detail_temp">
-                                        {{item.temp}}
+                                        {{item.temp}}°C
                                     </div>
                                 </div>
                     </div>
