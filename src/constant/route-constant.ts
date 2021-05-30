@@ -15,6 +15,7 @@ export const ROUTE_NAME = {
     EDIT_POST: 'editPost',
     DELETE_POST: 'deletePost',
     LIST_ICON: 'listIcon',
+    LIST_DATA: 'listData',
 }
 
 export const PATH = {
@@ -33,5 +34,6 @@ export const PATH = {
     CREATE_POST: 'create-post',
     EDIT_POST: 'edit-post/:id',
     DELETE_POST: 'delete-post/:id',
-    LIST_ICON: 'list-icon'
+    LIST_ICON: 'list-icon',
+    LIST_DATA: 'list-data',
 }

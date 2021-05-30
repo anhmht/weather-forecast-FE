@@ -26,7 +26,7 @@ export default class MenuCMSComponent extends Vue {
         {
             title: 'Dữ liệu KTTV',
             icon: 'mdi-home-account',
-            path: PATH.LIST_POST,
+            path: PATH.LIST_DATA,
         },
         {
             title: 'Biểu tượng thời tiết',

@@ -15,6 +15,7 @@ const ListPostComponent = () => import("../page/cms/components/list-posts/ListPo
 const CreatePostComponent = () => import("../page/cms/components/create-post/CreatePostComponent.vue")
 const EditPostComponent = () => import("../page/cms/components/edit-post/EditPostComponent.vue")
 const ListIconComponent = () => import("../page/cms/components/list-icon/ListIconComponent.vue")
+const ListDataComponent = () => import("../page/cms/components/list-data/ListDataComponent.vue")
 
 const homeRoutes = [
     { path: "/", redirect: { path: PATH.INFO } },
@@ -120,6 +121,15 @@ const adminRoutes = [
                 path: PATH.LIST_ICON,
                 name: ROUTE_NAME.LIST_ICON,
                 component: ListIconComponent,
+                meta: {
+                    requiresAuth: true
+                },
+                props: {}
+            },
+            {
+                path: PATH.LIST_DATA,
+                name: ROUTE_NAME.LIST_DATA,
+                component: ListDataComponent,
                 meta: {
                     requiresAuth: true
                 },

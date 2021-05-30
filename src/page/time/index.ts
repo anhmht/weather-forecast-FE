@@ -51,7 +51,7 @@ export default class TimePageComponent extends Vue {
             const minMaxTempNext3Date = DataHelper.getMinMaxTemp(res, DATE.NEXT_3_DAY);
             const minMaxTempNext4Date = DataHelper.getMinMaxTemp(res, DATE.NEXT_4_DAY);
 
-            this.currentTemp = DataHelper.getCurrentDayTempByHour(res, moment().format('LT').split(":")[0]);
+            this.currentTemp = DataHelper.getCurrentDayTempByHour(res, new Date().getHours());
             this.currentDayMinTemp = minMaxTempCurrentDate.min;
             this.currentDayMaxTemp = minMaxTempCurrentDate.max;
 

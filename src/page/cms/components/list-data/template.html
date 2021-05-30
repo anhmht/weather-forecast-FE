@@ -1,7 +1,7 @@
 <div class="base-cms-right--body_wrapper">
     <div class="base-cms-right--body_top">
-        <p>Biểu tượng thời tiết</p>
-        <v-btn depressed color="primary" height="50px" @click="toCreateIcon()">+ Tạo biểu tượng</v-btn>
+        <p>Dữ liệu KTTV</p>
+        <v-text-field label="Tìm kiếm" append-icon="mdi-magnify" solo hide-details>
     </div>
     <div class="base-cms-right--body_table">
 		<template>
@@ -10,13 +10,16 @@
 					<thead>
 						<tr>
 							<th class="base-cms-right--body_table_header">
-								HÌNH
+								TÊN TỈNH THÀNH
 							</th>
 							<th class="base-cms-right--body_table_header">
-								TÊN BIỂU TƯỢNG
+								NHIỆT ĐỘ THẤP NHẤT
 							</th>
 							<th class="base-cms-right--body_table_header">
-								LOẠI
+								NHIỆT ĐỘ CAO NHẤT
+							</th>
+							<th class="base-cms-right--body_table_header">
+								TRẠNG THÁI ĐẶC BIỆT
 							</th>
 							<th class="base-cms-right--body_table_header">
 
@@ -24,16 +27,12 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr v-for="(item, index) in icons" :key="index">
-							<td>
-                                <div class="base-cms-right--body_table_image">
-                                    <img :src="item.imageUrl">
-                                </div>
-                            </td>
-							<td>{{ item.name }}</td>
-							<td>{{ item.type }}</td>
+						<tr v-for="(item, index) in data" :key="index">
+							<td>{{ item.province }}</td>
+							<td>{{ item.minTemp }}</td>
+							<td>{{ item.maxTemp }}</td>
+							<td>{{ item.status }}</td>
 							<td class="base-cms-right--body_table_action">
-								<v-icon @click.native="deletePost(item.eventId)">mdi-delete</v-icon>
 								<v-icon @click.native="editPost(item.eventId)">mdi-square-edit-outline</v-icon>
 							</td>
 						</tr>
@@ -42,9 +41,9 @@
 			</v-simple-table>
 		</template>
         <div class="base-cms-right--body_table_footer_page_num">
-            <div style="flex: 1;">{{numPostsInPage}}/{{totalItems}} biểu tượng</div>
+            <div style="flex: 1;">{{numPostsInPage}}/{{totalItems}} dữ liệu</div>
 			<div class="base-cms-right--body_table_footer_page_num_limit">
-				Số biểu tượng mỗi trang
+				Số dữ liệu mỗi trang
 				<v-select style="margin-left: 20px;" :items="limitPerPage" v-model="pageSize" @change="getPostsByLimit"></v-select>
 			</div>
             <v-pagination v-model="currentPage" :length="totalPages" :total-visible="TotalPageVisible"
