@@ -37,3 +37,30 @@
         }
     }
 }
+
+.create-dialog {
+    background: #fff;
+    &-header {
+        background: $primary-color;
+        color: #fff;
+        padding: 1vw 2vw;
+        display: flex;
+        font-size: 20px;
+        font-weight: $medium-font-weight;
+        &--title {
+            flex: 1;
+        }
+    }
+    &-body {
+        padding: 2vw;
+
+        &--action {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            margin-left: 2vw;
+        }
+    }
+
+}

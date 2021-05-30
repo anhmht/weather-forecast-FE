@@ -11,6 +11,7 @@ export default class ListDataComponent extends Vue {
     limitPerPage: number[] = [5, 10, 15, 20];
     pageSize: number = 5;
     numPostsInPage: number = 20;
+    isDisplayDialog: boolean = false;
 
     get TotalPageVisible() {
         if (this.totalPages < 7)
@@ -51,4 +52,15 @@ export default class ListDataComponent extends Vue {
             status: "Nắng nóng",
         },
     ];
+
+    rules = {
+        provinceRules: [v => !!v || 'Vui lòng nhập tên tỉnh thành'],
+        minTempRules: [v => !!v || 'Vui lòng nhập nhiệt độ thấp nhất'],
+        maxTempRules: [v => !!v || 'Vui lòng nhập nhiệt độ cao nhất'],
+        statusRules: [v => !!v || 'Vui lòng nhập trạng thái đặc biệt']
+    }
+
+    toEditData(id) {
+        this.isDisplayDialog = true;
+    }
 }

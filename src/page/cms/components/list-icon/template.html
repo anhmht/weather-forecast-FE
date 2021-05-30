@@ -51,4 +51,43 @@
 				@input="getPostsByPaging"></v-pagination>
         </div>
     </div>
+	<v-dialog v-model="isDisplayDialog" persistent max-width="500">
+		<div class="create-dialog">
+            <div class="create-dialog-header">
+                <div class="create-dialog-header--title">
+                    {{dialogTitle}}
+                </div>
+                <div class="create-dialog-header--action">
+                    <v-btn @click="isDisplayDialog = false" icon color="white">
+                        <v-icon>mdi-close</v-icon>
+                    </v-btn>
+                </div>
+            </div>
+            <div class="create-dialog-body">
+                <div class="create-dialog-body_setting--upload">
+                    <div style="position: relative;">
+                        <div>Hình ảnh</div>
+                        <img :src="uploadedDocs" />
+                        <v-progress-circular v-if="progress > 0" class="progress-bar" :rotate="-90" :size="100"
+                            :width="15" :value="progress" color="primary">
+                            {{ progress }}
+                        </v-progress-circular>
+                    </div>
+                    <div class="create-dialog-body_setting--upload_btn">
+                        <input ref="upload" type="file" @change="onChangeDocuments($event.target.files)" title="" hidden
+                            accept="image/*" />
+                        <v-btn elevation="2" @click="handleClickBrowse">Upload hình</v-btn>
+                    </div>
+                </div>
+				<div>Tên biểu tượng</div>
+                <v-text-field solo :rules="rules.nameRules"></v-text-field>
+				<div>Loại biểu tượng</div>
+                <v-select :items="type" item-text="name" item-value="typeId" solo :rules="rules.typeRules"></v-select>
+				<div class="create-dialog-body--action">
+					<v-btn @click="isDisplayDialog = false" style="width: 100px; margin-right: 10px;">Hủy</v-btn>
+					<v-btn @click="createIcon()" color="primary" style="width: 100px;">{{dialogButton}}</v-btn>
+				</div>
+            </div>
+        </div>
+	</v-dialog>
 </div>

@@ -33,7 +33,7 @@
 							<td>{{ item.maxTemp }}</td>
 							<td>{{ item.status }}</td>
 							<td class="base-cms-right--body_table_action">
-								<v-icon @click.native="editPost(item.eventId)">mdi-square-edit-outline</v-icon>
+								<v-icon @click.native="toEditData(item.eventId)">mdi-square-edit-outline</v-icon>
 							</td>
 						</tr>
 					</tbody>
@@ -50,4 +50,32 @@
 				@input="getPostsByPaging"></v-pagination>
         </div>
     </div>
+	<v-dialog v-model="isDisplayDialog" persistent max-width="500">
+		<div class="create-dialog">
+            <div class="create-dialog-header">
+                <div class="create-dialog-header--title">
+                    Sửa dữ liệu
+                </div>
+                <div class="create-dialog-header--action">
+                    <v-btn @click="isDisplayDialog = false" icon color="white">
+                        <v-icon>mdi-close</v-icon>
+                    </v-btn>
+                </div>
+            </div>
+            <div class="create-dialog-body">
+                <div>Tên tỉnh thành</div>
+                <v-text-field solo :rules="rules.provinceRules"></v-text-field>
+				<div>Nhiệt độ thấp nhất</div>
+                <v-text-field solo :rules="rules.minTempRules"></v-text-field>
+				<div>Nhiệt độ cao nhất</div>
+                <v-text-field solo :rules="rules.maxTempRules"></v-text-field>
+				<div>Trạng thái đặc biệt</div>
+                <v-text-field solo :rules="rules.statusRules"></v-text-field>
+				<div class="create-dialog-body--action">
+					<v-btn @click="isDisplayDialog = false" style="width: 100px; margin-right: 10px;">Hủy</v-btn>
+					<v-btn @click="editData()" color="primary" style="width: 100px;">Sửa</v-btn>
+				</div>
+            </div>
+        </div>
+	</v-dialog>
 </div>
