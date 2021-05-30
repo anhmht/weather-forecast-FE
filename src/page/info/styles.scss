@@ -207,18 +207,3 @@
         }
     }
 }
-.bg-cover {
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-}
-.img-news img{
-    position: absolute;
-    top: 0;
-    left: 0;
-    opacity: 0;
-    pointer-events: none
-}
-.flex-row {
-    display: flex;
-}
