@@ -1,3 +1,6 @@
+import { Action } from 'vuex-class';
+import { Getter } from 'vuex-class';
+import { namespace } from 'vuex-class';
 import Vue from "vue";
 import Component from "vue-class-component";
 import { Carousel, Slide } from 'vue-carousel';
@@ -7,10 +10,15 @@ import { STATION } from "@/constant/forcast-station-constant";
 import { ROUTE_NAME } from "../../constant/route-constant";
 import { PostServices } from '../../service/post-service/post.service';
 import { CategoryServices } from '../../service/category-service/category.service';
-import { StatusServices } from '../../service/status-service/status.service';
 import { displayLocation } from "@/utils/location-helper";
 import { DataHelper } from "@/utils/data-helper";
 import { DATE } from "@/constant/common-constant";
+import { storeModules } from '@/store';
+import lookupTypesStore from '@/store/lookup/lookup-types.store';
+import IStatus from '@/model/status/status.model';
+
+const LookupGetter = namespace(storeModules.Lookup, Getter);
+const LookupAction = namespace(storeModules.Lookup, Action);
 
 @Component({
     template: require("./template.html").default,
@@ -24,7 +32,6 @@ export default class InfoPageComponent extends Vue {
     forecastService: ForecastServices = new ForecastServices();
     postService: PostServices = new PostServices();
     categoryService: CategoryServices = new CategoryServices();
-    statusService: StatusServices = new StatusServices();
     currentPosition: any = null;
     navigateTo: number = 0;
     timestamp: any = null;
@@ -37,6 +44,9 @@ export default class InfoPageComponent extends Vue {
     publishStatusName: string = "Publish";
     warningPosts: any = [];
     recommendPosts: any = [];
+
+    @LookupGetter(lookupTypesStore.Get.STATUS) status: IStatus[]
+    @LookupAction getLookupData: (type: string) => Promise<void>;
 
     get address() {
         return this.currentPosition ? this.currentPosition.region : null
@@ -106,6 +116,8 @@ export default class InfoPageComponent extends Vue {
         setInterval(this.getNow, 1000);
         this.currentPosition = await displayLocation() as any;
         await this.getTemperature();
+        await this.getLookupData(lookupTypesStore.Set.STATUS);
+        this.publishStatusId = this.status.find(x => x.name === this.publishStatusName).statusId;
 
         // Get category
         await this.categoryService.getAllCategories().then((res: any) => {
@@ -115,17 +127,6 @@ export default class InfoPageComponent extends Vue {
                 }
                 if (obj.name === this.recommendCategoryName) {
                     this.recommendCategoryId = obj.categoryId;
-                }
-            }
-        }).catch(error => {
-            console.log(error);
-        })
-
-        // Get status
-        await this.statusService.getAllStatuses().then((res: any) => {
-            for (let obj of res) {
-                if (obj.name === this.publishStatusName) {
-                    this.publishStatusId = obj.statusId;
                 }
             }
         }).catch(error => {

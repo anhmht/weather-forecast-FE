@@ -2,15 +2,19 @@
     .base-cms-right--body {
         &_top {
             display: flex;
-
+            align-items: center;
+            margin-bottom: 20px;
             // title
-            p {
-                font-size: 30px;
+            > p {
+                font-size: 25px;
+                flex: 1;
+                margin: 0;
             }
 
             // search input
-            .v-input__control {
-                margin-left: 500px;
+            .v-input {
+                width: 450px;
+                flex: unset;
             }
 
             // create new button

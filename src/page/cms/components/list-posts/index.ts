@@ -1,7 +1,7 @@
 import { IPostSearchParameter, PostSearchParameter } from './../../../../model/post/post-filter.model';
 import Vue from "vue";
 import Component from "vue-class-component";
-import { PATH, ROUTE_NAME } from "../../../../constant/route-constant";
+import { ROUTE_NAME } from "../../../../constant/route-constant";
 import { PostServices } from '../../../../service/post-service/post.service';
 import { Watch } from 'vue-property-decorator';
 
@@ -13,7 +13,7 @@ export default class ListPostComponent extends Vue {
     posts: any = []
     totalItems: number = 0;
     totalPages: number = 0;
-
+    listPostTitle: string = '';
     limitPerPage: number[] = [5, 10, 15, 20];
     numPostsInPage: number = 0;
 
@@ -27,7 +27,10 @@ export default class ListPostComponent extends Vue {
     }
 
     toCreatePost() {
-        this.$router.push(PATH.CREATE_POST);
+        this.$router.push({
+            name: ROUTE_NAME.CREATE_POST,
+            query: { categoryId: this.$route.query.categoryId}
+        });
     }
 
     editPost(id) {
@@ -36,9 +39,13 @@ export default class ListPostComponent extends Vue {
 
     async deletePost(id) {
         await this.postService.deletePostById(id);
+        if (this.posts.length === 1) {
+            this.searchParams.page -= 1;
+        }
+        this.getPostsByPaging();
     }
 
-    async getPostsByLimit(value) {
+    async getPostsByLimit(value = null) {
         this.searchParams.page = 1;
         await this.getPosts();
         if (this.searchParams.limit <= this.totalItems) {
@@ -60,6 +67,7 @@ export default class ListPostComponent extends Vue {
     async getPosts() {
         await this.postService.getPosts(this.searchParams).then((res: any) => {
             this.posts = res.events;
+            this.listPostTitle = this.posts[0] ? this.posts[0].categoryName : null;
             this.totalItems = res.totalItems;
             this.totalPages = res.totalPages;
         }).catch(error => {
@@ -80,10 +88,12 @@ export default class ListPostComponent extends Vue {
     }
 
     @Watch('$route.query.categoryId')
-    handleChangeCategory(val) {
-        this.searchParams = new PostSearchParameter({
-            categoryId: val
-        });
-        this.getPosts();
+    handleChangeCategory(val, old) {
+        if(val && val !== old) {
+            this.searchParams = new PostSearchParameter({
+                categoryId: val
+            });
+            this.getPosts();
+        }
     }
 }

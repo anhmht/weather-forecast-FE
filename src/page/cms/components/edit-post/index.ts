@@ -1,3 +1,6 @@
+import { Action } from 'vuex-class';
+import { Getter } from 'vuex-class';
+import { namespace } from 'vuex-class';
 import { ROUTE_NAME } from '@/constant/route-constant';
 import { Post } from '../../../../model/post/post.model';
 import Vue from "vue";
@@ -8,8 +11,12 @@ import { UploadServices } from "@/service/upload-service/upload.service";
 import NO_IMAGE from '../../../../../static/img/no-image/no-image.png';
 import { CategoryServices } from '../../../../service/category-service/category.service';
 import ICategory from './../../../../model/category/category.model';
-import { StatusServices } from '../../../../service/status-service/status.service';
 import IStatus from './../../../../model/status/status.model';
+import { storeModules } from '@/store';
+import lookupTypesStore from '@/store/lookup/lookup-types.store';
+
+const LookupGetter = namespace(storeModules.Lookup, Getter);
+const LookupAction = namespace(storeModules.Lookup, Action);
 
 @Component({
     template: require("./template.html").default,
@@ -23,7 +30,6 @@ export default class EditPostComponent extends Vue {
     postService: PostServices = new PostServices();
     uploadservice: UploadServices = new UploadServices();
     categoryService: CategoryServices = new CategoryServices();
-    statusService: StatusServices = new StatusServices();
     valid: boolean = true;
     uploadedDocs: any = NO_IMAGE;
     progress: number = 0;
@@ -31,13 +37,15 @@ export default class EditPostComponent extends Vue {
     postModel: IPost = new Post({});
 
     category: ICategory[] = []
-    status: IStatus[] = []
 
     rules = {
         title: [v => !!v || 'Vui lòng nhập tiêu đề'],
         statusRules: [v => !!v || 'Vui lòng chọn trạng thái'],
         categoryRules: [v => !!v || 'Vui lòng chọn danh mục']
     }
+
+    @LookupGetter(lookupTypesStore.Get.STATUS) status: IStatus[]
+    @LookupAction getLookupData: (type: string) => void;
 
     editPost() {
         //@ts-ignore
@@ -141,13 +149,7 @@ export default class EditPostComponent extends Vue {
         }).catch(error => {
             console.log(error);
         })
-
-        // Get status
-        this.statusService.getAllStatuses().then((res: any) => {
-            this.status = res;
-        }).catch(error => {
-            console.log(error);
-        })
+        this.getLookupData(lookupTypesStore.Set.STATUS);
 
         this.postService.getPostById(this.$route.params.id)
             .then(res => {

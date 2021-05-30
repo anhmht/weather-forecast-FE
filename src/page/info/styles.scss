@@ -26,7 +26,7 @@
     }
 
     .info-current-forecast {
-        height: 404px;
+        height: 428px;
         background: linear-gradient(rgb(255 255 255 / 23%), rgb(255 255 255 / 22%)), rgb(255 255 255 / 0%);
         border-radius: 10px;
         color: #fff;
@@ -59,7 +59,7 @@
     }
 
     .warning-info {
-        height: 404px;
+        height: 428px;
         background: #fff;
         border-radius: 10px;
         color: #000;
@@ -73,10 +73,10 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            padding: 15px 0;
+            padding: 10px 0;
         }
         &-left {
-            padding: 15px;
+            padding: 15px 15px 5px 15px;
             cursor: pointer;
             &:hover {
                 h4 {
@@ -85,7 +85,7 @@
             }
         }
         &-right {
-            padding: 15px 0;
+            padding: 15px 0 5px 0;
             &--item {
                  display: flex;
                 align-items: center;

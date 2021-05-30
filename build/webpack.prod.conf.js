@@ -18,30 +18,6 @@ const env = process.env.NODE_ENV === 'testing' ?
 const webpackConfig = merge(baseWebpackConfig, {
     mode: "production",
     module: {
-        rules: [
-            ...utils.styleLoaders({
-                sourceMap: config.build.productionSourceMap,
-                extract: false,
-                usePostCSS: true
-            }),
-            {
-                test: /\.(scss)$/,
-                use: [
-                    {
-                        loader: "sass-loader", // compiles Sass to CSS
-                        options: {
-                            implementation: require("sass"),
-                            sassOptions: {
-                                includePaths: [
-                                    `${__dirname}/src/theme/main.scss`
-                                ]
-                            },
-                            additionalData: '@import "~@/theme/main.scss";'
-                        }
-                    }
-                ]
-            }
-        ]
     },
     optimization: {
         runtimeChunk: "single",
@@ -49,12 +25,6 @@ const webpackConfig = merge(baseWebpackConfig, {
             chunks: "all",
             maxInitialRequests: Infinity,
             minSize: 0,
-            cacheGroups: {
-                elementui: {
-                    test: /[\\/]node_modules[\\/](element-ui)[\\/]/,
-                    name: "element-ui"
-                }
-            }
         },
         minimizer: [new TerserJSPlugin({}), new OptimizeCSSPlugin({})]
     },

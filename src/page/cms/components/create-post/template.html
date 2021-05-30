@@ -9,9 +9,7 @@
                 <v-text-field solo :rules="rules.title" v-model="postModel.title"></v-text-field>
                 <div class="base-cms-right--body_editor">
                     <div>Nội dung</div>
-                    <custom-ckeditor v-model="postModel.content"/>
-                    <!-- <ckeditor :editor="CKEditorOptions.editor" v-model="postModel.content"
-                        :config="CKEditorOptions.editorConfig"></ckeditor> -->
+                    <custom-ckeditor  :rules="rules.title" v-model="postModel.content"/>
                 </div>
             </div>
 
@@ -36,7 +34,7 @@
                     v-model="postModel.statusId"></v-select>
                 <div>Danh mục</div>
                 <v-select :items="category" item-text="name" item-value="categoryId" solo :rules="rules.categoryRules"
-                    v-model="postModel.categoryId"></v-select>
+                    v-model="postModel.categoryId" readonly></v-select>
                 <v-btn depressed color="primary" @click="createPost()">Lưu tin</v-btn>
             </div>
         </div>

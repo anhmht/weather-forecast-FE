@@ -29,8 +29,9 @@ export const displayLocation = (coordinate = null)  => new Promise( async (resol
     } else {
         locationService.getCurrentLocation(lat, lon).then((res: any) => {
             let regionCode = res.data[0].region_code;
-            sessionStorage.setItem('position', JSON.stringify({ lat, lon, regionCode }));
-            resolve({ lat, lon, regionCode });
+            let region = res.data[0].region;
+            sessionStorage.setItem('position', JSON.stringify({ lat, lon, regionCode, region }));
+            resolve({ lat, lon, regionCode, region });
         }).catch(error => {
             console.log(error);
         })

@@ -1,7 +1,7 @@
 <div class="list-post-container">
     <div class="base-cms-right--body_wrapper">
         <div class="base-cms-right--body_top">
-            <p>Cảnh báo thiên tai</p>
+            <p>{{listPostTitle}}</p>
             <v-text-field label="Tìm kiếm" append-icon="mdi-magnify" solo hide-details>
             </v-text-field>
             <v-btn depressed color="primary" height="50px" @click="toCreatePost()">
@@ -10,7 +10,7 @@
         </div>
         <div class="base-cms-right--body_table">
             <template>
-                <v-simple-table fixed-header height="504px">
+                <v-simple-table fixed-header height="574px">
                     <template v-slot:default>
                         <thead>
                             <tr>

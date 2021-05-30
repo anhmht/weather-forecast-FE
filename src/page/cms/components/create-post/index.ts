@@ -1,23 +1,23 @@
-import { ROUTE_NAME } from './../../../../constant/route-constant';
 import { Post } from './../../../../model/post/post.model';
 import Vue from "vue";
 import Component from "vue-class-component";
-import CKEditor from '@ckeditor/ckeditor5-vue2';
-import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor';
-
 import { PostServices } from '../../../../service/post-service/post.service';
 import IPost from "../../../../model/post/post.model";
 import { UploadServices } from "@/service/upload-service/upload.service";
 import NO_IMAGE from '../../../../../static/img/no-image/no-image.png';
 import { CategoryServices } from '../../../../service/category-service/category.service';
 import ICategory from './../../../../model/category/category.model';
-import { StatusServices } from '../../../../service/status-service/status.service';
 import IStatus from './../../../../model/status/status.model';
+import { namespace, Getter, Action } from "vuex-class";
+import { storeModules } from '@/store';
+import lookupTypesStore from '@/store/lookup/lookup-types.store';
+
+const LookupGetter = namespace(storeModules.Lookup, Getter);
+const LookupAction = namespace(storeModules.Lookup, Action);
 
 @Component({
     template: require("./template.html").default,
     components: {
-        ckeditor: CKEditor.component,
         "custom-ckeditor": () => import("../../../../components/ckeditor")
     }
 })
@@ -26,29 +26,22 @@ export default class CreatePostComponent extends Vue {
     postService: PostServices = new PostServices();
     uploadservice: UploadServices = new UploadServices();
     categoryService: CategoryServices = new CategoryServices();
-    statusService: StatusServices = new StatusServices();
     valid: boolean = true;
     uploadedDocs: any = NO_IMAGE;
     progress: number = 0
 
     postModel: IPost = new Post({});
 
-    CKEditorOptions: any = {
-        editor: ClassicEditor,
-
-        editorConfig: {
-            height:500
-        }
-    }
-
     category: ICategory[] = []
-    status: IStatus[] = []
 
     rules = {
         title: [v => !!v || 'Vui lòng nhập tiêu đề'],
         statusRules: [v => !!v || 'Vui lòng chọn trạng thái'],
         categoryRules: [v => !!v || 'Vui lòng chọn danh mục']
     }
+
+    @LookupGetter(lookupTypesStore.Get.STATUS) status: IStatus[]
+    @LookupAction getLookupData: (type: string) => void;
 
     createPost() {
         //@ts-ignore
@@ -57,7 +50,7 @@ export default class CreatePostComponent extends Vue {
         if (this.valid) {
             this.postModel.datePosted = new Date().toISOString();
             this.postService.createPost(this.postModel).then(res => {
-                vm.$router.push({ name: ROUTE_NAME.LIST_POST });
+                vm.$router.go(-1);
             }).catch(err => {
                 console.log(err);
             })
@@ -146,15 +139,11 @@ export default class CreatePostComponent extends Vue {
         // Get category
         this.categoryService.getAllCategories().then((res: any) => {
             this.category = res;
+            this.postModel.categoryId = this.$route.query.categoryId as any;
         }).catch(error => {
             console.log(error);
         })
 
-        // Get status
-        this.statusService.getAllStatuses().then((res: any) => {
-            this.status = res;
-        }).catch(error => {
-            console.log(error);
-        })
+        this.getLookupData(lookupTypesStore.Set.STATUS);
     }
 }

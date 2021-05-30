@@ -6,6 +6,7 @@ import router from "./router";
 import vuetify from "./plugins/Vuetify";
 import axios from 'axios';
 import { getLocalStorage, setAxiosHeader } from "./utils/appConfig";
+import store from "./store";
 
 Vue.config.productionTip = false;
 
@@ -33,5 +34,6 @@ class RootApp extends Vue {
 
 new RootApp({
     router,
-    vuetify
+    vuetify,
+    store
 }).$mount("#app");

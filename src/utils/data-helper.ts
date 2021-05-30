@@ -9,7 +9,7 @@ export class DataHelper {
         const hours = Object.keys(temp).filter(x => x.includes('_'));
         const tempValue = []
         const limitDate = (forecastDateApplyWithCurrent * 24) + 24;
-        for (let index = forecastDateApplyWithCurrent; index < limitDate; index++) {
+        for (let index = forecastDateApplyWithCurrent * 24; index < limitDate; index++) {
             tempValue.push(temp[hours[index]]);
         }
         return {

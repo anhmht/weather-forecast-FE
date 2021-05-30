@@ -46,6 +46,8 @@ export default class InfoDetailPageComponent extends Vue {
 
     @Watch("$route.params.id")
     handleChangeRoute(val) {
-        this.fetchData();
+        if(val) {
+            this.fetchData();
+        }
     }
 }
