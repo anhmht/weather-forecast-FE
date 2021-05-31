@@ -4,7 +4,7 @@ import icon from '../../../static/img/icon/day_partial_cloud.png';
 import { displayLocation } from "@/utils/location-helper";
 import { DataHelper } from "@/utils/data-helper";
 import { STATION } from "../../constant/forcast-station-constant";
-import { DATE, HOUR } from "@/constant/common-constant";
+import { DATE } from "@/constant/common-constant";
 import { ForecastServices } from "../../service/forecast-service/forecast.service";
 import moment from "moment";
 
@@ -51,7 +51,7 @@ export default class TimePageComponent extends Vue {
             const minMaxTempNext3Date = DataHelper.getMinMaxTemp(res, DATE.NEXT_3_DAY);
             const minMaxTempNext4Date = DataHelper.getMinMaxTemp(res, DATE.NEXT_4_DAY);
 
-            this.currentTemp = DataHelper.getCurrentDayTempByHour(res, new Date().getHours());
+            this.currentTemp = DataHelper.getTempByHour(res, 0);
             this.currentDayMinTemp = minMaxTempCurrentDate.min;
             this.currentDayMaxTemp = minMaxTempCurrentDate.max;
 
@@ -80,124 +80,124 @@ export default class TimePageComponent extends Vue {
 
             this.weatherByTime = [
                 {
-                    time: HOUR._1AM + ':00',
+                    time: DataHelper.getDisplayHour(0),
                     imageUrl: icon,
-                    temp: DataHelper.getCurrentDayTempByHour(res, HOUR._1AM)
+                    temp: this.currentTemp
                 },
                 {
-                    time: HOUR._2AM + ':00',
+                    time: DataHelper.getDisplayHour(1),
                     imageUrl: icon,
-                    temp: DataHelper.getCurrentDayTempByHour(res, HOUR._2AM)
+                    temp: DataHelper.getTempByHour(res, 1)
                 },
                 {
-                    time: HOUR._3AM + ':00',
+                    time: DataHelper.getDisplayHour(2),
                     imageUrl: icon,
-                    temp: DataHelper.getCurrentDayTempByHour(res, HOUR._3AM)
+                    temp: DataHelper.getTempByHour(res, 2)
                 },
                 {
-                    time: HOUR._4AM + ':00',
+                    time: DataHelper.getDisplayHour(3),
                     imageUrl: icon,
-                    temp: DataHelper.getCurrentDayTempByHour(res, HOUR._4AM)
+                    temp: DataHelper.getTempByHour(res, 3)
                 },
                 {
-                    time: HOUR._5AM + ':00',
+                    time: DataHelper.getDisplayHour(4),
                     imageUrl: icon,
-                    temp: DataHelper.getCurrentDayTempByHour(res, HOUR._5AM)
+                    temp: DataHelper.getTempByHour(res, 4)
                 },
                 {
-                    time: HOUR._6AM + ':00',
+                    time: DataHelper.getDisplayHour(5),
                     imageUrl: icon,
-                    temp: DataHelper.getCurrentDayTempByHour(res, HOUR._6AM)
+                    temp: DataHelper.getTempByHour(res, 5)
                 },
                 {
-                    time: HOUR._7AM + ':00',
+                    time: DataHelper.getDisplayHour(6),
                     imageUrl: icon,
-                    temp: DataHelper.getCurrentDayTempByHour(res, HOUR._7AM)
+                    temp: DataHelper.getTempByHour(res, 6)
                 },
                 {
-                    time: HOUR._8AM + ':00',
+                    time: DataHelper.getDisplayHour(7),
                     imageUrl: icon,
-                    temp: DataHelper.getCurrentDayTempByHour(res, HOUR._8AM)
+                    temp: DataHelper.getTempByHour(res, 7)
                 },
                 {
-                    time: HOUR._9AM + ':00',
+                    time: DataHelper.getDisplayHour(8),
                     imageUrl: icon,
-                    temp: DataHelper.getCurrentDayTempByHour(res, HOUR._9AM)
+                    temp: DataHelper.getTempByHour(res, 8)
                 },
                 {
-                    time: HOUR._10AM + ':00',
+                    time: DataHelper.getDisplayHour(9),
                     imageUrl: icon,
-                    temp: DataHelper.getCurrentDayTempByHour(res, HOUR._10AM)
+                    temp: DataHelper.getTempByHour(res, 9)
                 },
                 {
-                    time: HOUR._11AM + ':00',
+                    time: DataHelper.getDisplayHour(10),
                     imageUrl: icon,
-                    temp: DataHelper.getCurrentDayTempByHour(res, HOUR._11AM)
+                    temp: DataHelper.getTempByHour(res, 10)
                 },
                 {
-                    time: HOUR._12AM + ':00',
+                    time: DataHelper.getDisplayHour(11),
                     imageUrl: icon,
-                    temp: DataHelper.getCurrentDayTempByHour(res, HOUR._12AM)
+                    temp: DataHelper.getTempByHour(res, 11)
                 },
                 {
-                    time: HOUR._1PM + ':00',
+                    time: DataHelper.getDisplayHour(12),
                     imageUrl: icon,
-                    temp: DataHelper.getCurrentDayTempByHour(res, HOUR._1PM)
+                    temp: DataHelper.getTempByHour(res, 12)
                 },
                 {
-                    time: HOUR._2PM + ':00',
+                    time: DataHelper.getDisplayHour(13),
                     imageUrl: icon,
-                    temp: DataHelper.getCurrentDayTempByHour(res, HOUR._2PM)
+                    temp: DataHelper.getTempByHour(res, 13)
                 },
                 {
-                    time: HOUR._3PM + ':00',
+                    time: DataHelper.getDisplayHour(14),
                     imageUrl: icon,
-                    temp: DataHelper.getCurrentDayTempByHour(res, HOUR._3PM)
+                    temp: DataHelper.getTempByHour(res, 14)
                 },
                 {
-                    time: HOUR._4PM + ':00',
+                    time: DataHelper.getDisplayHour(15),
                     imageUrl: icon,
-                    temp: DataHelper.getCurrentDayTempByHour(res, HOUR._4PM)
+                    temp: DataHelper.getTempByHour(res, 15)
                 },
                 {
-                    time: HOUR._5PM + ':00',
+                    time: DataHelper.getDisplayHour(16),
                     imageUrl: icon,
-                    temp: DataHelper.getCurrentDayTempByHour(res, HOUR._5PM)
+                    temp: DataHelper.getTempByHour(res, 16)
                 },
                 {
-                    time: HOUR._6PM + ':00',
+                    time: DataHelper.getDisplayHour(17),
                     imageUrl: icon,
-                    temp: DataHelper.getCurrentDayTempByHour(res, HOUR._6PM)
+                    temp: DataHelper.getTempByHour(res, 17)
                 },
                 {
-                    time: HOUR._7PM + ':00',
+                    time: DataHelper.getDisplayHour(18),
                     imageUrl: icon,
-                    temp: DataHelper.getCurrentDayTempByHour(res, HOUR._7PM)
+                    temp: DataHelper.getTempByHour(res, 18)
                 },
                 {
-                    time: HOUR._8PM + ':00',
+                    time: DataHelper.getDisplayHour(19),
                     imageUrl: icon,
-                    temp: DataHelper.getCurrentDayTempByHour(res, HOUR._8PM)
+                    temp: DataHelper.getTempByHour(res, 19)
                 },
                 {
-                    time: HOUR._9PM + ':00',
+                    time: DataHelper.getDisplayHour(20),
                     imageUrl: icon,
-                    temp: DataHelper.getCurrentDayTempByHour(res, HOUR._9PM)
+                    temp: DataHelper.getTempByHour(res, 20)
                 },
                 {
-                    time: HOUR._10PM + ':00',
+                    time: DataHelper.getDisplayHour(21),
                     imageUrl: icon,
-                    temp: DataHelper.getCurrentDayTempByHour(res, HOUR._10PM)
+                    temp: DataHelper.getTempByHour(res, 21)
                 },
                 {
-                    time: HOUR._11PM + ':00',
+                    time: DataHelper.getDisplayHour(22),
                     imageUrl: icon,
-                    temp: DataHelper.getCurrentDayTempByHour(res, HOUR._11PM)
+                    temp: DataHelper.getTempByHour(res, 22)
                 },
                 {
-                    time: HOUR._12PM + ':00',
+                    time: DataHelper.getDisplayHour(23),
                     imageUrl: icon,
-                    temp: DataHelper.getCurrentDayTempByHour(res, HOUR._12PM)
+                    temp: DataHelper.getTempByHour(res, 23)
                 },
             ];
         }).catch(error => {
