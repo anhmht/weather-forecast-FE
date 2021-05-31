@@ -3,8 +3,8 @@
         <div class="base-container-header-logo">
             <img src="/static/img/header/logo.png" />
         </div>
-        <menu-bar />
-        <div class="nav-click">
+        <menu-bar :class="menuClick ? 'show' : ''"/>
+        <div class="nav-click" :class="menuClick ? 'active' : ''" @click="menuClick = !menuClick">
             <span></span>
         </div>
     </div>

@@ -44,6 +44,7 @@ export default class InfoPageComponent extends Vue {
     publishStatusName: string = "Publish";
     warningPosts: any = [];
     recommendPosts: any = [];
+    slideIndex:number = 0;
 
     @LookupGetter(lookupTypesStore.Get.STATUS) status: IStatus[]
     @LookupAction getLookupData: (type: string) => Promise<void>;
@@ -65,6 +66,18 @@ export default class InfoPageComponent extends Vue {
 
     get firstWarningPost() {
         return this.warningPosts.length > 0 ? this.warningPosts[0] : {}
+    }
+
+    get Recommend() {
+        const result = []
+        let i, j, chunk = 4;
+        for (i = 0, j = this.recommendPosts.length; i < j; i += chunk) {
+            const temparray = this.recommendPosts.slice(i, i + chunk);
+            result.push(temparray);
+        }
+        console.log(result);
+
+        return result;
     }
 
     transformImage(url) {
@@ -104,7 +117,7 @@ export default class InfoPageComponent extends Vue {
             await this.forecastService.getTemperatureByStation(station.id).then((res) => {
                 const minMaxTemp = DataHelper.getMinMaxTemp(res, DATE.CURRENT);
                 this.temparatureData = {
-                    current: res[`_${new Date().getHours()}`],
+                    current: DataHelper.getTempByHour(res, 0),
                     min: minMaxTemp.min,
                     max: minMaxTemp.max
                 }

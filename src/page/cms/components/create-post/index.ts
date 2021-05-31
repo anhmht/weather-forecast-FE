@@ -18,10 +18,11 @@ const LookupAction = namespace(storeModules.Lookup, Action);
 @Component({
     template: require("./template.html").default,
     components: {
-        "custom-ckeditor": () => import("../../../../components/ckeditor")
+        "custom-ckeditor": () => import("../../../../components/ckeditor"),
     }
 })
 export default class CreatePostComponent extends Vue {
+    isLoading: boolean = false;
     isUploading: boolean = false;
     postService: PostServices = new PostServices();
     uploadservice: UploadServices = new UploadServices();
@@ -49,10 +50,13 @@ export default class CreatePostComponent extends Vue {
         const vm = this as any;
         if (this.valid) {
             this.postModel.datePosted = new Date().toISOString();
+            this.isLoading = true;
             this.postService.createPost(this.postModel).then(res => {
                 vm.$router.go(-1);
+                this.isLoading = false;
             }).catch(err => {
                 console.log(err);
+                this.isLoading = false;
             })
         }
     }
@@ -136,12 +140,15 @@ export default class CreatePostComponent extends Vue {
     }
 
     mounted() {
+        this.isLoading = true;
         // Get category
         this.categoryService.getAllCategories().then((res: any) => {
             this.category = res;
             this.postModel.categoryId = this.$route.query.categoryId as any;
+            this.isLoading = false;
         }).catch(error => {
             console.log(error);
+            this.isLoading = false;
         })
 
         this.getLookupData(lookupTypesStore.Set.STATUS);

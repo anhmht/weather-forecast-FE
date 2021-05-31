@@ -73,8 +73,6 @@ export default class CKEditorComponent extends Vue {
         return this.value;
     }
     set editorData(value) {
-        console.log(value);
-
         this.$emit('input', value);
     }
 }

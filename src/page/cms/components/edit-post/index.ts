@@ -143,6 +143,7 @@ export default class EditPostComponent extends Vue {
     }
 
     async mounted() {
+        this.isLoading = true;
         // Get category
         this.categoryService.getAllCategories().then((res: any) => {
             this.category = res;
@@ -153,10 +154,12 @@ export default class EditPostComponent extends Vue {
 
         this.postService.getPostById(this.$route.params.id)
             .then(res => {
+                this.isLoading = false;
                 this.postModel = new Post(res);
                 this.uploadedDocs = this.postModel.imageUrl;
             }).catch(err => {
                 console.log(err);
+                this.isLoading = false;
             });
     }
 }

@@ -55,22 +55,18 @@
                     <v-col auto>
                         <h1>Thông tin khuyến cáo</h1>
                         <div class="recommend-info">
-                            <carousel :per-page="4" :navigate-to="navigateTo" :pagination-enabled="false">
-                                <slide v-for="(item,index) in recommendPosts" :key="index">
-                                    <div @click="handleViewDetail(item.eventId)" class="recommend-info-carousel-slide">
-                                        <img :src="item.imageUrl? item.imageUrl : null">
-                                        <div class="content-new-s">
-                                            <h4>{{item.title}}</h4>
-                                        </div>
-                                    </div>
-                                </slide>
-                            </carousel>
-                            <v-btn class="recommend-info-prev-btn" color="primary" elevation="10" icon @click="handlePrev()">
-                                <v-icon>mdi-arrow-left-bold-circle-outline</v-icon>
-                            </v-btn>
-                            <v-btn class="recommend-info-next-btn" color="primary" elevation="10" icon @click="handleNext()">
-                                <v-icon>mdi-arrow-right-bold-circle-outline</v-icon>
-                            </v-btn>
+                            <v-carousel height="300" v-model="slideIndex" hide-delimiters show-arrows-on-hover>
+                                <v-carousel-item v-for="(items,index) in Recommend" :key="index">
+                                    <v-row no-gutters>
+                                        <v-col class="recommend-info-item" style="padding: 10px" v-for="(item, i) in items" :key="i" cols="12" md="3">
+                                            <img :src="item.imageUrl? item.imageUrl : null" @click="handleViewDetail(item.eventId)">
+                                            <div class="content-new-s">
+                                                <h4>{{item.title}}</h4>
+                                            </div>
+                                        </v-col>
+                                    </v-row>
+                                </v-carousel-item>
+                            </v-carousel>
                         </div>
                     </v-col>
                 </v-row>

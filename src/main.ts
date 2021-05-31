@@ -6,6 +6,7 @@ import router from "./router";
 import vuetify from "./plugins/Vuetify";
 import axios from 'axios';
 import { getLocalStorage, setAxiosHeader } from "./utils/appConfig";
+import Loading from './components/loading';
 import store from "./store";
 
 Vue.config.productionTip = false;
@@ -16,6 +17,7 @@ axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 axios.defaults.headers.post['Access-Control-Allow-Methods'] = 'GET, POST, PATCH, PUT, DELETE, OPTIONS';
 axios.defaults.headers.post['Access-Control-Allow-Headers'] = 'Content-Type, Authorization';
 
+Vue.component('loading', Loading);
 @Component({
     template: "<App/>",
     components: {

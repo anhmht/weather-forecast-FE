@@ -5,7 +5,6 @@ import { UploadServices } from '@/service/upload-service/upload.service';
 export class UploadAdapter {
     loader: any;
     url: string;
-    xhr: any;
     uploadservice: UploadServices = new UploadServices();
     constructor(loader) {
         // CKEditor 5's FileLoader instance.
