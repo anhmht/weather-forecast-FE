@@ -67,6 +67,12 @@ export default class InfoPageComponent extends Vue {
         return this.warningPosts.length > 0 ? this.warningPosts[0] : {}
     }
 
+    transformImage(url) {
+        return {
+            background: `url('${url}')`
+        }
+    }
+
     handlePrev() {
         if (this.navigateTo) {
             this.navigateTo -= 1
