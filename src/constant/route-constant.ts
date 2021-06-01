@@ -9,18 +9,31 @@ export const ROUTE_NAME = {
     SOCIAL: 'social',
     NOT_FOUND: 'not-found',
     LOGIN: 'login',
-    MANAGEMENT: 'management'
+    MANAGEMENT: 'management',
+    LIST_POST: 'listPost',
+    CREATE_POST: 'createPost',
+    EDIT_POST: 'editPost',
+    DELETE_POST: 'deletePost',
+    LIST_ICON: 'listIcon',
+    LIST_DATA: 'listData',
 }
 
 export const PATH = {
     RADAR: '/radar',
     INFO: '/info',
-    INFO_DETAIL: '/info/*',
+    INFO_DETAIL: '/info/:id',
     DATA: '/data',
     TIME: '/time',
     ICON: '/icon',
     SOCIAL: '/social',
     NOT_FOUND: '/not-found',
     LOGIN: '/login',
-    MANAGEMENT: '/management'
+    MANAGEMENT: '/management',
+    ADMIN: '/admin',
+    LIST_POST: 'list-post',
+    CREATE_POST: 'create-post',
+    EDIT_POST: 'edit-post/:id',
+    DELETE_POST: 'delete-post/:id',
+    LIST_ICON: 'list-icon',
+    LIST_DATA: 'list-data',
 }

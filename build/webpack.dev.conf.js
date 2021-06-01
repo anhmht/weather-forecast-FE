@@ -8,29 +8,10 @@ const baseWebpackConfig = require('./webpack.base.conf')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
-let rules = utils.styleLoaders({
-    sourceMap: config.dev.cssSourceMap,
-    usePostCSS: true
-});
-rules.push({
-    test: /\.s[ac]ss$/i,
-    use: [
-        {
-            loader: "sass-loader", // compiles Sass to CSS
-            options: {
-                implementation: require("sass"),
-                sassOptions: {
-                    includePaths: [`${__dirname}/src/theme/main.scss`]
-                },
-                additionalData: '@import "~@/theme/main.scss";'
-            }
-        }
-    ]
-});
 const devWebpackConfig = merge(baseWebpackConfig, {
     module: {
         // rules: utils.styleLoaders({ sourceMap: config.dev.cssSourceMap, usePostCSS: true })
-        rules: rules
+        // rules: rules
     },
     // cheap-module-eval-source-map is faster for development
     devtool: config.dev.devtool,

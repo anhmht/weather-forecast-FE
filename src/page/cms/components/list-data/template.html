@@ -1,0 +1,81 @@
+<div class="base-cms-right--body_wrapper">
+    <div class="base-cms-right--body_top">
+        <p>Dữ liệu KTTV</p>
+        <v-text-field label="Tìm kiếm" append-icon="mdi-magnify" solo hide-details>
+    </div>
+    <div class="base-cms-right--body_table">
+		<template>
+			<v-simple-table fixed-header height="550px">
+				<template v-slot:default>
+					<thead>
+						<tr>
+							<th class="base-cms-right--body_table_header">
+								TÊN TỈNH THÀNH
+							</th>
+							<th class="base-cms-right--body_table_header">
+								NHIỆT ĐỘ THẤP NHẤT
+							</th>
+							<th class="base-cms-right--body_table_header">
+								NHIỆT ĐỘ CAO NHẤT
+							</th>
+							<th class="base-cms-right--body_table_header">
+								TRẠNG THÁI ĐẶC BIỆT
+							</th>
+							<th class="base-cms-right--body_table_header">
+
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr v-for="(item, index) in data" :key="index">
+							<td>{{ item.province }}</td>
+							<td>{{ item.minTemp }}</td>
+							<td>{{ item.maxTemp }}</td>
+							<td>{{ item.status }}</td>
+							<td class="base-cms-right--body_table_action">
+								<v-icon @click.native="toEditData(item.eventId)">mdi-square-edit-outline</v-icon>
+							</td>
+						</tr>
+					</tbody>
+				</template>
+			</v-simple-table>
+		</template>
+        <div class="base-cms-right--body_table_footer_page_num">
+            <div style="flex: 1;">{{numPostsInPage}}/{{totalItems}} dữ liệu</div>
+			<div class="base-cms-right--body_table_footer_page_num_limit">
+				Số dữ liệu mỗi trang
+				<v-select style="margin-left: 20px;" :items="limitPerPage" v-model="pageSize" @change="getPostsByLimit"></v-select>
+			</div>
+            <v-pagination v-model="currentPage" :length="totalPages" :total-visible="TotalPageVisible"
+				@input="getPostsByPaging"></v-pagination>
+        </div>
+    </div>
+	<v-dialog v-model="isDisplayDialog" persistent max-width="500">
+		<div class="create-dialog">
+            <div class="create-dialog-header">
+                <div class="create-dialog-header--title">
+                    Sửa dữ liệu
+                </div>
+                <div class="create-dialog-header--action">
+                    <v-btn @click="isDisplayDialog = false" icon color="white">
+                        <v-icon>mdi-close</v-icon>
+                    </v-btn>
+                </div>
+            </div>
+            <div class="create-dialog-body">
+                <div>Tên tỉnh thành</div>
+                <v-text-field solo :rules="rules.provinceRules"></v-text-field>
+				<div>Nhiệt độ thấp nhất</div>
+                <v-text-field solo :rules="rules.minTempRules"></v-text-field>
+				<div>Nhiệt độ cao nhất</div>
+                <v-text-field solo :rules="rules.maxTempRules"></v-text-field>
+				<div>Trạng thái đặc biệt</div>
+                <v-text-field solo :rules="rules.statusRules"></v-text-field>
+				<div class="create-dialog-body--action">
+					<v-btn @click="isDisplayDialog = false" style="width: 100px; margin-right: 10px;">Hủy</v-btn>
+					<v-btn @click="editData()" color="primary" style="width: 100px;">Sửa</v-btn>
+				</div>
+            </div>
+        </div>
+	</v-dialog>
+</div>

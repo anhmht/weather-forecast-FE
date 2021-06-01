@@ -1,9 +1,6 @@
 .map-type {
-    position: absolute;
-    left: 20px;
-    top: 35%;
     background: #000;
-    width: 170px;
+    width: 200px;
     background: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5)), rgba(121, 120, 120, 0.5);
     color: #fff;
     padding: 10px;
@@ -12,13 +9,16 @@
         font-weight: 500;
         margin-bottom: 10px;
         padding: 0 10px;
+        font-weight: 800;
+        color: $primary-color;
     }
     &-content {
+        padding: 10px;
         &--item {
             padding: 5px 10px;
             cursor: pointer;
             &.active {
-                background: map-get($red, 'base');
+                background: $primary-color;
                 border-radius: 20px;
             }
         }

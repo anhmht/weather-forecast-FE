@@ -1,0 +1,31 @@
+<div class="base-cms">
+    <div class="base-cms-left">
+        <div class="base-cms-left--header">
+            <router-link  to="/info">
+                <img src="/static/img/footer/logo.png" />
+            </router-link>
+        </div>
+        <div class="base-cms-left--body">
+            <cms-menu />
+        </div>
+        <div class="base-cms-left--footer" @click="handleLogout()">
+            <v-icon dark>
+                mdi-logout
+            </v-icon>
+            <span>Đăng xuất</span>
+        </div>
+    </div>
+    <div class="base-cms-right">
+        <div class="base-cms-right--header">
+            <v-icon dark>
+                mdi-menu
+            </v-icon>
+            <div>
+                Admin
+            </div>
+        </div>
+        <div class="base-cms-right--body">
+            <router-view></router-view>
+        </div>
+    </div>
+</div>

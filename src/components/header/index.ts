@@ -7,4 +7,6 @@ import Component from "vue-class-component";
         "menu-bar": () => import("../menu/MenuComponent.vue")
     }
 })
-export default class HeaderComponent extends Vue {}
+export default class HeaderComponent extends Vue {
+    menuClick: boolean = false;
+}

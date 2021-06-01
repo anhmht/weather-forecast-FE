@@ -1,4 +1,4 @@
-import { PATH } from "@/constant/route-constant";
+import { ROUTE_NAME } from "@/constant/route-constant";
 import Vue from "vue";
 import Component from "vue-class-component";
 
@@ -11,12 +11,17 @@ import Component from "vue-class-component";
 })
 export default class App extends Vue {
     get visibleHeaderFooter(): boolean {
-        return this.visblepath(this.$route.path);
+        return this.visblepath(this.$route.name);
     }
 
-    visblepath(path: string): boolean {
-        switch (path) {
-            case PATH.RADAR:
+    visblepath(name: string): boolean {
+        switch (name) {
+            case ROUTE_NAME.RADAR:
+            case ROUTE_NAME.EDIT_POST:
+            case ROUTE_NAME.LIST_POST:
+            case ROUTE_NAME.CREATE_POST:
+            case ROUTE_NAME.LIST_ICON:
+            case ROUTE_NAME.LIST_DATA:
                 return false;
             default:
                 return true;

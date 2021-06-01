@@ -7,20 +7,20 @@
                         <h1>Thông tin thời tiết</h1>
                         <div class="info-current-forecast">
                             <div class="info-current-forecast-header">
-                                Thời tiết: Ho Chi Minh - 20:00 14-05-2021
+                                {{address}} <br/> {{timestamp}}
                             </div>
                             <div class="info-current-forecast-body">
                                 <v-row justify="center" class="info-current-forecast-body-icon">
                                     <v-col auto>
-                                        32°
+                                        {{currentTemp}}°
                                     </v-col>
                                     <v-col auto>
                                         <img src="/static/img/icon/day_rain_thunder.png">
                                     </v-col>
 
                                 </v-row>
-                                <div class="info-current-forecast-body--info">Nhiệt độ thấp nhất: 24℃</div>
-                                <div class="info-current-forecast-body--info">Nhiệt độ cao nhất: 37℃</div>
+                                <div class="info-current-forecast-body--info">Nhiệt độ thấp nhất: {{minTemp}}℃</div>
+                                <div class="info-current-forecast-body--info">Nhiệt độ cao nhất: {{maxTemp}}℃</div>
                             </div>
                         </div>
                     </v-col>
@@ -28,14 +28,14 @@
                         <h1>Cảnh báo thiên tai</h1>
                         <div class="warning-info">
                             <div class="warning-info-wrapper">
-                                <div @click="handleViewDetail(1)" class="warning-info-left">
-                                    <div class="img-news" style="background-image: url(/static/img/info-page/1.jpg)">
-                                        <img width="400" src="/static/img/info-page/1.jpg" />
+                                <div @click="handleViewDetail(firstWarningPost.eventId)" class="warning-info-left">
+                                    <div class="img-news" :style="transformImage(firstWarningPost.imageUrl)">
+                                        <img width="400" :src="firstWarningPost.imageUrl" />
                                     </div>
-                                    <h4>Nhận định diễn biến của các loại hình thiên tai trong năm 2021</h4>
+                                    <h4>{{firstWarningPost.title}}</h4>
                                 </div>
                                 <div class="warning-info-right">
-                                    <div v-for="(item,index) in warningPosts" :key="index" @click="handleViewDetail(item.id)" class="warning-info-right--item">
+                                    <div v-for="(item,index) in warningPosts" v-if="index >= 1 && index <= 4" :key="index" @click="handleViewDetail(item.eventId)" class="warning-info-right--item">
                                         <img width="150" :src="item.imageUrl" />
                                         <h4>{{item.title}}</h4>
                                     </div>
@@ -55,22 +55,18 @@
                     <v-col auto>
                         <h1>Thông tin khuyến cáo</h1>
                         <div class="recommend-info">
-                            <carousel :per-page="4" :navigate-to="navigateTo" :pagination-enabled="false">
-                                <slide v-for="(item,index) in recommendPosts" :key="index">
-                                    <div @click="handleViewDetail(item.id)" class="recommend-info-carousel-slide">
-                                        <img :src="item.imageUrl">
-                                        <div class="content-new-s">
-                                            <h4>{{item.title}}</h4>
-                                        </div>
-                                    </div>
-                                </slide>
-                            </carousel>
-                            <v-btn class="recommend-info-prev-btn" color="primary" elevation="10" icon @click="handlePrev()">
-                                <v-icon>mdi-arrow-left-bold-circle-outline</v-icon>
-                            </v-btn>
-                            <v-btn class="recommend-info-next-btn" color="primary" elevation="10" icon @click="handleNext()">
-                                <v-icon>mdi-arrow-right-bold-circle-outline</v-icon>
-                            </v-btn>
+                            <v-carousel height="300" v-model="slideIndex" hide-delimiters show-arrows-on-hover>
+                                <v-carousel-item v-for="(items,index) in Recommend" :key="index">
+                                    <v-row no-gutters>
+                                        <v-col class="recommend-info-item" style="padding: 10px" v-for="(item, i) in items" :key="i" cols="12" md="3">
+                                            <img :src="item.imageUrl? item.imageUrl : null" @click="handleViewDetail(item.eventId)">
+                                            <div class="content-new-s">
+                                                <h4>{{item.title}}</h4>
+                                            </div>
+                                        </v-col>
+                                    </v-row>
+                                </v-carousel-item>
+                            </v-carousel>
                         </div>
                     </v-col>
                 </v-row>
@@ -91,7 +87,7 @@
                     <img width="100%" src="/static/img/info-page/img-a1.jpg" />
                     <h4>+ Ưu điểm:</h4>
                 <p>
-                    EMT Weather là đơn vị chuyên về thời tiết thuộc Trung tâm khí tượng thủy văn Khu vực Phía Nam-đơn vị cung cấp các dịch vụ thông tin thời tiết sáng tạo. Ứng dụng EMT Weather cung cấp giải pháp dự báo thời tiết hoàn hảo không chỉ cho các Đài Truyền Hình mà bất kì đơn vị, lĩnh vực nào hoạt động phụ thuộc vào yếu tố thời tiết. Sự tự động, trực quan làm nên điều khác biệt lớn nhất so với các phương pháp dự báo thông thường. Những dữ liệu, video dự báo được kết xuất ngay, với số liệu được cập nhật từng phút thay cho phương pháp truyền thống, tổng hợp, nhập số liệu trước hàng giờ để đưa ra thông tin dự báo. 
+                    EMT Weather là đơn vị chuyên về thời tiết thuộc Trung tâm khí tượng thủy văn Khu vực Phía Nam-đơn vị cung cấp các dịch vụ thông tin thời tiết sáng tạo. Ứng dụng EMT Weather cung cấp giải pháp dự báo thời tiết hoàn hảo không chỉ cho các Đài Truyền Hình mà bất kì đơn vị, lĩnh vực nào hoạt động phụ thuộc vào yếu tố thời tiết. Sự tự động, trực quan làm nên điều khác biệt lớn nhất so với các phương pháp dự báo thông thường. Những dữ liệu, video dự báo được kết xuất ngay, với số liệu được cập nhật từng phút thay cho phương pháp truyền thống, tổng hợp, nhập số liệu trước hàng giờ để đưa ra thông tin dự báo.
                 </p>
                 <p>
                     + Kết xuất đồ họa trong thời gian thực, hình ảnh 3D trực quan, chân thực với các hiệu ứng thời tiết từ sức gió, lượng mưa, độ ẩm thậm chí mức độ phủ độ dày của tuyết...
@@ -101,11 +97,11 @@
                 </p>
                 <ul>
                     <li>Truyền thông: Đài truyền hình, địa phương, các trang báo điện tử, báo giấy, đài phát thanh.</li>
-                    <li>TLĩnh vực khai thác, chế biến khoáng sản…</li>
-                    <li>THàng không: dự báo thời tiết kịp thời để các hãng hàng không có kế hoạch cho các đường bay phù hợp.</li>
-                    <li>TGiao thông: Giảm thiểu sự khắc nghiệt của thời tiết, cải thiện an toàn đường bộ, đường sông, đường biển.</li>
-                    <li>TBiển đảo: có ý nghĩa lớn về du lịch, cảnh báo kịp thời cho lĩnh vực vận tải biển.</li>
-                    <li>TNông nghiệp, ngư nghiệp, nghiên cứu khoa học…</li>
+                    <li>Lĩnh vực khai thác, chế biến khoáng sản…</li>
+                    <li>Hàng không: dự báo thời tiết kịp thời để các hãng hàng không có kế hoạch cho các đường bay phù hợp.</li>
+                    <li>Giao thông: Giảm thiểu sự khắc nghiệt của thời tiết, cải thiện an toàn đường bộ, đường sông, đường biển.</li>
+                    <li>Biển đảo: có ý nghĩa lớn về du lịch, cảnh báo kịp thời cho lĩnh vực vận tải biển.</li>
+                    <li>Nông nghiệp, ngư nghiệp, nghiên cứu khoa học…</li>
                 </ul>
                 <p></p>
                 <p>

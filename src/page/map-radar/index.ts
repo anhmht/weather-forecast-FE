@@ -1,15 +1,18 @@
+// import { displayLocation } from '@/utils/location-helper';
+import { STATION } from '@/constant/forcast-station-constant';
+import { ForecastServices } from '@/service/forecast-service/forecast.service';
 import Vue from 'vue';
 import Component from "vue-class-component";
+import img from '../../../static/img/icon/new/day_rain_thunder.png';
 
 @Component({
     template: require("./template.html").default,
     components: {
         "icon-picker": () =>
             import("./components/icon-drag-drop/IconDragDropComponent.vue"),
-        "location-picker": () =>
-            import("./components/location/LocationComponent.vue"),
         "map-type-picker": () =>
-            import("./components/map-type/MapTypeComponent.vue")
+            import("./components/map-type/MapTypeComponent.vue"),
+        "location-picker": () => import("./components/location/LocationComponent.vue"),
     }
 })
 export default class HomePageComponent extends Vue {
@@ -18,9 +21,12 @@ export default class HomePageComponent extends Vue {
     isRecording: boolean = false;
     isHideIconPicker: boolean = true;
     isDisplayDialog: boolean = false;
-
+    forecastService: ForecastServices = new ForecastServices()
     layerGroup: any;
     layerProvice: any;
+    layerPopup: any;
+
+    currentPosition = null;
 
     handleBack() {
         this.$router.go(-1);
@@ -40,11 +46,24 @@ export default class HomePageComponent extends Vue {
         store.set("overlay", mapData.type);
     }
 
-    handleChangeLocation(mapData) {
+    getTemprature(station) {
+        return new Promise((resolve, reject) => {
+            this.forecastService.getTemperatureByStation(station.id).then((res) => {
+                resolve(res[`_${new Date().getHours()}`]);
+            }).catch(err => {
+                console.log(err);
+            })
+        })
+    }
+
+    async handleChangeLocation(mapData) {
         const { map } = this.windy;
         //Remove geojson layer
         if (this.layerProvice) {
             this.layerGroup.removeLayer(this.layerProvice);
+            if(this.layerPopup) {
+                this.layerGroup.removeLayer(this.layerPopup);
+            }
         }
         if (!mapData.geojson) { // Incase dont have geojson data
             map.flyTo([mapData.lat, mapData.lon], mapData.zoom);
@@ -56,13 +75,31 @@ export default class HomePageComponent extends Vue {
         this.layerProvice = L.geoJSON(geojson, { style: mapData.style });
         map.flyToBounds(this.layerProvice.getBounds(), { maxZoom: mapData.zoom });
         this.layerGroup.addLayer(this.layerProvice);
+
+        const station = STATION.find(x => x.place_id === mapData.placeId);
+        let temp = null;
+        if (station) {
+            temp = await this.getTemprature(station);
+            //@ts-ignore
+            this.layerPopup = L.popup()
+                .setLatLng([station.y, station.x])
+                .setContent(`<div class="map-pop-up">
+                            <img src="${img}"/>
+                            <div class="map-pop-up-temp">${temp}℃</div>
+                        </div>`)
+        } else {
+            temp = 32;
+        }
+        if (station) {
+            this.layerGroup.addLayer(this.layerPopup);
+        }
     }
 
     async capture() {
         this.isRecording = true;
         const vm = this as any;
         //@ts-ignore
-        navigator.mediaDevices.getDisplayMedia({ video: { mediaSource: "screen" } })
+        navigator.mediaDevices.getDisplayMedia({ video: { mediaSource: "screen", cursor: false } })
             .then(function (stream) {
                 //@ts-ignore
                 let recorder = new MediaRecorder(stream);
@@ -92,17 +129,13 @@ export default class HomePageComponent extends Vue {
     }
 
     async mounted() {
-        let apiKey = "d4a2aee090ae49548d4133121211205";
-        //@ts-ignore
-        $.getJSON("https://api.weatherapi.com/v1/ip.json?lang=vi&key=" + apiKey + "&q=42.117.31.144", function (data) {
-            console.log(JSON.stringify(data, null, 2));
-        });
+        // this.currentPosition = await displayLocation() as any;
         const options = {
             // Required: API key
             key: "PsLAtXpsPTZexBwUkO7Mx5I", // REPLACE WITH YOUR KEY !!!
             // key: 'yw7vbuA1PQmaUPe0SNECjxmOIv5AJ4FC', // Production !!!
             // Put additional console output
-            verbose: true,
+            // verbose: true,
             // Optional: Initial state of the map
             lat: 16.06778,
             lon: 108.22083,
@@ -146,6 +179,8 @@ export default class HomePageComponent extends Vue {
             //@ts-ignore
             this.layerGroup = new L.LayerGroup();
             this.layerGroup.addTo(map);
+
+
         });
     }
 }

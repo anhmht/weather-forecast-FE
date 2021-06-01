@@ -10,7 +10,14 @@ const SocialPageComponent = () => import("../page/social/SocialPageComponent.vue
 const LoginPageComponent = () => import("../page/login/LoginPageComponent.vue");
 const PageNotFoundComponent = () => import("../page/not-found/PageNotFoundComponent.vue");
 
-export default [
+const AdminComponent = () => import("../page/cms/CMSComponent.vue");
+const ListPostComponent = () => import("../page/cms/components/list-posts/ListPostComponent.vue")
+const CreatePostComponent = () => import("../page/cms/components/create-post/CreatePostComponent.vue")
+const EditPostComponent = () => import("../page/cms/components/edit-post/EditPostComponent.vue")
+const ListIconComponent = () => import("../page/cms/components/list-icon/ListIconComponent.vue")
+const ListDataComponent = () => import("../page/cms/components/list-data/ListDataComponent.vue")
+
+const homeRoutes = [
     { path: "/", redirect: { path: PATH.INFO } },
     {
         path: PATH.RADAR,
@@ -58,7 +65,10 @@ export default [
         path: PATH.LOGIN,
         name: ROUTE_NAME.LOGIN,
         component: LoginPageComponent,
-        props: {}
+        props: {},
+        meta: {
+            guest: true
+        }
     },
 
     //#page not found
@@ -68,3 +78,68 @@ export default [
         component: PageNotFoundComponent
     }
 ];
+
+const adminRoutes = [
+    {
+        path: PATH.ADMIN,
+        name: ROUTE_NAME.MANAGEMENT,
+        component: AdminComponent,
+        props: {},
+        meta: {
+            requiresAuth: true
+        },
+        children: [
+            {
+                path: PATH.LIST_POST,
+                name: ROUTE_NAME.LIST_POST,
+                component: ListPostComponent,
+                meta: {
+                    requiresAuth: true
+                },
+                props: {}
+            },
+            { path: "/admin", redirect: { path: PATH.LIST_POST, query: { categoryId: 'e78c78b7-80d1-4f3b-3014-08d91e5e4dfa' } } },
+            {
+                path: PATH.CREATE_POST,
+                name: ROUTE_NAME.CREATE_POST,
+                component: CreatePostComponent,
+                meta: {
+                    requiresAuth: true
+                },
+                props: {}
+            },
+            {
+                path: PATH.EDIT_POST,
+                name: ROUTE_NAME.EDIT_POST,
+                component: EditPostComponent,
+                meta: {
+                    requiresAuth: true
+                },
+                props: {}
+            },
+            {
+                path: PATH.LIST_ICON,
+                name: ROUTE_NAME.LIST_ICON,
+                component: ListIconComponent,
+                meta: {
+                    requiresAuth: true
+                },
+                props: {}
+            },
+            {
+                path: PATH.LIST_DATA,
+                name: ROUTE_NAME.LIST_DATA,
+                component: ListDataComponent,
+                meta: {
+                    requiresAuth: true
+                },
+                props: {}
+            }
+        ]
+    },
+]
+
+export default [
+    ...homeRoutes,
+    ...adminRoutes
+]

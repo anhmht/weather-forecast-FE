@@ -33,6 +33,20 @@
     #mobile-ovr-select {
         display: none !important;
     }
+
+    .tool-bar {
+        position: absolute;
+        left: 20px;
+        top:  5%;
+    }
+}
+
+.map-pop-up {
+    &-temp {
+        font-size: 16px;
+        padding: 5px;
+        text-align: center;
+    }
 }
 
 .preview-dialog {

@@ -56,6 +56,7 @@
                 flex-basis: 75%;
 
                 &_day {
+                    text-transform: capitalize;
                     font-weight: bold;
                 }
 
@@ -78,6 +79,7 @@
             &--next {
 
                 &_day {
+                    text-transform: capitalize;
                     font-weight: bold;
                     text-align: center;
                 }

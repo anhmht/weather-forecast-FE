@@ -1,10 +1,9 @@
 import axios, { AxiosPromise } from "axios";
-
 export class GenericServices {
     protected executeSelecting<TValue, TResult>(
         params?: TValue,
         path?: string,
-        encodeURI: boolean = true
+        encodeURI: boolean = false
     ): AxiosPromise<TResult> {
         var uri = encodeURI ? encodeURIComponent(path) : path;
         return axios
@@ -16,14 +15,25 @@ export class GenericServices {
     protected executeSelectingPost<TValue, TResult>(
         value: TValue,
         path?: string,
-        cancelTokenSource?: any
+        config?: any
     ): AxiosPromise<TResult> {
         return axios
-            .post(path, value, {
-                cancelToken: cancelTokenSource && cancelTokenSource.token
-            })
+            .post(path, value, config)
             .then(response => response.data)
-            .catch(error => () => {
+            .catch(error => {
+                console.log(error);
+            });
+    }
+
+    protected executeSelectingPut<TValue, TResult>(
+        value: TValue,
+        path?: string,
+        config?: any
+    ): AxiosPromise<TResult> {
+        return axios
+            .put(path, value, config)
+            .then(response => response.data)
+            .catch(error => {
                 console.log(error);
             });
     }

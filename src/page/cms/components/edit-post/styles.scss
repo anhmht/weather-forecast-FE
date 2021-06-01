@@ -1,0 +1,58 @@
+.base-cms-right--body {
+    &_wrapper_inner {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    &_top {
+        p {
+            font-size: 30px;
+        }
+    }
+
+    &_title {
+        background-color: #fff;
+        padding: 20px;
+        order: 1;
+        flex: 0 0 65%;
+    }
+
+    &_editor {
+        background-color: #fff;
+        order: 3;
+        flex: 0 0 65%;
+        .ck-content { height: calc(100vh - 450px); }
+    }
+
+    &_setting {
+        background-color: #fff;
+        padding: 20px;
+        order: 2;
+        flex: 0 0 30%;
+        margin-left: 20px;
+        .progress-bar {
+            height: 100px;
+            width: 100px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        button {
+            float: right;
+        }
+        &--upload {
+            display: flex;
+            img {
+                width: 150px;
+            }
+            &_btn {
+                flex: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+    }
+}

@@ -1,5 +1,8 @@
+import { UserServices } from './../../service/user-service/user.service';
 import Vue from "vue";
 import Component from "vue-class-component";
+import { PATH } from '@/constant/route-constant';
+import { setAxiosHeader, setLocalStorage } from '@/utils/appConfig';
 
 @Component({
     template: require("./template.html").default,
@@ -9,6 +12,8 @@ import Component from "vue-class-component";
 })
 export default class LoginPageComponent extends Vue {
     valid: boolean = true;
+    isLoading: boolean = false;
+    userService: UserServices = new UserServices();
     data = {
         userName: null,
         password: null
@@ -18,13 +23,28 @@ export default class LoginPageComponent extends Vue {
         passRules: [v => !!v || 'Vui lòng nhập mật khẩu']
     }
 
+    setAuthenticate(authConfig) {
+        setLocalStorage('auth', authConfig);
+        setAxiosHeader(authConfig.token);
+    }
+
     handleLogin() {
         //@ts-ignore
         this.valid = this.$refs.loginForm.validate();
+        const vm = this as any;
         if(this.valid) {
-            console.log('thành công');
-        } else {
-            console.log('fail');
+            this.isLoading = true;
+            this.userService.checkLogin({
+                email: this.data.userName,
+                password: this.data.password
+            }).then(res => {
+                this.isLoading = false;
+                this.setAuthenticate(res);
+                vm.$router.push(PATH.ADMIN);
+            }).catch(err => {
+                console.log(err);
+                this.isLoading = false;
+            })
         }
     }
 

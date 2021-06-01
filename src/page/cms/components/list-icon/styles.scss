@@ -1,0 +1,106 @@
+.base-cms-right--body {
+    &_top {
+        display: flex;
+
+        // title
+        p {
+            font-size: 30px;
+        }
+
+        // create new button
+        button {
+            margin-left: 1008px;
+        }
+    }
+
+    &_table {
+        background-color: #fff;
+
+        &_header {
+            font-size: 16px !important;
+        }
+
+        &_image {
+            img {
+                margin-right: 20px;
+                width: 70px;
+                height: 70px;
+                border-radius: 4px;
+            }
+        }
+
+        &_action {
+            cursor: pointer;
+        }
+
+        &_footer_page_num {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            
+            &_limit {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+        }
+    }
+}
+
+.create-dialog {
+    background: #fff;
+    &-header {
+        background: $primary-color;
+        color: #fff;
+        padding: 1vw 2vw;
+        display: flex;
+        font-size: 20px;
+        font-weight: $medium-font-weight;
+        &--title {
+            flex: 1;
+        }
+    }
+    &-body {
+        padding: 2vw;
+
+        &_setting {
+            background-color: #fff;
+            padding: 20px;
+            order: 2;
+            flex: 0 0 30%;
+            margin-left: 20px;
+            .progress-bar {
+                height: 100px;
+                width: 100px;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+            button {
+                float: right;
+            }
+            &--upload {
+                display: flex;
+                img {
+                    width: 150px;
+                }
+                &_btn {
+                    flex: 1;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+            }
+        }
+
+        &--action {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            margin-left: 2vw;
+        }
+    }
+
+}

@@ -1,0 +1,73 @@
+<div class="list-post-container">
+    <div class="base-cms-right--body_wrapper">
+        <div class="base-cms-right--body_top">
+            <p>{{listPostTitle}}</p>
+            <v-text-field label="Tìm kiếm" append-icon="mdi-magnify" solo hide-details>
+            </v-text-field>
+            <v-btn depressed color="primary" height="50px" @click="toCreatePost()">
+                + Tạo tin mới
+            </v-btn>
+        </div>
+        <div class="base-cms-right--body_table">
+            <template>
+                <v-simple-table fixed-header height="574px">
+                    <template v-slot:default>
+                        <thead>
+                            <tr>
+                                <th class="base-cms-right--body_table_header_checkbox">
+                                    <v-checkbox color="primary" hide-details>
+                                    </v-checkbox>
+                                </th>
+                                <th class="base-cms-right--body_table_header">
+                                    TIÊU ĐỀ
+                                </th>
+                                <th class="base-cms-right--body_table_header">
+                                    NGÀY ĐĂNG
+                                </th>
+                                <th class="base-cms-right--body_table_header">
+                                    DANH MỤC
+                                </th>
+                                <th class="base-cms-right--body_table_header">
+                                    TRẠNG THÁI
+                                </th>
+                                <th class="base-cms-right--body_table_header">
+
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(item, index) in posts" :key="index">
+                                <td class="base-cms-right--body_table_checkbox">
+                                    <v-checkbox color="primary" hide-details></v-checkbox>
+                                </td>
+                                <td>
+                                    <div class="base-cms-right--body_table_title">
+                                        <img :src="item.imageUrl">
+                                        {{ item.title }}
+                                    </div>
+                                </td>
+                                <td>{{ item.datePosted }}</td>
+                                <td>{{ item.categoryName }}</td>
+                                <td>{{ item.statusName }}</td>
+                                <td class="base-cms-right--body_table_action">
+                                    <v-icon @click.native="deletePost(item.eventId)">mdi-delete</v-icon>
+                                    <v-icon @click.native="editPost(item.eventId)">mdi-square-edit-outline</v-icon>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </template>
+                </v-simple-table>
+            </template>
+            <div class="base-cms-right--body_table_footer_page_num">
+                <div style="flex: 1;">{{numPostsInPage}}/{{totalItems}} tin</div>
+                <div class="base-cms-right--body_table_footer_page_num_limit">
+                    Số tin mỗi trang
+                    <v-select style="margin-left: 20px;" :items="limitPerPage" v-model="searchParams.limit"
+                        @change="getPostsByLimit"></v-select>
+                </div>
+                <v-pagination v-model="searchParams.page" :length="totalPages" :total-visible="TotalPageVisible"
+                    @input="getPostsByPaging"></v-pagination>
+            </div>
+        </div>
+    </div>
+</div>

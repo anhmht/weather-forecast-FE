@@ -1,0 +1,9 @@
+<div class="cms-menu">
+    <div class="cms-menu--item" v-for="(item,index) in menuList" :class="activeMenu === index ? 'active' : ''"
+        :key="index" @click="handleClick(index)">
+        <v-icon dark>
+            {{item.icon}}
+        </v-icon>
+        {{item.title}}
+    </div>
+</div>
