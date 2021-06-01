@@ -1,0 +1,31 @@
+<div class="warning-page-container">
+    <base-container class="container">
+        <div class="warning-page-container_header"></div>
+        <div class="warning-page-container_section-1">
+            <div class="warning-page-container_section-1_main">
+                <img :src="warningPosts[0].imageUrl">
+                <div class="warning-page-container_section-1_main-info">
+                    <h4>{{warningPosts[0].title}}</h4>
+                    <p>{{warningPosts[0].datePosted}}</p>
+                </div>
+            </div>
+            <div class="warning-page-container_section-1_sub">
+                <div v-for="(item,index) in warningPosts" v-if="index >= 1 && index <= 2" :key="index" class="warning-page-container_section-1_sub-item">
+                    <img :src="item.imageUrl">
+                    <div class="warning-page-container_section-1_sub-item-info">
+                        <h4>{{item.title}}</h4>
+                        <p>{{item.datePosted}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="warning-page-container_section-2">
+            <div class="warning-page-container_section-2_main">
+                
+            </div>
+            <div class="warning-page-container_section-2_sub">
+
+            </div>
+        </div>
+    </base-container>
+</div>

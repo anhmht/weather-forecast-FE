@@ -102,6 +102,11 @@ export default class InfoPageComponent extends Vue {
         this.$router.push({ name: ROUTE_NAME.INFO_DETAIL , params: { id: postId } })
     }
 
+    viewAllWarning() {
+        this.$router.push({ name: ROUTE_NAME.WARNING , 
+            params: { categoryId: this.warningCategoryId, statusId: this.publishStatusId } })
+    }
+
     getNow() {
         const today = new Date();
         const date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();

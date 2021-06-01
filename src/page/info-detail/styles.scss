@@ -16,11 +16,30 @@
             img {
                 width: 100%;
             }
+            h1 {
+                color: red;
+            }
         }
 
         &_relative {
             background-color: #fff;
             padding: 10px 10px;
+
+            &_item {
+                display: flex;
+                cursor: pointer;
+                &:hover {
+                    h4 {
+                        color: $primary-color;
+                    }
+                }
+
+                img {
+                    width: 100%;
+                    height: 60px;
+                    object-fit: cover;
+                }
+            }
         }
     }
 
@@ -34,10 +53,5 @@
             border-left: 3px solid;
             margin-bottom: 30px;
         }
-    }
-    .image-relative {
-        width: 100%;
-        height: 60px;
-        object-fit: cover;
     }
 }

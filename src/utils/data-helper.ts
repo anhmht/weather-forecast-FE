@@ -22,7 +22,12 @@ export class DataHelper {
         const hours = Object.keys(temp).filter(x => x.includes('_'));
         let refDate = Object.keys(temp).filter(x => x.includes('refDate'));
         let refHour = new Date(temp[refDate[0]]).getHours();
+        let refDay = new Date(temp[refDate[0]]).getDate();
         let currentHour = new Date().getHours();
+        let currentDay = new Date().getDate();
+        if (currentDay > refDay) {
+            currentHour = currentHour + 24 * (currentDay - refDay);
+        }
         return temp[hours[currentHour - refHour + offset - 1]];
     }
 

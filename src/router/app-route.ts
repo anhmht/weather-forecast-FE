@@ -3,6 +3,7 @@ import { ROUTE_NAME, PATH } from "../constant/route-constant";
 const MapRadarComponent = () => import("../page/map-radar/MapRadarComponent.vue");
 const InfoPageComponent = () => import("../page/info/InfoPageComponent.vue");
 const InfoDetailPageComponent = () => import("../page/info-detail/InfoDetailPageComponent.vue");
+const WarningPageComponent = () => import("../page/warning/WarningPageComponent.vue");
 const DataPageComponent = () => import("../page/data/DataPageComponent.vue");
 const TimePageComponent = () => import("../page/time/TimePageComponent.vue");
 const IconPageComponent = () => import("../page/icon/IconPageComponent.vue");
@@ -35,6 +36,12 @@ const homeRoutes = [
         path: PATH.INFO_DETAIL,
         name: ROUTE_NAME.INFO_DETAIL,
         component: InfoDetailPageComponent,
+        props: {}
+    },
+    {
+        path: PATH.WARNING,
+        name: ROUTE_NAME.WARNING,
+        component: WarningPageComponent,
         props: {}
     },
     {

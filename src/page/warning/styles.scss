@@ -1,0 +1,63 @@
+.warning-page-container {
+    background-color: #ddd;
+
+    &_header {
+        height: 50px;
+    }
+    &_section-1 {
+        display: flex;
+        background-color: #fff;
+        padding: 20px;
+
+        &_main {
+            position: relative;
+            cursor: pointer;
+
+            img {
+                width: 100%;
+                object-fit: cover;
+                height: 500px;
+                display: block;
+            }
+
+            &-info {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                padding: 15px;
+                color: #fff;
+                background: rgb(0,0,0);
+                background: linear-gradient(0deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+                p {
+                    margin: 0;
+                }
+            }
+        }
+
+        &_sub {
+            padding-left: 20px;
+
+            &-item {
+                cursor: pointer;
+
+                img {
+                    width: 100%;
+                    height: 160px;
+                    object-fit: cover;
+                    display: block;
+                }
+
+                &-info {
+                    h4 {
+                        overflow: hidden;
+                    }
+                }
+            }
+        }
+    }
+    
+    &_section-2 {
+        
+    }
+}
