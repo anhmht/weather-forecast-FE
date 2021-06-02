@@ -8,10 +8,11 @@
         margin: 0 0 0 20px;
         text-transform: uppercase;
         font-weight: 600;
-        font-size: 16px;
+        font-size: 15px;
         &.active {
             font-weight: $medium-font-weight;
             border-bottom: 1px solid $primary-color;
+            color: $primary-color;
         }
         &:hover {
             color: $primary-color;
@@ -32,7 +33,7 @@
     z-index: 999;
     &::before, &::after {
         content: '';
-        background-color: #1bdbd0;
+        background-color: #999;
         position: absolute;
         top: 9px;
         right: 4px;
@@ -49,7 +50,7 @@
     }
     span {
         content: '';
-        background-color: #1bdbd0;
+        background-color: #999;
         position: absolute;
         top: 18px;
         right: 0px;
@@ -104,7 +105,7 @@
         right: 0;
         width: 300px;
         height: calc(100% - 69px);
-        top: 69px;
+        top: 64px;
         background-color: #fff;
         max-width: 100%;
         -webkit-transition: all 0.3s ease-in-out;
@@ -114,21 +115,16 @@
          transform: translateX(170%);
          -webkit-backface-visibility: hidden;
          backface-visibility: hidden;
+         border-left: 1px solid #ddd;
          &.show {
             -webkit-transform: translate3d(0, 0, 0);
             transform: translate3d(0, 0, 0);
          }
-        li {
-            display: block;
-            border-bottom: 1px solid #ddd;
-            margin: 0;
-            float: none;
-            a {
-                display: block;
-                padding: 15px;
-                font-size: 16px;
-                color: #000;
-             }
+         &-item {
+             float: none;
+             padding: 13px;
+             margin: 0;
+             border-bottom: 1px solid #ddd;
          }
      }
     
