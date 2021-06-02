@@ -19,13 +19,26 @@
                 </div>
             </div>
         </div>
-        <div class="warning-page-container_section-2">
-            <div class="warning-page-container_section-2_main">
-                
+        <div class="warning-page-container_section-2-3_wrapper">
+            <div class="warning-page-container_section-2">
+                <div v-for="(item,index) in warningPosts" v-if="index >= 3 && index <= 7" :key="index" class="warning-page-container_section-2_item">
+                    <img :src="item.imageUrl">
+                    <div class="warning-page-container_section-2_item-info">
+                        <h4>{{item.title}}</h4>
+                        <p>{{item.datePosted}}</p>
+                    </div>
+                </div>
             </div>
-            <div class="warning-page-container_section-2_sub">
-
+            <div class="warning-page-container_section-3">
+                <h4>TIN XEM NHIỀU</h4>
+                <div v-for="(item,index) in mostWatchPosts" :key="index" class="warning-page-container_section-3_item">
+                    <img :src="item.imageUrl">
+                    <div class="warning-page-container_section-3_item-info">
+                        <h4>{{item.title}}</h4>
+                    </div>
+                </div>
             </div>
         </div>
+        <div class="warning-page-container_footer"></div>
     </base-container>
 </div>

@@ -4,6 +4,11 @@
     &_header {
         height: 50px;
     }
+
+    &_footer {
+        height: 50px;
+    }
+
     &_section-1 {
         display: flex;
         background-color: #fff;
@@ -57,7 +62,62 @@
         }
     }
     
+    &_section-2-3_wrapper {
+        display: flex;
+    }
+
     &_section-2 {
-        
+        margin: 50px 20px 0px 0px;
+        background-color: #fff;
+        padding: 20px;
+        flex: 2;
+
+        &_item {
+            display: flex;
+            cursor: pointer;
+
+            img {
+                width: 35%;
+                height: 160px;
+                object-fit: cover;
+                display: block;
+            }
+
+            &-info {
+                margin-left: 20px;
+
+                h4 {
+                    overflow: hidden;
+                }
+            }
+        }
+    }
+
+    &_section-3 {
+        margin-top: 50px;
+        background-color: #fff;
+        padding: 20px;
+        flex: 1;
+
+        &_item {
+            display: flex;
+            cursor: pointer;
+            margin-top: 20px;
+
+            img {
+                width: 50%;
+                height: 100px;
+                object-fit: cover;
+                display: block;
+            }
+
+            &-info {
+                margin-left: 20px;
+
+                h4 {
+                    overflow: hidden;
+                }
+            }
+        }
     }
 }
