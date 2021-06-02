@@ -135,6 +135,15 @@
     .recommend-info {
         &-item {
             cursor: pointer;
+            img {
+                width: 100%;
+                height: 260px;
+                object-fit: cover;
+                object-position: center;
+            }
+            h4 {
+                text-align: center;
+            }
             &:hover {
                 color: $primary-color;
 
@@ -157,15 +166,7 @@
                         padding: 10px;
                     }
                 }
-                img {
-                    width: 100%;
-                    height: 260px;
-                    object-fit: cover;
-                    object-position: center;
-                }
-                h4 {
-                    text-align: center;
-                }
+
                 position: relative;
                 // @media all and (min-width: 320px) and (max-width: 1200px) {
                 //     display: none;
