@@ -18,6 +18,10 @@ export default class WarningPageComponent extends Vue {
     postModel: IPost = new Post({});
     warningPosts: any = [];
 
+    get firstWarningPost() {
+        return this.warningPosts.length > 0 ? this.warningPosts[0] : {}
+    }
+
     mostWatchPosts: any = [
         {
             imageUrl: image,

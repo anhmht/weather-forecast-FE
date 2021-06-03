@@ -23,7 +23,7 @@ export const PATH = {
     RADAR: '/radar',
     INFO: '/info',
     INFO_DETAIL: '/info/:id',
-    WARNING: '/warning',
+    WARNING: '/warning/:categoryId/:statusId',
     DATA: '/data',
     TIME: '/time',
     ICON: '/icon',

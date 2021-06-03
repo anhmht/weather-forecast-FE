@@ -31,17 +31,18 @@ export default class InfoDetailPageComponent extends Vue {
             }).catch(err => {
                 console.log(err);
             });
+
+        // Get relative posts
+        await this.postService.getPostByCategoryAndStatus(this.postModel.categoryId, this.postModel.statusId)
+            .then((res: any) => {
+                this.relativePosts = res.filter(x => x.eventId !== this.$route.params.id);
+            }).catch(error => {
+                console.log(error);
+            });
     }
 
     async mounted() {
         await this.fetchData();
-
-        // Get relative posts
-        await this.postService.getPostByCategoryAndStatus(this.postModel.categoryId, this.postModel.statusId).then((res: any) => {
-            this.relativePosts = res;
-        }).catch(error => {
-            console.log(error);
-        })
     }
 
     @Watch("$route.params.id")

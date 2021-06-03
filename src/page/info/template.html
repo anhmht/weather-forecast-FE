@@ -35,7 +35,7 @@
                                     <h4>{{firstWarningPost.title}}</h4>
                                 </div>
                                 <div class="warning-info-right">
-                                    <div v-for="(item,index) in warningPosts" v-if="index >= 1 && index <= 4" :key="index" @click="handleViewDetail(item.eventId)" class="warning-info-right--item">
+                                    <div v-for="(item,index) in warningPosts" v-if="index >= 1 && index <= 3" :key="index" @click="handleViewDetail(item.eventId)" class="warning-info-right--item">
                                         <img width="150" :src="item.imageUrl" />
                                         <h4>{{item.title}}</h4>
                                     </div>

@@ -2,15 +2,15 @@
     <base-container class="container">
         <div class="warning-page-container_header"></div>
         <div class="warning-page-container_section-1">
-            <div class="warning-page-container_section-1_main">
-                <img :src="warningPosts[0].imageUrl">
+            <div class="warning-page-container_section-1_main" @click="handleViewDetail(firstWarningPost.eventId)">
+                <img :src="firstWarningPost.imageUrl">
                 <div class="warning-page-container_section-1_main-info">
-                    <h4>{{warningPosts[0].title}}</h4>
-                    <p>{{warningPosts[0].datePosted}}</p>
+                    <h4>{{firstWarningPost.title}}</h4>
+                    <p>{{firstWarningPost.datePosted}}</p>
                 </div>
             </div>
             <div class="warning-page-container_section-1_sub">
-                <div v-for="(item,index) in warningPosts" v-if="index >= 1 && index <= 2" :key="index" class="warning-page-container_section-1_sub-item">
+                <div v-for="(item,index) in warningPosts" v-if="index >= 1 && index <= 2" :key="index" @click="handleViewDetail(item.eventId)" class="warning-page-container_section-1_sub-item">
                     <img :src="item.imageUrl">
                     <div class="warning-page-container_section-1_sub-item-info">
                         <h4>{{item.title}}</h4>
@@ -21,7 +21,7 @@
         </div>
         <div class="warning-page-container_section-2-3_wrapper">
             <div class="warning-page-container_section-2">
-                <div v-for="(item,index) in warningPosts" v-if="index >= 3 && index <= 7" :key="index" class="warning-page-container_section-2_item">
+                <div v-for="(item,index) in warningPosts" v-if="index >= 3 && index <= 7" :key="index" @click="handleViewDetail(item.eventId)" class="warning-page-container_section-2_item">
                     <img :src="item.imageUrl">
                     <div class="warning-page-container_section-2_item-info">
                         <h4>{{item.title}}</h4>
