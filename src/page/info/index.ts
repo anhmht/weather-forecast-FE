@@ -16,6 +16,7 @@ import { DATE } from "@/constant/common-constant";
 import { storeModules } from '@/store';
 import lookupTypesStore from '@/store/lookup/lookup-types.store';
 import IStatus from '@/model/status/status.model';
+import moment from 'moment';
 
 const LookupGetter = namespace(storeModules.Lookup, Getter);
 const LookupAction = namespace(storeModules.Lookup, Action);
@@ -50,7 +51,7 @@ export default class InfoPageComponent extends Vue {
     @LookupAction getLookupData: (type: string) => Promise<void>;
 
     get address() {
-        return this.currentPosition ? this.currentPosition.region : null
+        return this.currentPosition ? STATION.find(x => x.place_id === this.currentPosition.regionCode).ten : null
     }
 
     get currentTemp() {
@@ -103,16 +104,12 @@ export default class InfoPageComponent extends Vue {
     }
 
     viewAllWarning() {
-        this.$router.push({ name: ROUTE_NAME.WARNING , 
+        this.$router.push({ name: ROUTE_NAME.WARNING ,
             params: { categoryId: this.warningCategoryId, statusId: this.publishStatusId } })
     }
 
     getNow() {
-        const today = new Date();
-        const date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
-        const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-        const dateTime = date + ' ' + time;
-        this.timestamp = dateTime;
+        this.timestamp = moment().format('DD/MM/YYYY HH:mm:ss');
     }
 
     async getTemperature() {

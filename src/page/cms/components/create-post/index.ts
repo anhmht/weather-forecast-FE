@@ -11,6 +11,7 @@ import IStatus from './../../../../model/status/status.model';
 import { namespace, Getter, Action } from "vuex-class";
 import { storeModules } from '@/store';
 import lookupTypesStore from '@/store/lookup/lookup-types.store';
+import { DataHelper } from '@/utils/data-helper';
 
 const LookupGetter = namespace(storeModules.Lookup, Getter);
 const LookupAction = namespace(storeModules.Lookup, Action);
@@ -51,6 +52,7 @@ export default class CreatePostComponent extends Vue {
         if (this.valid) {
             this.postModel.datePosted = new Date().toISOString();
             this.isLoading = true;
+            this.postModel.normalImageUrls = DataHelper.getImageArray(this.postModel.content);
             this.postService.createPost(this.postModel).then(res => {
                 vm.$router.go(-1);
                 this.isLoading = false;
@@ -149,7 +151,7 @@ export default class CreatePostComponent extends Vue {
         }).catch(error => {
             console.log(error);
             this.isLoading = false;
-        })
+        });
 
         this.getLookupData(lookupTypesStore.Set.STATUS);
     }

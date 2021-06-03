@@ -1,0 +1,32 @@
+<div class="weahter-tool">
+    <div class="weahter-tool-picker">
+        <v-menu offset-y nudge-bottom="20">
+            <template v-slot:activator="{ on, attrs }">
+                <div dark v-bind="attrs" v-on="on">
+                    {{currentDay}}
+                </div>
+            </template>
+            <v-list class="weahter-tool-picker-list">
+                <v-list-item class="weahter-tool-picker-list--item" v-for="(item, index) in forecastDates" :key="index">
+                    <v-list-item-title>{{ item.title }}</v-list-item-title>
+                </v-list-item>
+            </v-list>
+        </v-menu>
+        <span>|</span>
+        <v-menu offset-y nudge-bottom="20" style="max-width: unset;max-height: 400px;" class="weahter-tool-picker-list--menu">
+            <template v-slot:activator="{ on, attrs }">
+                <div dark v-bind="attrs" v-on="on">
+                    Giờ: Tất cả
+                </div>
+            </template>
+            <v-list class="weahter-tool-picker-list">
+                <v-list-item class="weahter-tool-picker-list--item" v-for="(item, index) in forecastHours" :key="index">
+                    <v-list-item-title>{{ item.title }}</v-list-item-title>
+                </v-list-item>
+            </v-list>
+        </v-menu>
+    </div>
+    <div class="weahter-tool-result">
+        <forecast-result />
+    </div>
+</div>

@@ -14,6 +14,7 @@ import ICategory from './../../../../model/category/category.model';
 import IStatus from './../../../../model/status/status.model';
 import { storeModules } from '@/store';
 import lookupTypesStore from '@/store/lookup/lookup-types.store';
+import { DataHelper } from '@/utils/data-helper';
 
 const LookupGetter = namespace(storeModules.Lookup, Getter);
 const LookupAction = namespace(storeModules.Lookup, Action);
@@ -35,6 +36,7 @@ export default class EditPostComponent extends Vue {
     progress: number = 0;
 
     postModel: IPost = new Post({});
+    originalContent: string = '<div />';
 
     category: ICategory[] = []
 
@@ -54,6 +56,9 @@ export default class EditPostComponent extends Vue {
         if (this.valid) {
             this.isLoading = true;
             this.postModel.datePosted = new Date().toISOString();
+            const imageData = DataHelper.generateInsertAndDeleteArr(this.postModel.content, this.originalContent);
+            this.postModel.imageNormalAdd = imageData.imageNormalAdd;
+            this.postModel.imageNormalDelete = imageData.imageNormalDelete;
             this.postService.editPost(this.postModel).then(res => {
                 this.isLoading = false;
                 vm.$router.push({ name: ROUTE_NAME.LIST_POST});
@@ -153,9 +158,10 @@ export default class EditPostComponent extends Vue {
         this.getLookupData(lookupTypesStore.Set.STATUS);
 
         this.postService.getPostById(this.$route.params.id)
-            .then(res => {
+            .then((res: any) => {
                 this.isLoading = false;
                 this.postModel = new Post(res);
+                this.originalContent = res.content;
                 this.uploadedDocs = this.postModel.imageUrl;
             }).catch(err => {
                 console.log(err);

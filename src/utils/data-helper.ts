@@ -1,3 +1,4 @@
+import { BASE_CLOUD_URL } from './../constant/common-constant';
 export class DataHelper {
     static deepClone<T>(source: any): T {
         if (source === undefined) return undefined;
@@ -38,4 +39,36 @@ export class DataHelper {
         }
         return displayHour + ':00';
     }
+
+    static getImageArray(htmlStr) {
+        const node = document.createElement('div');
+        node.innerHTML = htmlStr;
+        const nodeList = node.querySelectorAll('img');
+        const result = [];
+        nodeList.forEach(el => {
+            result.push(el.src);
+        });
+        return result.filter(x => x.includes(BASE_CLOUD_URL));
+    }
+
+    static generateInsertAndDeleteArr(entity:string , original: string) {
+        const originalArr = this.getImageArray(original);
+        const entityArr = this.getImageArray(entity);
+        const imageNormalDelete = [];
+        const imageNormalAdd = [];
+        originalArr.forEach(element => {
+            const img = entityArr.find(x => x === element);
+            if(!img) {
+                imageNormalDelete.push(element)
+            }
+        });
+        entityArr.forEach(element => {
+            const img = originalArr.find(x => x === element);
+            if (!img) {
+                imageNormalAdd.push(element)
+            }
+        });
+        return { imageNormalDelete, imageNormalAdd };
+    }
+
 }

@@ -13,6 +13,7 @@ import img from '../../../static/img/icon/new/day_rain_thunder.png';
         "map-type-picker": () =>
             import("./components/map-type/MapTypeComponent.vue"),
         "location-picker": () => import("./components/location/LocationComponent.vue"),
+        "tool-bar": () => import("./components/weather-tool/WeatherToolComponent.vue")
     }
 })
 export default class HomePageComponent extends Vue {

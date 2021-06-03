@@ -1,0 +1,29 @@
+.weahter-tool {
+    &-result {
+        &--header {
+            padding-bottom: 10px;
+            border-bottom: 1px solid;
+        }
+        &--body {
+            padding-top: 10px;
+            &_temp {
+                display: flex;
+                > div {
+                    width: 50%;
+                }
+                &--value {
+                    font-size: 30px;
+                    text-align: center;
+                }
+                &--icon {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    img {
+                        width: 100px;
+                    }
+                }
+            }
+        }
+    }
+}

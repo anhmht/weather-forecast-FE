@@ -1,0 +1,31 @@
+.weahter-tool {
+    &-picker {
+        width: fit-content;
+        display: flex;
+        background: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5)), rgba(121, 120, 120, 0.5);
+        color: #fff;
+        padding: 10px;
+        > span {
+            margin: 0 10px;
+        }
+        &-list {
+            background: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5)), rgba(121, 120, 120, 0.5) !important;
+            &--item {
+                .v-list-item__title {
+                    color: #fff !important;
+                }
+
+            }
+        }
+    }
+    &-result {
+        margin-top: 20px;
+        background: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5)), rgba(121, 120, 120, 0.5);
+        color: #fff;
+        padding: 20px;
+    }
+}
+.v-menu__content {
+    min-width: none;
+    max-height: 400px;
+}

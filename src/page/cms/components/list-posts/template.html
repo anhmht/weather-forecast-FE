@@ -46,11 +46,11 @@
                                         {{ item.title }}
                                     </div>
                                 </td>
-                                <td>{{ item.datePosted }}</td>
+                                <td>{{ $formatDateTime(item.datePosted) }}</td>
                                 <td>{{ item.categoryName }}</td>
                                 <td>{{ item.statusName }}</td>
                                 <td class="base-cms-right--body_table_action">
-                                    <v-icon @click.native="deletePost(item.eventId)">mdi-delete</v-icon>
+                                    <v-icon @click.native="handleDeletePost(item.eventId)">mdi-delete</v-icon>
                                     <v-icon @click.native="editPost(item.eventId)">mdi-square-edit-outline</v-icon>
                                 </td>
                             </tr>
@@ -70,4 +70,20 @@
             </div>
         </div>
     </div>
+    <v-dialog v-model="visibleConfirm" max-width="400">
+        <v-card>
+            <v-card-title class="text-h5">
+                Bạn có muốn xoá bài viết này?
+            </v-card-title>
+            <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn  text @click="visibleConfirm = false">
+                    Bỏ qua
+                </v-btn>
+                <v-btn color="primary" @click="deletePost()">
+                    Đồng ý
+                </v-btn>
+            </v-card-actions>
+        </v-card>
+    </v-dialog>
 </div>

@@ -9,8 +9,15 @@
         </v-btn>
     </div>
     <div class="tool-bar">
-        <location-picker v-if="!isRecording" @change-map="handleChangeLocation" />
-        <map-type-picker v-if="!isRecording" @change-map="handleChangeMap" />
+        <div class="tool-bar-row">
+            <div>
+                <location-picker v-if="!isRecording" @change-map="handleChangeLocation" />
+                <map-type-picker v-if="!isRecording" @change-map="handleChangeMap" />
+            </div>
+            <div style="margin-left: 20px;">
+                <tool-bar />
+            </div>
+        </div>
     </div>
 
 

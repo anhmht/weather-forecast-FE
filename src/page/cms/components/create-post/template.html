@@ -9,7 +9,7 @@
                 <v-text-field solo :rules="rules.title" v-model="postModel.title"></v-text-field>
                 <div class="base-cms-right--body_editor">
                     <div>Nội dung</div>
-                    <custom-ckeditor  :rules="rules.title" v-model="postModel.content"/>
+                    <custom-ckeditor ref="ckEditor" :rules="rules.title" v-model="postModel.content"/>
                 </div>
             </div>
 

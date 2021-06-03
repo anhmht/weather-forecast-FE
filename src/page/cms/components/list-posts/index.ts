@@ -16,7 +16,8 @@ export default class ListPostComponent extends Vue {
     listPostTitle: string = '';
     limitPerPage: number[] = [5, 10, 15, 20];
     numPostsInPage: number = 0;
-
+    visibleConfirm: boolean = false;
+    selectedId: string = null;
     searchParams: IPostSearchParameter = new PostSearchParameter({});
 
     get TotalPageVisible() {
@@ -24,6 +25,11 @@ export default class ListPostComponent extends Vue {
             return this.totalPages
         else
             return 7
+    }
+
+    handleDeletePost(id) {
+        this.visibleConfirm = true;
+        this.selectedId = id;
     }
 
     toCreatePost() {
@@ -37,8 +43,8 @@ export default class ListPostComponent extends Vue {
         this.$router.push({ name: ROUTE_NAME.EDIT_POST , params: { id } })
     }
 
-    async deletePost(id) {
-        await this.postService.deletePostById(id);
+    async deletePost() {
+        await this.postService.deletePostById(this.selectedId);
         if (this.posts.length === 1) {
             this.searchParams.page -= 1;
         }
