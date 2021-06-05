@@ -19,6 +19,7 @@ export default class TimePageComponent extends Vue {
     currentPositionCode: string = "";
     currentForecastStationId: string = "";
     currentDay: string = "";
+    currentDate: string = "";
     currentTemp: number = 0;
     currentDayMinTemp: number = 0;
     currentDayMaxTemp: number = 0;
@@ -43,6 +44,7 @@ export default class TimePageComponent extends Vue {
 
         moment.locale('vi');
         this.currentDay = moment().format('dddd');
+        this.currentDate = moment().format('L');
 
         await this.forecastService.getTemperatureByStation(this.currentForecastStationId).then((res: any) => {
             const minMaxTempCurrentDate = DataHelper.getMinMaxTemp(res, DATE.CURRENT);
