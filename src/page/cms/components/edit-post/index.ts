@@ -57,8 +57,8 @@ export default class EditPostComponent extends Vue {
             this.isLoading = true;
             this.postModel.datePosted = new Date().toISOString();
             const imageData = DataHelper.generateInsertAndDeleteArr(this.postModel.content, this.originalContent);
-            this.postModel.imageNormalAdd = imageData.imageNormalAdd;
-            this.postModel.imageNormalDelete = imageData.imageNormalDelete;
+            this.postModel.imageNormalAdds = imageData.imageNormalAdd;
+            this.postModel.imageNormalDeletes = imageData.imageNormalDelete;
             this.postService.editPost(this.postModel).then(res => {
                 this.isLoading = false;
                 vm.$router.push({ name: ROUTE_NAME.LIST_POST});

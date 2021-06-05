@@ -1,20 +1,20 @@
 <div>
     <div class="weahter-tool-result--header">
-        {{address}}, {{currentDay}}
+        {{address}}, {{time}}
     </div>
     <div class="weahter-tool-result--body">
         <div class="weahter-tool-result--body_temp">
             <div class="weahter-tool-result--body_temp--value">
-                32°
+                {{data.currentTemp}}°
             </div>
             <div class="weahter-tool-result--body_temp--icon">
                 <img src="/static/img/icon/day_rain_thunder.png" />
             </div>
         </div>
         <div>
-            <div>Nhiệt độ thấp nhất:</div>
-            <div>Nhiệt độ cao nhât: </div>
-            <div>Lượng mưa</div>
+            <div>Nhiệt độ thấp nhất: {{data.currentDayMinTemp}}°</div>
+            <div>Nhiệt độ cao nhât: {{data.currentDayMaxTemp}}°</div>
+            <div>Lượng mưa: </div>
             <div>Độ ẩm: </div>
         </div>
     </div>

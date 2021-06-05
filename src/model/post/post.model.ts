@@ -6,9 +6,9 @@ export default interface IPost {
     datePosted: string;
     statusId: string;
     categoryId: string;
-    normalImageUrls?: string[];
-    imageNormalDelete?: string[];
-    imageNormalAdd?: string[];
+    imageNormalUrls?: string[];
+    imageNormalDeletes?: string[];
+    imageNormalAdds?: string[];
 }
 
 export class Post implements IPost {
@@ -19,9 +19,9 @@ export class Post implements IPost {
     datePosted: string;
     statusId: string;
     categoryId: string;
-    normalImageUrls?: string[];
-    imageNormalDelete?: string[];
-    imageNormalAdd?: string[];
+    imageNormalUrls?: string[];
+    imageNormalDeletes?: string[];
+    imageNormalAdds?: string[];
 
     constructor(option?: any) {
         this.eventId = option.eventId || null
@@ -31,8 +31,8 @@ export class Post implements IPost {
         this.datePosted = option.datePosted || null
         this.statusId = option.statusId || null
         this.categoryId = option.categoryId || null
-        this.normalImageUrls = option.normalImageUrls || []
-        this.imageNormalDelete = option.imageNormalDelete || []
-        this.imageNormalAdd = option.imageNormalAdd || []
+        this.imageNormalUrls = option.imageNormalUrls || []
+        this.imageNormalDeletes = option.imageNormalDeletes || []
+        this.imageNormalAdds = option.imageNormalAdds || []
     }
 }

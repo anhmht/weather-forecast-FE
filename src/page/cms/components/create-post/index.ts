@@ -52,7 +52,7 @@ export default class CreatePostComponent extends Vue {
         if (this.valid) {
             this.postModel.datePosted = new Date().toISOString();
             this.isLoading = true;
-            this.postModel.normalImageUrls = DataHelper.getImageArray(this.postModel.content);
+            this.postModel.imageNormalUrls = DataHelper.getImageArray(this.postModel.content);
             this.postService.createPost(this.postModel).then(res => {
                 vm.$router.go(-1);
                 this.isLoading = false;

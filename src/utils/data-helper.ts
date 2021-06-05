@@ -32,6 +32,13 @@ export class DataHelper {
         return temp[hours[currentHour - refHour + offset - 1]];
     }
 
+    static getTempByDateHour(temp, date, time) {
+        const hours = Object.keys(temp).filter(x => x.includes('_'));
+        let refDate = Object.keys(temp).filter(x => x.includes('refDate'));
+        let refHour = new Date(temp[refDate[0]]).getHours();
+        return temp[hours[(date * 24) +  time - refHour  - 1]];
+    }
+
     static getDisplayHour(offset) {
         let displayHour = new Date().getHours() + offset;
         if (displayHour > 23) {

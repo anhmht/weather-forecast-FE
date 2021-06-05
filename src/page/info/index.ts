@@ -136,7 +136,8 @@ export default class InfoPageComponent extends Vue {
     async mounted() {
         setInterval(this.getNow, 1000);
         this.currentPosition = await displayLocation() as any;
-        await this.getTemperature();
+        this.getTemperature();
+
         await this.getLookupData(lookupTypesStore.Set.STATUS);
         this.publishStatusId = this.status.find(x => x.name === this.publishStatusName).statusId;
 

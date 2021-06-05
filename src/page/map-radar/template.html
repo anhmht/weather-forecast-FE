@@ -15,7 +15,7 @@
                 <map-type-picker v-if="!isRecording" @change-map="handleChangeMap" />
             </div>
             <div style="margin-left: 20px;">
-                <tool-bar />
+                <tool-bar v-if="forecastData" :station-info="forecastData" />
             </div>
         </div>
     </div>

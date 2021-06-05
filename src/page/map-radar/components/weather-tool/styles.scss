@@ -9,16 +9,17 @@
             margin: 0 10px;
         }
         &-list {
-            background: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5)), rgba(121, 120, 120, 0.5) !important;
+            background: linear-gradient(rgb(0 0 0), rgb(0 0 0 / 67%)), rgba(121, 120, 120, 0.5)  !important;
             &--item {
                 .v-list-item__title {
                     color: #fff !important;
                 }
-
             }
         }
     }
     &-result {
+        position: relative;
+        min-height: 280px;
         margin-top: 20px;
         background: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5)), rgba(121, 120, 120, 0.5);
         color: #fff;

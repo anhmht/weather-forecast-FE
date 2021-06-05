@@ -3,7 +3,7 @@ import { STATION } from '@/constant/forcast-station-constant';
 import { ForecastServices } from '@/service/forecast-service/forecast.service';
 import Vue from 'vue';
 import Component from "vue-class-component";
-import img from '../../../static/img/icon/new/day_rain_thunder.png';
+// import img from '../../../static/img/icon/new/day_rain_thunder.png';
 
 @Component({
     template: require("./template.html").default,
@@ -28,6 +28,7 @@ export default class HomePageComponent extends Vue {
     layerPopup: any;
 
     currentPosition = null;
+    forecastData: any = null;
 
     handleBack() {
         this.$router.go(-1);
@@ -77,23 +78,22 @@ export default class HomePageComponent extends Vue {
         map.flyToBounds(this.layerProvice.getBounds(), { maxZoom: mapData.zoom });
         this.layerGroup.addLayer(this.layerProvice);
 
-        const station = STATION.find(x => x.place_id === mapData.placeId);
-        let temp = null;
-        if (station) {
-            temp = await this.getTemprature(station);
+        this.forecastData = STATION.find(x => x.place_id === mapData.placeId);
+        // if (station) {
+            // this.forecastData = station;
             //@ts-ignore
-            this.layerPopup = L.popup()
-                .setLatLng([station.y, station.x])
-                .setContent(`<div class="map-pop-up">
-                            <img src="${img}"/>
-                            <div class="map-pop-up-temp">${temp}℃</div>
-                        </div>`)
-        } else {
-            temp = 32;
-        }
-        if (station) {
-            this.layerGroup.addLayer(this.layerPopup);
-        }
+            // this.layerPopup = L.popup()
+            //     .setLatLng([station.y, station.x])
+            //     .setContent(`<div class="map-pop-up">
+            //                 <img src="${img}"/>
+            //                 <div class="map-pop-up-temp">${temp}℃</div>
+            //             </div>`)
+        // } else {
+            // this.forecastData = 32;
+        // }
+        // if (station) {
+        //     this.layerGroup.addLayer(this.layerPopup);
+        // }
     }
 
     async capture() {

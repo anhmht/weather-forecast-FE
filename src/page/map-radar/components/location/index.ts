@@ -7,27 +7,22 @@ import Component from "vue-class-component";
     components: {}
 })
 export default class LocationComponent extends Vue {
-    isActive: Number = 0;
+    isActive: Number = null;
     vinhlong = null;
     get locations() {
         return [
-            {
-                lat: 16.06778,
-                lon: 108.22083,
-                name: "Toàn Quốc",
-                zoom: 6
-            },
             {
                 lat: 10.25369,
                 lon: 105.9722,
                 name: "Vĩnh Long",
                 zoom: 12,
-                placeId: 'ChIJR8ONdLqCCjERJ00Xm4aX9fQ',
+                placeId: 'VL',
                 geojson: 'vinh_long',
                 style: {
                     color: "#ff7800",
                     weight: 3,
-                    opacity: 0.5
+                    opacity: 0.5,
+                    // fill: false
                 }
             },
             {
@@ -48,6 +43,7 @@ export default class LocationComponent extends Vue {
                 name: "TP.HCM",
                 zoom: 12,
                 geojson: 'ho_chi_minh_city',
+                placeId: 'HC',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -58,6 +54,7 @@ export default class LocationComponent extends Vue {
                 name: "An Giang",
                 zoom: 12,
                 geojson: 'an_giang',
+                placeId: 'AG',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -68,6 +65,7 @@ export default class LocationComponent extends Vue {
                 name: "Bà Rịa – Vũng Tàu",
                 zoom: 12,
                 geojson: 'ba_ria_vung_tau',
+                placeId: 'BV',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -98,6 +96,7 @@ export default class LocationComponent extends Vue {
                 name: "Bạc Liêu",
                 zoom: 12,
                 geojson: 'bac_lieu',
+                placeId: 'BL',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -118,6 +117,7 @@ export default class LocationComponent extends Vue {
                 name: "Bến Tre",
                 zoom: 12,
                 geojson: 'ben_tre',
+                placeId: 'BR',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -138,6 +138,7 @@ export default class LocationComponent extends Vue {
                 name: "Bình Dương",
                 zoom: 12,
                 geojson: 'binh_duong',
+                placeId: 'BI',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -148,6 +149,7 @@ export default class LocationComponent extends Vue {
                 name: "Bình Phước",
                 zoom: 12,
                 geojson: 'binh_phuoc',
+                placeId: 'BP',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -168,6 +170,7 @@ export default class LocationComponent extends Vue {
                 name: "Cà Mau",
                 zoom: 12,
                 geojson: 'ca_mau',
+                placeId: 'CM',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -178,6 +181,7 @@ export default class LocationComponent extends Vue {
                 name: "Cần Thơ",
                 zoom: 12,
                 geojson: 'can_tho',
+                placeId: 'CN',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -238,6 +242,7 @@ export default class LocationComponent extends Vue {
                 name: "Đồng Nai",
                 zoom: 12,
                 geojson: 'dong_nai',
+                placeId: 'DN',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -248,6 +253,7 @@ export default class LocationComponent extends Vue {
                 name: "Đồng Tháp",
                 zoom: 12,
                 geojson: 'dong_thap',
+                placeId: 'DT',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -318,6 +324,7 @@ export default class LocationComponent extends Vue {
                 name: "Hậu Giang",
                 zoom: 12,
                 geojson: 'hau_giang',
+                placeId: 'HU',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -358,6 +365,7 @@ export default class LocationComponent extends Vue {
                 name: "Kiên Giang",
                 zoom: 12,
                 geojson: 'kien_giang',
+                placeId: 'KG',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -418,6 +426,7 @@ export default class LocationComponent extends Vue {
                 name: "Long An",
                 zoom: 12,
                 geojson: 'long_an',
+                placeId: 'LA',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -538,6 +547,7 @@ export default class LocationComponent extends Vue {
                 name: "Sóc Trăng",
                 zoom: 12,
                 geojson: 'soc_trang',
+                placeId: 'ST',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -558,6 +568,7 @@ export default class LocationComponent extends Vue {
                 name: "Tây Ninh",
                 zoom: 12,
                 geojson: 'tay_ninh',
+                placeId: 'TN',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -608,6 +619,7 @@ export default class LocationComponent extends Vue {
                 name: "Tiền Giang",
                 zoom: 12,
                 geojson: 'tien_giang',
+                placeId: 'TG',
                 style: {
                     color: "#ff7800",
                     weight: 3,
@@ -618,6 +630,7 @@ export default class LocationComponent extends Vue {
                 name: "Trà Vinh",
                 zoom: 12,
                 geojson: 'tra_vinh',
+                placeId: 'TV',
                 style: {
                     color: "#ff7800",
                     weight: 3,
