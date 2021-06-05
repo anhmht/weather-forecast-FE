@@ -62,6 +62,7 @@ export default class TimePageComponent extends Vue {
             for (let i = 0; i < 24; i++) {
                 this.weatherByTime.push({
                     time: DataHelper.getDisplayHour(i),
+                    date: moment().add(i, 'hours').format('DD/MM'),
                     imageUrl: icon,
                     temp: DataHelper.getTempByHour(res, i)
                 });
