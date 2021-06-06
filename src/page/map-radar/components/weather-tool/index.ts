@@ -2,6 +2,7 @@ import { DATE } from '@/constant/common-constant';
 import { ForecastServices } from '@/service/forecast-service/forecast.service';
 import { DataHelper } from '@/utils/data-helper';
 import moment from 'moment';
+import 'moment/locale/vi';
 import Vue from "vue";
 import Component from "vue-class-component";
 import { Prop, Watch } from 'vue-property-decorator';
@@ -25,7 +26,8 @@ export default class WeatherToolComponent extends Vue {
     dataResult: any = null;
 
     context:any = {
-        data: null,
+        icon: null,
+        temp: null,
         date: 0,
         time: 0
     }
@@ -68,12 +70,13 @@ export default class WeatherToolComponent extends Vue {
 
     handlePickDate(date) {
         this.context.time = 0
-        this.prepareResult(this.context.data, date.value, this.context.time);
-
+        this.prepareResult(this.context.temp, date.value, this.context.time);
+        this.prepareIconResult(this.context.icon, date.value, this.context.time);
     }
 
     handlePickHour(time) {
-        this.prepareResult(this.context.data, this.context.date, time.value);
+        this.prepareResult(this.context.temp, this.context.date, time.value);
+        this.prepareIconResult(this.context.icon, this.context.date, time.value);
     }
 
     prepareResult(data, date = 0, time = 0) {
@@ -81,27 +84,33 @@ export default class WeatherToolComponent extends Vue {
         this.context.time = time;
         const minMaxTempCurrentDate = DataHelper.getMinMaxTemp(data, date);
         this.dataResult = {
+            ...this.dataResult,
             currentDay: moment().add(date, 'days').format('dddd, DD/MM/YYYY'),
             currentPosition: this.stationInfo.ten,
-            currentTemp: this.getDisplaytemp(data, date, time),
+            currentTemp: this.getDisplayData(data, date, time),
             currentDayMinTemp: minMaxTempCurrentDate.min,
-            currentDayMaxTemp: minMaxTempCurrentDate.max
+            currentDayMaxTemp: minMaxTempCurrentDate.max,
         }
     }
 
-    getDisplaytemp(data, date, time) {
-        const realtime = this.forecastHours.find(x => x.value === time);
-        const hour = realtime.title.split(':')[0];
-        console.log(hour);
-
-        return DataHelper.getTempByDateHour(data, date, Number(hour));
+    prepareIconResult(data, date = 0, time = 0) {
+        this.dataResult = {
+            ...this.dataResult,
+            icon: this.getDisplayData(data, date, time)
+        }
     }
 
-    async getTemprature() {
+    getDisplayData(data, date, time) {
+        const realtime = this.forecastHours.find(x => x.value === time);
+        const hour = realtime.title.split(':')[0];
+        return DataHelper.getDataByDateHour(data, date, Number(hour));
+    }
+
+    getTemprature() {
         this.isLoading = true;
-        await this.forecastService.getTemperatureByStation(this.stationInfo.id).then((res: any) => {
+        this.forecastService.getTemperatureByStation(this.stationInfo.id).then((res: any) => {
             this.prepareResult(res, this.context.date, this.context.time);
-            this.context.data = res;
+            this.context.temp = res;
             this.isLoading = false;
         }).catch(err => {
             console.log(err);
@@ -109,10 +118,23 @@ export default class WeatherToolComponent extends Vue {
         })
     }
 
-    async mounted() {
+    getIcon() {
+        this.isLoading = true;
+        this.forecastService.getIconWeahter(this.stationInfo.id).then((res: any) => {
+            this.context.icon = res;
+            this.prepareIconResult(res, this.context.date, this.context.time);
+            this.isLoading = false;
+        }).catch(err => {
+            console.log(err);
+            this.isLoading = false;
+        })
+    }
+
+    mounted() {
         moment.locale('vi');
         this.currentDay = moment().format('dddd, DD/MM/YYYY');
         this.getTemprature();
+        this.getIcon();
     }
 
     @Watch('stationInfo')

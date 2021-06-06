@@ -1,4 +1,6 @@
+
 import { BASE_CLOUD_URL } from './../constant/common-constant';
+import moment from 'moment';
 export class DataHelper {
     static deepClone<T>(source: any): T {
         if (source === undefined) return undefined;
@@ -32,11 +34,12 @@ export class DataHelper {
         return temp[hours[currentHour - refHour + offset - 1]];
     }
 
-    static getTempByDateHour(temp, date, time) {
+    static getDataByDateHour(temp, date, time) {
         const hours = Object.keys(temp).filter(x => x.includes('_'));
         let refDate = Object.keys(temp).filter(x => x.includes('refDate'));
-        let refHour = new Date(temp[refDate[0]]).getHours();
-        return temp[hours[(date * 24) +  time - refHour  - 1]];
+        const diffHours = moment().add(date, 'days').hours(time).diff(moment(temp[refDate[0]]), 'hours');
+        const reuslt = diffHours -1;
+        return temp[hours[reuslt]];
     }
 
     static getDisplayHour(offset) {

@@ -1,4 +1,5 @@
 export default {
     getForecastStation: '/api/DiemDuBao/all',
-    getTemperatureByStation: '/api/NhietDo/get-nhiet-do'
+    getTemperatureByStation: '/api/Temperature/get-temperature',
+    getIconWeatherByStation: '/api/Weather/get-weather'
 }

@@ -148,7 +148,11 @@ export default class HomePageComponent extends Vue {
             // windyAPI is ready, and contain 'map', 'store',
             // 'picker' and other usefull stuff
             this.windy = windyAPI;
-            const { map } = this.windy;
+            const { map, overlays, store } = this.windy;
+            const levels = store.getAllowed('availLevels');
+            console.log(levels);
+
+            overlays.wind.setMetric('km/h');
             map.setZoom(6);
             //@ts-ignore
             let topLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);

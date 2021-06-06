@@ -9,7 +9,13 @@ export class ForecastServices extends GenericServices {
         }).catch(error => Promise.reject(error))
     }
     getTemperatureByStation(stationId: string): Promise<ApiResponse> {
-        const uri = `${Uri.getTemperatureByStation}?diaDuBaoId=${stationId}`
+        const uri = `${Uri.getTemperatureByStation}?diemDuBaoId=${stationId}`
+        return this.executeSelecting({}, uri).then((response: ApiResponse) => {
+            return Promise.resolve(response)
+        }).catch(error => Promise.reject(error))
+    }
+    getIconWeahter(stationId: string): Promise<ApiResponse> {
+        const uri = `${Uri.getIconWeatherByStation}?diemDuBaoId=${stationId}`
         return this.executeSelecting({}, uri).then((response: ApiResponse) => {
             return Promise.resolve(response)
         }).catch(error => Promise.reject(error))

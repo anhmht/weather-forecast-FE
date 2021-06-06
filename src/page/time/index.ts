@@ -7,6 +7,7 @@ import { STATION } from "../../constant/forcast-station-constant";
 import { DATE } from "@/constant/common-constant";
 import { ForecastServices } from "../../service/forecast-service/forecast.service";
 import moment from "moment";
+import 'moment/locale/vi';
 
 @Component({
     template: require("./template.html").default,
