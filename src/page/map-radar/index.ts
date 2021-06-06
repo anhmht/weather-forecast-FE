@@ -4,6 +4,7 @@ import { ForecastServices } from '@/service/forecast-service/forecast.service';
 import Vue from 'vue';
 import Component from "vue-class-component";
 // import img from '../../../static/img/icon/new/day_rain_thunder.png';
+import VNGeoJson from "../../asset/geoJson/viet_nam.geojson";
 
 @Component({
     template: require("./template.html").default,
@@ -179,9 +180,17 @@ export default class HomePageComponent extends Vue {
 
             //@ts-ignore
             this.layerGroup = new L.LayerGroup();
+            const geojson = JSON.parse(JSON.stringify(VNGeoJson));
+            //@ts-ignore
+            const vnBorder = L.geoJSON(geojson, { style: {
+                color: "#ddd",
+                weight: 3,
+                opacity: 0.5,
+                fill: false
+            }});
+
+            this.layerGroup.addLayer(vnBorder);
             this.layerGroup.addTo(map);
-
-
         });
     }
 }
