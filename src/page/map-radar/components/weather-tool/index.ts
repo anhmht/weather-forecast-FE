@@ -67,8 +67,9 @@ export default class WeatherToolComponent extends Vue {
     }
 
     handlePickDate(date) {
-        this.prepareResult(this.context.data, date.value, this.context.time);
         this.context.time = 0
+        this.prepareResult(this.context.data, date.value, this.context.time);
+
     }
 
     handlePickHour(time) {
@@ -76,6 +77,8 @@ export default class WeatherToolComponent extends Vue {
     }
 
     prepareResult(data, date = 0, time = 0) {
+        this.context.date = date;
+        this.context.time = time;
         const minMaxTempCurrentDate = DataHelper.getMinMaxTemp(data, date);
         this.dataResult = {
             currentDay: moment().add(date, 'days').format('dddd, DD/MM/YYYY'),
@@ -84,13 +87,14 @@ export default class WeatherToolComponent extends Vue {
             currentDayMinTemp: minMaxTempCurrentDate.min,
             currentDayMaxTemp: minMaxTempCurrentDate.max
         }
-        this.context.date = date;
-        this.context.time = time;
     }
 
     getDisplaytemp(data, date, time) {
-        const realtime = this.coTime.split(':')[0];
-        return DataHelper.getTempByDateHour(data, date, Number(realtime));
+        const realtime = this.forecastHours.find(x => x.value === time);
+        const hour = realtime.title.split(':')[0];
+        console.log(hour);
+
+        return DataHelper.getTempByDateHour(data, date, Number(hour));
     }
 
     async getTemprature() {

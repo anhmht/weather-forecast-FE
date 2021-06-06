@@ -183,10 +183,9 @@ export default class HomePageComponent extends Vue {
             const geojson = JSON.parse(JSON.stringify(VNGeoJson));
             //@ts-ignore
             const vnBorder = L.geoJSON(geojson, { style: {
-                color: "#ddd",
+                color: "#fff",
                 weight: 3,
                 opacity: 0.5,
-                fill: false
             }});
 
             this.layerGroup.addLayer(vnBorder);
