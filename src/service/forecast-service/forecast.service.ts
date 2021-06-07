@@ -20,4 +20,28 @@ export class ForecastServices extends GenericServices {
             return Promise.resolve(response)
         }).catch(error => Promise.reject(error))
     }
+    getMinMaxTemperatureByStation(stationId: string): Promise<ApiResponse> {
+        const uri = `${Uri.getMinMaxTemperatureByStation}?diemDuBaoId=${stationId}`
+        return this.executeSelecting({}, uri).then((response: ApiResponse) => {
+            return Promise.resolve(response)
+        }).catch(error => Promise.reject(error))
+    }
+    getMinMaxPrecipitationByStation(stationId: string): Promise<ApiResponse> {
+        const uri = `${Uri.getMinMaxPrecipitationByStation}?diemDuBaoId=${stationId}`
+        return this.executeSelecting({}, uri).then((response: ApiResponse) => {
+            return Promise.resolve(response)
+        }).catch(error => Promise.reject(error))
+    }
+    getMinMaxWindLevelByStation(stationId: string): Promise<ApiResponse> {
+        const uri = `${Uri.getMinMaxWindLevelByStation}?diemDuBaoId=${stationId}`
+        return this.executeSelecting({}, uri).then((response: ApiResponse) => {
+            return Promise.resolve(response)
+        }).catch(error => Promise.reject(error))
+    }
+    getMinMaxHumidityByStation(stationId: string): Promise<ApiResponse> {
+        const uri = `${Uri.getMinMaxHumidityByStation}?diaDuBaoId=${stationId}`
+        return this.executeSelecting({}, uri).then((response: ApiResponse) => {
+            return Promise.resolve(response)
+        }).catch(error => Promise.reject(error))
+    }
 }

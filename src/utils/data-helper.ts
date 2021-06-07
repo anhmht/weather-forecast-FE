@@ -24,22 +24,17 @@ export class DataHelper {
     static getTempByHour(temp, offset) {
         const hours = Object.keys(temp).filter(x => x.includes('_'));
         let refDate = Object.keys(temp).filter(x => x.includes('refDate'));
-        let refHour = new Date(temp[refDate[0]]).getHours();
-        let refDay = new Date(temp[refDate[0]]).getDate();
-        let currentHour = new Date().getHours();
-        let currentDay = new Date().getDate();
-        if (currentDay > refDay) {
-            currentHour = currentHour + 24 * (currentDay - refDay);
-        }
-        return temp[hours[currentHour - refHour + offset - 1]];
+        const diffHours = moment().add(offset, 'hours').diff(moment(temp[refDate[0]]), 'hours');
+        const result = diffHours - 1;
+        return temp[hours[result]];
     }
 
     static getDataByDateHour(temp, date, time) {
         const hours = Object.keys(temp).filter(x => x.includes('_'));
         let refDate = Object.keys(temp).filter(x => x.includes('refDate'));
         const diffHours = moment().add(date, 'days').hours(time).diff(moment(temp[refDate[0]]), 'hours');
-        const reuslt = diffHours -1;
-        return temp[hours[reuslt]];
+        const result = diffHours -1;
+        return temp[hours[result]];
     }
 
     static getDisplayHour(offset) {

@@ -29,6 +29,12 @@
                                         Nhiệt độ thấp nhất: {{currentDayMinTemp}}°C
                                         <br>
                                         Nhiệt độ cao nhất: {{currentDayMaxTemp}}°C
+                                        <br>
+                                        Lượng mưa: {{currentDayMinPrecip}} - {{currentDayMaxPrecip}} mm
+                                        <br>
+                                        Cấp gió: {{currentDayMinWindLvl}} - {{currentDayMaxWindLvl}}
+                                        <br>
+                                        Độ ẩm: {{currentDayMinHumid}}% - {{currentDayMaxHumid}}%
                                     </div>
                                 </div>
                             </v-col>
@@ -45,6 +51,15 @@
                                             </div>
                                             <div class="time-page-container_section_1_main--next_temp">
                                                 {{item.temp}}
+                                            </div>
+                                            <div class="time-page-container_section_1_main--next_precip">
+                                                Lượng mưa: {{item.precip}}
+                                            </div>
+                                            <div class="time-page-container_section_1_main--next_wind">
+                                                Cấp gió: {{item.windLvl}}
+                                            </div>
+                                            <div class="time-page-container_section_1_main--next_humid">
+                                                Độ ẩm: {{item.humid}}
                                             </div>
                                         </div>
                                     </div>

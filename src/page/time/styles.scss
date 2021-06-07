@@ -88,15 +88,26 @@
                     img {
                         margin: 20px auto;
                         display: block;
-                        width: 70%;
+                        width: 50%;
                     }
 
                 }
 
                 &_temp {
-                    margin-top: 25px;
                     text-align: center;
                     font-size: 25px;
+                }
+
+                &_precip {
+                    text-align: center;
+                }
+
+                &_wind {
+                    text-align: center;
+                }
+
+                &_humid {
+                    text-align: center;
                 }
             }
 
