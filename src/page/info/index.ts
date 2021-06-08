@@ -119,7 +119,7 @@ export default class InfoPageComponent extends Vue {
             await this.forecastService.getTemperatureByStation(station.id).then((res) => {
                 const minMaxTemp = DataHelper.getMinMaxTemp(res, DATE.CURRENT);
                 this.temparatureData = {
-                    current: DataHelper.getTempByHour(res, 0),
+                    current: DataHelper.getDataByHour(res, 0),
                     min: minMaxTemp.min,
                     max: minMaxTemp.max
                 }

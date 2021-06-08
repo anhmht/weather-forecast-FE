@@ -21,7 +21,7 @@ export class DataHelper {
         }
     }
 
-    static getTempByHour(temp, offset) {
+    static getDataByHour(temp, offset) {
         const hours = Object.keys(temp).filter(x => x.includes('_'));
         let refDate = Object.keys(temp).filter(x => x.includes('refDate'));
         const diffHours = moment().add(offset, 'hours').diff(moment(temp[refDate[0]]), 'hours');

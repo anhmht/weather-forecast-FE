@@ -38,6 +38,10 @@ export default class TimePageComponent extends Vue {
     precipMinMaxByDay: any = [];
     windLvlMinMaxByDay: any = [];
     humidMinMaxByDay: any = [];
+    tempByHour: any = [];
+    precipByHour: any = [];
+    windLvlByHour: any = [];
+    humidByHour: any = [];
     activeTab: number = 1
     handleChangeTab(tab) {
         this.activeTab = tab;
@@ -134,18 +138,60 @@ export default class TimePageComponent extends Vue {
 
         await this.forecastService.getTemperatureByStation(this.currentForecastStationId)
         .then((res: any) => {
-            this.currentTemp = DataHelper.getTempByHour(res, 0);
+            this.currentTemp = DataHelper.getDataByHour(res, 0);
 
             for (let i = 0; i < 24; i++) {
-                this.weatherByTime.push({
-                    time: DataHelper.getDisplayHour(i),
-                    date: moment().add(i, 'hours').format('DD/MM'),
-                    imageUrl: icon,
-                    temp: DataHelper.getTempByHour(res, i)
+                this.tempByHour.push({
+                    temp: DataHelper.getDataByHour(res, i)
                 });
             }
         }).catch(error => {
             console.log(error);
         })
+
+        await this.forecastService.getPrecipitationByStation(this.currentForecastStationId)
+        .then((res: any) => {
+            for (let i = 0; i < 24; i++) {
+                this.precipByHour.push({
+                    precip: DataHelper.getDataByHour(res, i)
+                });
+            }
+        }).catch(error => {
+            console.log(error);
+        })
+
+        await this.forecastService.getWindLevelByStation(this.currentForecastStationId)
+        .then((res: any) => {
+            for (let i = 0; i < 24; i++) {
+                this.windLvlByHour.push({
+                    windLvl: DataHelper.getDataByHour(res, i)
+                });
+            }
+        }).catch(error => {
+            console.log(error);
+        })
+
+        await this.forecastService.getHumidityByStation(this.currentForecastStationId)
+        .then((res: any) => {
+            for (let i = 0; i < 24; i++) {
+                this.humidByHour.push({
+                    humid: DataHelper.getDataByHour(res, i)
+                });
+            }
+        }).catch(error => {
+            console.log(error);
+        })
+
+        for (let i = 0; i < 24; i++) {
+            this.weatherByTime.push({
+                time: DataHelper.getDisplayHour(i),
+                date: moment().add(i, 'hours').format('DD/MM'),
+                imageUrl: icon,
+                temp: this.tempByHour[i].temp,
+                precip: this.precipByHour[i].precip,
+                windLvl: this.windLvlByHour[i].windLvl,
+                humid: this.humidByHour[i].humid,
+            });
+        }
     }
 }

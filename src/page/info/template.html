@@ -19,8 +19,8 @@
                                     </v-col>
 
                                 </v-row>
-                                <div class="info-current-forecast-body--info">Nhiệt độ thấp nhất: {{minTemp}}℃</div>
-                                <div class="info-current-forecast-body--info">Nhiệt độ cao nhất: {{maxTemp}}℃</div>
+                                <div class="info-current-forecast-body--info">Nhiệt độ thấp nhất: {{minTemp}}°C</div>
+                                <div class="info-current-forecast-body--info">Nhiệt độ cao nhất: {{maxTemp}}°C</div>
                             </div>
                         </div>
                     </v-col>
@@ -29,9 +29,7 @@
                         <div class="warning-info">
                             <div class="warning-info-wrapper">
                                 <div @click="handleViewDetail(firstWarningPost.eventId)" class="warning-info-left">
-                                    <div class="img-news" :style="transformImage(firstWarningPost.imageUrl)">
-                                        <img width="400" :src="firstWarningPost.imageUrl" />
-                                    </div>
+                                    <div class="img-news" :style="{ backgroundImage: 'url(' + firstWarningPost.imageUrl + ')' }"></div>
                                     <h4>{{firstWarningPost.title}}</h4>
                                 </div>
                                 <div class="warning-info-right">
