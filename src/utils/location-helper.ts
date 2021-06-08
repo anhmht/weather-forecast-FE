@@ -1,3 +1,4 @@
+import { BASE_CLOUD_URL } from './../constant/common-constant';
 import { LocationServices } from '../service/location-service/location.service';
 
 export const getCurrentLocation = () => {
@@ -36,4 +37,15 @@ export const displayLocation = (coordinate = null)  => new Promise( async (resol
             console.log(error);
         })
     }
+})
+
+export const getGeoJson = (level, name) => new Promise(async (resolve,reject) => {
+    const url = `${BASE_CLOUD_URL}file/${level}/${name}.geojson`
+    fetch(url).then(async html => {
+        const geojson = await JSON.parse(await html.text());
+        resolve(geojson)
+    }).catch(err => {
+        console.log(err);
+        reject(null);
+    })
 })

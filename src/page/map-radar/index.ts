@@ -1,11 +1,15 @@
+import { getGeoJson } from './../../utils/location-helper';
 // import { displayLocation } from '@/utils/location-helper';
 import { STATION } from '@/constant/forcast-station-constant';
 import { ForecastServices } from '@/service/forecast-service/forecast.service';
 import Vue from 'vue';
 import Component from "vue-class-component";
 // import img from '../../../static/img/icon/new/day_rain_thunder.png';
-import VNGeoJson from "../../asset/geoJson/viet_nam.geojson";
-
+// import VNGeoJson from "../../asset/geoJson/viet_nam.geojson";
+const COLOR = [
+    'red', 'green', 'blue', 'yellow', 'DeepPink', 'DeepSkyBlue', 'GreenYellow', 'Lime', 'Thistle', 'NavajoWhite',
+    'MidnightBlue', 'orange', 'purple', 'aqua', 'Aquamarine', 'RoyalBlue', 'Teal', 'DarkGreen', 'Salmon'
+]
 @Component({
     template: require("./template.html").default,
     components: {
@@ -27,6 +31,8 @@ export default class HomePageComponent extends Vue {
     layerGroup: any;
     layerProvice: any;
     layerPopup: any;
+
+    regionGroup: any;
 
     currentPosition = null;
     forecastData: any = null;
@@ -59,6 +65,33 @@ export default class HomePageComponent extends Vue {
         })
     }
 
+    handleResetLayer() {
+        if (this.regionGroup) {
+            this.layerGroup.removeLayer(this.regionGroup);
+        }
+        if (this.layerProvice) {
+            this.layerGroup.removeLayer(this.layerProvice);
+        }
+        this.forecastData = null;
+    }
+
+    handleChangeRegion(mapData) {
+        const { map } = this.windy;
+        if (this.regionGroup) {
+            this.layerGroup.removeLayer(this.regionGroup);
+        }
+        //@ts-ignore
+        this.regionGroup = new L.LayerGroup();
+
+        const geojson = JSON.parse(mapData.geojson);
+        //@ts-ignore
+        const layer = L.geoJSON(geojson, { style: mapData.style })
+        this.regionGroup.addLayer(layer);
+        map.flyToBounds(layer.getBounds(), { maxZoom: mapData.zoom, animate: true, duration: 1, easeLinearity: 0.5 });
+
+        this.layerGroup.addLayer(this.regionGroup)
+    }
+
     async handleChangeLocation(mapData) {
         const { map } = this.windy;
         //Remove geojson layer
@@ -68,17 +101,30 @@ export default class HomePageComponent extends Vue {
                 this.layerGroup.removeLayer(this.layerPopup);
             }
         }
-        if (!mapData.geojson) { // Incase dont have geojson data
-            map.flyTo([mapData.lat, mapData.lon], mapData.zoom);
-            return;
-        }
+
         // Move map with Geojson data
         const geojson = JSON.parse(mapData.geojson);
-        //@ts-ignore
-        this.layerProvice = L.geoJSON(geojson, { style: mapData.style });
-        map.flyToBounds(this.layerProvice.getBounds(), { maxZoom: mapData.zoom });
-        this.layerGroup.addLayer(this.layerProvice);
 
+        //@ts-ignore
+        this.layerProvice = new L.LayerGroup();
+        //@ts-ignore
+        this.layerProvice.addLayer(L.geoJSON(geojson, { style: mapData.style }));
+
+        const districts = JSON.parse(mapData.district);
+        districts.forEach((element, index) => {
+            //@ts-ignore
+            const layer = L.geoJSON(element, {
+                style: {
+                    color: COLOR[index],
+                    weight: 1,
+                    opacity: 1,
+                    fillOpacity: 0.5
+                }
+            })
+            this.layerProvice.addLayer(layer);
+            map.flyToBounds(layer, { maxZoom: mapData.zoom, animate: true, duration: 1, easeLinearity: 0.5, paddingBottomRight: [0, 500], paddingTopLeft: [0, 0] });
+        });
+        this.layerGroup.addLayer(this.layerProvice);
         this.forecastData = STATION.find(x => x.place_id === mapData.placeId);
         // if (station) {
             // this.forecastData = station;
@@ -144,7 +190,7 @@ export default class HomePageComponent extends Vue {
             zoom: 7
         };
         // @ts-ignore
-        windyInit(options, windyAPI => {
+        windyInit(options,async windyAPI => {
             // windyAPI is ready, and contain 'map', 'store',
             // 'picker' and other usefull stuff
             this.windy = windyAPI;
@@ -184,14 +230,17 @@ export default class HomePageComponent extends Vue {
 
             //@ts-ignore
             this.layerGroup = new L.LayerGroup();
-            const geojson = JSON.parse(JSON.stringify(VNGeoJson));
-            //@ts-ignore
-            const vnBorder = L.geoJSON(geojson, { style: {
-                color: "#fff",
-                weight: 3,
-                opacity: 0.5,
-            }});
 
+            const VietNamGeojson = await getGeoJson('nation', 'viet_nam');
+            //@ts-ignore
+            const vnBorder = L.geoJSON(VietNamGeojson, {
+                style: {
+                    color: "#fff",
+                    weight: 1,
+                    opacity: 1,
+                    fillOpacity: 0.2
+                }
+            });
             this.layerGroup.addLayer(vnBorder);
             this.layerGroup.addTo(map);
         });

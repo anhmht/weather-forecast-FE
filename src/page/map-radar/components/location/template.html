@@ -1,12 +1,21 @@
 <div class="location-picker">
     <div class="location-picker-title">BẢN ĐỒ VỊ TRÍ</div>
+    <div class="location-picker-tab">
+        <div class="location-picker-tab--region" :class="activeTab === 0 ? 'active' : ''" @click="handleChangeTab(0)">Khu vực</div>
+        <div class="location-picker-tab--province" :class="activeTab === 1 ? 'active' : ''" @click="handleChangeTab(1)">Tỉnh thành</div>
+    </div>
     <div class="location-picker-content" >
-        <div @click="handleClick(index)"
+        <div v-if="activeTab === 0" :class="activeTabRegion === index ? 'active' : null" class="location-picker-content--item"
+            v-for="(item, index) in regions" :key="index" @click="handleClickRegion(index)">
+            {{item.name}}
+        </div>
+        <div v-if="activeTab === 1" @click="handleClick(index)"
             :class="isActive === index ? 'active' : null"
             class="location-picker-content--item"
             v-for="(item, index) in locations"
             :key="index">
             {{item.name}}
         </div>
+
     </div>
 </div>

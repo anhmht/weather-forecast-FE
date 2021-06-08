@@ -11,7 +11,7 @@
     <div class="tool-bar">
         <div class="tool-bar-row">
             <div>
-                <location-picker v-if="!isRecording" @change-map="handleChangeLocation" />
+                <location-picker v-if="!isRecording" @change-map="handleChangeLocation" @clear="handleResetLayer" @change-region-map="handleChangeRegion"/>
                 <map-type-picker v-if="!isRecording" @change-map="handleChangeMap" />
             </div>
             <div style="margin-left: 20px;">

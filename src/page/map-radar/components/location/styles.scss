@@ -1,10 +1,35 @@
 .location-picker {
     background: #000;
-    width: 200px;
+    width: 250px;
     background: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5)), rgba(121, 120, 120, 0.5);
     color: #fff;
     padding: 10px;
     margin-bottom: 20px;
+    &-tab {
+        display: flex;
+        align-items: center;
+        margin: 15px 0;
+        text-align: center;
+        border: 1px solid;
+        cursor: pointer;
+        &--region {
+            width: 50%;
+            padding: 10px;
+            border-right: 1px solid;
+            &.active {
+                background-color: #fff;
+                color: #000;
+            }
+        }
+        &--province {
+            padding: 10px;
+            width: 50%;
+            &.active {
+                background-color: #fff;
+                color: #000;
+            }
+        }
+    }
     &-title {
         font-size: 16px;
         font-weight: 500;

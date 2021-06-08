@@ -1,3 +1,4 @@
+import { getGeoJson } from './../../../../utils/location-helper';
 import { DataHelper } from "@/utils/data-helper";
 import Vue from "vue";
 import Component from "vue-class-component";
@@ -8,22 +9,56 @@ import Component from "vue-class-component";
 })
 export default class LocationComponent extends Vue {
     isActive: Number = null;
-    vinhlong = null;
-    get locations() {
+    activeTabRegion: number = null;
+
+    activeTab: number = 0;
+
+    get regions() {
         return [
             {
-                lat: 10.25369,
-                lon: 105.9722,
-                name: "Vĩnh Long",
-                zoom: 12,
-                placeId: 'VL',
-                geojson: 'vinh_long',
+                name: "Đông Nam Bộ",
+                zoom: 10,
+                placeId: 'DNB',
+                geojson: 'dong_nam_bo',
                 style: {
                     color: "#ff7800",
                     weight: 3,
                     opacity: 0.5,
                     // fill: false
                 }
+            },
+            {
+                name: "Tây Nam Bộ",
+                zoom: 11,
+                placeId: 'TNB',
+                geojson: 'tay_nam_bo',
+                style: {
+                    color: "#49cc90",
+                    weight: 3,
+                    opacity: 0.5,
+                    // fill: false
+                }
+            },
+        ]
+    }
+    get locations() {
+        return [
+            {
+                lat: 10.25369,
+                lon: 105.9722,
+                name: "Vĩnh Long",
+                zoom: 11,
+                placeId: 'VL',
+                paddingTopLeft: [0, 0],
+                paddingBottomRight: [500, 0],
+                geojson: 'vinh_long',
+                style: {
+                    color: "#ff7800",
+                    weight: 1,
+                    opacity: 1,
+                    fillOpacity: 0.5
+                },
+
             },
             {
                 lat: 21.0245,
@@ -670,12 +705,28 @@ export default class LocationComponent extends Vue {
         ];
     }
 
+    handleChangeTab(index) {
+        this.activeTab = index;
+        this.isActive = null;
+        this.activeTabRegion = null;
+        this.$emit('clear')
+    }
+
     async handleClick(index) {
         this.isActive = index;
         const mapLocation = DataHelper.deepClone(this.locations[index]) as any;
-        const geojson = await import(`../../../../asset/geoJson/${mapLocation.geojson}.geojson`);
+        const geojson = await getGeoJson('province', mapLocation.geojson) as any;
         mapLocation.geojson = JSON.stringify(geojson);
+        mapLocation.district = JSON.stringify(geojson.features);
         this.$emit("change-map", mapLocation);
+    }
+
+    async handleClickRegion(index) {
+        this.activeTabRegion = index;
+        const mapLocation = DataHelper.deepClone(this.regions[index]) as any;
+        const geojson = await getGeoJson('region', mapLocation.geojson);
+        mapLocation.geojson = JSON.stringify(geojson);
+        this.$emit("change-region-map", mapLocation);
     }
 
     async mounted() {
