@@ -1,5 +1,12 @@
 <div class="info-page-container">
     <base-container>
+        <div class="nav-sticky">
+            <div @click="scrollTo('info-page-container_section_1')">Thông tin thời tiết - Cảnh báo thiên tai</div>
+            <div @click="scrollTo('info-page-container_section_2')">Thông tin khuyến cáo</div>
+            <div @click="scrollTo('info-page-container_section_3')">Tổng quan</div>
+            <div @click="scrollTo('info-page-container_section_4')">Chuyên mục KT-VH-XH</div>
+        </div>
+
         <div class="info-page-container_section_1">
             <div class="info-page-container-wrapper">
                 <v-row justify="center">
@@ -47,6 +54,7 @@
                 </v-row>
             </div>
         </div>
+
         <div class="info-page-container_section_2 padding-main">
             <div class="info-page-container-wrapper">
                 <v-row justify="center">
@@ -112,5 +120,30 @@
             </div>
         </div>
 
+        <div class="info-page-container_section_4 padding-main">
+            <div class="info-page-container-wrapper">
+                <v-row justify="center">
+                    <v-col auto>
+                        <h1>Chuyên mục KT-VH-XH</h1>
+                        <div class="recommend-info">
+                            <v-carousel height="290" v-model="slideIndex" hide-delimiters show-arrows-on-hover>
+                                <v-carousel-item v-for="(items,index) in Recommend" :key="index">
+                                    <v-row no-gutters>
+                                        <v-col class="recommend-info-item" style="padding: 5px" v-for="(item, i) in items" :key="i" cols="12" md="3">
+                                            <div class="box-recommend">
+                                                <img :src="item.imageUrl? item.imageUrl : null" @click="handleViewDetail(item.eventId)">
+                                                <div class="content-new-s">
+                                                    <h4>{{item.title}}</h4>
+                                                </div>
+                                            </div>
+                                        </v-col>
+                                    </v-row>
+                                </v-carousel-item>
+                            </v-carousel>
+                        </div>
+                    </v-col>
+                </v-row>
+            </div>
+        </div>
     </base-container>
 </div>

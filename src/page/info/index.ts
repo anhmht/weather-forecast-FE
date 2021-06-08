@@ -112,6 +112,11 @@ export default class InfoPageComponent extends Vue {
         this.timestamp = moment().format('DD/MM/YYYY HH:mm:ss');
     }
 
+    scrollTo(className) {
+        var element = document.getElementsByClassName(className)[0];
+        element.scrollIntoView({behavior: "smooth"});
+    }
+
     async getTemperature() {
         const placeId = this.currentPosition.regionCode;
         const station = STATION.find(x => x.place_id === placeId);
