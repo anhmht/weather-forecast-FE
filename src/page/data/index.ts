@@ -16,22 +16,217 @@ export default class DataPageComponent extends Vue {
         'Sương mù', 'Nhiều mây', 'Mưa rào nhẹ', 'Có mây', 'Mưa dông', 'Mưa rải rác', 'Nắng nóng'
     ]
 
-    weatherInfo = [
+    northeastRegion = [
         {
-            name: 'Cấp độ gió',
+            name: 'Hà Giang',
         },
         {
-            name: 'Nhiệt độ',
+            name: 'Cao Bằng',
         },
         {
-            name: 'Xâm nhập mặn',
+            name: 'Bắc Kạn',
         },
         {
-            name: 'Độ ẩm',
+            name: 'Lạng Sơn',
         },
         {
-            name: 'Thuỷ Văn',
+            name: 'Tuyên Quang',
         },
+        {
+            name: 'Thái Nguyên',
+        },
+        {
+            name: 'Bắc Giang',
+        },
+        {
+            name: 'Quảng Ninh',
+        },
+    ]
+
+    northwestRegion = [
+        {
+            name: 'Lào Cai',
+        },
+        {
+            name: 'Yên Bái',
+        },
+        {
+            name: 'Phú Thọ',
+        },
+        {
+            name: 'Điện Biên',
+        },
+        {
+            name: 'Lai Châu',
+        },
+        {
+            name: 'Sơn La',
+        },
+        {
+            name: 'Hòa Bình',
+        },
+    ]
+
+    redRiverDelta = [
+        {
+            name: 'Hà Nội',
+        },
+        {
+            name: 'Hải Phòng',
+        },
+        {
+            name: 'Bắc Ninh',
+        },
+        {
+            name: 'Hà Nam',
+        },
+        {
+            name: 'Hải Dương',
+        },
+        {
+            name: 'Hưng Yên',
+        },
+        {
+            name: 'Nam Định',
+        },
+        {
+            name: 'Ninh Bình',
+        },
+        {
+            name: 'Thái Bình',
+        },
+        {
+            name: 'Vĩnh Phúc',
+        },
+    ]
+
+    northCentralCoast = [
+        {
+            name: 'Thanh Hóa',
+        },
+        {
+            name: 'Nghệ An',
+        },
+        {
+            name: 'Hà Tĩnh',
+        },
+        {
+            name: 'Quảng Bình',
+        },
+        {
+            name: 'Quảng Trị',
+        },
+        {
+            name: 'Thừa Thiên - Huế',
+        },
+    ]
+
+    southCentralCoast = [
+        {
+            name: 'Đà Nẵng',
+        },
+        {
+            name: 'Quảng Nam',
+        },
+        {
+            name: 'Quảng Ngãi',
+        },
+        {
+            name: 'Bình Định',
+        },
+        {
+            name: 'Phú Yên',
+        },
+        {
+            name: 'Khánh Hòa',
+        },
+        {
+            name: 'Ninh Thuận',
+        },
+        {
+            name: 'Bình Thuận',
+        },
+    ]
+
+    centralHighlands = [
+        {
+            name: 'Kon Tum',
+        },
+        {
+            name: 'Gia Lai',
+        },
+        {
+            name: 'Đắk Lắk',
+        },
+        {
+            name: 'Đắk Nông',
+        },
+        {
+            name: 'Lâm Đồng',
+        },
+    ]
+
+    southeastRegion = [
+        {
+            name: 'Bình Phước',
+        },
+        {
+            name: 'Bình Dương',
+        },
+        {
+            name: 'Đồng Nai',
+        },
+        {
+            name: 'Tây Ninh',
+        },
+        {
+            name: 'Bà Rịa - Vũng Tàu',
+        },
+        {
+            name: 'Thành phố Hồ Chí Minh',
+        },
+    ]
+
+    mekongRiverDelta = [
+        {
+            name: 'Long An',
+        },
+        {
+            name: 'Đồng Tháp',
+        },
+        {
+            name: 'Tiền Giang',
+        },
+        {
+            name: 'An Giang',
+        },
+        {
+            name: 'Bến Tre',
+        },
+        {
+            name: 'Vĩnh Long',
+        },
+        {
+            name: 'Trà Vinh',
+        },
+        {
+            name: 'Hậu Giang',
+        },
+        {
+            name: 'Kiên Giang',
+        },
+        {
+            name: 'Sóc Trăng',
+        },
+        {
+            name: 'Bạc Liêu',
+        },
+        {
+            name: 'Cà Mau',
+        },
+        {
+            name: 'Thành phố Cần Thơ',
+        }
     ]
 
     wardInfo = [
@@ -61,49 +256,7 @@ export default class DataPageComponent extends Vue {
         },
     ]
 
-    mekongDeltaProvinces = [
-        {
-            name: 'Tiền Giang',
-        },
-        {
-            name: 'Bến Tre',
-        },
-        {
-            name: 'Trà Vinh',
-        },
-        {
-            name: 'Sóc Trăng',
-        },
-        {
-            name: 'Bạc Liêu',
-        },
-        {
-            name: 'Kiên Giang',
-        },
-        {
-            name: 'Cà Mau',
-        },
-        {
-            name: 'Long An',
-        },
-        {
-            name: 'Đồng Tháp',
-        },
-        {
-            name: 'Vĩnh Long',
-        },
-        {
-            name: 'Cần Thơ',
-        },
-        {
-            name: 'Hậu Giang',
-        },
-        {
-            name: 'An Giang',
-        }
-    ]
-
-    mainRivers = [
+    riversEstuaries = [
         {
             name: 'Sông Tiền',
         },
@@ -112,7 +265,28 @@ export default class DataPageComponent extends Vue {
         },
         {
             name: 'Sông Cổ Chiên',
-        }
+        },
+        {
+            name: 'Cửa Tiểu',
+        },
+        {
+            name: 'Cửa Đại',
+        },
+        {
+            name: 'Hàm Luông',
+        },
+        {
+            name: 'Cổ Chiên',
+        },
+        {
+            name: 'Cung Hầu',
+        },
+        {
+            name: 'Định An',
+        },
+        {
+            name: 'Trần Đề',
+        },
     ]
     
     harshStatus = [
