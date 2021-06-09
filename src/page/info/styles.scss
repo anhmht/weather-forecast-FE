@@ -281,14 +281,19 @@
         }
     }
 
-    .nav-sticky {
+    .nav-sticky-wrapper {
         position: sticky;
-        top: 90px;
-        color: #2196F3;
+        top: 100px;
+        color: #fff;
         cursor: pointer;
         height: 0px;
         width: fit-content;
         padding-left: 10px;
-        font-size: 20px;
+    }
+
+    .nav-sticky {
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), rgba(121, 120, 120, 0.5);
+        padding: 10px;
+        border-radius: 5px;
     }
 }

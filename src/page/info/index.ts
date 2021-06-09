@@ -114,7 +114,14 @@ export default class InfoPageComponent extends Vue {
 
     scrollTo(className) {
         var element = document.getElementsByClassName(className)[0];
-        element.scrollIntoView({behavior: "smooth"});
+        var headerOffset = 90;
+        var elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+        var offsetPosition = elementPosition - headerOffset;
+
+        window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth"
+        });
     }
 
     async getTemperature() {
