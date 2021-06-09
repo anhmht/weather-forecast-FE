@@ -16,6 +16,78 @@ export default class LocationComponent extends Vue {
     get regions() {
         return [
             {
+                name: "Tây Bắc Bộ",
+                zoom: 10,
+                placeId: 'TBB',
+                geojson: 'tay_bac_bo',
+                style: {
+                    color: "#ff7800",
+                    weight: 3,
+                    opacity: 0.5,
+                    // fill: false
+                }
+            },
+            {
+                name: "Đông Bắc Bộ",
+                zoom: 10,
+                placeId: 'DBB',
+                geojson: 'dong_bac_bo',
+                style: {
+                    color: "#ff7800",
+                    weight: 3,
+                    opacity: 0.5,
+                    // fill: false
+                }
+            },
+            {
+                name: "Đồng Bằng Sông Hồng",
+                zoom: 10,
+                placeId: 'DBSH',
+                geojson: 'dong_bang_song_hong',
+                style: {
+                    color: "#ff7800",
+                    weight: 3,
+                    opacity: 0.5,
+                    // fill: false
+                }
+            },
+            {
+                name: "Bắc Trung Bộ",
+                zoom: 10,
+                placeId: 'BTB',
+                geojson: 'bac_trung_bo',
+                style: {
+                    color: "#ff7800",
+                    weight: 3,
+                    opacity: 0.5,
+                    // fill: false
+                }
+            },
+            {
+                name: "Nam Trung Bộ",
+                zoom: 10,
+                placeId: 'NTB',
+                geojson: 'nam_trung_bo',
+                style: {
+                    color: "#ff7800",
+                    weight: 3,
+                    opacity: 0.5,
+                    // fill: false
+                }
+            },
+            {
+                name: "Tây Nguyên",
+                zoom: 10,
+                placeId: 'TN',
+                geojson: 'tay_nguyen',
+                style: {
+                    color: "#ff7800",
+                    weight: 3,
+                    opacity: 0.5,
+                    // fill: false
+                }
+            },
+            {
                 name: "Đông Nam Bộ",
                 zoom: 10,
                 placeId: 'DNB',
