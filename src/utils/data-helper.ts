@@ -35,14 +35,12 @@ export class DataHelper {
 
         // Get most frequent icon at daylight from 6:00 to 18:00 for next 5 day
         if (currentHour >= 6 && currentHour <= 18) {
-            if (date == 0) {
-                for (let i = currentHour; i <= 18; i++) {
-                    arr.push(DataHelper.getDataByDateHour(temp, date, i));
-                }
-            } else {
-                for (let i = 6; i <= 18; i++) {
-                    arr.push(DataHelper.getDataByDateHour(temp, date, i));
-                }
+            if (date != 0) {
+                currentHour = 6;
+            }
+
+            for (let i = currentHour; i <= 18; i++) {
+                arr.push(DataHelper.getDataByDateHour(temp, date, i));
             }
         }
         // Get most frequent icon at night from 19:00 to 5:00 next day for next 5 day
@@ -51,14 +49,17 @@ export class DataHelper {
                 if (currentHour >= 0 && currentHour <= 5) {
                     currentHour = currentHour + 24;
                 }
-
-                for (let i = currentHour; i <= 5 + 24; i++) {
-                    arr.push(DataHelper.getDataByDateHour(temp, date, i - 24));
-                }
             } else {
-                for (let i = 19; i <= 5 + 24; i++) {
-                    arr.push(DataHelper.getDataByDateHour(temp, date, i - 24));
+                currentHour = 19;
+            }
+
+            for (let i = currentHour; i <= 5 + 24; i++) {
+                if (i <= 23) {
+                    arr.push(DataHelper.getDataByDateHour(temp, date, i));
+                } else {
+                    arr.push(DataHelper.getDataByDateHour(temp, date + 1, i - 24));
                 }
+                
             }
         }
 
