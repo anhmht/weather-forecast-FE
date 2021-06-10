@@ -9,4 +9,5 @@ export default {
     getMinMaxPrecipitationByStation: '/api/AmountOfRain/get-min-max-amount-of-rain',
     getMinMaxWindLevelByStation: '/api/WindLevel/get-min-max-wind-level',
     getMinMaxHumidityByStation: '/api/Humidity/get-min-max-humidity',
+    getMinMaxWindSpeedByStation: '/api/WindSpeed/get-min-max-wind-speed',
 }

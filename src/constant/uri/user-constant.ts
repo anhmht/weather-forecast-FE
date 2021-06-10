@@ -6,6 +6,5 @@ export default {
     postId: '/api/Event/:id',
     postCategoryStatus: '/api/Event/GetEventsBy',
     category: '/api/Category',
-    getAllStatuses: '/api/Common/Status/GetAllStatuses',
     getCurrentLocation: '/api/Common/Location/GetCurrentLocation'
 }

@@ -15,7 +15,7 @@
                 <map-type-picker v-if="!isRecording" @change-map="handleChangeMap" />
             </div>
             <div style="margin-left: 20px;">
-                <tool-bar v-if="forecastData" :station-info="forecastData" />
+                <tool-bar v-if="forecastData" :station-info="forecastData" @changeTime="updateDistrictPopUp" />
             </div>
         </div>
     </div>

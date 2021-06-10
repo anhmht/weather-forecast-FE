@@ -8,19 +8,16 @@
                 {{data.currentTemp}}°
             </div>
             <div class="weahter-tool-result--body_temp--icon">
-                <div class="weahter-tool-result--body_temp--icon__image">
-                    <img :src="Icon" />
-                </div>
-                <div class="weahter-tool-result--body_temp--icon__des">
-                    {{IconDescription}}
-                </div>
+                <img :src="Icon" />
             </div>
         </div>
         <div>
-            <div>Nhiệt độ thấp nhất: {{data.currentDayMinTemp}}°</div>
-            <div>Nhiệt độ cao nhât: {{data.currentDayMaxTemp}}°</div>
-            <div>Lượng mưa: </div>
-            <div>Độ ẩm: </div>
+            <div>Mô tả: {{IconDescription}}</div>
+            <div>Nhiệt độ: {{data.currentDayMinTemp}}° - {{data.currentDayMaxTemp}}°</div>
+            <div>Lượng mưa: {{data.currentDayMinRain}}mm - {{data.currentDayMaxRain}}mm</div>
+            <div>Độ ẩm: {{data.currentDayMinHumidity}}% - {{data.currentDayMaxHumidity}}%</div>
+            <div>Cấp gió: Cấp {{data.currentDayMinWindLevel}} - Cấp {{data.currentDayMaxWindLevel}}</div>
+            <div>Tốc độ gió: Cấp {{data.currentDayMinWindSpeed}} - Cấp {{data.currentDayMaxWindSpeed}}</div>
         </div>
     </div>
 </div>

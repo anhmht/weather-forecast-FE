@@ -11,7 +11,7 @@
         border-radius: 25px;
         margin-bottom: 40px;
         color: #fff;
-        
+
         h2 {
             padding: 16px 30px;
             border-bottom: 1px solid rgba(255,255,255,0.5);
@@ -37,7 +37,7 @@
                         flex: none;
                     }
                 }
-                
+
             }
         }
         &_content {
@@ -171,16 +171,28 @@
                         }
                     }
                     &_temp {
-                        text-align: center;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        padding: 0 10px;
                     }
                     &_precip {
-                        text-align: center;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        padding: 0 10px;
                     }
                     &_wind {
-                        text-align: center;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        padding: 0 10px;
                     }
                     &_humid {
-                        text-align: center;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        padding: 0 10px;
                     }
                 }
             }

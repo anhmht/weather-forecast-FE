@@ -8,7 +8,7 @@ const service = new LookupServices();
 
 const actions = <ActionTree<ILookupState, any>>{
 
-    [lookupTypesStore.Get.LOOKUP_DATA]: ({ getters, commit }, type: string) => {
+    [lookupTypesStore.Get.LOOKUP_DATA]: ({ getters, commit, dispatch, state }, type: string) => {
         if (getters.getLookupData[type]) {
             return getters.getLookupData[type];
         }

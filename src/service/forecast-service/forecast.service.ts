@@ -62,4 +62,10 @@ export class ForecastServices extends GenericServices {
             return Promise.resolve(response)
         }).catch(error => Promise.reject(error))
     }
+    getMinMaxWindSpeedByStation(stationId: string): Promise<ApiResponse> {
+        const uri = `${Uri.getMinMaxWindSpeedByStation}?diaDuBaoId=${stationId}`
+        return this.executeSelecting({}, uri).then((response: ApiResponse) => {
+            return Promise.resolve(response)
+        }).catch(error => Promise.reject(error))
+    }
 }

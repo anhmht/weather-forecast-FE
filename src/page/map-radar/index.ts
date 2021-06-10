@@ -4,8 +4,10 @@ import { STATION } from '@/constant/forcast-station-constant';
 import { ForecastServices } from '@/service/forecast-service/forecast.service';
 import Vue from 'vue';
 import Component from "vue-class-component";
-// import img from '../../../static/img/icon/new/day_rain_thunder.png';
-// import VNGeoJson from "../../asset/geoJson/viet_nam.geojson";
+import { DataHelper } from '@/utils/data-helper';
+import moment from 'moment';
+import { ICON } from '@/constant/icon-constant';
+
 const COLOR = [
     'red', 'green', 'blue', 'yellow', 'DeepPink', 'DeepSkyBlue', 'GreenYellow', 'Lime', 'Thistle', 'NavajoWhite',
     'MidnightBlue', 'orange', 'purple', 'aqua', 'Aquamarine', 'RoyalBlue', 'Teal', 'DarkGreen', 'Salmon'
@@ -28,17 +30,42 @@ export default class HomePageComponent extends Vue {
     isHideIconPicker: boolean = true;
     isDisplayDialog: boolean = false;
     forecastService: ForecastServices = new ForecastServices()
+
     layerGroup: any;
     layerProvice: any;
     layerPopup: any;
-
     regionGroup: any;
 
     currentPosition = null;
     forecastData: any = null;
 
+    districtIds:any = [];
+    context = {
+        icon: [],
+        temp: [],
+        station: []
+    }
+
     handleBack() {
         this.$router.go(-1);
+    }
+
+    updateDistrictPopUp(changeTime) {
+        if (this.layerPopup) {
+            Object.keys(this.layerPopup._layers).forEach((element, index) => {
+                const temp = this.getDisplayData(this.context.temp[index], changeTime.date, changeTime.time);
+                const icon = this.getDisplayData(this.context.icon[index], changeTime.date, changeTime.time);
+                const iconUrl = ICON.find(x => x.id === icon);
+                const station = this.context.station[index];
+                this.layerPopup._layers[element].setContent(`<div class="map-pop-up">
+                            <div class="map-pop-up-name">${station.ten}</div>
+                            <div class="map-pop-up-data">
+                                <div class="map-pop-up-data--image"><img src="${iconUrl.url}"/></div>
+                                <div class="map-pop-up-data--temp">${temp}℃</div>
+                            </div>
+                        </div>`);
+            });
+        }
     }
 
     handleDownload() {
@@ -58,7 +85,17 @@ export default class HomePageComponent extends Vue {
     getTemprature(station) {
         return new Promise((resolve, reject) => {
             this.forecastService.getTemperatureByStation(station.id).then((res) => {
-                resolve(res[`_${new Date().getHours()}`]);
+                resolve(res);
+            }).catch(err => {
+                console.log(err);
+            })
+        })
+    }
+
+    getIcon(station) {
+        return new Promise((resolve, reject) => {
+            this.forecastService.getIconWeather(station.id).then((res) => {
+                resolve(res);
             }).catch(err => {
                 console.log(err);
             })
@@ -68,9 +105,20 @@ export default class HomePageComponent extends Vue {
     handleResetLayer() {
         if (this.regionGroup) {
             this.layerGroup.removeLayer(this.regionGroup);
+            this.regionGroup = null;
         }
         if (this.layerProvice) {
             this.layerGroup.removeLayer(this.layerProvice);
+            this.layerProvice = null;
+        }
+        if (this.layerPopup) {
+            this.layerGroup.removeLayer(this.layerPopup);
+            this.layerPopup = null;
+        }
+        this.context = {
+            icon: [],
+            temp: [],
+            station: []
         }
         this.forecastData = null;
     }
@@ -79,6 +127,7 @@ export default class HomePageComponent extends Vue {
         const { map } = this.windy;
         if (this.regionGroup) {
             this.layerGroup.removeLayer(this.regionGroup);
+            this.regionGroup = null;
         }
         //@ts-ignore
         this.regionGroup = new L.LayerGroup();
@@ -87,8 +136,7 @@ export default class HomePageComponent extends Vue {
         //@ts-ignore
         const layer = L.geoJSON(geojson, { style: mapData.style })
         this.regionGroup.addLayer(layer);
-        map.flyToBounds(layer.getBounds(), { maxZoom: mapData.zoom, animate: true, duration: 1, easeLinearity: 0.5 });
-
+        map.flyToBounds(layer.getBounds(), { maxZoom: mapData.zoom, animate: true, duration: 1, easeLinearity: 1 });
         this.layerGroup.addLayer(this.regionGroup)
     }
 
@@ -97,20 +145,33 @@ export default class HomePageComponent extends Vue {
         //Remove geojson layer
         if (this.layerProvice) {
             this.layerGroup.removeLayer(this.layerProvice);
+            this.layerProvice = null;
             if(this.layerPopup) {
                 this.layerGroup.removeLayer(this.layerPopup);
+                this.layerPopup = null;
+                this.context = {
+                    icon: [],
+                    temp: [],
+                    station: []
+                }
             }
         }
-
         // Move map with Geojson data
         const geojson = JSON.parse(mapData.geojson);
-
         //@ts-ignore
         this.layerProvice = new L.LayerGroup();
         //@ts-ignore
-        this.layerProvice.addLayer(L.geoJSON(geojson, { style: mapData.style }));
-
+        const provinceLayer = L.geoJSON(geojson, { style: mapData.style })
+        this.layerProvice.addLayer(provinceLayer);
+        map.flyToBounds(provinceLayer.getBounds(), { maxZoom: mapData.zoom, duration: 1.5, easeLinearity: 0.2 });
         const districts = JSON.parse(mapData.district);
+        this.addDistrictLayer(districts);
+        this.addPopUPLayer(mapData.districtIds);
+        this.layerGroup.addLayer(this.layerProvice);
+        this.forecastData = STATION.find(x => x.place_id === mapData.placeId);
+    }
+
+    addDistrictLayer(districts) {
         districts.forEach((element, index) => {
             //@ts-ignore
             const layer = L.geoJSON(element, {
@@ -122,25 +183,43 @@ export default class HomePageComponent extends Vue {
                 }
             })
             this.layerProvice.addLayer(layer);
-            map.flyToBounds(layer, { maxZoom: mapData.zoom, animate: true, duration: 1, easeLinearity: 0.5, paddingBottomRight: [0, 500], paddingTopLeft: [0, 0] });
         });
-        this.layerGroup.addLayer(this.layerProvice);
-        this.forecastData = STATION.find(x => x.place_id === mapData.placeId);
-        // if (station) {
-            // this.forecastData = station;
-            //@ts-ignore
-            // this.layerPopup = L.popup()
-            //     .setLatLng([station.y, station.x])
-            //     .setContent(`<div class="map-pop-up">
-            //                 <img src="${img}"/>
-            //                 <div class="map-pop-up-temp">${temp}℃</div>
-            //             </div>`)
-        // } else {
-            // this.forecastData = 32;
-        // }
-        // if (station) {
-        //     this.layerGroup.addLayer(this.layerPopup);
-        // }
+    }
+
+    async addPopUPLayer(ids) {
+        if(!ids) return;
+        const vm = this as any;
+        // @ts-ignore
+        this.layerPopup = new L.LayerGroup();
+        for (const element of ids) {
+            const station = STATION.find(x => x.place_id === element);
+            if (station) {
+                const contextTemp = await this.getTemprature(station);
+                const contextIcon = await this.getIcon(station);
+                this.context.temp.push(contextTemp);
+                this.context.icon.push(contextIcon);
+                this.context.station.push(station);
+                const temp = vm.getDisplayData(contextTemp, 0, moment().hour())
+                const icon = vm.getDisplayData(contextIcon, 0, moment().hour())
+                const iconUrl = ICON.find(x => x.id === icon)
+                // @ts-ignore
+                const layer = L.popup()
+                    .setLatLng([station.y, station.x])
+                    .setContent(`<div class="map-pop-up">
+                            <div class="map-pop-up-name">${station.ten}</div>
+                            <div class="map-pop-up-data">
+                                <div class="map-pop-up-data--image"><img src="${iconUrl.url}"/></div>
+                                <div class="map-pop-up-data--temp">${temp}℃</div>
+                            </div>
+                        </div>`)
+                this.layerPopup.addLayer(layer);
+            }
+        }
+        this.layerGroup.addLayer(this.layerPopup);
+    }
+
+    getDisplayData(data, date, time) {
+        return DataHelper.getDataByDateHour(data, date, time);
     }
 
     async capture() {

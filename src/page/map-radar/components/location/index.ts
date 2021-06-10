@@ -121,8 +121,10 @@ export default class LocationComponent extends Vue {
                 name: "Vĩnh Long",
                 zoom: 11,
                 placeId: 'VL',
-                paddingTopLeft: [0, 0],
-                paddingBottomRight: [500, 0],
+                districtIds: [
+                    'VL_1', 'VL_2', 'VL_3', 'VL_4',
+                    'VL_5', 'VL_6', 'VL_7', 'VL_8',
+                ],
                 geojson: 'vinh_long',
                 style: {
                     color: "#ff7800",

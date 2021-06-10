@@ -44,14 +44,6 @@
     }
 }
 
-.map-pop-up {
-    &-temp {
-        font-size: 16px;
-        padding: 5px;
-        text-align: center;
-    }
-}
-
 .preview-dialog {
     background: #fff;
     &-header {
@@ -87,4 +79,31 @@
 #legend-mobile {
     font-size: 17px !important;
     height: 30px;
+}
+
+// Windy popup
+.leaflet-popup-content-wrapper {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), rgba(121, 120, 120, 0.5) !important;
+    color: #fff !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    border: 3px solid $primary-color;
+}
+.leaflet-popup-tip-container {
+    display: none;
+}
+
+.map-pop-up {
+    font-size: 15px;
+    &-name {
+    }
+    &-data {
+        display: flex;
+        &--temp {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50%;
+        }
+    }
 }

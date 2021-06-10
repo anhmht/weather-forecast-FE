@@ -8,7 +8,7 @@
             padding-top: 10px;
             &_temp {
                 display: flex;
-                width: 400px;
+                width: 280px;
                 > div {
                     width: 50%;
                 }
@@ -20,16 +20,11 @@
                     text-align: center;
                 }
                 &--icon {
-                    &__image {
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        img {
-                            width: 100px;
-                        }
-                    }
-                    &__des {
-                        padding: 10px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    img {
+                        width: 100px;
                     }
                 }
             }
