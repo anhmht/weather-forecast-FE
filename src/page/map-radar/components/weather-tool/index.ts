@@ -120,7 +120,7 @@ export default class WeatherToolComponent extends Vue {
 
     getIcon() {
         this.isLoading = true;
-        this.forecastService.getIconWeahter(this.stationInfo.id).then((res: any) => {
+        this.forecastService.getIconWeather(this.stationInfo.id).then((res: any) => {
             this.context.icon = res;
             this.prepareIconResult(res, this.context.date, this.context.time);
             this.isLoading = false;

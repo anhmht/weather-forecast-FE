@@ -70,13 +70,14 @@
                     &_right {
                         img {
                             margin: 20px;
-                            width: 35%;
+                            width: 40%;
                         }
                     }
                 }
             }
 
             &--next {
+                margin: 0px 25px;
 
                 &_day {
                     text-transform: capitalize;
@@ -88,7 +89,7 @@
                     img {
                         margin: 20px auto;
                         display: block;
-                        width: 50%;
+                        width: 100%;
                     }
 
                 }

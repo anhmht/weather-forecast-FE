@@ -1,10 +1,10 @@
 import Vue from "vue";
 import Component from "vue-class-component";
-import icon from '../../../static/img/icon/day_partial_cloud.png';
 import { displayLocation } from "@/utils/location-helper";
 import { DataHelper } from "@/utils/data-helper";
 import { STATION } from "../../constant/forcast-station-constant";
 import { DATE } from "@/constant/common-constant";
+import { ICON } from '@/constant/icon-constant';
 import { ForecastServices } from "../../service/forecast-service/forecast.service";
 import moment from "moment";
 import 'moment/locale/vi';
@@ -22,6 +22,7 @@ export default class TimePageComponent extends Vue {
     currentDay: string = "";
     currentDate: string = "";
     currentTemp: number = 0;
+    currentIcon: string = "";
     currentDayMinTemp: number = 0;
     currentDayMaxTemp: number = 0;
     currentDayMinPrecip: number = 0;
@@ -38,10 +39,12 @@ export default class TimePageComponent extends Vue {
     precipMinMaxByDay: any = [];
     windLvlMinMaxByDay: any = [];
     humidMinMaxByDay: any = [];
+    iconByDay: any = [];
     tempByHour: any = [];
     precipByHour: any = [];
     windLvlByHour: any = [];
     humidByHour: any = [];
+    iconByHour: any = [];
     activeTab: number = 1
     handleChangeTab(tab) {
         this.activeTab = tab;
@@ -125,10 +128,37 @@ export default class TimePageComponent extends Vue {
             console.log(error);
         })
 
+        await this.forecastService.getIconWeather(this.currentForecastStationId)
+        .then((res: any) => {
+            for (let i = DATE.CURRENT; i <= DATE.NEXT_4_DAY; i++) {
+                const icon = ICON.find(x => x.id === DataHelper.getMostFrequentIcon(res, i))
+
+                this.iconByDay.push({
+                    icon: icon.url
+                });
+            }
+
+            for (let i = 0; i < 24; i++) {
+                const icon = ICON.find(x => x.id === DataHelper.getDataByHour(res, i))
+
+                if (icon) {
+                    this.iconByHour.push({
+                        icon: icon.url
+                    });
+
+                    if (i == 0) {
+                        this.currentIcon = icon.url;
+                    }
+                }
+            }
+        }).catch(error => {
+            console.log(error);
+        })
+
         for (let i = DATE.NEXT_DAY; i <= DATE.NEXT_4_DAY; i++) {
             this.weatherByDay.push({
                 day: moment().add(i, 'days').format('dddd'),
-                imageUrl: icon,
+                imageUrl: this.iconByDay[i].icon,
                 temp: this.tempMinMaxByDay[i].min + '°C - ' + this.tempMinMaxByDay[i].max + '°C',
                 precip: this.precipMinMaxByDay[i].min + ' - ' + this.precipMinMaxByDay[i].max + ' mm',
                 windLvl: this.windLvlMinMaxByDay[i].min + ' - ' + this.windLvlMinMaxByDay[i].max,
@@ -186,7 +216,7 @@ export default class TimePageComponent extends Vue {
             this.weatherByTime.push({
                 time: DataHelper.getDisplayHour(i),
                 date: moment().add(i, 'hours').format('DD/MM'),
-                imageUrl: icon,
+                imageUrl: this.iconByHour[i].icon,
                 temp: this.tempByHour[i].temp,
                 precip: this.precipByHour[i].precip,
                 windLvl: this.windLvlByHour[i].windLvl,

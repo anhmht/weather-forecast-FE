@@ -32,7 +32,7 @@ export class ForecastServices extends GenericServices {
             return Promise.resolve(response)
         }).catch(error => Promise.reject(error))
     }
-    getIconWeahter(stationId: string): Promise<ApiResponse> {
+    getIconWeather(stationId: string): Promise<ApiResponse> {
         const uri = `${Uri.getIconWeatherByStation}?diemDuBaoId=${stationId}`
         return this.executeSelecting({}, uri).then((response: ApiResponse) => {
             return Promise.resolve(response)
