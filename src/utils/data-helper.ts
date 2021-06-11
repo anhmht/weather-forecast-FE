@@ -57,7 +57,7 @@ export class DataHelper {
                 if (i <= 23) {
                     arr.push(DataHelper.getDataByDateHour(temp, date, i));
                 } else {
-                    arr.push(DataHelper.getDataByDateHour(temp, date + 1, i - 24));
+                    arr.push(DataHelper.getDataByDateHour(temp, date, i - 24));
                 }
                 
             }
