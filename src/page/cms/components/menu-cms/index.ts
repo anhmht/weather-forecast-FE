@@ -24,6 +24,12 @@ export default class MenuCMSComponent extends Vue {
             query: { categoryId: '580ffb36-2c72-4642-cb46-08d91fa2c701' }
         },
         {
+            title: 'Chuyên mục KT-VH-XH',
+            icon: 'mdi-home-account',
+            name: ROUTE_NAME.LIST_POST,
+            query: { categoryId: 'eededf06-2e83-458d-9e0e-08d92ce117ec' }
+        },
+        {
             title: 'Dữ liệu KTTV',
             icon: 'mdi-home-account',
             name: ROUTE_NAME.LIST_DATA,

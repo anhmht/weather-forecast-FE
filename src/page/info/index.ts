@@ -41,10 +41,13 @@ export default class InfoPageComponent extends Vue {
     recommendCategoryName: string = "Thông tin khuyến cáo";
     warningCategoryId: string = "";
     warningCategoryName: string = "Cảnh báo thiên tai";
+    otherCategoryId: string = "";
+    otherCategoryName: string = "Kinh tế - Văn hóa - Xã hội";
     publishStatusId: string = "";
     publishStatusName: string = "Publish";
     warningPosts: any = [];
     recommendPosts: any = [];
+    otherPosts: any = [];
     slideIndex:number = 0;
 
     @LookupGetter(lookupTypesStore.Get.STATUS) status: IStatus[]
@@ -74,6 +77,18 @@ export default class InfoPageComponent extends Vue {
         let i, j, chunk = 4;
         for (i = 0, j = this.recommendPosts.length; i < j; i += chunk) {
             const temparray = this.recommendPosts.slice(i, i + chunk);
+            result.push(temparray);
+        }
+        console.log(result);
+
+        return result;
+    }
+
+    get Other() {
+        const result = []
+        let i, j, chunk = 4;
+        for (i = 0, j = this.otherPosts.length; i < j; i += chunk) {
+            const temparray = this.otherPosts.slice(i, i + chunk);
             result.push(temparray);
         }
         console.log(result);
@@ -162,6 +177,9 @@ export default class InfoPageComponent extends Vue {
                 if (obj.name === this.recommendCategoryName) {
                     this.recommendCategoryId = obj.categoryId;
                 }
+                if (obj.name === this.otherCategoryName) {
+                    this.otherCategoryId = obj.categoryId;
+                }
             }
         }).catch(error => {
             console.log(error);
@@ -177,6 +195,13 @@ export default class InfoPageComponent extends Vue {
         // Get recommend posts
         await this.postService.getPostByCategoryAndStatus(this.recommendCategoryId, this.publishStatusId).then((res: any) => {
             this.recommendPosts = res;
+        }).catch(error => {
+            console.log(error);
+        })
+
+        // Get other posts (Economic - Culture - Society)
+        await this.postService.getPostByCategoryAndStatus(this.otherCategoryId, this.publishStatusId).then((res: any) => {
+            this.otherPosts = res;
         }).catch(error => {
             console.log(error);
         })
