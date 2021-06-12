@@ -3,6 +3,8 @@ export default {
     getTemperatureByStation: '/api/Temperature/get-temperature',
     getPrecipitationByStation: '/api/AmountOfRain/get-amount-of-rain',
     getWindLevelByStation: '/api/WindLevel/get-wind-level',
+    getWindSpeedByStation: '/api/WindSpeed/get-wind-speed',
+    getWindDirectionByStation: '/api/WindDirection/get-wind-direction',
     getHumidityByStation: '/api/Humidity/get-humidity',
     getIconWeatherByStation: '/api/Weather/get-weather',
     getMinMaxTemperatureByStation: '/api/Temperature/get-min-max-temperature',

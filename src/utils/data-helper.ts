@@ -30,7 +30,8 @@ export class DataHelper {
     }
 
     static getMostFrequentIcon(temp, date) {
-        let currentHour = new Date().getHours();
+        const originalHour = new Date().getHours();
+        let currentHour = originalHour;
         let arr = new Array();
 
         // Get most frequent icon at daylight from 6:00 to 18:00 for next 5 day
@@ -55,9 +56,13 @@ export class DataHelper {
 
             for (let i = currentHour; i <= 5 + 24; i++) {
                 if (i <= 23) {
-                    arr.push(DataHelper.getDataByDateHour(temp, date, i));
+                    if (originalHour > 5) {
+                        arr.push(DataHelper.getDataByDateHour(temp, date, i));
+                    } else {
+                        arr.push(DataHelper.getDataByDateHour(temp, date - 1, i));
+                    }
                 } else {
-                    if (currentHour > 5 && date == 0) {
+                    if (originalHour > 5) {
                         arr.push(DataHelper.getDataByDateHour(temp, date + 1, i - 24));
                     } else {
                         arr.push(DataHelper.getDataByDateHour(temp, date, i - 24));

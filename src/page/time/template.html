@@ -34,6 +34,10 @@
                                         <br>
                                         Cấp gió: {{currentDayMinWindLvl}} - {{currentDayMaxWindLvl}}
                                         <br>
+                                        Tốc độ gió: {{currentDayMinWindSpd}} - {{currentDayMaxWindSpd}} m/s
+                                        <!-- <br>
+                                        Hướng gió: {{currentDayMinWindDir}} -->
+                                        <br>
                                         Độ ẩm: {{currentDayMinHumid}}% - {{currentDayMaxHumid}}%
                                     </div>
                                 </div>
@@ -55,9 +59,15 @@
                                             <div class="time-page-container_section_1_main--next_precip">
                                                 Lượng mưa: {{item.precip}}
                                             </div>
-                                            <div class="time-page-container_section_1_main--next_wind">
+                                            <div class="time-page-container_section_1_main--next_wind_lvl">
                                                 Cấp gió: {{item.windLvl}}
                                             </div>
+                                            <div class="time-page-container_section_1_main--next_wind_spd">
+                                                Tốc độ gió: {{item.windSpd}}
+                                            </div>
+                                            <!-- <div class="time-page-container_section_1_main--next_wind_dir">
+                                                Hướng gió: {{item.windDir}}
+                                            </div> -->
                                             <div class="time-page-container_section_1_main--next_humid">
                                                 Độ ẩm: {{item.humid}}
                                             </div>
@@ -86,9 +96,15 @@
                                 <div class="time-page-container_section_2_main--time_detail_precip">
                                     <v-icon color="#fff">mdi-weather-rainy</v-icon> {{item.precip}} mm
                                 </div>
-                                <div class="time-page-container_section_2_main--time_detail_wind">
+                                <div class="time-page-container_section_2_main--time_detail_wind_lvl">
                                     <v-icon color="#fff">mdi-weather-windy</v-icon> Cấp {{item.windLvl}}
                                 </div>
+                                <div class="time-page-container_section_2_main--time_detail_wind_spd">
+                                    <v-icon color="#fff">mdi-tailwind</v-icon> {{item.windSpd}} m/s
+                                </div>
+                                <!-- <div class="time-page-container_section_2_main--time_detail_wind_dir">
+                                    <v-icon color="#fff">mdi-weather-windy-variant</v-icon> {{item.windDir}}
+                                </div> -->
                                 <div class="time-page-container_section_2_main--time_detail_humid">
                                     <v-icon color="#fff">mdi-water-percent</v-icon> {{item.humid}}%
                                 </div>

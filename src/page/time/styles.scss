@@ -103,7 +103,13 @@
                     text-align: center;
                 }
 
-                &_wind {
+                &_wind_lvl {
+                    text-align: center;
+                }
+                &_wind_spd {
+                    text-align: center;
+                }
+                &_wind_dir {
                     text-align: center;
                 }
 
@@ -182,7 +188,19 @@
                         justify-content: space-between;
                         padding: 0 10px;
                     }
-                    &_wind {
+                    &_wind_lvl {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        padding: 0 10px;
+                    }
+                    &_wind_spd {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        padding: 0 10px;
+                    }
+                    &_wind_dir {
                         display: flex;
                         align-items: center;
                         justify-content: space-between;

@@ -27,8 +27,11 @@ export default class TimePageComponent extends Vue {
     currentDayMaxTemp: number = 0;
     currentDayMinPrecip: number = 0;
     currentDayMaxPrecip: number = 0;
-    currentDayMinWindLvl: string = "";
-    currentDayMaxWindLvl: string = "";
+    currentDayMinWindLvl: number = 0;
+    currentDayMaxWindLvl: number = 0;
+    currentDayMinWindSpd: number = 0;
+    currentDayMaxWindSpd: number = 0;
+    currentDayMinWindDir: string = "";
     currentDayMinHumid: number = 0;
     currentDayMaxHumid: number = 0;
     forecastService: ForecastServices = new ForecastServices();
@@ -38,11 +41,15 @@ export default class TimePageComponent extends Vue {
     tempMinMaxByDay: any = [];
     precipMinMaxByDay: any = [];
     windLvlMinMaxByDay: any = [];
+    windSpdMinMaxByDay: any = [];
     humidMinMaxByDay: any = [];
     iconByDay: any = [];
+    windDirByDay: any = [];
     tempByHour: any = [];
     precipByHour: any = [];
     windLvlByHour: any = [];
+    windSpdByHour: any = [];
+    windDirByHour: any = [];
     humidByHour: any = [];
     iconByHour: any = [];
     activeTab: number = 1
@@ -112,6 +119,22 @@ export default class TimePageComponent extends Vue {
             console.log(error);
         })
 
+        await this.forecastService.getMinMaxWindSpeedByStation(this.currentForecastStationId)
+        .then((res: any) => {
+            this.currentDayMinWindSpd = res.windSpeedByDays[0].windSpeedMin;
+            this.currentDayMaxWindSpd = res.windSpeedByDays[0].windSpeedMax;
+
+            for (let i = DATE.CURRENT; i <= DATE.NEXT_4_DAY; i++) {
+                this.windSpdMinMaxByDay.push({
+                    min: res.windSpeedByDays[i].windSpeedMin,
+                    max: res.windSpeedByDays[i].windSpeedMax
+                });
+            }
+        })
+        .catch(error => {
+            console.log(error);
+        })
+
         await this.forecastService.getMinMaxHumidityByStation(this.currentForecastStationId)
         .then((res: any) => {
             this.currentDayMinHumid = res.humidityByDays[0].humidityMin;
@@ -131,15 +154,19 @@ export default class TimePageComponent extends Vue {
         await this.forecastService.getIconWeather(this.currentForecastStationId)
         .then((res: any) => {
             for (let i = DATE.CURRENT; i <= DATE.NEXT_4_DAY; i++) {
-                const icon = ICON.find(x => x.id === DataHelper.getMostFrequentIcon(res, i))
+                const mostFrequentIcon = DataHelper.getMostFrequentIcon(res, i);
+                const icon = ICON.find(x => x.id === mostFrequentIcon)
 
-                this.iconByDay.push({
-                    icon: icon.url
-                });
+                if (icon) {
+                    this.iconByDay.push({
+                        icon: icon.url
+                    });
+                }
             }
 
             for (let i = 0; i < 24; i++) {
-                const icon = ICON.find(x => x.id === DataHelper.getDataByHour(res, i))
+                const dataByHour = DataHelper.getDataByHour(res, i);
+                const icon = ICON.find(x => x.id === dataByHour)
 
                 if (icon) {
                     this.iconByHour.push({
@@ -162,6 +189,7 @@ export default class TimePageComponent extends Vue {
                 temp: this.tempMinMaxByDay[i].min + '°C - ' + this.tempMinMaxByDay[i].max + '°C',
                 precip: this.precipMinMaxByDay[i].min + ' - ' + this.precipMinMaxByDay[i].max + ' mm',
                 windLvl: this.windLvlMinMaxByDay[i].min + ' - ' + this.windLvlMinMaxByDay[i].max,
+                windSpd: this.windSpdMinMaxByDay[i].min + ' - ' + this.windSpdMinMaxByDay[i].max + ' m/s',
                 humid: this.humidMinMaxByDay[i].min + '% - ' + this.humidMinMaxByDay[i].max + '%'
             });
         }
@@ -201,6 +229,17 @@ export default class TimePageComponent extends Vue {
             console.log(error);
         })
 
+        await this.forecastService.getWindSpeedByStation(this.currentForecastStationId)
+        .then((res: any) => {
+            for (let i = 0; i < 24; i++) {
+                this.windSpdByHour.push({
+                    windSpd: DataHelper.getDataByHour(res, i)
+                });
+            }
+        }).catch(error => {
+            console.log(error);
+        })
+
         await this.forecastService.getHumidityByStation(this.currentForecastStationId)
         .then((res: any) => {
             for (let i = 0; i < 24; i++) {
@@ -220,6 +259,7 @@ export default class TimePageComponent extends Vue {
                 temp: this.tempByHour[i].temp,
                 precip: this.precipByHour[i].precip,
                 windLvl: this.windLvlByHour[i].windLvl,
+                windSpd: this.windSpdByHour[i].windSpd,
                 humid: this.humidByHour[i].humid,
             });
         }
