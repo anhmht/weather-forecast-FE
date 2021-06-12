@@ -19,7 +19,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     // these devServer options should be customized in /config/index.js
     devServer: {
         https: true,
-        historyApiFallback: true,
+        historyApiFallback: false,
         hot: true,
         host: process.env.HOST || config.dev.host,
         port: process.env.PORT || config.dev.port,
@@ -32,7 +32,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
         proxy: config.dev.proxyTable,
         quiet: true, // necessary for FriendlyErrorsPlugin
         watchOptions: {
-            poll: true,
+            poll: false,
         }
     },
     plugins: [
@@ -47,7 +47,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
             filename: 'index.html',
             template: 'index.html',
             inject: true,
-            cache: true,
+            cache: false,
             chunksSortMode: 'none'
         }),
         new FriendlyErrorsPlugin()

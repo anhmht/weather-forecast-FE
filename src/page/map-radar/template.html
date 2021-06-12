@@ -1,7 +1,7 @@
 <div class="home-page-container">
     <div class="" id="windy"></div>
     <div v-if="!isRecording" class="record-btn">
-        <v-btn @click="capture" color="primary" depressed elevation="7" rounded x-large>
+        <v-btn @click="handleOpenScenario" color="primary" depressed elevation="7" rounded x-large>
             Xuất Tất Cả
         </v-btn>
         <v-btn style="margin-left: 20px;" @click="capture" color="primary" depressed elevation="7" rounded x-large>
@@ -11,8 +11,13 @@
     <div class="tool-bar">
         <div class="tool-bar-row">
             <div>
-                <location-picker v-if="!isRecording" @change-map="handleChangeLocation" @clear="handleResetLayer" @change-region-map="handleChangeRegion"/>
+                <location-picker v-if="!isRecording"
+                    :custom="customLocationControl"
+                    @change-map="handleChangeLocation"
+                    @clear="handleResetLayer"
+                    @change-region-map="handleChangeRegion"/>
                 <map-type-picker v-if="!isRecording" @change-map="handleChangeMap" />
+                <elevation-picker v-model="customLevelControl" @change="handleChangeLevel"/>
             </div>
             <div style="margin-left: 20px;">
                 <tool-bar v-if="forecastData" :station-info="forecastData" @changeTime="updateDistrictPopUp" />
@@ -60,4 +65,14 @@
         </div>
     </v-dialog>
 
+    <scenario-modal v-model="drawer"/>
+
+
+    <div v-if="isRecording" style="
+        position: fixed;
+        top: 0;
+        height: 100vh;
+        width: 100vw;
+        cursor: none;
+    "></div>
 </div>

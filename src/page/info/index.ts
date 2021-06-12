@@ -161,10 +161,6 @@ export default class InfoPageComponent extends Vue {
     }
 
     async mounted() {
-        setInterval(this.getNow, 1000);
-        this.currentPosition = await displayLocation() as any;
-        this.getTemperature();
-
         await this.getLookupData(lookupTypesStore.Set.STATUS);
         this.publishStatusId = this.status.find(x => x.name === this.publishStatusName).statusId;
 
@@ -205,5 +201,8 @@ export default class InfoPageComponent extends Vue {
         }).catch(error => {
             console.log(error);
         })
+        setInterval(this.getNow, 1000);
+        this.currentPosition = await displayLocation() as any;
+        this.getTemperature();
     }
 }

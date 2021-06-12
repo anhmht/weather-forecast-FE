@@ -1,0 +1,10 @@
+<div class="elevation-picker">
+    <div class="elevation-picker-title">
+        Độ cao
+    </div>
+    <v-slider v-model="value" step="1" :max="12" tick-size="4" thumb-label @change="handleChangeLevel">
+        <template v-slot:thumb-label="{ value }">
+            {{ getDisplayElevation(value) }}
+        </template>
+    </v-slider>
+</div>

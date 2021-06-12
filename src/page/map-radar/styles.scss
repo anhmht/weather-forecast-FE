@@ -37,7 +37,7 @@
     .tool-bar {
         position: absolute;
         left: 20px;
-        top:  5%;
+        top:  20px;
         &-row {
             display: flex;
         }
@@ -96,6 +96,7 @@
 .map-pop-up {
     font-size: 15px;
     &-name {
+        min-width: 100px;
     }
     &-data {
         display: flex;

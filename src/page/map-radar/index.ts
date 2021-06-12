@@ -15,12 +15,12 @@ const COLOR = [
 @Component({
     template: require("./template.html").default,
     components: {
-        "icon-picker": () =>
-            import("./components/icon-drag-drop/IconDragDropComponent.vue"),
-        "map-type-picker": () =>
-            import("./components/map-type/MapTypeComponent.vue"),
+        "icon-picker": () => import("./components/icon-drag-drop/IconDragDropComponent.vue"),
+        "map-type-picker": () => import("./components/map-type/MapTypeComponent.vue"),
         "location-picker": () => import("./components/location/LocationComponent.vue"),
-        "tool-bar": () => import("./components/weather-tool/WeatherToolComponent.vue")
+        "tool-bar": () => import("./components/weather-tool/WeatherToolComponent.vue"),
+        "elevation-picker": () => import("./components/elevation/ElevationComponent.vue"),
+        "scenario-modal": () => import("./components/scenario/ScenarioComponent.vue")
     }
 })
 export default class HomePageComponent extends Vue {
@@ -29,7 +29,7 @@ export default class HomePageComponent extends Vue {
     isRecording: boolean = false;
     isHideIconPicker: boolean = true;
     isDisplayDialog: boolean = false;
-    forecastService: ForecastServices = new ForecastServices()
+    forecastService: ForecastServices = new ForecastServices();
 
     layerGroup: any;
     layerProvice: any;
@@ -38,6 +38,26 @@ export default class HomePageComponent extends Vue {
 
     currentPosition = null;
     forecastData: any = null;
+
+    customLocationControl: any = null;
+    customLevelControl: any = 0;
+
+    drawer: boolean = false;
+
+    customControl: any = [
+        {
+            methodName: 'handleClick',
+            data: 0,
+            duration: 5000,
+            type: 'customLocationControl'
+        },
+        {
+            methodName: 'handleClick',
+            data: 2,
+            duration: 3000,
+            type: 'customLocationControl'
+        }
+    ];
 
     districtIds:any = [];
     context = {
@@ -64,6 +84,7 @@ export default class HomePageComponent extends Vue {
                                 <div class="map-pop-up-data--temp">${temp}℃</div>
                             </div>
                         </div>`);
+                this.layerPopup._layers[element].update();
             });
         }
     }
@@ -80,6 +101,17 @@ export default class HomePageComponent extends Vue {
     handleChangeMap(mapData) {
         const { store } = this.windy;
         store.set("overlay", mapData.type);
+
+        for (const iterator of this.customControl) {
+            setTimeout(() => {
+                this[iterator.type] = iterator;
+            }, iterator.duration);
+        }
+    }
+
+    handleChangeLevel(data) {
+        const { store } = this.windy;
+        store.set("level", data);
     }
 
     getTemprature(station) {
@@ -128,6 +160,15 @@ export default class HomePageComponent extends Vue {
         if (this.regionGroup) {
             this.layerGroup.removeLayer(this.regionGroup);
             this.regionGroup = null;
+            if (this.layerPopup) {
+                this.layerGroup.removeLayer(this.layerPopup);
+                this.layerPopup = null;
+                this.context = {
+                    icon: [],
+                    temp: [],
+                    station: []
+                }
+            }
         }
         //@ts-ignore
         this.regionGroup = new L.LayerGroup();
@@ -137,6 +178,9 @@ export default class HomePageComponent extends Vue {
         const layer = L.geoJSON(geojson, { style: mapData.style })
         this.regionGroup.addLayer(layer);
         map.flyToBounds(layer.getBounds(), { maxZoom: mapData.zoom, animate: true, duration: 1, easeLinearity: 1 });
+        const provinces = JSON.parse(mapData.province);
+        this.addProvinceLayer(provinces);
+        this.addPopUPLayer(mapData.provinceIds);
         this.layerGroup.addLayer(this.regionGroup)
     }
 
@@ -186,12 +230,28 @@ export default class HomePageComponent extends Vue {
         });
     }
 
+    addProvinceLayer(provinces) {
+        provinces.forEach((element, index) => {
+            //@ts-ignore
+            const layer = L.geoJSON(element, {
+                style: {
+                    color: COLOR[index],
+                    weight: 1,
+                    opacity: 1,
+                    fillOpacity: 0.5
+                }
+            })
+            this.regionGroup.addLayer(layer);
+        });
+    }
+
     async addPopUPLayer(ids) {
         if(!ids) return;
         const vm = this as any;
         // @ts-ignore
         this.layerPopup = new L.LayerGroup();
-        for (const element of ids) {
+        this.layerGroup.addLayer(this.layerPopup);
+        ids.forEach(async element => {
             const station = STATION.find(x => x.place_id === element);
             if (station) {
                 const contextTemp = await this.getTemprature(station);
@@ -203,7 +263,7 @@ export default class HomePageComponent extends Vue {
                 const icon = vm.getDisplayData(contextIcon, 0, moment().hour())
                 const iconUrl = ICON.find(x => x.id === icon)
                 // @ts-ignore
-                const layer = L.popup()
+                const layer = L.popup({ closeOnClick: false})
                     .setLatLng([station.y, station.x])
                     .setContent(`<div class="map-pop-up">
                             <div class="map-pop-up-name">${station.ten}</div>
@@ -214,8 +274,8 @@ export default class HomePageComponent extends Vue {
                         </div>`)
                 this.layerPopup.addLayer(layer);
             }
-        }
-        this.layerGroup.addLayer(this.layerPopup);
+        });
+
     }
 
     getDisplayData(data, date, time) {
@@ -255,6 +315,10 @@ export default class HomePageComponent extends Vue {
             });
     }
 
+    handleOpenScenario() {
+        this.drawer = true;
+    }
+
     async mounted() {
         // this.currentPosition = await displayLocation() as any;
         const options = {
@@ -266,7 +330,7 @@ export default class HomePageComponent extends Vue {
             // Optional: Initial state of the map
             lat: 16.06778,
             lon: 108.22083,
-            zoom: 7
+            zoom: 7,
         };
         // @ts-ignore
         windyInit(options,async windyAPI => {
