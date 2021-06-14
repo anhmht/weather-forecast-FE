@@ -323,6 +323,7 @@ export const MAP_PROVINCE = [
         name: "Hà Nội",
         zoom: 12,
         geojson: 'ha_noi',
+        placeId: 'HN',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -960,3 +961,34 @@ export const MAP_PROVINCE = [
         }
     }
 ]
+
+export const MAP_TYPE = [
+    {
+        type: "wind",
+        name: "Tốc độ gió"
+    },
+    {
+        type: "rain",
+        name: "Lượng mưa"
+    },
+    {
+        type: "clouds",
+        name: "Lượng mây"
+    },
+    {
+        type: "pressure",
+        name: "Áp Lực không khí"
+    },
+    {
+        type: "temp",
+        name: "Nhiệt độ"
+    },
+    {
+        type: "currents",
+        name: "Dòng nước"
+    },
+    {
+        type: "waves",
+        name: "Dải sóng"
+    }
+];

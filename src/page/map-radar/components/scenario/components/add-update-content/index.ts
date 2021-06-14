@@ -1,7 +1,8 @@
-import { SCENARIO_ACTION } from './../../scenario-default';
+import { DataHelper } from '@/utils/data-helper';
+import { SCENARIO_ACTION, ELEVATION } from './../../scenario-default';
 
-import { MAP_PROVINCE, REGION } from '@/constant/forcast-station-constant';
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { MAP_PROVINCE, MAP_TYPE, REGION } from '@/constant/forcast-station-constant';
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 
 @Component({
     template: require("./template.html").default,
@@ -10,6 +11,9 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 export default class AddUpdateContentComponent extends Vue {
     @Prop({required: true})
     value
+
+    @Prop({type: Object, default: null})
+    content
 
     durations = [
         { text: '0 giây', value: 0 },
@@ -34,6 +38,10 @@ export default class AddUpdateContentComponent extends Vue {
         return MAP_PROVINCE;
     }
 
+    get mapTypes() {
+        return MAP_TYPE;
+    }
+
     get visibleAddItem() {
         return this.value;
     }
@@ -42,8 +50,46 @@ export default class AddUpdateContentComponent extends Vue {
         this.$emit('input', value)
     }
 
+    get zooms() {
+        return [7,8,9,10,11,12];
+    }
+
+    get elevations() {
+        return ELEVATION;
+    }
+
     handleSave() {
+        if (this.data.action === 'customMapStatusControl') {
+            this.data.method = 'handleClick';
+        }
+        if (this.data.action === 'customZoomControl') {
+            this.data.duration = 1000;
+        }
+        if (this.data.action === 'customLevelControl') {
+            this.data.method = 'handleChangeLevel';
+        }
         this.$emit('save', this.data);
         this.visibleAddItem = false
+    }
+
+    handleChangeAction(value) {
+        this.data = {
+            action: value,
+            method: null,
+            data: null,
+            duration: 0
+        }
+    }
+
+    @Watch('value')
+    dialogVisible(visible) {
+        if (visible) {
+            this.data = this.content ? DataHelper.deepClone(this.content) : {
+                action: null,
+                method: null,
+                data: null,
+                duration: 0
+            }
+        }
     }
 }

@@ -1,10 +1,13 @@
 <div class="home-page-container">
     <div class="" id="windy"></div>
-    <div v-if="!isRecording" class="record-btn">
-        <v-btn @click="handleOpenScenario" color="primary" depressed elevation="7" rounded x-large>
+    <div class="record-btn">
+        <v-btn v-show="isRecording" @click="handleClearTimeout" color="primary" depressed elevation="7" rounded x-large>
+            Dừng
+        </v-btn>
+        <v-btn v-show="!isRecording" style="margin-left: 20px;" @click="handleOpenScenario" color="primary" depressed elevation="7" rounded x-large>
             Kịch Bản
         </v-btn>
-        <v-btn style="margin-left: 20px;" @click="capture" color="primary" depressed elevation="7" rounded x-large>
+        <v-btn v-show="!isRecording" style="margin-left: 20px;" @click="capture" color="primary" depressed elevation="7" rounded x-large>
             Xuất Video
         </v-btn>
     </div>
@@ -16,7 +19,7 @@
                     @change-map="handleChangeLocation"
                     @clear="handleResetLayer"
                     @change-region-map="handleChangeRegion"/>
-                <map-type-picker v-show="!isRecording" @change-map="handleChangeMap" />
+                <map-type-picker :custom="customMapStatusControl" v-show="!isRecording" @change-map="handleChangeMap" />
                 <elevation-picker v-show="!isRecording" v-model="customLevelControl" @change="handleChangeLevel"/>
             </div>
             <div style="margin-left: 20px;">
@@ -68,7 +71,7 @@
     <scenario-modal v-model="drawer" @preview="handlePreview"/>
 
 
-    <div v-if="isRecording" style="
+    <div v-if="isRecording && !isReview" style="
         position: fixed;
         top: 0;
         height: 100vh;

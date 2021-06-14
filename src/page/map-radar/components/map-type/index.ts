@@ -1,5 +1,7 @@
+import { MAP_TYPE } from "@/constant/forcast-station-constant";
 import Vue from "vue";
 import Component from "vue-class-component";
+import { Watch, Prop } from "vue-property-decorator";
 
 
 @Component({
@@ -7,43 +9,23 @@ import Component from "vue-class-component";
     components: {}
 })
 export default class MapTypeComponent extends Vue {
+    @Prop({ type: Object, default: null })
+    custom
+
     isActive: Number = 0;
     get mapTypes() {
-        return [
-            {
-                type: "wind",
-                name: "Tốc độ gió"
-            },
-            {
-                type: "rain",
-                name: "Lượng mưa"
-            },
-            {
-                type: "clouds",
-                name: "Lượng mây"
-            },
-            {
-                type: "pressure",
-                name: "Áp Lực không khí"
-            },
-            {
-                type: "temp",
-                name: "Nhiệt độ"
-            },
-            {
-                type: "currents",
-                name: "Dòng nước"
-            },
-            {
-                type: "waves",
-                name: "Dải sóng"
-            }
-        ];
+        return MAP_TYPE;
     }
 
     handleClick(index) {
         this.isActive = index;
         const type = this.mapTypes[index];
         this.$emit("change-map", type);
+    }
+
+    @Watch('custom')
+    handleMoveCustom(val, old) {
+        let index = this.mapTypes.findIndex(x => x.type === val.data);
+        this[val.method](index);
     }
 }

@@ -7,8 +7,8 @@
             <v-toolbar-title>Tạo nội dung</v-toolbar-title>
         </v-toolbar>
         <v-card-text>
-            <v-select v-model="data.action" :items="actionList" label="Chọn hàng động" item-value="value"></v-select>
-            <div v-if="data.action">
+            <v-select v-model="data.action" @change="handleChangeAction" :items="actionList" label="Chọn hàng động" item-value="value"></v-select>
+            <div v-if="data.action === 'customLocationControl'">
                 <v-radio-group v-model="data.method" row>
                     <v-radio label="Khu Vực" value="handleClickRegion"></v-radio>
                     <v-radio label="Tỉnh Thành" value="handleClick"></v-radio>
@@ -19,6 +19,18 @@
                     item-text="name" item-value="placeId"></v-select>
                 <v-select v-model="data.duration" :items="durations" label="Chọn thời lượng" item-value="value">
                 </v-select>
+            </div>
+            <div v-if="data.action === 'customMapStatusControl'">
+                <v-select v-model="data.data" :items="mapTypes" label="trạng thái bản đồ"
+                    item-text="name" item-value="type"></v-select>
+            </div>
+            <div v-if="data.action === 'customZoomControl'">
+                <v-select v-model="data.data" :items="zooms" label="thu phóng bản đồ"
+                    item-text="name" item-value="type"></v-select>
+            </div>
+            <div v-if="data.action === 'customLevelControl'">
+                <v-select v-model="data.data" :items="elevations" label="độ cao bản đồ"
+                    item-text="label" item-value="data"></v-select>
             </div>
         </v-card-text>
         <v-card-actions>

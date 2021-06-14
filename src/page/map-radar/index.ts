@@ -29,6 +29,7 @@ export default class HomePageComponent extends Vue {
     windy: any;
     media: any = null;
     isRecording: boolean = false;
+    isReview: boolean = false;
     isHideIconPicker: boolean = true;
     isDisplayDialog: boolean = false;
     forecastService: ForecastServices = new ForecastServices();
@@ -45,6 +46,10 @@ export default class HomePageComponent extends Vue {
     customLevelControl: any = 0;
     customMapStatusControl: any = null;
     customZoomControl: any = 6;
+    clearTimeout: any = {
+        timeout: null,
+    }
+    isStop: boolean = false;
 
     drawer: boolean = false;
 
@@ -93,6 +98,8 @@ export default class HomePageComponent extends Vue {
     }
 
     handleChangeLevel(data) {
+        console.log(data);
+
         const { store } = this.windy;
         store.set("level", data);
     }
@@ -148,7 +155,7 @@ export default class HomePageComponent extends Vue {
         const layer = L.geoJSON(geojson, { style: mapData.style })
         this.regionGroup.addLayer(layer);
         map.flyToBounds(layer.getBounds(), { maxZoom: mapData.zoom, animate: true, duration: 1, easeLinearity: 1 });
-        await sleep(1000);
+        await sleep(1000, this.clearTimeout);
         const provinces = JSON.parse(mapData.province);
         this.addProvinceLayer(provinces);
         this.addPopUPLayer(mapData.provinceIds);
@@ -281,13 +288,36 @@ export default class HomePageComponent extends Vue {
     }
 
     async handlePreview(previewData) {
+        clearTimeout(this.clearTimeout.timeout);
+        this.isStop = false;
         this.isRecording = true;
+        this.isReview = true;
         for (const iterator of previewData) {
+            if (this.isStop) {
+                this.isStop = false;
+                break;
+            }
             this[iterator.action] = iterator;
-            await sleep(iterator.duration);
+            if (this.isStop) {
+                this.isStop = false;
+                break;
+            }
+            await sleep(iterator.duration, this.clearTimeout);
+            if (this.isStop) {
+                this.isStop = false;
+                break;
+            }
         }
         this.isRecording = false;
+        this.isReview = false;
         this.drawer = true;
+    }
+
+    handleClearTimeout() {
+        clearTimeout(this.clearTimeout.timeout);
+        this.isRecording = false;
+        this.drawer = true;
+        this.isStop = true;
     }
 
     async mounted() {
@@ -365,9 +395,12 @@ export default class HomePageComponent extends Vue {
 
     @Watch('customZoomControl')
     handleZoomMap(val) {
-        console.log(val);
-
         const { map } = this.windy;
         map.setZoom(val.data);
+    }
+
+    @Watch('customLevelControl')
+    handleChangeElevation(val) {
+        this.handleChangeLevel(val.data);
     }
 }

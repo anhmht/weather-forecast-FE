@@ -1,9 +1,9 @@
-import { DEFAULT_SCENARIOS, SCENARIO_ACTION, SCENARIO_DURATION, SCENARIO_LOCATION_METHOD } from './scenario-default';
+import { DataHelper } from '@/utils/data-helper';
+import { DEFAULT_SCENARIOS, SCENARIO_ACTION, SCENARIO_DURATION, SCENARIO_LOCATION_METHOD, ELEVATION } from './scenario-default';
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import Sortable from "sortablejs";
-import { DataHelper } from '@/utils/data-helper';
 import { sleep } from '@/utils/common-utils';
-import { MAP_PROVINCE, REGION } from '@/constant/forcast-station-constant';
+import { MAP_PROVINCE, REGION, MAP_TYPE } from '@/constant/forcast-station-constant';
 @Component({
     template: require("./template.html").default,
     components: {
@@ -14,15 +14,13 @@ export default class ScenarioComponent extends Vue {
     @Prop({required: true})
     value
 
-    selectedItem = 0
-    items = [
-        { text: 'Kịch bản mặc định', icon: 'mdi-clock' },
-        { text: 'Audience', icon: 'mdi-account' },
-        { text: 'Conversions', icon: 'mdi-flag' },
-    ]
+    selectedItem = 0;
+    content: any = null;
+    selectContentIndex: number = null;
     visibleAddItem: boolean = false;
     scenarios = []
     sortedList: any = []
+    buttonLoading: boolean = true;
 
     get drawer() {
         return this.value;
@@ -41,7 +39,11 @@ export default class ScenarioComponent extends Vue {
     }
 
     updateContent(data) {
-        this.Contents.push(data);
+        if(this.content) {
+            this.Contents[this.selectContentIndex] = DataHelper.deepClone(data);
+        } else {
+            this.Contents.push(DataHelper.deepClone(data));
+        }
     }
 
     generateKey(index) {
@@ -56,27 +58,50 @@ export default class ScenarioComponent extends Vue {
         return SCENARIO_ACTION.find(x => x.value === value).text;
     }
 
-    getMethod(value) {
-        return SCENARIO_LOCATION_METHOD.find(x => x.value === value).text;
+    getMethod(item) {
+        if (item.action === 'customLocationControl') {
+            return SCENARIO_LOCATION_METHOD.find(x => x.value === item.method).text;
+        }
+        return null;
     }
 
     getData(item) {
-        if (item.method === SCENARIO_LOCATION_METHOD[0].value) {
-            return REGION.find(x => x.placeId  === item.data).name
+        if (item.action === 'customLocationControl') {
+            if (item.method === SCENARIO_LOCATION_METHOD[0].value) {
+                return REGION.find(x => x.placeId === item.data).name
+            }
+            if (item.method === SCENARIO_LOCATION_METHOD[1].value) {
+                return MAP_PROVINCE.find(x => x.placeId === item.data).name
+            }
         }
-        if (item.method === SCENARIO_LOCATION_METHOD[1].value) {
-            return MAP_PROVINCE.find(x => x.placeId  === item.data).name
+        if (item.action === 'customMapStatusControl') {
+            return MAP_TYPE.find(x => x.type === item.data).name;
         }
+        if (item.action === 'customLevelControl') {
+            return ELEVATION.find(x => x.data === item.data).label;
+        }
+        return item.data
     }
 
     handlePreview() {
         this.drawer = false;
-
         this.$emit('preview', this.Contents)
     }
 
+    handleEditContent(content, index) {
+        this.selectContentIndex = index;
+        this.content = content;
+        this.visibleAddItem = true;
+    }
+
+    handleAddContent() {
+        this.content = null;
+        this.visibleAddItem = true;
+    }
+
     async makeSortAbleList() {
-        await sleep(500);
+        let clear = {timeout: null};
+        await sleep(500, clear);
         const list = document.getElementById('sortAble-list');
         if (list) {
             Sortable.create(list, {
@@ -88,9 +113,6 @@ export default class ScenarioComponent extends Vue {
                     DataHelper.insertAndShift(contents, oldIndex, newIndex);
                     this.sortedList = contents
                     Vue.set(this.scenarios[this.selectedItem], 'contents', contents)
-
-                    // this.scenarios[this.selectedItem].contents = contents;
-                    // this.$forceUpdate()
                 }
             });
         }
@@ -108,6 +130,11 @@ export default class ScenarioComponent extends Vue {
     dialogVisible(visible) {
         if (visible) {
             this.makeSortAbleList();
+            setTimeout(() => {
+                this.buttonLoading = false;
+            }, 2000);
+        } else {
+            this.buttonLoading = true;
         }
     }
 }
