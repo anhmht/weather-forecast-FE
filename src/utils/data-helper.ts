@@ -8,6 +8,11 @@ export class DataHelper {
         return JSON.parse(json);
     }
 
+    static insertAndShift(arr, from, to) {
+        let cutOut = arr.splice(from, 1)[0]; // cut the element at index 'from'
+        arr.splice(to, 0, cutOut);            // insert it at index 'to'
+    }
+
     static getMinMaxTemp(temp, forecastDateApplyWithCurrent = 0) {
         const hours = Object.keys(temp).filter(x => x.includes('_'));
         const tempValue = []
@@ -68,7 +73,7 @@ export class DataHelper {
                         arr.push(DataHelper.getDataByDateHour(temp, date, i - 24));
                     }
                 }
-                
+
             }
         }
 

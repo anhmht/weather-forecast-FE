@@ -194,7 +194,7 @@ export const STATION = [
 export const REGION = [
     {
         name: "Tây Bắc Bộ",
-        zoom: 10,
+        zoom: 9,
         placeId: 'TBB',
         geojson: 'tay_bac_bo',
         style: {
@@ -206,7 +206,7 @@ export const REGION = [
     },
     {
         name: "Đông Bắc Bộ",
-        zoom: 10,
+        zoom: 9,
         placeId: 'DBB',
         geojson: 'dong_bac_bo',
         style: {
@@ -218,7 +218,7 @@ export const REGION = [
     },
     {
         name: "Đồng Bằng Sông Hồng",
-        zoom: 10,
+        zoom: 9,
         placeId: 'DBSH',
         geojson: 'dong_bang_song_hong',
         style: {
@@ -230,7 +230,7 @@ export const REGION = [
     },
     {
         name: "Bắc Trung Bộ",
-        zoom: 10,
+        zoom: 8,
         placeId: 'BTB',
         geojson: 'bac_trung_bo',
         style: {
@@ -242,7 +242,7 @@ export const REGION = [
     },
     {
         name: "Nam Trung Bộ",
-        zoom: 10,
+        zoom: 8,
         placeId: 'NTB',
         geojson: 'nam_trung_bo',
         style: {
@@ -254,7 +254,7 @@ export const REGION = [
     },
     {
         name: "Tây Nguyên",
-        zoom: 10,
+        zoom: 8,
         placeId: 'TN',
         geojson: 'tay_nguyen',
         style: {
@@ -266,7 +266,7 @@ export const REGION = [
     },
     {
         name: "Đông Nam Bộ",
-        zoom: 10,
+        zoom: 9,
         placeId: 'DNB',
         geojson: 'dong_nam_bo',
         provinceIds: [
@@ -281,7 +281,7 @@ export const REGION = [
     },
     {
         name: "Tây Nam Bộ",
-        zoom: 12,
+        zoom: 9,
         placeId: 'TNB',
         geojson: 'tay_nam_bo',
         provinceIds: [

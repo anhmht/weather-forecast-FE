@@ -7,6 +7,8 @@ import Component from "vue-class-component";
 import { DataHelper } from '@/utils/data-helper';
 import moment from 'moment';
 import { ICON } from '@/constant/icon-constant';
+import { sleep } from '@/utils/common-utils';
+import { Watch } from 'vue-property-decorator';
 
 const COLOR = [
     'red', 'green', 'blue', 'yellow', 'DeepPink', 'DeepSkyBlue', 'GreenYellow', 'Lime', 'Thistle', 'NavajoWhite',
@@ -41,23 +43,10 @@ export default class HomePageComponent extends Vue {
 
     customLocationControl: any = null;
     customLevelControl: any = 0;
+    customMapStatusControl: any = null;
+    customZoomControl: any = 6;
 
     drawer: boolean = false;
-
-    customControl: any = [
-        {
-            methodName: 'handleClick',
-            data: 0,
-            duration: 5000,
-            type: 'customLocationControl'
-        },
-        {
-            methodName: 'handleClick',
-            data: 2,
-            duration: 3000,
-            type: 'customLocationControl'
-        }
-    ];
 
     districtIds:any = [];
     context = {
@@ -101,12 +90,6 @@ export default class HomePageComponent extends Vue {
     handleChangeMap(mapData) {
         const { store } = this.windy;
         store.set("overlay", mapData.type);
-
-        for (const iterator of this.customControl) {
-            setTimeout(() => {
-                this[iterator.type] = iterator;
-            }, iterator.duration);
-        }
     }
 
     handleChangeLevel(data) {
@@ -155,21 +138,8 @@ export default class HomePageComponent extends Vue {
         this.forecastData = null;
     }
 
-    handleChangeRegion(mapData) {
+    async handleChangeRegion(mapData) {
         const { map } = this.windy;
-        if (this.regionGroup) {
-            this.layerGroup.removeLayer(this.regionGroup);
-            this.regionGroup = null;
-            if (this.layerPopup) {
-                this.layerGroup.removeLayer(this.layerPopup);
-                this.layerPopup = null;
-                this.context = {
-                    icon: [],
-                    temp: [],
-                    station: []
-                }
-            }
-        }
         //@ts-ignore
         this.regionGroup = new L.LayerGroup();
 
@@ -178,28 +148,19 @@ export default class HomePageComponent extends Vue {
         const layer = L.geoJSON(geojson, { style: mapData.style })
         this.regionGroup.addLayer(layer);
         map.flyToBounds(layer.getBounds(), { maxZoom: mapData.zoom, animate: true, duration: 1, easeLinearity: 1 });
+        await sleep(1000);
         const provinces = JSON.parse(mapData.province);
         this.addProvinceLayer(provinces);
         this.addPopUPLayer(mapData.provinceIds);
-        this.layerGroup.addLayer(this.regionGroup)
+        this.layerGroup.addLayer(this.regionGroup);
+        if (mapData.zoom) {
+            map.setZoom(mapData.zoom)
+        }
     }
 
     async handleChangeLocation(mapData) {
         const { map } = this.windy;
         //Remove geojson layer
-        if (this.layerProvice) {
-            this.layerGroup.removeLayer(this.layerProvice);
-            this.layerProvice = null;
-            if(this.layerPopup) {
-                this.layerGroup.removeLayer(this.layerPopup);
-                this.layerPopup = null;
-                this.context = {
-                    icon: [],
-                    temp: [],
-                    station: []
-                }
-            }
-        }
         // Move map with Geojson data
         const geojson = JSON.parse(mapData.geojson);
         //@ts-ignore
@@ -319,6 +280,16 @@ export default class HomePageComponent extends Vue {
         this.drawer = true;
     }
 
+    async handlePreview(previewData) {
+        this.isRecording = true;
+        for (const iterator of previewData) {
+            this[iterator.action] = iterator;
+            await sleep(iterator.duration);
+        }
+        this.isRecording = false;
+        this.drawer = true;
+    }
+
     async mounted() {
         // this.currentPosition = await displayLocation() as any;
         const options = {
@@ -332,6 +303,9 @@ export default class HomePageComponent extends Vue {
             lon: 108.22083,
             zoom: 7,
         };
+
+        localStorage.setItem('settings_particles', '{"multiplier":1,"velocity":1.4,"width":0.75,"blending":1.08,"opacity":1.8}')
+        localStorage.setItem('settings_lang', '"vi"')
         // @ts-ignore
         windyInit(options,async windyAPI => {
             // windyAPI is ready, and contain 'map', 'store',
@@ -342,7 +316,7 @@ export default class HomePageComponent extends Vue {
             console.log(levels);
 
             overlays.wind.setMetric('km/h');
-            map.setZoom(6);
+            map.setZoom(this.customZoomControl);
             //@ts-ignore
             let topLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
             topLayer.setOpacity('0');
@@ -387,5 +361,13 @@ export default class HomePageComponent extends Vue {
             this.layerGroup.addLayer(vnBorder);
             this.layerGroup.addTo(map);
         });
+    }
+
+    @Watch('customZoomControl')
+    handleZoomMap(val) {
+        console.log(val);
+
+        const { map } = this.windy;
+        map.setZoom(val.data);
     }
 }

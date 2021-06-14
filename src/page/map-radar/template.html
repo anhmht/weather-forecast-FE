@@ -2,7 +2,7 @@
     <div class="" id="windy"></div>
     <div v-if="!isRecording" class="record-btn">
         <v-btn @click="handleOpenScenario" color="primary" depressed elevation="7" rounded x-large>
-            Xuất Tất Cả
+            Kịch Bản
         </v-btn>
         <v-btn style="margin-left: 20px;" @click="capture" color="primary" depressed elevation="7" rounded x-large>
             Xuất Video
@@ -11,13 +11,13 @@
     <div class="tool-bar">
         <div class="tool-bar-row">
             <div>
-                <location-picker v-if="!isRecording"
+                <location-picker v-show="!isRecording"
                     :custom="customLocationControl"
                     @change-map="handleChangeLocation"
                     @clear="handleResetLayer"
                     @change-region-map="handleChangeRegion"/>
-                <map-type-picker v-if="!isRecording" @change-map="handleChangeMap" />
-                <elevation-picker v-model="customLevelControl" @change="handleChangeLevel"/>
+                <map-type-picker v-show="!isRecording" @change-map="handleChangeMap" />
+                <elevation-picker v-show="!isRecording" v-model="customLevelControl" @change="handleChangeLevel"/>
             </div>
             <div style="margin-left: 20px;">
                 <tool-bar v-if="forecastData" :station-info="forecastData" @changeTime="updateDistrictPopUp" />
@@ -31,7 +31,7 @@
     </div>
     <icon-picker :is-recording="isRecording || isHideIconPicker"  />
 
-    <v-btn class="mx-2 back-btn" fab dark large color="primary" @click="handleBack()">
+    <v-btn v-show="!isRecording" class="mx-2 back-btn" fab dark large color="primary" @click="handleBack()">
         <v-icon dark>
             mdi-keyboard-backspace
         </v-icon>
@@ -65,7 +65,7 @@
         </div>
     </v-dialog>
 
-    <scenario-modal v-model="drawer"/>
+    <scenario-modal v-model="drawer" @preview="handlePreview"/>
 
 
     <div v-if="isRecording" style="

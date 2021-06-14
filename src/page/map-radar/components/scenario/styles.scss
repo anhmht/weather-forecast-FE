@@ -15,4 +15,22 @@
             padding: 20px;
         }
     }
+    &-right {
+        padding: 1.5vw;
+        flex: 1;
+    }
+
+    .v-toolbar--extended {
+        height: 64px !important;
+        .v-toolbar__content {
+            height: 0 !important;
+        }
+    }
+
+}
+.v-card__text {
+    padding-top: 20px !important;
+}
+.blue-background-class {
+	background-color: #C8EBFB;
 }

@@ -34,6 +34,7 @@ export default class LocationComponent extends Vue {
     }
 
     async handleClick(index) {
+        this.$emit('clear')
         this.isActive = index;
         const mapLocation = DataHelper.deepClone(this.locations[index]) as any;
         const geojson = await getGeoJson('province', mapLocation.geojson) as any;
@@ -43,6 +44,7 @@ export default class LocationComponent extends Vue {
     }
 
     async handleClickRegion(index) {
+        this.$emit('clear')
         this.activeTabRegion = index;
         const mapLocation = DataHelper.deepClone(this.regions[index]) as any;
         const geojson = await getGeoJson('region', mapLocation.geojson) as any;
@@ -57,6 +59,12 @@ export default class LocationComponent extends Vue {
 
     @Watch('custom')
     handleMoveCustom(val, old) {
-        this[val.methodName](val.data);
+        let index = null
+        if (val.method === 'handleClickRegion') {
+            index = this.regions.findIndex(x => x.placeId === val.data);
+        } else {
+            index = this.locations.findIndex(x => x.placeId === val.data);
+        }
+        this[val.method](index);
     }
 }
