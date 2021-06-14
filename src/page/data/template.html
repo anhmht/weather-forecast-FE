@@ -2,18 +2,22 @@
     <base-container class="container padding-main">
         <div class="data-page-container_wrapper">
             <div class="data-page-container_search">
-                Khu vực: <v-select style="margin: 0px 20px;" hide-details dense></v-select>
-                Tỉnh thành: <v-select style="margin: 0px 20px;" hide-details dense></v-select>
+                Khu vực: <v-select :items="allRegions" item-text="name" item-value="value"
+                    style="margin: 0px 20px;" hide-details dense v-model="region"></v-select>
+                Tỉnh thành: <v-select :items="ProvincesByRegion" item-text="name" item-value="code"
+                    style="margin: 0px 20px;" hide-details dense v-model="province"></v-select>
                 Loại trạm: <v-select style="margin: 0px 20px;" hide-details dense></v-select>
             </div>
 
             <div class="data-page-container_content">
                 <div class="data-page-container_content-station">
                     <h2>Trạm khí tượng thủy văn</h2>
-                    <div class="data-page-container_content-station--item">
-                        <div class="data-page-container_content-station--item-name">Thạnh Bắc</div>
-                        <div class="data-page-container_content-station--item-type">Mưa</div>
-                        <div class="data-page-container_content-station--item-address">Xã Thạnh Bắc, Huyện Tân Triều, Tỉnh Tây Ninh</div>
+                    <div v-for="(item, index) in StationsByProvince" :key="index" class="data-page-container_content-station--item">
+                        <div class="data-page-container_content-station--item-header">
+                            <div class="data-page-container_content-station--item-header-name">{{item.name}}</div>
+                            <div class="data-page-container_content-station--item-header-type">{{item.stationType}}</div>
+                        </div>
+                        <div class="data-page-container_content-station--item-address">{{item.address}}</div>
                     </div>
                 </div>
                 <div class="data-page-container_content-result">

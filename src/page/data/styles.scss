@@ -38,26 +38,32 @@
                 border: 1px solid;
                 border-radius: 5px;
                 width: 350px;
+                height: 75px;
                 padding: 10px;
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: space-between;
+                margin-bottom: 10px;
 
-                &-name {
-                    font-weight: bold;
-                    width: 200px;
-                }
-
-                &-type {
-                    width: fit-content;
-                    padding: 0px 10px;
-                    text-align: right;
-                    border: 1px solid;
-                    border-radius: 5px;
+                &-header {
+                    display: flex;
+                    justify-content: space-between;
+                    
+                    &-name {
+                        font-weight: bold;
+                    }
+    
+                    &-type {
+                        width: fit-content;
+                        padding: 0px 10px;
+                        text-align: right;
+                        border: 1px solid;
+                        border-radius: 5px;
+                    }
                 }
 
                 &-address {
-
+                    width: 330px;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
                 }
             }
         }
