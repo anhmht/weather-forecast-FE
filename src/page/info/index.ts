@@ -17,6 +17,7 @@ import { storeModules } from '@/store';
 import lookupTypesStore from '@/store/lookup/lookup-types.store';
 import IStatus from '@/model/status/status.model';
 import moment from 'moment';
+import { ICON } from '@/constant/icon-constant';
 
 const LookupGetter = namespace(storeModules.Lookup, Getter);
 const LookupAction = namespace(storeModules.Lookup, Action);
@@ -59,6 +60,10 @@ export default class InfoPageComponent extends Vue {
 
     get currentTemp() {
         return this.temparatureData ? this.temparatureData.current : null;
+    }
+
+    get currentIcon() {
+        return this.temparatureData ? this.temparatureData.icon : null;
     }
 
     get minTemp() {
@@ -139,13 +144,40 @@ export default class InfoPageComponent extends Vue {
         });
     }
 
-    async getTemperature() {
+    getIcon() {
+        const placeId = this.currentPosition.regionCode;
+        const station = STATION.find(x => x.place_id === placeId);
+        if (station) {
+            this.forecastService.getIconWeather(station.id).then((res) => {
+                const mostFrequentIcon = DataHelper.getMostFrequentIcon(res, 0);
+                const icon = ICON.find(x => x.id === mostFrequentIcon)
+
+                if (icon) {
+                    this.temparatureData = {
+                        ... this.temparatureData,
+                        icon: icon.url
+                    }
+                }
+
+            }).catch(err => {
+                console.log(err);
+            })
+        } else {
+            this.temparatureData = {
+                ... this.temparatureData,
+                icon: null
+            }
+        }
+    }
+
+    getTemperature() {
         const placeId = this.currentPosition.regionCode;
         const station = STATION.find(x => x.place_id === placeId);
         if(station) {
-            await this.forecastService.getTemperatureByStation(station.id).then((res) => {
+            this.forecastService.getTemperatureByStation(station.id).then((res) => {
                 const minMaxTemp = DataHelper.getMinMaxTemp(res, DATE.CURRENT);
                 this.temparatureData = {
+                    ... this.temparatureData,
                     current: DataHelper.getDataByHour(res, 0),
                     min: minMaxTemp.min,
                     max: minMaxTemp.max
@@ -155,6 +187,7 @@ export default class InfoPageComponent extends Vue {
             })
         } else {
             this.temparatureData = {
+                ... this.temparatureData,
                 current: '32'
             }
         }
@@ -182,21 +215,21 @@ export default class InfoPageComponent extends Vue {
         })
 
         // Get warning posts
-        await this.postService.getPostByCategoryAndStatus(this.warningCategoryId, this.publishStatusId).then((res: any) => {
+        this.postService.getPostByCategoryAndStatus(this.warningCategoryId, this.publishStatusId).then((res: any) => {
             this.warningPosts = res;
         }).catch(error => {
             console.log(error);
         })
 
         // Get recommend posts
-        await this.postService.getPostByCategoryAndStatus(this.recommendCategoryId, this.publishStatusId).then((res: any) => {
+        this.postService.getPostByCategoryAndStatus(this.recommendCategoryId, this.publishStatusId).then((res: any) => {
             this.recommendPosts = res;
         }).catch(error => {
             console.log(error);
         })
 
         // Get other posts (Economic - Culture - Society)
-        await this.postService.getPostByCategoryAndStatus(this.otherCategoryId, this.publishStatusId).then((res: any) => {
+        this.postService.getPostByCategoryAndStatus(this.otherCategoryId, this.publishStatusId).then((res: any) => {
             this.otherPosts = res;
         }).catch(error => {
             console.log(error);
@@ -204,5 +237,6 @@ export default class InfoPageComponent extends Vue {
         setInterval(this.getNow, 1000);
         this.currentPosition = await displayLocation() as any;
         this.getTemperature();
+        this.getIcon();
     }
 }

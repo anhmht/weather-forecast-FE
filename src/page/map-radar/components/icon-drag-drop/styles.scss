@@ -21,86 +21,94 @@
         }
     }
     // line 1
-    .day_rain_thunder {
+    .icon_0001 {
         top: 20px;
         left: 20px;
     }
-    .angry_clouds {
+    .icon_0002 {
         top: 20px;
         left: 80px;
     }
-    .cloudy {
+    .icon_0003  {
         top: 20px;
         left: 140px;
     }
-    .day_clear {
+    .icon_0011  {
         top: 20px;
         left: 200px;
     }
-    .day_partial_cloud {
+    .icon_0012 {
         top: 20px;
         left: 260px;
     }
-    .day_rain {
+    .icon_0021 {
         top: 20px;
         left: 320px;
     }
 
     //line 2
-    .day_sleet {
+    .icon_0022 {
         top: 80px;
         left: 20px;
     }
-    .day_snow_thunder {
+    .icon_0031 {
         top: 80px;
         left: 80px;
     }
-    .day_snow {
+    .icon_0032{
         top: 80px;
         left: 140px;
     }
-    .fog {
+    .icon_1001 {
         top: 80px;
         left: 200px;
     }
-    .mist {
+    .icon_1002 {
         top: 80px;
         left: 260px;
     }
-    .night_full_moon_clear {
+    .icon_1003 {
         top: 80px;
         left: 320px;
     }
 
     // line 3
-    .night_full_moon_partial_cloud {
+    .icon_1011 {
         top: 140px;
         left: 20px;
     }
-    .night_full_moon_rain_thunder {
+    .icon_1012 {
         top: 140px;
         left: 80px;
     }
-    .night_full_moon_rain {
+    .icon_1021 {
         top: 140px;
         left: 140px;
     }
-    .night_full_moon_sleet {
+    .icon_1022 {
         top: 140px;
         left: 200px;
     }
-    .night_full_moon_snow_thunder {
+    .icon_1031 {
         top: 140px;
         left: 260px;
     }
-    .night_full_moon_snow {
+    .icon_1032 {
         top: 140px;
         left: 320px;
     }
 
     // line 4
-    .night_half_moon_clear {
+    .icon_1081 {
         top: 200px;
         left: 20px;
+    }
+    .icon_1082 {
+        top: 200px;
+        left: 80px;
+    }
+    .icon_1083 {
+        top: 200px;
+        left: 140px;
     }
 }
