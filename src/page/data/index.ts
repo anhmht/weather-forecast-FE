@@ -20,6 +20,7 @@ export default class DataPageComponent extends Vue {
     region: string = null;
     allProvinces = PROVINCE;
     province: number = null;
+    type: string = null;
     @LookupAction getLookupData: (type: string) => Promise<void>
     @LookupGetter(lookupTypesStore.Get.KTTV) stations
     monitoringService: MonitoringServices = new MonitoringServices();
@@ -32,6 +33,9 @@ export default class DataPageComponent extends Vue {
     toDateMenu: any = null;
     fromDate: string = null;
     toDate: string = null;
+
+    activeStation: number = 0;
+
 
     allRegions: any = [
         {
@@ -68,6 +72,25 @@ export default class DataPageComponent extends Vue {
         },
     ]
 
+    stationTypes: any = [
+        {
+            name: "Tất cả",
+            value: null
+        },
+        {
+            name: "Mưa",
+            value: STATION_TYPE.RAIN_STATION
+        },
+        {
+            name: "Khí Tượng",
+            value: STATION_TYPE.METEOROLOGICAL_STATION
+        },
+        {
+            name: "Thuỷ Văn",
+            value: STATION_TYPE.HYDROLOGICAL_STATION
+        },
+    ]
+
     get ProvincesByRegion() {
         return this.allProvinces.filter(p => p.region === this.region);
     }
@@ -93,9 +116,9 @@ export default class DataPageComponent extends Vue {
         return;
     }
 
-    getStationData(stationId, stationType) {
+    getStationData(stationId, stationType, index) {
         this.currentStation = stationType;
-
+        this.activeStation = index;
         if (this.fromDate === null) {
             this.fromDate = moment().format('YYYY-MM-DD');
         }

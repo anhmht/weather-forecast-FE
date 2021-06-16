@@ -2,43 +2,60 @@
     <base-container class="container padding-main">
         <div class="data-page-container_wrapper">
             <div class="data-page-container_search">
-                Khu vực: <v-select :items="allRegions" item-text="name" item-value="value"
-                    style="margin: 0px 20px;" hide-details dense v-model="region"></v-select>
-                Tỉnh thành: <v-select :items="ProvincesByRegion" item-text="name" item-value="code"
-                    style="margin: 0px 20px;" hide-details dense v-model="province"></v-select>
-                Loại trạm: <v-select style="margin: 0px 20px;" hide-details dense></v-select>
+                <div class="data-page-container_search--item">
+                    Khu vực: <v-select color="white" dark :items="allRegions" item-text="name" item-value="value" style="margin: 0px 20px;" hide-details dense
+                        v-model="region"></v-select>
+                </div>
+                <div class="data-page-container_search--item">
+                    Tỉnh thành: <v-select color="white" dark :items="ProvincesByRegion" item-text="name" item-value="code" style="margin: 0px 20px;"
+                        hide-details dense v-model="province"></v-select>
+                </div>
             </div>
-
             <div class="data-page-container_content">
                 <div class="data-page-container_content-station">
-                    <h2>Trạm khí tượng thủy văn</h2>
-                    <div v-for="(item, index) in StationsByProvince" :key="index" @click="getStationData(item.stationId, item.stationType)" class="data-page-container_content-station--item">
-                        <div class="data-page-container_content-station--item-header">
-                            <div class="data-page-container_content-station--item-header-name">{{item.name}}</div>
-                            <div class="data-page-container_content-station--item-header-type">{{$formatStationType(item.stationType)}}</div>
+                    <div class="data-page-container_content-station__header">
+                        <div class="data-page-container_content-station__header--title">Trạm khí tượng thủy văn</div>
+                        <v-select color="white" dark :items="stationTypes" item-text="name" item-value="value" hide-details dense v-model="type"></v-select>
+                    </div>
+                    <div class="data-page-container_content-station__body">
+                        <div v-for="(item, index) in StationsByProvince" :key="index" @click="getStationData(item.stationId, item.stationType, index)"
+                            class="data-page-container_content-station--item" :class="index === activeStation ? 'active' : ''">
+                            <div class="data-page-container_content-station--item-header">
+                                <div class="data-page-container_content-station--item-header-name">{{item.name}}</div>
+                                <div class="data-page-container_content-station--item-header-type">{{$formatStationType(item.stationType)}}
+                                </div>
+                            </div>
+                            <div class="data-page-container_content-station--item-address">{{item.address}}</div>
                         </div>
-                        <div class="data-page-container_content-station--item-address">{{item.address}}</div>
                     </div>
                 </div>
                 <div class="data-page-container_content-result">
                     <div class="data-page-container_content-result-filter">
-                        Thời gian từ:
-                        <v-menu v-model="fromDateMenu" :close-on-content-click="false" :nudge-right="40" transition="scale-transition" offset-y min-width="auto">
-                            <template v-slot:activator="{ on, attrs }">
-                                <v-text-field v-model="FormattedFromDate" prepend-icon="mdi-calendar" readonly v-bind="attrs" v-on="on"></v-text-field>
-                            </template>
-                            <v-date-picker v-model="fromDate" @input="fromDateMenu = false" locale="vi-vn"></v-date-picker>
-                        </v-menu>
-                        đến:
-                        <v-menu v-model="toDateMenu" :close-on-content-click="false" :nudge-right="40" transition="scale-transition" offset-y min-width="auto">
-                            <template v-slot:activator="{ on, attrs }">
-                                <v-text-field v-model="FormattedToDate" prepend-icon="mdi-calendar" readonly v-bind="attrs" v-on="on"></v-text-field>
-                            </template>
-                            <v-date-picker v-model="toDate" @input="toDateMenu = false" locale="vi-vn"></v-date-picker>
-                        </v-menu>
+                        <div style="margin-right: 20px; display: flex;">
+                            Thời gian từ:
+                            <v-menu v-model="fromDateMenu" :close-on-content-click="false" :nudge-right="40" transition="scale-transition" offset-y
+                                min-width="auto">
+                                <template v-slot:activator="{ on, attrs }">
+                                    <v-text-field color="white" dark v-model="FormattedFromDate" prepend-icon="mdi-calendar" readonly v-bind="attrs"
+                                        v-on="on"></v-text-field>
+                                </template>
+                                <v-date-picker v-model="fromDate" @input="fromDateMenu = false" locale="vi-vn"></v-date-picker>
+                            </v-menu>
+                        </div>
+                        <div style="margin-right: 20px; display: flex;">
+                            đến:
+                            <v-menu v-model="toDateMenu" :close-on-content-click="false" :nudge-right="40" transition="scale-transition" offset-y
+                                min-width="auto">
+                                <template v-slot:activator="{ on, attrs }">
+                                    <v-text-field color="white" dark v-model="FormattedToDate" prepend-icon="mdi-calendar" readonly v-bind="attrs"
+                                        v-on="on"></v-text-field>
+                                </template>
+                                <v-date-picker v-model="toDate" @input="toDateMenu = false" locale="vi-vn"></v-date-picker>
+                            </v-menu>
+                        </div>
                     </div>
                     <div class="data-page-container_content-result-table">
-                        <v-simple-table v-if="currentStation === stationConstant.RAIN_STATION">
+                        <v-simple-table v-if="currentStation === stationConstant.RAIN_STATION"  fixed-header height="400px">
                             <template v-slot:default>
                                 <thead>
                                     <tr>
@@ -57,7 +74,7 @@
 								</tbody>
                             </template>
                         </v-simple-table>
-						<v-simple-table v-if="currentStation === stationConstant.METEOROLOGICAL_STATION">
+						<v-simple-table v-if="currentStation === stationConstant.METEOROLOGICAL_STATION" fixed-header height="400px">
                             <template v-slot:default>
 								<thead>
 									<tr>
@@ -100,7 +117,7 @@
 								</tbody>
                             </template>
                         </v-simple-table>
-						<v-simple-table v-if="currentStation === stationConstant.HYDROLOGICAL_STATION">
+						<v-simple-table v-if="currentStation === stationConstant.HYDROLOGICAL_STATION" fixed-header height="400px">
                             <template v-slot:default>
 								<thead>
 									<tr>
@@ -123,6 +140,9 @@
                                 </tbody>
                             </template>
                         </v-simple-table>
+                    </div>
+                    <div class="data-page-container_content-result-paging">
+
                     </div>
                 </div>
             </div>
