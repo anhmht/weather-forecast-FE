@@ -34,3 +34,9 @@
 .blue-background-class {
 	background-color: #C8EBFB;
 }
+.v-list-item__action, .v-list-item__avatar, .v-list-item__icon {
+    display: unset;
+}
+.v-timeline-item {
+    cursor: move;
+}

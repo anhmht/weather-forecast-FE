@@ -1,0 +1,19 @@
+<v-dialog persistent v-model="visibleAddItem" max-width="600px">
+    <v-card>
+        <v-toolbar dark color="primary">
+            <v-btn :loading="buttonLoading" :disabled="buttonLoading" icon dark @click="visibleAddItem = false">
+                <v-icon>mdi-close</v-icon>
+            </v-btn>
+            <v-toolbar-title>Tạo kịch bản</v-toolbar-title>
+        </v-toolbar>
+        <v-card-text>
+            <v-text-field v-if="data" label="Tiêu đề kịch bản" v-model="data.scenarioName"></v-text-field>
+        </v-card-text>
+        <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn :loading="buttonLoading" :disabled="buttonLoading" color="primary" @click="handleSave">
+                Lưu Kịch bản
+            </v-btn>
+        </v-card-actions>
+    </v-card>
+</v-dialog>
