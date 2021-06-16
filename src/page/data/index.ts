@@ -27,15 +27,24 @@ export default class DataPageComponent extends Vue {
     precipitationArray: any = [];
     meteorologicalArray: any = [];
     hydrologicalArray: any = [];
-    currentStation: string = null;
+    currentStationType: string = null;
     stationConstant = STATION_TYPE;
     fromDateMenu: any = null;
     toDateMenu: any = null;
     fromDate: string = null;
     toDate: string = null;
+    totalPages: number = 0;
+    page: number = 1;
+    currentStationId: string = null;
 
     activeStation: number = 0;
 
+    get TotalPageVisible() {
+        if (this.totalPages < 7)
+            return this.totalPages
+        else
+            return 7
+    }
 
     allRegions: any = [
         {
@@ -97,6 +106,9 @@ export default class DataPageComponent extends Vue {
 
     get StationsByProvince() {
         if (!isNaN(Number(this.province)) && this.stations) {
+            if (this.type !== null) {
+                return this.stations.filter(s => s.zipCode === Number(this.province) && s.stationType === this.type);
+            }
             return this.stations.filter(s => s.zipCode === Number(this.province));
         }
         return [];
@@ -116,11 +128,16 @@ export default class DataPageComponent extends Vue {
         return;
     }
 
-    getStationData(stationId, stationType, index) {
-        this.currentStation = stationType;
+    getStationData(stationId, stationType, index, isPaging) {
+        if (!isPaging) {
+            this.page = 1;
+        }
+
+        this.currentStationId = stationId;
+        this.currentStationType = stationType;
         this.activeStation = index;
         if (this.fromDate === null) {
-            this.fromDate = moment().format('YYYY-MM-DD');
+            this.fromDate = moment().subtract(3, 'days').format('YYYY-MM-DD');
         }
 
         if (this.toDate === null) {
@@ -128,23 +145,26 @@ export default class DataPageComponent extends Vue {
         }
 
         if (stationType === this.stationConstant.RAIN_STATION) {
-            this.monitoringService.getPrecipitation(10, 1, stationId, this.fromDate, this.toDate)
+            this.monitoringService.getPrecipitation(10, this.page, stationId, this.fromDate, this.toDate)
             .then((res: any) => {
                 this.precipitationArray = res.rains;
+                this.totalPages = res.totalPages;
             }).catch(error => {
                 console.log(error);
             })
         } else if (stationType === this.stationConstant.METEOROLOGICAL_STATION) {
-            this.monitoringService.getMeteorological(10, 1, stationId, this.fromDate, this.toDate)
+            this.monitoringService.getMeteorological(10, this.page, stationId, this.fromDate, this.toDate)
             .then((res: any) => {
                 this.meteorologicalArray = res.meteorologicals;
+                this.totalPages = res.totalPages;
             }).catch(error => {
                 console.log(error);
             })
         } else if (stationType === this.stationConstant.HYDROLOGICAL_STATION) {
-            this.monitoringService.getHydrological(10, 1, stationId, this.fromDate, this.toDate)
+            this.monitoringService.getHydrological(10, this.page, stationId, this.fromDate, this.toDate)
             .then((res: any) => {
                 this.hydrologicalArray = res.hydrologicals;
+                this.totalPages = res.totalPages;
             }).catch(error => {
                 console.log(error);
             })

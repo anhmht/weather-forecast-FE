@@ -18,7 +18,7 @@
                         <v-select color="white" dark :items="stationTypes" item-text="name" item-value="value" hide-details dense v-model="type"></v-select>
                     </div>
                     <div class="data-page-container_content-station__body">
-                        <div v-for="(item, index) in StationsByProvince" :key="index" @click="getStationData(item.stationId, item.stationType, index)"
+                        <div v-for="(item, index) in StationsByProvince" :key="index" @click="getStationData(item.stationId, item.stationType, index, 0)"
                             class="data-page-container_content-station--item" :class="index === activeStation ? 'active' : ''">
                             <div class="data-page-container_content-station--item-header">
                                 <div class="data-page-container_content-station--item-header-name">{{item.name}}</div>
@@ -39,7 +39,7 @@
                                     <v-text-field color="white" dark v-model="FormattedFromDate" prepend-icon="mdi-calendar" readonly v-bind="attrs"
                                         v-on="on"></v-text-field>
                                 </template>
-                                <v-date-picker v-model="fromDate" @input="fromDateMenu = false" locale="vi-vn"></v-date-picker>
+                                <v-date-picker v-model="fromDate" @input="fromDateMenu = false" locale="vi-vn" @change="getStationData(currentStationId, currentStationType, activeStation, 0)"></v-date-picker>
                             </v-menu>
                         </div>
                         <div style="margin-right: 20px; display: flex;">
@@ -50,12 +50,12 @@
                                     <v-text-field color="white" dark v-model="FormattedToDate" prepend-icon="mdi-calendar" readonly v-bind="attrs"
                                         v-on="on"></v-text-field>
                                 </template>
-                                <v-date-picker v-model="toDate" @input="toDateMenu = false" locale="vi-vn"></v-date-picker>
+                                <v-date-picker v-model="toDate" @input="toDateMenu = false" locale="vi-vn" @change="getStationData(currentStationId, currentStationType, activeStation, 0)"></v-date-picker>
                             </v-menu>
                         </div>
                     </div>
                     <div class="data-page-container_content-result-table">
-                        <v-simple-table v-if="currentStation === stationConstant.RAIN_STATION"  fixed-header height="400px">
+                        <v-simple-table v-if="currentStationType === stationConstant.RAIN_STATION"  fixed-header height="400px">
                             <template v-slot:default>
                                 <thead>
                                     <tr>
@@ -74,7 +74,7 @@
 								</tbody>
                             </template>
                         </v-simple-table>
-						<v-simple-table v-if="currentStation === stationConstant.METEOROLOGICAL_STATION" fixed-header height="400px">
+						<v-simple-table v-if="currentStationType === stationConstant.METEOROLOGICAL_STATION" fixed-header height="400px">
                             <template v-slot:default>
 								<thead>
 									<tr>
@@ -117,7 +117,7 @@
 								</tbody>
                             </template>
                         </v-simple-table>
-						<v-simple-table v-if="currentStation === stationConstant.HYDROLOGICAL_STATION" fixed-header height="400px">
+						<v-simple-table v-if="currentStationType === stationConstant.HYDROLOGICAL_STATION" fixed-header height="400px">
                             <template v-slot:default>
 								<thead>
 									<tr>
@@ -142,7 +142,8 @@
                         </v-simple-table>
                     </div>
                     <div class="data-page-container_content-result-paging">
-
+                        <v-pagination v-if="totalPages" v-model="page" :length="totalPages" :total-visible="TotalPageVisible"
+                            @input="getStationData(currentStationId, currentStationType, activeStation, 1)"></v-pagination>
                     </div>
                 </div>
             </div>
