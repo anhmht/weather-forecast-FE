@@ -1,9 +1,12 @@
 import { namespace, Action, Getter } from 'vuex-class';
-import { PROVINCE } from './../../constant/province-constant';
 import Vue from "vue";
 import Component from "vue-class-component";
 import { storeModules } from '@/store';
 import lookupTypesStore from '@/store/lookup/lookup-types.store';
+import { PROVINCE } from '@/constant/province-constant';
+import { MonitoringServices } from '@/service/monitoring-service/monitoring.service';
+import { STATION_TYPE } from '@/constant/common-constant';
+import moment from 'moment';
 
 const LookupAction = namespace(storeModules.Lookup, Action);
 const LookupGetter = namespace(storeModules.Lookup, Getter);
@@ -14,312 +17,118 @@ const LookupGetter = namespace(storeModules.Lookup, Getter);
     }
 })
 export default class DataPageComponent extends Vue {
-    province = PROVINCE;
-    activeTab: number = 0
-
+    region: string = null;
+    allProvinces = PROVINCE;
+    province: number = null;
     @LookupAction getLookupData: (type: string) => Promise<void>
     @LookupGetter(lookupTypesStore.Get.KTTV) stations
+    monitoringService: MonitoringServices = new MonitoringServices();
+    precipitationArray: any = [];
+    meteorologicalArray: any = [];
+    hydrologicalArray: any = [];
+    currentStation: string = null;
+    stationConstant = STATION_TYPE;
+    fromDateMenu: any = null;
+    toDateMenu: any = null;
+    fromDate: string = null;
+    toDate: string = null;
 
-    status = [
-        'Sương mù', 'Nhiều mây', 'Mưa rào nhẹ', 'Có mây', 'Mưa dông', 'Mưa rải rác', 'Nắng nóng'
-    ]
-
-    northeastRegion = [
+    allRegions: any = [
         {
-            name: 'Hà Giang',
+            name: "Đông Bắc Bộ",
+            value: "DBB"
         },
         {
-            name: 'Cao Bằng',
+            name: "Tây Bắc Bộ",
+            value: "TBB"
         },
         {
-            name: 'Bắc Kạn',
+            name: "Đồng bằng sông Hồng",
+            value: "DBSH"
         },
         {
-            name: 'Lạng Sơn',
+            name: "Bắc Trung Bộ",
+            value: "BTB"
         },
         {
-            name: 'Tuyên Quang',
+            name: "Nam Trung Bộ",
+            value: "NTB"
         },
         {
-            name: 'Thái Nguyên',
+            name: "Tây Nguyên",
+            value: "TN"
         },
         {
-            name: 'Bắc Giang',
+            name: "Đông Nam Bộ",
+            value: "DNB"
         },
         {
-            name: 'Quảng Ninh',
-        },
-    ]
-
-    northwestRegion = [
-        {
-            name: 'Lào Cai',
-        },
-        {
-            name: 'Yên Bái',
-        },
-        {
-            name: 'Phú Thọ',
-        },
-        {
-            name: 'Điện Biên',
-        },
-        {
-            name: 'Lai Châu',
-        },
-        {
-            name: 'Sơn La',
-        },
-        {
-            name: 'Hòa Bình',
+            name: "Tây Nam Bộ",
+            value: "TNB"
         },
     ]
 
-    redRiverDelta = [
-        {
-            name: 'Hà Nội',
-        },
-        {
-            name: 'Hải Phòng',
-        },
-        {
-            name: 'Bắc Ninh',
-        },
-        {
-            name: 'Hà Nam',
-        },
-        {
-            name: 'Hải Dương',
-        },
-        {
-            name: 'Hưng Yên',
-        },
-        {
-            name: 'Nam Định',
-        },
-        {
-            name: 'Ninh Bình',
-        },
-        {
-            name: 'Thái Bình',
-        },
-        {
-            name: 'Vĩnh Phúc',
-        },
-    ]
+    get ProvincesByRegion() {
+        return this.allProvinces.filter(p => p.region === this.region);
+    }
 
-    northCentralCoast = [
-        {
-            name: 'Thanh Hóa',
-        },
-        {
-            name: 'Nghệ An',
-        },
-        {
-            name: 'Hà Tĩnh',
-        },
-        {
-            name: 'Quảng Bình',
-        },
-        {
-            name: 'Quảng Trị',
-        },
-        {
-            name: 'Thừa Thiên - Huế',
-        },
-    ]
-
-    southCentralCoast = [
-        {
-            name: 'Đà Nẵng',
-        },
-        {
-            name: 'Quảng Nam',
-        },
-        {
-            name: 'Quảng Ngãi',
-        },
-        {
-            name: 'Bình Định',
-        },
-        {
-            name: 'Phú Yên',
-        },
-        {
-            name: 'Khánh Hòa',
-        },
-        {
-            name: 'Ninh Thuận',
-        },
-        {
-            name: 'Bình Thuận',
-        },
-    ]
-
-    centralHighlands = [
-        {
-            name: 'Kon Tum',
-        },
-        {
-            name: 'Gia Lai',
-        },
-        {
-            name: 'Đắk Lắk',
-        },
-        {
-            name: 'Đắk Nông',
-        },
-        {
-            name: 'Lâm Đồng',
-        },
-    ]
-
-    southeastRegion = [
-        {
-            name: 'Bình Phước',
-        },
-        {
-            name: 'Bình Dương',
-        },
-        {
-            name: 'Đồng Nai',
-        },
-        {
-            name: 'Tây Ninh',
-        },
-        {
-            name: 'Bà Rịa - Vũng Tàu',
-        },
-        {
-            name: 'Thành phố Hồ Chí Minh',
-        },
-    ]
-
-    mekongRiverDelta = [
-        {
-            name: 'Long An',
-        },
-        {
-            name: 'Đồng Tháp',
-        },
-        {
-            name: 'Tiền Giang',
-        },
-        {
-            name: 'An Giang',
-        },
-        {
-            name: 'Bến Tre',
-        },
-        {
-            name: 'Vĩnh Long',
-        },
-        {
-            name: 'Trà Vinh',
-        },
-        {
-            name: 'Hậu Giang',
-        },
-        {
-            name: 'Kiên Giang',
-        },
-        {
-            name: 'Sóc Trăng',
-        },
-        {
-            name: 'Bạc Liêu',
-        },
-        {
-            name: 'Cà Mau',
-        },
-        {
-            name: 'Thành phố Cần Thơ',
+    get StationsByProvince() {
+        if (!isNaN(Number(this.province)) && this.stations) {
+            return this.stations.filter(s => s.zipCode === Number(this.province));
         }
-    ]
-
-    wardInfo = [
-        {
-            name: 'Tp.Vĩnh Long',
-        },
-        {
-            name: 'Huyện Long Hồ',
-        },
-        {
-            name: 'Huyện Mang Thít',
-        },
-        {
-            name: 'Huyện Vũng Liêm',
-        },
-        {
-            name: 'Huyện Tam Bình',
-        },
-        {
-            name: 'Thị Xã Bình Minh',
-        },
-        {
-            name: 'Huyện Trà Ôn',
-        },
-        {
-            name: 'Huyện Bình Tân',
-        },
-    ]
-
-    riversEstuaries = [
-        {
-            name: 'Sông Tiền',
-        },
-        {
-            name: 'Sông Hậu',
-        },
-        {
-            name: 'Sông Cổ Chiên',
-        },
-        {
-            name: 'Cửa Tiểu',
-        },
-        {
-            name: 'Cửa Đại',
-        },
-        {
-            name: 'Hàm Luông',
-        },
-        {
-            name: 'Cổ Chiên',
-        },
-        {
-            name: 'Cung Hầu',
-        },
-        {
-            name: 'Định An',
-        },
-        {
-            name: 'Trần Đề',
-        },
-    ]
-
-    harshStatus = [
-        '', 'O'
-    ]
-
-    handleChangeTab(tab) {
-        this.activeTab = tab;
+        return [];
     }
 
-    getRandomArbitrary(min, max) {
-        return Math.ceil(Math.random() * (max - min) + min);
+    get FormattedFromDate() {
+        if (this.fromDate) {
+            return moment(this.fromDate).format('DD/MM/YYYY');
+        }
+        return;
     }
 
-    getStatus() {
-        const num = this.getRandomArbitrary(0, 6);
-        return num
+    get FormattedToDate() {
+        if (this.toDate) {
+            return moment(this.toDate).format('DD/MM/YYYY');
+        }
+        return;
     }
 
-    getHarshStatus() {
-        const num = this.getRandomArbitrary(0, 2);
-        return num
+    getStationData(stationId, stationType) {
+        this.currentStation = stationType;
+
+        if (this.fromDate === null) {
+            this.fromDate = moment().format('YYYY-MM-DD');
+        }
+
+        if (this.toDate === null) {
+            this.toDate = moment().format('YYYY-MM-DD');
+        }
+
+        if (stationType === this.stationConstant.RAIN_STATION) {
+            this.monitoringService.getPrecipitation(10, 1, stationId, this.fromDate, this.toDate)
+            .then((res: any) => {
+                this.precipitationArray = res.rains;
+            }).catch(error => {
+                console.log(error);
+            })
+        } else if (stationType === this.stationConstant.METEOROLOGICAL_STATION) {
+            this.monitoringService.getMeteorological(10, 1, stationId, this.fromDate, this.toDate)
+            .then((res: any) => {
+                this.meteorologicalArray = res.meteorologicals;
+            }).catch(error => {
+                console.log(error);
+            })
+        } else if (stationType === this.stationConstant.HYDROLOGICAL_STATION) {
+            this.monitoringService.getHydrological(10, 1, stationId, this.fromDate, this.toDate)
+            .then((res: any) => {
+                this.hydrologicalArray = res.hydrologicals;
+            }).catch(error => {
+                console.log(error);
+            })
+        }
     }
 
-    mounted() {
+    async mounted() {
         this.getLookupData(lookupTypesStore.Set.KTTV);
     }
 }
