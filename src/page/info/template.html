@@ -2,39 +2,40 @@
     <base-container>
         <div class="nav-sticky-wrapper">
             <div class="nav-sticky">
-                <div @click="scrollTo('info-page-container_section_1')">Thông tin thời tiết - Cảnh báo thiên tai</div>
-                <div @click="scrollTo('info-page-container_section_2 padding-main')">Thông tin khuyến cáo</div>
-                <div @click="scrollTo('info-page-container_section_3 padding-main')">Tổng quan</div>
-                <div @click="scrollTo('info-page-container_section_4 padding-main')">Chuyên mục KT-VH-XH</div>
+                <ul>
+                    <li @click="scrollTo('info-page-container_section_1')">Thông tin thời tiết - Cảnh báo thiên tai</li>
+                    <li @click="scrollTo('info-page-container_section_2 padding-main')">Thông tin khuyến cáo</li>
+                    <li @click="scrollTo('info-page-container_section_3 padding-main')">Tổng quan</li>
+                    <li @click="scrollTo('info-page-container_section_4 padding-main')">Chuyên mục KT-VH-XH</li>
+                </ul>
+                
             </div>
         </div>
 
         <div class="info-page-container_section_1">
             <div class="info-page-container-wrapper">
                 <v-row justify="center">
-                    <v-col cols="12" md="5">
-                        <h1>Thông tin thời tiết</h1>
+                    <v-col cols="12" md="3">
+                        <!-- <h1>Thông tin thời tiết</h1> -->
                         <div class="info-current-forecast">
                             <div class="info-current-forecast-header">
                                 {{address}} <br/> {{timestamp}}
                             </div>
                             <div class="info-current-forecast-body">
-                                <v-row justify="center" class="info-current-forecast-body-icon">
-                                    <v-col auto>
-                                        {{currentTemp}}°
-                                    </v-col>
-                                    <v-col auto>
+                                <div justify="center" class="info-current-forecast-body-icon">
+                                        Nhiệt độ {{currentTemp}}°
                                         <img src="/static/img/icon/day_rain_thunder.png">
-                                    </v-col>
-
-                                </v-row>
-                                <div class="info-current-forecast-body--info">Nhiệt độ thấp nhất: {{minTemp}}°C</div>
-                                <div class="info-current-forecast-body--info">Nhiệt độ cao nhất: {{maxTemp}}°C</div>
+                                        
+                                        <div class="info-current-forecast-body--info">Nhiệt độ thấp nhất: {{minTemp}}°C</div>
+                                        <div class="info-current-forecast-body--info">Nhiệt độ cao nhất: {{maxTemp}}°C</div>
+                                   
+                                </div>
+                               
                             </div>
                         </div>
                     </v-col>
-                    <v-col cols="12" md="7">
-                        <h1>Cảnh báo thiên tai</h1>
+                    <v-col cols="12" md="9">
+                        <!-- <h1>Cảnh báo thiên tai</h1> -->
                         <div class="warning-info">
                             <div class="warning-info-wrapper">
                                 <div @click="handleViewDetail(firstWarningPost.eventId)" class="warning-info-left">
@@ -42,7 +43,7 @@
                                     <h4>{{firstWarningPost.title}}</h4>
                                 </div>
                                 <div class="warning-info-right">
-                                    <div v-for="(item,index) in warningPosts" v-if="index >= 1 && index <= 3" :key="index" @click="handleViewDetail(item.eventId)" class="warning-info-right--item">
+                                    <div v-for="(item,index) in warningPosts" v-if="index >= 1 && index <= 2" :key="index" @click="handleViewDetail(item.eventId)" class="warning-info-right--item">
                                         <img width="150" :src="item.imageUrl" />
                                         <h4>{{item.title}}</h4>
                                     </div>
@@ -124,8 +125,7 @@
 
         <div class="info-page-container_section_4 padding-main">
             <div class="info-page-container-wrapper">
-                <v-row justify="center">
-                    <v-col auto>
+
                         <h1>Chuyên mục KT-VH-XH</h1>
                         <div class="recommend-info">
                             <v-carousel height="290" v-model="slideIndex" hide-delimiters show-arrows-on-hover>
@@ -143,8 +143,7 @@
                                 </v-carousel-item>
                             </v-carousel>
                         </div>
-                    </v-col>
-                </v-row>
+           
             </div>
         </div>
     </base-container>

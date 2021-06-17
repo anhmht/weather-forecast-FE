@@ -77,8 +77,8 @@
 
 }
 #legend-mobile {
-    font-size: 17px !important;
-    height: 30px;
+    font-size: 15px !important;
+    height: 22px;
 }
 
 // Windy popup
@@ -87,7 +87,21 @@
     color: #fff !important;
     box-shadow: none !important;
     border-radius: 0 !important;
-    border: 3px solid $primary-color;
+    border: 3px solid rgba($color: #fff, $alpha: 0.8);
+    position: relative;
+    border-radius:5px;
+    &:after {
+        content: " ";
+        width: 0;
+        height: 0;
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        border-top: 8px solid rgba($color: #fff, $alpha: 0.8);
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        margin-left: -8px;
+    }
 }
 .leaflet-popup-tip-container {
     display: none;

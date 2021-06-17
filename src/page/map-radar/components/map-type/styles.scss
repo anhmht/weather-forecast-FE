@@ -3,8 +3,8 @@
     width: 250px;
     background: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5)), rgba(121, 120, 120, 0.5);
     color: #fff;
-    padding: 10px;
-    margin-bottom: 20px;
+    padding: 15px;
+    margin-bottom: 10px;
     &-title {
         font-size: 16px;
         font-weight: 500;
@@ -14,9 +14,30 @@
         color: $primary-color;
     }
     &-content {
-        padding: 10px;
+        padding-right: 5px;
+        height: calc(30vh - 40px);
+        overflow: auto;
+         /* width */
+         &::-webkit-scrollbar {
+            width: 5px;
+            position: absolute;
+        }
+        /* Track */
+        &::-webkit-scrollbar-track {
+            display: none;
+        }
+        /* Handle */
+        &::-webkit-scrollbar-thumb {
+            background: #ddd;
+            border-radius: 10px;
+        }
+        /* Handle on hover */
+        &::-webkit-scrollbar-thumb:hover {
+            background: #fff;
+        }
         &--item {
-            padding: 5px 10px;
+            padding: 3px 7px;
+            font-size: 14px;
             cursor: pointer;
             &.active {
                 background: $primary-color;

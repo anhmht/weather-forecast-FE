@@ -18,7 +18,7 @@
             justify-content: center;
             margin: 40px 0;
             button {
-                height: 70px !important;
+                height: 50px !important;
                 width: 60%;
                 border: 3px solid rgba(0, 0, 0, 0.1);
                 font-weight: 900;
@@ -29,8 +29,8 @@
                     box-shadow: none;
                 }
                 &:hover {
-                    color: #ed2553;
-                    border-color: #ed2553;
+                    color:$primary-color;
+                    border-color:$primary-color;
                 }
             }
         }
@@ -42,7 +42,7 @@
             font-size: 34px;
             font-weight: 700;
             letter-spacing: 2px;
-            color: #ed2553;
+            color:$primary-color;
             position: relative;
             &::before {
                 content: "";
@@ -51,7 +51,7 @@
                 position: absolute;
                 top: 0;
                 left: -50px;
-                background: #ed2553;
+                background:$primary-color;
             }
         }
         &::before {
