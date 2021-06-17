@@ -28,6 +28,7 @@ const COLOR = [
 export default class HomePageComponent extends Vue {
     windy: any;
     media: any = null;
+    videoStream: any = null;
     isRecording: boolean = false;
     isReview: boolean = false;
     isHideIconPicker: boolean = true;
@@ -50,10 +51,11 @@ export default class HomePageComponent extends Vue {
         timeout: null,
     }
     isStop: boolean = false;
+    isShowButtonStop: boolean = false;
 
     drawer: boolean = false;
 
-    districtIds:any = [];
+    districtIds: any = [];
     context = {
         icon: [],
         temp: [],
@@ -214,7 +216,7 @@ export default class HomePageComponent extends Vue {
     }
 
     async addPopUPLayer(ids) {
-        if(!ids) return;
+        if (!ids) return;
         const vm = this as any;
         // @ts-ignore
         this.layerPopup = new L.LayerGroup();
@@ -231,7 +233,7 @@ export default class HomePageComponent extends Vue {
                 const icon = vm.getDisplayData(contextIcon, 0, moment().hour())
                 const iconUrl = ICON.find(x => x.id === icon)
                 // @ts-ignore
-                const layer = L.popup({ closeOnClick: false})
+                const layer = L.popup({ closeOnClick: false })
                     .setLatLng([station.y, station.x])
                     .setContent(`<div class="map-pop-up">
                             <div class="map-pop-up-name">${station.ten}</div>
@@ -254,29 +256,40 @@ export default class HomePageComponent extends Vue {
         this.isRecording = true;
         const vm = this as any;
         //@ts-ignore
-        navigator.mediaDevices.getDisplayMedia({ video: { mediaSource: "screen", cursor: false } })
+        return await navigator.mediaDevices.getDisplayMedia({ video: { mediaSource: "screen", cursor: false } })
             .then(function (stream) {
                 //@ts-ignore
-                let recorder = new MediaRecorder(stream);
+                vm.videoStream  = new MediaRecorder(stream);
                 const chunks = [];
-                recorder.ondataavailable = e => chunks.push(e.data);
+                vm.videoStream.ondataavailable = e => chunks.push(e.data);
                 stream.getVideoTracks()[0].onended = () => {
                     // Click on browser UI stop sharing button
                     console.info("Recording has ended");
                     setTimeout(() => {
+                        vm.handleClearTimeout(true);
                         const completeBlob = new Blob(chunks, {
                             type: chunks[0].type
                         });
                         vm.isDisplayDialog = true;
                         vm.media = URL.createObjectURL(completeBlob);
                         vm.isRecording = false;
+
                     }, 500);
                 };
-                recorder.onended = e => { };
-                recorder.onerror = () => {
+                vm.videoStream.onstop = e => {
+                    const completeBlob = new Blob(chunks, {
+                        type: chunks[0].type
+                    });
+                    vm.isDisplayDialog = true;
+                    vm.media = URL.createObjectURL(completeBlob);
+                    vm.isRecording = false;
+
+                    stream.getTracks().forEach(track => track.stop())
+                };
+                vm.videoStream .onerror = () => {
                     vm.isRecording = false;
                 };
-                recorder.start();
+                vm.videoStream .start();
             })
             .catch(err => {
                 vm.isRecording = false;
@@ -287,11 +300,16 @@ export default class HomePageComponent extends Vue {
         this.drawer = true;
     }
 
-    async handlePreview(previewData) {
+    async handlePreview(previewData, isRecord = false) {
         clearTimeout(this.clearTimeout.timeout);
         this.isStop = false;
         this.isRecording = true;
         this.isReview = true;
+        if (isRecord) {
+            await this.capture();
+        } else {
+            this.isShowButtonStop = true;
+        }
         for (const iterator of previewData) {
             if (this.isStop) {
                 this.isStop = false;
@@ -310,14 +328,21 @@ export default class HomePageComponent extends Vue {
         }
         this.isRecording = false;
         this.isReview = false;
-        this.drawer = true;
+        if (!isRecord) {
+            this.drawer = true;
+        } else {
+            this.videoStream.stop();
+        }
+        this.isShowButtonStop = false;
     }
 
-    handleClearTimeout() {
+    handleClearTimeout(isRecord = false) {
         clearTimeout(this.clearTimeout.timeout);
         this.isRecording = false;
-        this.drawer = true;
         this.isStop = true;
+        if (!isRecord) {
+            this.drawer = true;
+        }
     }
 
     async mounted() {
@@ -337,7 +362,7 @@ export default class HomePageComponent extends Vue {
         localStorage.setItem('settings_particles', '{"multiplier":1,"velocity":1.4,"width":0.75,"blending":1.08,"opacity":1.8}')
         localStorage.setItem('settings_lang', '"vi"')
         // @ts-ignore
-        windyInit(options,async windyAPI => {
+        windyInit(options, async windyAPI => {
             // windyAPI is ready, and contain 'map', 'store',
             // 'picker' and other usefull stuff
             this.windy = windyAPI;

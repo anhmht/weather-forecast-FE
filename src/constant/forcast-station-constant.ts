@@ -100,7 +100,7 @@ export const STATION = [
     {
         "id": "DiemNB10_5",
         "ten": "TP Hồ Chí Minh",
-        "place_id": "HC",
+        "place_id": "SG",
         "x": 106.688,
         "y": 10.7572
     },
@@ -270,7 +270,7 @@ export const REGION = [
         placeId: 'DNB',
         geojson: 'dong_nam_bo',
         provinceIds: [
-            'HC', 'BV', 'BI', 'BP', 'DN', 'TN'
+            'SG', 'BV', 'BI', 'BP', 'DN', 'TN'
         ],
         style: {
             color: "#ff7800",
@@ -336,7 +336,7 @@ export const MAP_PROVINCE = [
         name: "TP.HCM",
         zoom: 12,
         geojson: 'ho_chi_minh_city',
-        placeId: 'HC',
+        placeId: 'SG',
         style: {
             color: "#ff7800",
             weight: 3,

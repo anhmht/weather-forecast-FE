@@ -1,6 +1,6 @@
 <div>
     <v-dialog v-model="drawer" fullscreen hide-overlay transition="dialog-bottom-transition">
-        <v-card>
+        <v-card style="position: relative">
             <v-toolbar dark color="primary">
                 <v-btn :loading="buttonLoading" :disabled="buttonLoading" icon dark @click="drawer = false">
                     <v-icon>mdi-close</v-icon>
@@ -73,6 +73,9 @@
                         </v-card-text>
                         <v-card-actions>
                             <v-spacer></v-spacer>
+                            <v-btn :loading="buttonLoading" :disabled="buttonLoading" color="primary" @click="handlePreview(true)">
+                                Xuất video theo kịch bản
+                            </v-btn>
                             <v-btn :loading="buttonLoading" :disabled="buttonLoading" color="primary" @click="handlePreview">
                                 Xem Kịch Bản
                             </v-btn>
@@ -83,9 +86,11 @@
                     </v-card>
                 </div>
             </div>
+            <loading :is-loading="isLoading" absolute />
         </v-card>
     </v-dialog>
     <add-update-content v-model="visibleAddItem" :content="content" @save="updateContent" />
     <add-update-scenario v-model="visibleAddUpdateScenario" :content="scenario" @save="updateScenario"/>
     <confirm-dialog v-model="visibleConfirm" :title="confirmTitle" :action="confirmAction" @confirm="handleConfirm"/>
+
 </div>

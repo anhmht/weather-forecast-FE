@@ -1,7 +1,7 @@
 <div class="home-page-container">
     <div class="" id="windy"></div>
     <div class="record-btn">
-        <v-btn v-show="isRecording" @click="handleClearTimeout" color="primary" depressed elevation="7" rounded x-large>
+        <v-btn v-show="isShowButtonStop" @click="handleClearTimeout" color="primary" depressed elevation="7" rounded x-large>
             Dừng
         </v-btn>
         <v-btn v-show="!isRecording" style="margin-left: 20px;" @click="handleOpenScenario" color="primary" depressed elevation="7" rounded x-large>
@@ -68,7 +68,7 @@
         </div>
     </v-dialog>
 
-    <scenario-modal v-model="drawer" @preview="handlePreview"/>
+    <scenario-modal v-model="drawer" @preview="handlePreview" @capture="(e) => handlePreview(e,true)"/>
 
 
     <div v-if="isRecording && !isReview" style="

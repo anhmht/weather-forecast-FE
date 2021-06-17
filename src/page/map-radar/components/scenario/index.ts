@@ -18,6 +18,8 @@ export default class ScenarioComponent extends Vue {
     @Prop({required: true})
     value
 
+    isLoading: boolean = false;
+
     selectedItem = 0;
     content: any = null;
     selectContentIndex: number = null;
@@ -106,8 +108,12 @@ export default class ScenarioComponent extends Vue {
         return item.data
     }
 
-    handlePreview() {
+    handlePreview(isRecord) {
         this.drawer = false;
+        if (isRecord) {
+            this.$emit('capture', this.Contents);
+            return;
+        }
         this.$emit('preview', this.Contents)
     }
 
@@ -176,14 +182,15 @@ export default class ScenarioComponent extends Vue {
         })
     }
 
-    handleChangeScenario(index) {
+    async handleChangeScenario(index) {
         this.selectedItem = index;
+        let clear = {timeout: null};
+        this.isLoading = true;
+        await sleep(500, clear);
         this.makeSortAbleList();
     }
 
     async makeSortAbleList() {
-        let clear = {timeout: null};
-        await sleep(200, clear);
         const list = document.getElementById('sortAble-list');
         if (list) {
             Sortable.create(list, {
@@ -196,6 +203,9 @@ export default class ScenarioComponent extends Vue {
                     Vue.set(this.scenarios[this.selectedItem], 'scenarioContent', contents)
                 }
             });
+            this.isLoading = false;
+        } else {
+            this.isLoading = false;
         }
     }
 
@@ -206,7 +216,8 @@ export default class ScenarioComponent extends Vue {
             scenarioId: '0',
             scenarioContent: DEFAULT_SCENARIOS
         });
-        this.scenarioService.getAllScenarios(this.searchParams).then((res: any) => {
+        this.isLoading = true;
+        this.scenarioService.getAllScenarios(this.searchParams).then(async (res: any) => {
             const sceneArray = res.scenarios.map(x => {
                 return {
                     ...x,
@@ -215,6 +226,8 @@ export default class ScenarioComponent extends Vue {
             })
             this.scenarios = this.scenarios.concat(sceneArray);
             this.searchParams.total = res.totalPages
+            let clear = { timeout: null };
+            await sleep(500, clear);
             this.makeSortAbleList();
         }).catch(err => {
             console.log(err);
