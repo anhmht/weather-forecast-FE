@@ -9,6 +9,7 @@ import { getLocalStorage, setAxiosHeader } from "./utils/appConfig";
 import Loading from './components/loading';
 import { DateFormatterPlugin } from './plugins/date-format';
 import store from "./store";
+import { StringFormatterPlugin } from './plugins/string-format';
 
 Vue.config.productionTip = false;
 
@@ -20,6 +21,7 @@ axios.defaults.headers.post['Access-Control-Allow-Headers'] = 'Content-Type, Aut
 
 Vue.component('loading', Loading);
 Vue.use(DateFormatterPlugin);
+Vue.use(StringFormatterPlugin);
 @Component({
     template: "<App/>",
     components: {

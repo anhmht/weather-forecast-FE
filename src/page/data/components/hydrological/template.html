@@ -1,0 +1,157 @@
+<div class="data-page-container_wrapper">
+    <div class="data-page-container_search">
+        <div class="data-page-container_search--item">
+            Khu vực: <v-select color="white" dark :items="allRegions" item-text="name" item-value="value"
+                style="margin: 0px 20px;" hide-details dense v-model="region"></v-select>
+        </div>
+        <div class="data-page-container_search--item">
+            Tỉnh thành: <v-select color="white" dark :items="ProvincesByRegion" item-text="name" item-value="code"
+                style="margin: 0px 20px;" hide-details dense v-model="province"></v-select>
+        </div>
+    </div>
+    <div class="data-page-container_content">
+        <div class="data-page-container_content-station">
+            <div class="data-page-container_content-station__header">
+                <div class="data-page-container_content-station__header--title">Trạm khí tượng thủy văn</div>
+                <v-select color="white" dark :items="stationTypes" item-text="name" item-value="value" hide-details
+                    dense v-model="type"></v-select>
+            </div>
+            <div class="data-page-container_content-station__body">
+                <div v-for="(item, index) in StationsByProvince" :key="index"
+                    @click="getStationData(item.stationId, item.stationType, index, 0)"
+                    class="data-page-container_content-station--item" :class="index === activeStation ? 'active' : ''">
+                    <div class="data-page-container_content-station--item-header">
+                        <div class="data-page-container_content-station--item-header-name">{{item.name}}</div>
+                        <div class="data-page-container_content-station--item-header-type">
+                            {{$formatStationType(item.stationType)}}
+                        </div>
+                    </div>
+                    <div class="data-page-container_content-station--item-address">{{item.address}}</div>
+                </div>
+            </div>
+        </div>
+        <div class="data-page-container_content-result">
+            <div class="data-page-container_content-result-filter">
+                <div style="margin-right: 20px; display: flex;">
+                    Thời gian từ:
+                    <v-menu v-model="fromDateMenu" :close-on-content-click="false" :nudge-right="40"
+                        transition="scale-transition" offset-y min-width="auto">
+                        <template v-slot:activator="{ on, attrs }">
+                            <v-text-field color="white" dark v-model="FormattedFromDate" prepend-icon="mdi-calendar"
+                                readonly v-bind="attrs" v-on="on"></v-text-field>
+                        </template>
+                        <v-date-picker v-model="fromDate" @input="fromDateMenu = false" locale="vi-vn"
+                            @change="getStationData(currentStationId, currentStationType, activeStation, 0)">
+                        </v-date-picker>
+                    </v-menu>
+                </div>
+                <div style="margin-right: 20px; display: flex;">
+                    đến:
+                    <v-menu v-model="toDateMenu" :close-on-content-click="false" :nudge-right="40"
+                        transition="scale-transition" offset-y min-width="auto">
+                        <template v-slot:activator="{ on, attrs }">
+                            <v-text-field color="white" dark v-model="FormattedToDate" prepend-icon="mdi-calendar"
+                                readonly v-bind="attrs" v-on="on"></v-text-field>
+                        </template>
+                        <v-date-picker v-model="toDate" @input="toDateMenu = false" locale="vi-vn"
+                            @change="getStationData(currentStationId, currentStationType, activeStation, 0)">
+                        </v-date-picker>
+                    </v-menu>
+                </div>
+            </div>
+            <div class="data-page-container_content-result-table">
+                <v-simple-table v-if="currentStationType === stationConstant.RAIN_STATION" fixed-header height="400px">
+                    <template v-slot:default>
+                        <thead>
+                            <tr>
+                                <th class="text-left">Thời gian</th>
+                                <th class="text-left">Lượng mưa</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-if="precipitationArray.length === 0">
+                                <td colspan="2" style="text-align: center;">Không có dữ liệu</td>
+                            </tr>
+                            <tr v-for="(item, index) in precipitationArray" :key="index">
+                                <td>{{$formatDateTime(item.date)}}</td>
+                                <td>{{item.rainQuantity}}</td>
+                            </tr>
+                        </tbody>
+                    </template>
+                </v-simple-table>
+                <v-simple-table v-if="currentStationType === stationConstant.METEOROLOGICAL_STATION" fixed-header
+                    height="400px">
+                    <template v-slot:default>
+                        <thead>
+                            <tr>
+                                <th class="text-left">Thời gian</th>
+                                <th class="text-left">Bay hơi</th>
+                                <th class="text-left">Bức xạ</th>
+                                <th class="text-left">Độ ẩm</th>
+                                <th class="text-left">Hướng gió</th>
+                                <th class="text-left">Khí áp</th>
+                                <th class="text-left">HGA10</th>
+                                <th class="text-left">HGM60</th>
+                                <th class="text-left">Lượng mưa</th>
+                                <th class="text-left">Nhiệt độ</th>
+                                <th class="text-left">TDGA10</th>
+                                <th class="text-left">TDGM60</th>
+                                <th class="text-left">Tốc độ gió</th>
+                                <th class="text-left">Lũy kế</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-if="meteorologicalArray.length === 0">
+                                <td colspan="14" style="text-align: center;">Không có dữ liệu</td>
+                            </tr>
+                            <tr v-for="(item, index) in meteorologicalArray" :key="index">
+                                <td>{{$formatDateTime(item.date)}}</td>
+                                <td>{{item.evaporation}}</td>
+                                <td>{{item.radiation}}</td>
+                                <td>{{item.humidity}}</td>
+                                <td>{{item.windDirection}}</td>
+                                <td>{{item.barometric}}</td>
+                                <td>{{item.hga10}}</td>
+                                <td>{{item.hgm60}}</td>
+                                <td>{{item.rain}}</td>
+                                <td>{{item.temperature}}</td>
+                                <td>{{item.tdga10}}</td>
+                                <td>{{item.tdgm60}}</td>
+                                <td>{{item.windSpeed}}</td>
+                                <td>{{item.zluyKe}}</td>
+                            </tr>
+                        </tbody>
+                    </template>
+                </v-simple-table>
+                <v-simple-table v-if="currentStationType === stationConstant.HYDROLOGICAL_STATION" fixed-header
+                    height="400px">
+                    <template v-slot:default>
+                        <thead>
+                            <tr>
+                                <th class="text-left">Thời gian</th>
+                                <th class="text-left">Lượng mưa</th>
+                                <th class="text-left">Mực nước</th>
+                                <th class="text-left">Lũy kế</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-if="hydrologicalArray.length === 0">
+                                <td colspan="4" style="text-align: center;">Không có dữ liệu</td>
+                            </tr>
+                            <tr v-for="(item, index) in hydrologicalArray" :key="index">
+                                <td>{{$formatDateTime(item.date)}}</td>
+                                <td>{{item.rain}}</td>
+                                <td>{{item.waterLevel}}</td>
+                                <td>{{item.zLuyKe}}</td>
+                            </tr>
+                        </tbody>
+                    </template>
+                </v-simple-table>
+            </div>
+            <div class="data-page-container_content-result-paging">
+                <v-pagination v-if="totalPages" v-model="page" :length="totalPages" :total-visible="TotalPageVisible"
+                    @input="getStationData(currentStationId, currentStationType, activeStation, 1)"></v-pagination>
+            </div>
+        </div>
+    </div>
+</div>

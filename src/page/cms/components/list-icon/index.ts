@@ -1,6 +1,5 @@
 import Vue from "vue";
 import Component from "vue-class-component";
-import icon from "../../../../../static/img/icon/angry_clouds.png";
 import NO_IMAGE from '../../../../../static/img/no-image/no-image.png';
 
 @Component({
@@ -28,27 +27,27 @@ export default class ListIconComponent extends Vue {
 
     icons: any = [
         {
-            imageUrl: icon,
+            imageUrl: 'https://weatherstoragevn.blob.core.windows.net/images/icons/0001.png',
             name: "Quang mây, không mưa",
             type: "Quang mây"
         },
         {
-            imageUrl: icon,
+            imageUrl: 'https://weatherstoragevn.blob.core.windows.net/images/icons/0001.png',
             name: "Quang mây, không mưa",
             type: "Quang mây"
         },
         {
-            imageUrl: icon,
+            imageUrl: 'https://weatherstoragevn.blob.core.windows.net/images/icons/0001.png',
             name: "Quang mây, không mưa",
             type: "Quang mây"
         },
         {
-            imageUrl: icon,
+            imageUrl: 'https://weatherstoragevn.blob.core.windows.net/images/icons/0001.png',
             name: "Quang mây, không mưa",
             type: "Quang mây"
         },
         {
-            imageUrl: icon,
+            imageUrl: 'https://weatherstoragevn.blob.core.windows.net/images/icons/0001.png',
             name: "Quang mây, không mưa",
             type: "Quang mây"
         }

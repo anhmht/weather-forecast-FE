@@ -8,7 +8,7 @@
                     <li @click="scrollTo('info-page-container_section_3 padding-main')">Tổng quan</li>
                     <li @click="scrollTo('info-page-container_section_4 padding-main')">Chuyên mục KT-VH-XH</li>
                 </ul>
-                
+
             </div>
         </div>
 
@@ -24,13 +24,10 @@
                             <div class="info-current-forecast-body">
                                 <div justify="center" class="info-current-forecast-body-icon">
                                         Nhiệt độ {{currentTemp}}°
-                                        <img src="/static/img/icon/day_rain_thunder.png">
-                                        
+                                        <img :src="currentIcon">
                                         <div class="info-current-forecast-body--info">Nhiệt độ thấp nhất: {{minTemp}}°C</div>
                                         <div class="info-current-forecast-body--info">Nhiệt độ cao nhất: {{maxTemp}}°C</div>
-                                   
                                 </div>
-                               
                             </div>
                         </div>
                     </v-col>
@@ -98,7 +95,7 @@
                     <img width="100%" src="/static/img/info-page/img-a1.jpg" />
                     <h4>+ Ưu điểm:</h4>
                 <p>
-                    EMT Weather là đơn vị chuyên về thời tiết thuộc Trung tâm khí tượng thủy văn Khu vực Phía Nam-đơn vị cung cấp các dịch vụ thông tin thời tiết sáng tạo. Ứng dụng EMT Weather cung cấp giải pháp dự báo thời tiết hoàn hảo không chỉ cho các Đài Truyền Hình mà bất kì đơn vị, lĩnh vực nào hoạt động phụ thuộc vào yếu tố thời tiết. Sự tự động, trực quan làm nên điều khác biệt lớn nhất so với các phương pháp dự báo thông thường. Những dữ liệu, video dự báo được kết xuất ngay, với số liệu được cập nhật từng phút thay cho phương pháp truyền thống, tổng hợp, nhập số liệu trước hàng giờ để đưa ra thông tin dự báo.
+                    EMT Weather là đơn vị chuyên về thời tiết thuộc Đài khí tượng thủy văn Khu vực Phía Nam-đơn vị cung cấp các dịch vụ thông tin thời tiết sáng tạo. Ứng dụng EMT Weather cung cấp giải pháp dự báo thời tiết hoàn hảo không chỉ cho các Đài Truyền Hình mà bất kì đơn vị, lĩnh vực nào hoạt động phụ thuộc vào yếu tố thời tiết. Sự tự động, trực quan làm nên điều khác biệt lớn nhất so với các phương pháp dự báo thông thường. Những dữ liệu, video dự báo được kết xuất ngay, với số liệu được cập nhật từng phút thay cho phương pháp truyền thống, tổng hợp, nhập số liệu trước hàng giờ để đưa ra thông tin dự báo.
                 </p>
                 <p>
                     + Kết xuất đồ họa trong thời gian thực, hình ảnh 3D trực quan, chân thực với các hiệu ứng thời tiết từ sức gió, lượng mưa, độ ẩm thậm chí mức độ phủ độ dày của tuyết...
@@ -116,7 +113,7 @@
                 </ul>
                 <p></p>
                 <p>
-                    Ứng dụng đến từ Trung tâm Khí tượng thuỷ văn luôn luôn có độ chính xác cao, dễ dàng sử dụng và được cập nhật thay đổi dữ liệu một cách nhanh chóng. Nếu quan tâm đến thời tiết Việt Nam thì ứng dụng EMT Weather sẽ là một trong những lựa chọn hàng đầu.
+                    Ứng dụng đến từ Đài Khí tượng thuỷ văn luôn luôn có độ chính xác cao, dễ dàng sử dụng và được cập nhật thay đổi dữ liệu một cách nhanh chóng. Nếu quan tâm đến thời tiết Việt Nam thì ứng dụng EMT Weather sẽ là một trong những lựa chọn hàng đầu.
                 </p>
                 </div>
                 </div>
@@ -143,7 +140,7 @@
                                 </v-carousel-item>
                             </v-carousel>
                         </div>
-           
+
             </div>
         </div>
     </base-container>

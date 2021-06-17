@@ -3,27 +3,19 @@ import { GenericServices } from "../generic-service/generic.service";
 import Uri from "@/constant/uri/monitoring-constants";
 
 export class MonitoringServices extends GenericServices {
-    getMonitoringStation(): Promise<ApiResponse> {
-        return this.executeSelecting({}, Uri.getMonitoringStation).then((response: ApiResponse) => {
+    getPrecipitation(limit: number, page: number, stationId: string, dateFrom: string, dateTo: string): Promise<ApiResponse> {
+        return this.executeSelectingPost({limit, page, stationId, dateFrom, dateTo}, Uri.getPrecipitation).then((response: ApiResponse) => {
             return Promise.resolve(response)
-        }).catch(error => Promise.reject(error))
+            }).catch(error => Promise.reject(error))
     }
-    getPrecipitation(zipcodes: number[]): Promise<ApiResponse> {
-        const uri = `${Uri.getPrecipitation}?zipcodes=${zipcodes}`
-        return this.executeSelecting({}, uri).then((response: ApiResponse) => {
+    getMeteorological(limit: number, page: number, stationId: string, dateFrom: string, dateTo: string): Promise<ApiResponse> {
+        return this.executeSelectingPost({limit, page, stationId, dateFrom, dateTo}, Uri.getMeteorological).then((response: ApiResponse) => {
             return Promise.resolve(response)
-        }).catch(error => Promise.reject(error))
+            }).catch(error => Promise.reject(error))
     }
-    getMeteorological(zipcodes: number[]): Promise<ApiResponse> {
-        const uri = `${Uri.getMeteorological}?zipcodes=${zipcodes}`
-        return this.executeSelecting({}, uri).then((response: ApiResponse) => {
+    getHydrological(limit: number, page: number, stationId: string, dateFrom: string, dateTo: string): Promise<ApiResponse> {
+        return this.executeSelectingPost({limit, page, stationId, dateFrom, dateTo}, Uri.getHydrological).then((response: ApiResponse) => {
             return Promise.resolve(response)
-        }).catch(error => Promise.reject(error))
-    }
-    getHydrological(zipcodes: number[]): Promise<ApiResponse> {
-        const uri = `${Uri.getHydrological}?zipcodes=${zipcodes}`
-        return this.executeSelecting({}, uri).then((response: ApiResponse) => {
-            return Promise.resolve(response)
-        }).catch(error => Promise.reject(error))
+            }).catch(error => Promise.reject(error))
     }
 }

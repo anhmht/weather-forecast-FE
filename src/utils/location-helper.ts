@@ -12,6 +12,16 @@ export const getCurrentLocation = () => {
     });
 }
 
+export const getIpAddress = () => new Promise(async (resolve, reject) => {
+    fetch('https://api.ipify.org/?format=json').then(async (res: any) => {
+        const address = await JSON.parse(await res.text());
+        resolve(address.ip)
+    }).catch(err => {
+        console.log(err);
+        reject(null);
+    })
+})
+
 export const displayLocation = (coordinate = null)  => new Promise( async (resolve) => {
     var locationService = new LocationServices();
     let lon = null;
@@ -28,9 +38,10 @@ export const displayLocation = (coordinate = null)  => new Promise( async (resol
     if (cached) {
         resolve(JSON.parse(cached));
     } else {
-        locationService.getCurrentLocation(lat, lon).then((res: any) => {
-            let regionCode = res.data[0].region_code;
-            let region = res.data[0].region;
+        const ipAddress = await getIpAddress() as any;
+        locationService.getCurrentLocation(lat, lon, ipAddress).then((res: any) => {
+            let regionCode = res.region_code;
+            let region = res.region_name;
             sessionStorage.setItem('position', JSON.stringify({ lat, lon, regionCode, region }));
             resolve({ lat, lon, regionCode, region });
         }).catch(error => {

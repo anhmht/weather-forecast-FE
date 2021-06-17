@@ -6,4 +6,9 @@ export const DATE = {
     NEXT_2_DAY: 2,
     NEXT_3_DAY: 3,
     NEXT_4_DAY: 4,
-}
+};
+export const STATION_TYPE = {
+    RAIN_STATION: 'mua',
+    METEOROLOGICAL_STATION: 'khituong',
+    HYDROLOGICAL_STATION: 'thuyvan',
+};
