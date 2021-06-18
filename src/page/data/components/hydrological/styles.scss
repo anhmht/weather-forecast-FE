@@ -1,12 +1,4 @@
 .data-page-container {
-    background-image: url(/static/img/time-page/bg.png);
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    font-family: 'Roboto', sans-serif;
-    font-size: 14px;
-    overflow: hidden;
-
     &_wrapper {
         background: linear-gradient(rgba(0, 114, 255, 0.3), rgba(0, 43, 255, 0.46)), rgba(0, 0, 0, 0.22);
         border-radius: 10px;
@@ -233,6 +225,7 @@
                 }
                 .theme--light.v-pagination .v-pagination__navigation {
                     box-shadow: none;
+                    background: none;
                     i {
                         color: #fff !important;
                     }

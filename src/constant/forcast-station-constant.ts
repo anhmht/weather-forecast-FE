@@ -4,26 +4,26 @@ export const STATION = [
         "ten": "Bình Phước",
         "x": 106.908,
         "y": 11.754,
-        "place_id": "BP",
+        "place_id": "58",
     },
     {
         "id": "DiemNB10_10",
         "ten": "Đồng Tháp",
         "x": 105.608,
         "y": 10.5642,
-        "place_id": "DT",
+        "place_id": "45",
     },
     {
         "id": "DiemNB10_11",
         "ten": "An Giang",
         "x": 105.139,
         "y": 10.5904,
-        "place_id": "AG",
+        "place_id": "44",
     },
     {
         "id": "DiemNB10_12",
         "ten": "Vĩnh Long",
-        "place_id": "VL",
+        "place_id": "49",
         "x": 106.012,
         "y": 10.0801
     },
@@ -32,70 +32,70 @@ export const STATION = [
         "ten": "Cần Thơ",
         "x": 105.623,
         "y": 10.1002,
-        "place_id": "CN",
+        "place_id": "CT",
     },
     {
         "id": "DiemNB10_14",
         "ten": "Trà Vinh",
         "x": 106.528,
         "y": 9.61032,
-        "place_id": "TV",
+        "place_id": "51",
     },
     {
         "id": "DiemNB10_15",
         "ten": "Hậu Giang",
         "x": 105.553,
         "y": 9.77708,
-        "place_id": "HU",
+        "place_id": "73",
     },
     {
         "id": "DiemNB10_16",
         "ten": "Kiên Giang",
         "x": 105.046,
         "y": 9.97044,
-        "place_id": "KG",
+        "place_id": "47",
     },
     {
         "id": "DiemNB10_17",
         "ten": "Bạc Liêu",
         "x": 105.605,
         "y": 9.30571,
-        "place_id": "BL",
+        "place_id": "55",
     },
     {
         "id": "DiemNB10_18",
         "ten": "Sóc Trăng",
         "x": 105.924,
         "y": 9.55832,
-        "place_id": "ST",
+        "place_id": "52",
     },
     {
         "id": "DiemNB10_19",
         "ten": "Cà Mau",
         "x": 105.062,
         "y": 9.12369,
-        "place_id": "CM",
+        "place_id": "59",
     },
     {
         "id": "DiemNB10_2",
         "ten": "Bình Dương",
         "x": 106.643,
         "y": 11.0521,
-        "place_id": "BI",
+        "place_id": "57",
     },
     {
         "id": "DiemNB10_3",
         "ten": "Tây Ninh",
         "x": 106.082,
         "y": 11.361,
-        "place_id": "TN",
+        "place_id": "37",
     },
     {
         "id": "DiemNB10_4",
         "ten": "Đồng Nai",
         "x": 107.30001,
         "y": 10.9235,
-        "place_id": "DN",
+        "place_id": "39",
     },
     {
         "id": "DiemNB10_5",
@@ -109,28 +109,28 @@ export const STATION = [
         "ten": "Bà Rịa - Vũng Tàu",
         "x": 107.208,
         "y": 10.5056,
-        "place_id": "BV",
+        "place_id": "43",
     },
     {
         "id": "DiemNB10_7",
         "ten": "Long An",
         "x": 106.314,
         "y": 10.6942,
-        "place_id": "LA",
+        "place_id": "41",
     },
     {
         "id": "DiemNB10_8",
         "ten": "Tiền Giang",
         "x": 106.334,
         "y": 10.383,
-        "place_id": "TG",
+        "place_id": "46",
     },
     {
         "id": "DiemNB10_9",
         "ten": "Bến Tre",
         "x": 106.507,
         "y": 10.0377,
-        "place_id": "BR",
+        "place_id": "50",
     },
     {
         "id": "DiemVL10_1",
@@ -202,7 +202,10 @@ export const REGION = [
             weight: 3,
             opacity: 0.5,
             // fill: false
-        }
+        },
+        provinceIds: [
+            '02', '06', '68', '71', '01', '05', '14'
+        ],
     },
     {
         name: "Đông Bắc Bộ",
@@ -214,7 +217,11 @@ export const REGION = [
             weight: 3,
             opacity: 0.5,
             // fill: false
-        }
+        },
+        provinceIds: [
+            '03', '04', '53', '09', '07',
+            '69', '54', '13'
+        ],
     },
     {
         name: "Đồng Bằng Sông Hồng",
@@ -226,7 +233,11 @@ export const REGION = [
             weight: 3,
             opacity: 0.5,
             // fill: false
-        }
+        },
+        provinceIds: [
+            'HN', 'HP', '56', '63', '61',
+            '66', '67', '18', '20', '70'
+        ],
     },
     {
         name: "Bắc Trung Bộ",
@@ -238,13 +249,20 @@ export const REGION = [
             weight: 3,
             opacity: 0.5,
             // fill: false
-        }
+        },
+        provinceIds: [
+            '21', '22','23', '24', '25', '26'
+        ],
     },
     {
         name: "Nam Trung Bộ",
         zoom: 8,
         placeId: 'NTB',
         geojson: 'nam_trung_bo',
+        provinceIds: [
+            'DN', '27', '29', '31', '32',
+            '34', '36', '40'
+        ],
         style: {
             color: "#ff7800",
             weight: 3,
@@ -257,6 +275,9 @@ export const REGION = [
         zoom: 8,
         placeId: 'TN',
         geojson: 'tay_nguyen',
+        provinceIds: [
+            '28', '30', '33', '72', '35'
+        ],
         style: {
             color: "#ff7800",
             weight: 3,
@@ -270,7 +291,7 @@ export const REGION = [
         placeId: 'DNB',
         geojson: 'dong_nam_bo',
         provinceIds: [
-            'SG', 'BV', 'BI', 'BP', 'DN', 'TN'
+            'SG', '43', '57', '58', '39', '37'
         ],
         style: {
             color: "#ff7800",
@@ -285,8 +306,8 @@ export const REGION = [
         placeId: 'TNB',
         geojson: 'tay_nam_bo',
         provinceIds: [
-            'VL', 'AG', 'DT', 'BL', 'BR', 'CN',
-            'LA', 'CM', 'ST', 'HU', 'TV', 'KG', 'TG'
+            '49', '44', '45', '55', '50', 'CT',
+            '41', '59', '52', '73', '51', '47', '46'
         ],
         style: {
             color: "#49cc90",
@@ -303,7 +324,7 @@ export const MAP_PROVINCE = [
         lon: 105.9722,
         name: "Vĩnh Long",
         zoom: 11,
-        placeId: 'VL',
+        placeId: '49',
         districtIds: [
             'VL_1', 'VL_2', 'VL_3', 'VL_4',
             'VL_5', 'VL_6', 'VL_7', 'VL_8',
@@ -347,7 +368,7 @@ export const MAP_PROVINCE = [
         name: "An Giang",
         zoom: 12,
         geojson: 'an_giang',
-        placeId: 'AG',
+        placeId: '44',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -358,7 +379,7 @@ export const MAP_PROVINCE = [
         name: "Bà Rịa – Vũng Tàu",
         zoom: 12,
         geojson: 'ba_ria_vung_tau',
-        placeId: 'BV',
+        placeId: '43',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -369,6 +390,7 @@ export const MAP_PROVINCE = [
         name: "Bắc Giang",
         zoom: 12,
         geojson: 'bac_giang',
+        placeId: '54',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -379,6 +401,7 @@ export const MAP_PROVINCE = [
         name: "Bắc Kạn",
         zoom: 12,
         geojson: 'bac_kan',
+        placeId: '53',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -389,7 +412,7 @@ export const MAP_PROVINCE = [
         name: "Bạc Liêu",
         zoom: 12,
         geojson: 'bac_lieu',
-        placeId: 'BL',
+        placeId: '55',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -400,6 +423,7 @@ export const MAP_PROVINCE = [
         name: "Bắc Ninh",
         zoom: 12,
         geojson: 'bac_ninh',
+        placeId: '56',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -410,7 +434,7 @@ export const MAP_PROVINCE = [
         name: "Bến Tre",
         zoom: 12,
         geojson: 'ben_tre',
-        placeId: 'BR',
+        placeId: '50',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -421,6 +445,7 @@ export const MAP_PROVINCE = [
         name: "Bình Định",
         zoom: 12,
         geojson: 'binh_dinh',
+        placeId: '31',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -431,7 +456,7 @@ export const MAP_PROVINCE = [
         name: "Bình Dương",
         zoom: 12,
         geojson: 'binh_duong',
-        placeId: 'BI',
+        placeId: '57',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -442,7 +467,7 @@ export const MAP_PROVINCE = [
         name: "Bình Phước",
         zoom: 12,
         geojson: 'binh_phuoc',
-        placeId: 'BP',
+        placeId: '58',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -453,6 +478,7 @@ export const MAP_PROVINCE = [
         name: "Bình Thuận",
         zoom: 12,
         geojson: 'binh_thuan',
+        placeId: '40',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -463,7 +489,7 @@ export const MAP_PROVINCE = [
         name: "Cà Mau",
         zoom: 12,
         geojson: 'ca_mau',
-        placeId: 'CM',
+        placeId: '59',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -474,7 +500,7 @@ export const MAP_PROVINCE = [
         name: "Cần Thơ",
         zoom: 12,
         geojson: 'can_tho',
-        placeId: 'CN',
+        placeId: 'CT',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -485,6 +511,7 @@ export const MAP_PROVINCE = [
         name: "Cao Bằng",
         zoom: 12,
         geojson: 'cao_bang',
+        placeId: '04',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -495,6 +522,7 @@ export const MAP_PROVINCE = [
         name: "Đà Nẵng",
         zoom: 12,
         geojson: 'da_nang',
+        placeId: 'DN',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -505,6 +533,7 @@ export const MAP_PROVINCE = [
         name: "Đắk Lắk",
         zoom: 12,
         geojson: 'dak_lak',
+        placeId: '33',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -515,6 +544,7 @@ export const MAP_PROVINCE = [
         name: "Đắk Nông",
         zoom: 12,
         geojson: 'dak_nong',
+        placeId: '72',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -525,6 +555,7 @@ export const MAP_PROVINCE = [
         name: "Điện Biên",
         zoom: 12,
         geojson: 'dien_bien',
+        placeId: '71',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -535,7 +566,7 @@ export const MAP_PROVINCE = [
         name: "Đồng Nai",
         zoom: 12,
         geojson: 'dong_nai',
-        placeId: 'DN',
+        placeId: '39',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -546,7 +577,7 @@ export const MAP_PROVINCE = [
         name: "Đồng Tháp",
         zoom: 12,
         geojson: 'dong_thap',
-        placeId: 'DT',
+        placeId: '45',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -557,6 +588,7 @@ export const MAP_PROVINCE = [
         name: "Gia Lai",
         zoom: 12,
         geojson: 'gia_lai',
+        placeId: '30',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -567,6 +599,7 @@ export const MAP_PROVINCE = [
         name: "Hà Giang",
         zoom: 12,
         geojson: 'ha_giang',
+        placeId: '03',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -577,6 +610,7 @@ export const MAP_PROVINCE = [
         name: "Hà Nam",
         zoom: 12,
         geojson: 'ha_nam',
+        placeId: '63',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -587,6 +621,7 @@ export const MAP_PROVINCE = [
         name: "Hà Tĩnh",
         zoom: 12,
         geojson: 'ha_tinh',
+        placeId: '23',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -597,6 +632,7 @@ export const MAP_PROVINCE = [
         name: "Hải Dương",
         zoom: 12,
         geojson: 'hai_duong',
+        placeId: '61',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -607,6 +643,7 @@ export const MAP_PROVINCE = [
         name: "Hải Phòng",
         zoom: 12,
         geojson: 'hai_phong',
+        placeId: 'HP',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -617,7 +654,7 @@ export const MAP_PROVINCE = [
         name: "Hậu Giang",
         zoom: 12,
         geojson: 'hau_giang',
-        placeId: 'HU',
+        placeId: '73',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -628,6 +665,7 @@ export const MAP_PROVINCE = [
         name: "Hòa Bình",
         zoom: 12,
         geojson: 'hoa_binh',
+        placeId: '14',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -638,6 +676,7 @@ export const MAP_PROVINCE = [
         name: "Hưng Yên",
         zoom: 12,
         geojson: 'hung_yen',
+        placeId: '66',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -648,6 +687,7 @@ export const MAP_PROVINCE = [
         name: "Khánh Hòa",
         zoom: 12,
         geojson: 'khanh_hoa',
+        placeId: '34',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -658,7 +698,7 @@ export const MAP_PROVINCE = [
         name: "Kiên Giang",
         zoom: 12,
         geojson: 'kien_giang',
-        placeId: 'KG',
+        placeId: '47',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -669,6 +709,7 @@ export const MAP_PROVINCE = [
         name: "Kon Tum",
         zoom: 12,
         geojson: 'kon_tum',
+        placeId: '28',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -679,6 +720,7 @@ export const MAP_PROVINCE = [
         name: "Lai Châu",
         zoom: 12,
         geojson: 'lai_chau',
+        placeId: '01',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -689,6 +731,7 @@ export const MAP_PROVINCE = [
         name: "Lâm Đồng",
         zoom: 12,
         geojson: 'lam_dong',
+        placeId: '35',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -699,6 +742,7 @@ export const MAP_PROVINCE = [
         name: "Lạng Sơn",
         zoom: 12,
         geojson: 'lang_son',
+        placeId: '09',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -709,6 +753,7 @@ export const MAP_PROVINCE = [
         name: "Lào Cai",
         zoom: 12,
         geojson: 'lao_cai',
+        placeId: '02',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -719,7 +764,7 @@ export const MAP_PROVINCE = [
         name: "Long An",
         zoom: 12,
         geojson: 'long_an',
-        placeId: 'LA',
+        placeId: '41',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -730,6 +775,7 @@ export const MAP_PROVINCE = [
         name: "Nam Định",
         zoom: 12,
         geojson: 'nam_dinh',
+        placeId: '67',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -740,6 +786,7 @@ export const MAP_PROVINCE = [
         name: "Nghệ An",
         zoom: 12,
         geojson: 'nghe_an',
+        placeId: '22',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -750,6 +797,7 @@ export const MAP_PROVINCE = [
         name: "Ninh Bình",
         zoom: 12,
         geojson: 'ninh_binh',
+        placeId: '18',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -760,6 +808,7 @@ export const MAP_PROVINCE = [
         name: "Ninh Thuận",
         zoom: 12,
         geojson: 'ninh_thuan',
+        placeId: '36',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -770,6 +819,7 @@ export const MAP_PROVINCE = [
         name: "Phú Thọ",
         zoom: 12,
         geojson: 'phu_tho',
+        placeId: '68',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -780,6 +830,7 @@ export const MAP_PROVINCE = [
         name: "Phú Yên",
         zoom: 12,
         geojson: 'phu_yen',
+        placeId: '32',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -790,6 +841,7 @@ export const MAP_PROVINCE = [
         name: "Quảng Bình",
         zoom: 12,
         geojson: 'quang_binh',
+        placeId: '24',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -800,6 +852,7 @@ export const MAP_PROVINCE = [
         name: "Quảng Nam",
         zoom: 12,
         geojson: 'quang_nam',
+        placeId: '27',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -810,6 +863,7 @@ export const MAP_PROVINCE = [
         name: "Quảng Ngãi",
         zoom: 12,
         geojson: 'quang_ngai',
+        placeId: '29',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -820,6 +874,7 @@ export const MAP_PROVINCE = [
         name: "Quảng Ninh",
         zoom: 12,
         geojson: 'quang_ninh',
+        placeId: '13',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -830,6 +885,7 @@ export const MAP_PROVINCE = [
         name: "Quảng Trị",
         zoom: 12,
         geojson: 'quang_tri',
+        placeId: '25',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -840,7 +896,7 @@ export const MAP_PROVINCE = [
         name: "Sóc Trăng",
         zoom: 12,
         geojson: 'soc_trang',
-        placeId: 'ST',
+        placeId: '52',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -851,6 +907,7 @@ export const MAP_PROVINCE = [
         name: "Sơn La",
         zoom: 12,
         geojson: 'son_la',
+        placeId: '05',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -861,7 +918,7 @@ export const MAP_PROVINCE = [
         name: "Tây Ninh",
         zoom: 12,
         geojson: 'tay_ninh',
-        placeId: 'TN',
+        placeId: '37',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -872,6 +929,7 @@ export const MAP_PROVINCE = [
         name: "Thái Bình",
         zoom: 12,
         geojson: 'thai_binh',
+        placeId: '20',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -882,6 +940,7 @@ export const MAP_PROVINCE = [
         name: "Thái Nguyên",
         zoom: 12,
         geojson: 'thai_nguyen',
+        placeId: '69',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -892,6 +951,7 @@ export const MAP_PROVINCE = [
         name: "Thanh Hóa",
         zoom: 12,
         geojson: 'thanh_hoa',
+        placeId: '21',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -902,6 +962,7 @@ export const MAP_PROVINCE = [
         name: "Thừa Thiên Huế",
         zoom: 12,
         geojson: 'thua_thien_hue',
+        placeId: '26',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -912,7 +973,7 @@ export const MAP_PROVINCE = [
         name: "Tiền Giang",
         zoom: 12,
         geojson: 'tien_giang',
-        placeId: 'TG',
+        placeId: '46',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -923,7 +984,7 @@ export const MAP_PROVINCE = [
         name: "Trà Vinh",
         zoom: 12,
         geojson: 'tra_vinh',
-        placeId: 'TV',
+        placeId: '51',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -934,6 +995,7 @@ export const MAP_PROVINCE = [
         name: "Tuyên Quang",
         zoom: 12,
         geojson: 'tuyen_quang',
+        placeId: '07',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -944,6 +1006,7 @@ export const MAP_PROVINCE = [
         name: "Vĩnh Phúc",
         zoom: 12,
         geojson: 'vinh_phuc',
+        placeId: '70',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -954,6 +1017,7 @@ export const MAP_PROVINCE = [
         name: "Yên Bái",
         zoom: 12,
         geojson: 'yen_bai',
+        placeId: '06',
         style: {
             color: "#ff7800",
             weight: 3,
@@ -992,3 +1056,13 @@ export const MAP_TYPE = [
         name: "Dải sóng"
     }
 ];
+
+export const WEATHER_TYPE = {
+    Humidity: 1,
+    WindLevel:2,
+    WindDirection: 3,
+    WindSpeed: 4,
+    RainAmount: 5,
+    Temperature: 6,
+    Weather: 7
+}

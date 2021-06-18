@@ -23,7 +23,7 @@
             </div>
             <div class="data-page-container-wrapper--tab" :class="activeTab === 5 ? 'active' : ''"
                 @click="handleChangeTab(5)">
-                DỰ BÁO THỦY VĂN
+                THỦY VĂN
             </div>
             <div class="data-page-container-wrapper--tab" :class="activeTab === 6 ? 'active' : ''"
                 @click="handleChangeTab(6)">
@@ -32,318 +32,37 @@
         </v-row>
         <v-row v-if="activeTab === 0" class="data-page-container-wrapper" style="padding: 2vw 0">
             <div class="data-page-container-wrapper-col">
-                <div>
-                    <template>
-                        <v-simple-table fixed-header height="500px">
-                            <template v-slot:default>
-                                <thead>
-                                    <tr>
-                                        <th class="text-left">
-                                            Tên tỉnh thành
-                                        </th>
-                                        <th class="text-left">
-                                            Nhiệt độ thấp nhất
-                                        </th>
-                                        <th class="text-left">
-                                            Nhiệt độ cao nhất
-                                        </th>
-                                        <th class="text-left">
-                                            Trạng thái đặc biệt
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="item in province" :key="item.name">
-                                        <td>{{ item.name }}</td>
-                                        <td>{{ getRandomArbitrary(17, 25) }}°C</td>
-                                        <td>{{ getRandomArbitrary(35, 40) }}°C</td>
-                                        <td>{{ status[getStatus()] }}</td>
-                                    </tr>
-                                </tbody>
-                            </template>
-                        </v-simple-table>
-                    </template>
-                </div>
+                <weather-forecast region="DBB" key="TQ" all dummy />
             </div>
         </v-row>
         <v-row v-if="activeTab === 1" class="data-page-container-wrapper" style="padding: 2vw 0">
             <div class="data-page-container-wrapper-col">
-                <div>
-                    <template>
-                        <v-simple-table fixed-header height="500px">
-                            <template v-slot:default>
-                                <thead>
-                                    <tr>
-                                        <th class="text-left">
-                                            Đông Bắc Bộ
-                                        </th>
-                                        <th class="text-left">
-                                            Thấp nhất
-                                        </th>
-                                        <th class="text-left">
-                                            Cao Nhất
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="item in northeastRegion" :key="item.name">
-                                        <td>{{ item.name }}</td>
-                                        <td>{{ getRandomArbitrary(17, 25) }}°C</td>
-                                        <td>{{ getRandomArbitrary(35, 40) }}°C</td>
-                                    </tr>
-                                </tbody>
-                            </template>
-                        </v-simple-table>
-                        <v-simple-table fixed-header height="400px">
-                            <template v-slot:default>
-                                <thead>
-                                    <tr>
-                                        <th class="text-left">
-                                            Tây Bắc Bộ
-                                        </th>
-                                        <th class="text-left">
-                                            Thấp nhất
-                                        </th>
-                                        <th class="text-left">
-                                            Cao Nhất
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="item in northwestRegion" :key="item.name">
-                                        <td>{{ item.name }}</td>
-                                        <td>{{ getRandomArbitrary(17, 25) }}°C</td>
-                                        <td>{{ getRandomArbitrary(35, 40) }}°C</td>
-                                    </tr>
-                                </tbody>
-                            </template>
-                        </v-simple-table>
-                        <v-simple-table fixed-header height="600px">
-                            <template v-slot:default>
-                                <thead>
-                                    <tr>
-                                        <th class="text-left">
-                                            Khu vực ĐB Sông Hồng
-                                        </th>
-                                        <th class="text-left">
-                                            Thấp nhất
-                                        </th>
-                                        <th class="text-left">
-                                            Cao Nhất
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="item in redRiverDelta" :key="item.name">
-                                        <td>{{ item.name }}</td>
-                                        <td>{{ getRandomArbitrary(17, 25) }}°C</td>
-                                        <td>{{ getRandomArbitrary(35, 40) }}°C</td>
-                                    </tr>
-                                </tbody>
-                            </template>
-                        </v-simple-table>
-                    </template>
-                </div>
+                <weather-forecast region="DBB" key="DBB" dummy />
+                <weather-forecast region="TBB" key="TBB" dummy style="margin-top: 20px" />
+                <weather-forecast region="DBSH" key="DBSH" dummy style="margin-top: 20px"/>
             </div>
         </v-row>
         <v-row v-if="activeTab === 2" class="data-page-container-wrapper" style="padding: 2vw 0">
             <div class="data-page-container-wrapper-col">
-                <div>
-                    <template>
-                        <v-simple-table fixed-header height="400px">
-                            <template v-slot:default>
-                                <thead>
-                                    <tr>
-                                        <th class="text-left">
-                                            Bắc Trung Bộ
-                                        </th>
-                                        <th class="text-left">
-                                            Thấp nhất
-                                        </th>
-                                        <th class="text-left">
-                                            Cao Nhất
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="item in northCentralCoast" :key="item.name">
-                                        <td>{{ item.name }}</td>
-                                        <td>{{ getRandomArbitrary(17, 25) }}°C</td>
-                                        <td>{{ getRandomArbitrary(35, 40) }}°C</td>
-                                    </tr>
-                                </tbody>
-                            </template>
-                        </v-simple-table>
-                        <v-simple-table fixed-header height="500px">
-                            <template v-slot:default>
-                                <thead>
-                                    <tr>
-                                        <th class="text-left">
-                                            Nam Trung Bộ
-                                        </th>
-                                        <th class="text-left">
-                                            Thấp nhất
-                                        </th>
-                                        <th class="text-left">
-                                            Cao Nhất
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="item in southCentralCoast" :key="item.name">
-                                        <td>{{ item.name }}</td>
-                                        <td>{{ getRandomArbitrary(17, 25) }}°C</td>
-                                        <td>{{ getRandomArbitrary(35, 40) }}°C</td>
-                                    </tr>
-                                </tbody>
-                            </template>
-                        </v-simple-table>
-                        <v-simple-table fixed-header height="300px">
-                            <template v-slot:default>
-                                <thead>
-                                    <tr>
-                                        <th class="text-left">
-                                            Tây Nguyên
-                                        </th>
-                                        <th class="text-left">
-                                            Thấp nhất
-                                        </th>
-                                        <th class="text-left">
-                                            Cao Nhất
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="item in centralHighlands" :key="item.name">
-                                        <td>{{ item.name }}</td>
-                                        <td>{{ getRandomArbitrary(17, 25) }}°C</td>
-                                        <td>{{ getRandomArbitrary(35, 40) }}°C</td>
-                                    </tr>
-                                </tbody>
-                            </template>
-                        </v-simple-table>
-                    </template>
-                </div>
+                <weather-forecast region="BTB" key="BTB" dummy />
+                <weather-forecast region="NTB" key="NTB" dummy style="margin-top: 20px" />
+                <weather-forecast region="TN" key="TN" dummy style="margin-top: 20px" />
             </div>
         </v-row>
         <v-row v-if="activeTab === 3" class="data-page-container-wrapper" style="padding: 2vw 0">
             <div class="data-page-container-wrapper-col">
-                <div>
-                    <template>
-                        <v-simple-table fixed-header height="400px">
-                            <template v-slot:default>
-                                <thead>
-                                    <tr>
-                                        <th class="text-left">
-                                            Đông Nam Bộ
-                                        </th>
-                                        <th class="text-left">
-                                            Thấp nhất
-                                        </th>
-                                        <th class="text-left">
-                                            Cao Nhất
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="item in southeastRegion" :key="item.name">
-                                        <td>{{ item.name }}</td>
-                                        <td>{{ getRandomArbitrary(17, 25) }}°C</td>
-                                        <td>{{ getRandomArbitrary(35, 40) }}°C</td>
-                                    </tr>
-                                </tbody>
-                            </template>
-                        </v-simple-table>
-                        <v-simple-table fixed-header height="700px">
-                            <template v-slot:default>
-                                <thead>
-                                    <tr>
-                                        <th class="text-left">
-                                            Tây Nam Bộ
-                                        </th>
-                                        <th class="text-left">
-                                            Thấp nhất
-                                        </th>
-                                        <th class="text-left">
-                                            Cao Nhất
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="item in mekongRiverDelta" :key="item.name">
-                                        <td>{{ item.name }}</td>
-                                        <td>{{ getRandomArbitrary(17, 25) }}°C</td>
-                                        <td>{{ getRandomArbitrary(35, 40) }}°C</td>
-                                    </tr>
-                                </tbody>
-                            </template>
-                        </v-simple-table>
-                    </template>
-                </div>
+                <weather-forecast region="DNB" :height="350" key="DNB"/>
+                <weather-forecast region="TNB" style="margin-top: 20px" key="TNB"/>
             </div>
         </v-row>
         <v-row v-if="activeTab === 4" class="data-page-container-wrapper" style="padding: 2vw 0">
             <div class="data-page-container-wrapper-col">
-                <div>
-                    <template>
-                        <v-simple-table fixed-header height="500px">
-                            <template v-slot:default>
-                                <thead>
-                                    <tr>
-                                        <th class="text-left">
-                                            CÁC HUYỆN, TPVL
-                                        </th>
-                                        <th class="text-left">
-                                            Thấp nhất
-                                        </th>
-                                        <th class="text-left">
-                                            Cao Nhất
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="item in wardInfo" :key="item.name">
-                                        <td>{{ item.name }}</td>
-                                        <td>{{ getRandomArbitrary(17, 25) }}°C</td>
-                                        <td>{{ getRandomArbitrary(35, 40) }}°C</td>
-                                    </tr>
-                                </tbody>
-                            </template>
-                        </v-simple-table>
-                    </template>
-                </div>
+                <weather-forecast region="TNB" province="49" key="49"/>
             </div>
         </v-row>
         <v-row v-if="activeTab === 5" class="data-page-container-wrapper" style="padding: 2vw 0">
             <div class="data-page-container-wrapper-col">
-                <div>
-                    <template>
-                        <v-simple-table fixed-header height="600px" style="margin-bottom: 20px;">
-                            <template v-slot:default>
-                                <thead>
-                                    <tr>
-                                        <th class="text-left">
-                                            Mực nước tại các sông lớn, cửa sông
-                                        </th>
-                                        <th class="text-left">
-                                            Thấp nhất
-                                        </th>
-                                        <th class="text-left">
-                                            Cao Nhất
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="item in riversEstuaries" :key="item.name">
-                                        <td>{{ item.name }}</td>
-                                        <td>{{ getRandomArbitrary(17, 25) }}</td>
-                                        <td>{{ getRandomArbitrary(35, 40) }}</td>
-                                    </tr>
-                                </tbody>
-                            </template>
-                        </v-simple-table>
-                    </template>
-                </div>
+                <hydrological />
             </div>
         </v-row>
         <v-row v-if="activeTab === 6" class="data-page-container-wrapper" style="padding: 2vw 0">

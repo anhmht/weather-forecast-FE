@@ -350,7 +350,8 @@ export default class HomePageComponent extends Vue {
         const options = {
             // Required: API key
             key: "PsLAtXpsPTZexBwUkO7Mx5I", // REPLACE WITH YOUR KEY !!!
-            // key: 'yw7vbuA1PQmaUPe0SNECjxmOIv5AJ4FC', // Production !!!
+            // key: 'yw7vbuA1PQmaUPe0SNECjxmOIv5AJ4FC', // Production Github Page !!!
+            // key: 'oixjdU358Nvzz8CGDQhcBAswQ2ngOshM', // Production Azure web static!!!
             // Put additional console output
             // verbose: true,
             // Optional: Initial state of the map

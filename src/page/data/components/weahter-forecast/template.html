@@ -1,0 +1,39 @@
+<div class="weather-forecast">
+    <v-simple-table fixed-header :height="`${height}px`">
+        <template v-slot:default>
+            <thead>
+                <tr>
+                    <th>
+                        {{title}}
+                    </th>
+                    <th>
+                        Nhiệt độ
+                    </th>
+                    <th>
+                        Độ ẩm
+                    </th>
+                    <th>
+                        Lượng mưa
+                    </th>
+                    <th>
+                        Tốc độ gió
+                    </th>
+                    <th>
+                        Cấp gió
+                    </th>
+                </tr>
+            </thead>
+            <tbody style="position: relative;">
+                <tr v-for="(item,index) in data" :key="item.StationId">
+                    <td>{{item.Name}}</td>
+                    <td>{{item.Temprature.min}}°C - {{item.Temprature.max}}°C</td>
+                    <td>{{item.Humidity.min}}% - {{item.Humidity.max}}%</td>
+                    <td>{{item.RainAmount.min}}mm - {{item.RainAmount.max}}mm </td>
+                    <td>Cấp {{item.WindLevel.min}} - Cấp {{item.WindLevel.max}}</td>
+                    <td>{{item.WindSpeed.min}}m/s - {{item.WindSpeed.max}}m/s</td>
+                </tr>
+                <loading :is-loading="isLoading" absolute/>
+            </tbody>
+        </template>
+    </v-simple-table>
+</div>

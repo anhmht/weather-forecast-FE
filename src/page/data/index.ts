@@ -1,31 +1,23 @@
 import { namespace, Action, Getter } from 'vuex-class';
-import { PROVINCE } from './../../constant/province-constant';
 import Vue from "vue";
 import Component from "vue-class-component";
 import { storeModules } from '@/store';
 import lookupTypesStore from '@/store/lookup/lookup-types.store';
 import { WeatherServices } from '@/service/weather-service/weather.service';
-import { STATION } from '@/constant/forcast-station-constant';
-import moment from 'moment';
-import { WEATHER_TYPE } from '@/constant/common-constant';
+
 
 const LookupAction = namespace(storeModules.Lookup, Action);
 const LookupGetter = namespace(storeModules.Lookup, Getter);
 @Component({
     template: require("./template.html").default,
     components: {
-        "base-container": () => import("../../components/base-container/BaseContainerComponent.vue")
+        "base-container": () => import("../../components/base-container/BaseContainerComponent.vue"),
+        "weather-forecast": () => import("./components/weahter-forecast/WeatherForecastComponent.vue"),
+        "hydrological": () => import("./components/hydrological/HydrologicalComponent.vue")
     }
 })
 export default class DataPageComponent extends Vue {
-    province = PROVINCE;
-    station = STATION;
-    stationIds: string[] = [];
-    fromDate: string = null;
-    toDate: string = null;
-    weatherTypes: number[] = [];
-    provinceData: any = [];
-    activeTab: number = 0;
+    activeTab: number = 1;
     weatherService: WeatherServices = new WeatherServices();
 
     @LookupAction getLookupData: (type: string) => Promise<void>
@@ -111,32 +103,5 @@ export default class DataPageComponent extends Vue {
     getHarshStatus() {
         const num = this.getRandomArbitrary(0, 2);
         return num
-    }
-
-    async mounted() {
-        this.getLookupData(lookupTypesStore.Set.KTTV);
-
-        // Get all station id
-        this.province.forEach(provinceElement => {
-            this.station.filter(stationElement => {
-                if (provinceElement.name === stationElement.ten) {
-                    this.stationIds.push(stationElement.id);
-                }
-            });
-        });
-
-        this.fromDate = moment().format('YYYY-MM-DD');
-        this.toDate = moment().format('YYYY-MM-DD');
-        this.weatherTypes.push(WEATHER_TYPE.TEMPERATURE);
-
-        // Get all provinces data
-        await this.weatherService.getDetail(this.stationIds, this.fromDate, this.toDate, this.weatherTypes)
-        .then((res: any) => {
-            this.provinceData.push({
-                
-            });
-        }).catch(error => {
-            console.log(error);
-        })
     }
 }
