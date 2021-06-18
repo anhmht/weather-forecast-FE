@@ -93,10 +93,12 @@ export default class ScenarioComponent extends Vue {
     getData(item) {
         if (item.action === 'customLocationControl') {
             if (item.method === SCENARIO_LOCATION_METHOD[0].value) {
-                return REGION.find(x => x.placeId === item.data).name
+                const region = REGION.find(x => x.placeId === item.data)
+                return region ? region.name : null
             }
             if (item.method === SCENARIO_LOCATION_METHOD[1].value) {
-                return MAP_PROVINCE.find(x => x.placeId === item.data).name
+                const province = MAP_PROVINCE.find(x => x.placeId === item.data)
+                return province ? province.name : null
             }
         }
         if (item.action === 'customMapStatusControl') {

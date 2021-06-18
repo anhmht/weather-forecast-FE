@@ -17,7 +17,7 @@ const LookupGetter = namespace(storeModules.Lookup, Getter);
     }
 })
 export default class DataPageComponent extends Vue {
-    activeTab: number = 1;
+    activeTab: number = 0;
     weatherService: WeatherServices = new WeatherServices();
 
     @LookupAction getLookupData: (type: string) => Promise<void>

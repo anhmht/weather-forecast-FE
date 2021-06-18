@@ -13,6 +13,7 @@
         align-items: center;
         float: left;
         margin-top: 1px;
+        cursor: pointer;
         img {
             max-width: 342px;
             @media all and (min-width: 320px) and (max-width: 700px) {

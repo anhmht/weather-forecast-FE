@@ -29,12 +29,6 @@ export const DEFAULT_SCENARIOS = [
         data: 'TNB',
         duration: 5000
     },
-    {
-        action: 'customLocationControl',
-        method: 'handleClick',
-        data: 'VL',
-        duration: 10000
-    },
 ]
 export const SCENARIO_ACTION = [
     {
