@@ -1,3 +1,4 @@
+import { PATH } from './../../constant/route-constant';
 import Vue from "vue";
 import Component from "vue-class-component";
 
@@ -9,4 +10,8 @@ import Component from "vue-class-component";
 })
 export default class HeaderComponent extends Vue {
     menuClick: boolean = false;
+
+    handleClick() {
+        this.$router.push(PATH.INFO);
+    }
 }

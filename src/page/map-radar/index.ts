@@ -1,3 +1,4 @@
+import { PATH } from './../../constant/route-constant';
 import { getGeoJson } from './../../utils/location-helper';
 // import { displayLocation } from '@/utils/location-helper';
 import { STATION } from '@/constant/forcast-station-constant';
@@ -63,7 +64,7 @@ export default class HomePageComponent extends Vue {
     }
 
     handleBack() {
-        this.$router.go(-1);
+        this.$router.push(PATH.INFO);
     }
 
     updateDistrictPopUp(changeTime) {
@@ -304,11 +305,11 @@ export default class HomePageComponent extends Vue {
         clearTimeout(this.clearTimeout.timeout);
         this.isStop = false;
         this.isRecording = true;
-        this.isReview = true;
         if (isRecord) {
             await this.capture();
         } else {
             this.isShowButtonStop = true;
+            this.isReview = true;
         }
         for (const iterator of previewData) {
             if (this.isStop) {
@@ -327,8 +328,8 @@ export default class HomePageComponent extends Vue {
             }
         }
         this.isRecording = false;
-        this.isReview = false;
         if (!isRecord) {
+            this.isReview = false;
             this.drawer = true;
         } else {
             this.videoStream.stop();

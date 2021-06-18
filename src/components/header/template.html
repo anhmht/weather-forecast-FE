@@ -1,6 +1,6 @@
 <div class="base-container-header">
     <div class="container">
-        <div class="base-container-header-logo">
+        <div class="base-container-header-logo" @click="handleClick">
             <img src="/static/img/header/logo.png" />
         </div>
         <menu-bar :class="menuClick ? 'show' : ''"/>
