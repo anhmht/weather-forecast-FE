@@ -99,14 +99,14 @@ export const STATION = [
     },
     {
         "id": "DiemNB10_5",
-        "ten": "TP Hồ Chí Minh",
+        "ten": "Hồ Chí Minh",
         "place_id": "SG",
         "x": 106.688,
         "y": 10.7572
     },
     {
         "id": "DiemNB10_6",
-        "ten": "Bà Rịa-Vũng Tàu",
+        "ten": "Bà Rịa - Vũng Tàu",
         "x": 107.208,
         "y": 10.5056,
         "place_id": "BV",

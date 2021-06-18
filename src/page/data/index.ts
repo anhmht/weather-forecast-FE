@@ -4,6 +4,10 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import { storeModules } from '@/store';
 import lookupTypesStore from '@/store/lookup/lookup-types.store';
+import { WeatherServices } from '@/service/weather-service/weather.service';
+import { STATION } from '@/constant/forcast-station-constant';
+import moment from 'moment';
+import { WEATHER_TYPE } from '@/constant/common-constant';
 
 const LookupAction = namespace(storeModules.Lookup, Action);
 const LookupGetter = namespace(storeModules.Lookup, Getter);
@@ -15,227 +19,17 @@ const LookupGetter = namespace(storeModules.Lookup, Getter);
 })
 export default class DataPageComponent extends Vue {
     province = PROVINCE;
-    activeTab: number = 0
+    station = STATION;
+    stationIds: string[] = [];
+    fromDate: string = null;
+    toDate: string = null;
+    weatherTypes: number[] = [];
+    provinceData: any = [];
+    activeTab: number = 0;
+    weatherService: WeatherServices = new WeatherServices();
 
     @LookupAction getLookupData: (type: string) => Promise<void>
     @LookupGetter(lookupTypesStore.Get.KTTV) stations
-
-    status = [
-        'Sương mù', 'Nhiều mây', 'Mưa rào nhẹ', 'Có mây', 'Mưa dông', 'Mưa rải rác', 'Nắng nóng'
-    ]
-
-    northeastRegion = [
-        {
-            name: 'Hà Giang',
-        },
-        {
-            name: 'Cao Bằng',
-        },
-        {
-            name: 'Bắc Kạn',
-        },
-        {
-            name: 'Lạng Sơn',
-        },
-        {
-            name: 'Tuyên Quang',
-        },
-        {
-            name: 'Thái Nguyên',
-        },
-        {
-            name: 'Bắc Giang',
-        },
-        {
-            name: 'Quảng Ninh',
-        },
-    ]
-
-    northwestRegion = [
-        {
-            name: 'Lào Cai',
-        },
-        {
-            name: 'Yên Bái',
-        },
-        {
-            name: 'Phú Thọ',
-        },
-        {
-            name: 'Điện Biên',
-        },
-        {
-            name: 'Lai Châu',
-        },
-        {
-            name: 'Sơn La',
-        },
-        {
-            name: 'Hòa Bình',
-        },
-    ]
-
-    redRiverDelta = [
-        {
-            name: 'Hà Nội',
-        },
-        {
-            name: 'Hải Phòng',
-        },
-        {
-            name: 'Bắc Ninh',
-        },
-        {
-            name: 'Hà Nam',
-        },
-        {
-            name: 'Hải Dương',
-        },
-        {
-            name: 'Hưng Yên',
-        },
-        {
-            name: 'Nam Định',
-        },
-        {
-            name: 'Ninh Bình',
-        },
-        {
-            name: 'Thái Bình',
-        },
-        {
-            name: 'Vĩnh Phúc',
-        },
-    ]
-
-    northCentralCoast = [
-        {
-            name: 'Thanh Hóa',
-        },
-        {
-            name: 'Nghệ An',
-        },
-        {
-            name: 'Hà Tĩnh',
-        },
-        {
-            name: 'Quảng Bình',
-        },
-        {
-            name: 'Quảng Trị',
-        },
-        {
-            name: 'Thừa Thiên - Huế',
-        },
-    ]
-
-    southCentralCoast = [
-        {
-            name: 'Đà Nẵng',
-        },
-        {
-            name: 'Quảng Nam',
-        },
-        {
-            name: 'Quảng Ngãi',
-        },
-        {
-            name: 'Bình Định',
-        },
-        {
-            name: 'Phú Yên',
-        },
-        {
-            name: 'Khánh Hòa',
-        },
-        {
-            name: 'Ninh Thuận',
-        },
-        {
-            name: 'Bình Thuận',
-        },
-    ]
-
-    centralHighlands = [
-        {
-            name: 'Kon Tum',
-        },
-        {
-            name: 'Gia Lai',
-        },
-        {
-            name: 'Đắk Lắk',
-        },
-        {
-            name: 'Đắk Nông',
-        },
-        {
-            name: 'Lâm Đồng',
-        },
-    ]
-
-    southeastRegion = [
-        {
-            name: 'Bình Phước',
-        },
-        {
-            name: 'Bình Dương',
-        },
-        {
-            name: 'Đồng Nai',
-        },
-        {
-            name: 'Tây Ninh',
-        },
-        {
-            name: 'Bà Rịa - Vũng Tàu',
-        },
-        {
-            name: 'Thành phố Hồ Chí Minh',
-        },
-    ]
-
-    mekongRiverDelta = [
-        {
-            name: 'Long An',
-        },
-        {
-            name: 'Đồng Tháp',
-        },
-        {
-            name: 'Tiền Giang',
-        },
-        {
-            name: 'An Giang',
-        },
-        {
-            name: 'Bến Tre',
-        },
-        {
-            name: 'Vĩnh Long',
-        },
-        {
-            name: 'Trà Vinh',
-        },
-        {
-            name: 'Hậu Giang',
-        },
-        {
-            name: 'Kiên Giang',
-        },
-        {
-            name: 'Sóc Trăng',
-        },
-        {
-            name: 'Bạc Liêu',
-        },
-        {
-            name: 'Cà Mau',
-        },
-        {
-            name: 'Thành phố Cần Thơ',
-        }
-    ]
 
     wardInfo = [
         {
@@ -319,7 +113,30 @@ export default class DataPageComponent extends Vue {
         return num
     }
 
-    mounted() {
+    async mounted() {
         this.getLookupData(lookupTypesStore.Set.KTTV);
+
+        // Get all station id
+        this.province.forEach(provinceElement => {
+            this.station.filter(stationElement => {
+                if (provinceElement.name === stationElement.ten) {
+                    this.stationIds.push(stationElement.id);
+                }
+            });
+        });
+
+        this.fromDate = moment().format('YYYY-MM-DD');
+        this.toDate = moment().format('YYYY-MM-DD');
+        this.weatherTypes.push(WEATHER_TYPE.TEMPERATURE);
+
+        // Get all provinces data
+        await this.weatherService.getDetail(this.stationIds, this.fromDate, this.toDate, this.weatherTypes)
+        .then((res: any) => {
+            this.provinceData.push({
+                
+            });
+        }).catch(error => {
+            console.log(error);
+        })
     }
 }

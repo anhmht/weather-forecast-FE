@@ -12,3 +12,12 @@ export const STATION_TYPE = {
     METEOROLOGICAL_STATION: 'khituong',
     HYDROLOGICAL_STATION: 'thuyvan',
 };
+export const WEATHER_TYPE = {
+    HUMIDITY: 1,
+    WIND_LEVEL: 2,
+    WIND_DIRECTION: 3,
+    WIND_SPEED: 4,
+    RAIN_AMOUNT: 5,
+    TEMPERATURE: 6,
+    WEATHER: 7,
+};
