@@ -4,7 +4,7 @@ import { WeatherServices } from '@/service/weather-service/weather.service';
 import Vue from 'vue';
 import Component from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
-
+import moment from 'moment';
 
 @Component({
     template: require("./template.html").default,
@@ -28,6 +28,8 @@ export default class WeatherForecastComponent extends Vue {
     dummy
 
     isLoading: boolean = false;
+    selectedDateMenu: string = null;
+    selectedDate: string = null;
 
     weatherService: WeatherServices = new WeatherServices();
     searchParam: IForecastSearchParam = new ForecastSearchParam();
@@ -37,6 +39,21 @@ export default class WeatherForecastComponent extends Vue {
     get title() {
         if (this.province) return MAP_PROVINCE.find(x => x.placeId === this.province).name;
         return REGION.find(x => x.placeId === this.region).name;
+    }
+
+    get FormattedSelectedDate() {
+        if (this.selectedDate) {
+            return moment(this.selectedDate).format('DD/MM/YYYY');
+        }
+        return;
+    }
+
+    get CalendarMinDate() {
+        return moment().subtract(3, "days").format('YYYY-MM-DD');
+    }
+
+    get CalendarMaxDate() {
+        return moment().add(3, "days").format('YYYY-MM-DD');
     }
 
     getRegionStationId() {
@@ -164,6 +181,22 @@ export default class WeatherForecastComponent extends Vue {
         return Math.ceil(Math.random() * (max - min) + min);
     }
 
+    getDetail() {
+        if (this.selectedDate) {
+            this.searchParam.fromDate = moment(this.selectedDate).format();
+            this.searchParam.toDate = moment(this.selectedDate).add(1, 'days').subtract(1, 'minutes').format();
+        }
+
+        this.weatherService.getDetail(this.searchParam).then((res: any) => {
+            const data = this.transformData(res.weatherInformationByStations);
+            this.data = data;
+            this.isLoading = false;
+        }).catch(err => {
+            console.log(err);
+            this.isLoading = false;
+        });
+    }
+    
     mounted() {
         if(this.dummy) {
             this.data = this.getDummyData(this.all);
@@ -177,13 +210,7 @@ export default class WeatherForecastComponent extends Vue {
             this.searchParam.stationIds = this.getRegionStationId();
         }
         if (this.searchParam.stationIds.length === 0) return;
-        this.weatherService.getDetail(this.searchParam).then((res: any) => {
-            const data = this.transformData(res.weatherInformationByStations);
-            this.data = data;
-            this.isLoading = false;
-        }).catch(err => {
-            console.log(err);
-            this.isLoading = false;
-        })
+        
+        this.getDetail();
     }
 }
