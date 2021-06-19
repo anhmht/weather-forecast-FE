@@ -33,19 +33,23 @@ export const DEFAULT_SCENARIOS = [
 export const SCENARIO_ACTION = [
     {
         text: 'Di chuyển bản đồ',
-        value: 'customLocationControl'
+        value: 'customLocationControl',
+        color: 'blue'
     },
     {
         text: 'Đổi trạng thái thời tiết',
-        value: 'customMapStatusControl'
+        value: 'customMapStatusControl',
+        color: 'pink'
     },
     {
         text: 'Đổi độ cao',
-        value: 'customLevelControl'
+        value: 'customLevelControl',
+        color: 'green'
     },
     {
         text: 'Thu phóng bản đồ',
-        value: 'customZoomControl'
+        value: 'customZoomControl',
+        color: 'black'
     },
 ]
 export const SCENARIO_LOCATION_METHOD = [

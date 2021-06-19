@@ -53,6 +53,10 @@ export default class ScenarioComponent extends Vue {
         return this.scenarios[this.selectedItem] ? this.scenarios[this.selectedItem].scenarioContent : [];
     }
 
+    getColor(action) {
+        return SCENARIO_ACTION.find(x => x.value === action).color;
+    }
+
     updateScenario(data) {
         if (this.scenario) {
 

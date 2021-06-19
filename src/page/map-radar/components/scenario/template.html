@@ -48,7 +48,7 @@
                         <v-card-text class="py-0">
                             <v-timeline dense id="sortAble-list" v-if="Contents.length > 0">
                                 <v-timeline-item small v-for="(item, index) in Contents" :key="generateKey(index)"
-                                    color="pink">
+                                    :color="getColor(item.action)">
                                     <v-row class="pt-1">
                                         <v-col cols="2">
                                             <strong>{{getDuration(item.duration)}}</strong>
