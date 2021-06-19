@@ -80,16 +80,16 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="(item, index) in disasters" :key="item">
+                                    <tr v-for="(item, index) in disasters" :key="index">
                                         <td>{{ item.name }}</td>
-                                        <td>{{ harshStatus[getHarshStatus()] }}</td>
-                                        <td>{{ harshStatus[getHarshStatus()] }}</td>
-                                        <td>{{ getRandomArbitrary(17, 25) }}</td>
-                                        <td>{{ getRandomArbitrary(35, 40) }}</td>
-                                        <td>{{ getRandomArbitrary(35, 40) }}</td>
-                                        <td>{{ harshStatus[getHarshStatus()] }}</td>
-                                        <td>{{ getRandomArbitrary(17, 25) }}</td>
-                                        <td>{{ harshStatus[getHarshStatus()] }}</td>
+                                        <td>{{ getData(item.value, item.min, item.max) }}</td>
+                                        <td>{{ getData(item.value, item.min, item.max) }}</td>
+                                        <td>{{ getData(item.value, item.min, item.max) }}</td>
+                                        <td>{{ getData(item.value, item.min, item.max) }}</td>
+                                        <td>{{ getData(item.value, item.min, item.max) }}</td>
+                                        <td>{{ getData(item.value, item.min, item.max) }}</td>
+                                        <td>{{ getData(item.value, item.min, item.max) }}</td>
+                                        <td>{{ getData(item.value, item.min, item.max) }}</td>
                                     </tr>
                                 </tbody>
                             </template>

@@ -57,39 +57,49 @@ export default class DataPageComponent extends Vue {
     disasters = [
         {
             name: 'Hạn hán',
-            value: this.harshStatus[this.getHarshStatus()]
+            value: true
         },
         {
             name: 'Gió',
-            value: `${this.getRandomArbitrary(0, 5)} m/s`
+            value: false,
+            min: 0,
+            max: 5
         },
         {
             name: 'Bão',
-            value: `${this.getRandomArbitrary(0, 5)}`
+            value: false,
+            min: 1,
+            max: 10
         },
         {
             name: 'Độ ẩm',
-            value: `${this.getRandomArbitrary(50, 80)} %`
+            value: false,
+            min: 0,
+            max: 100
         },
         {
             name: 'Sương mù',
-            value: `${this.getRandomArbitrary(35, 40)}`
+            value: false,
+            min: 35,
+            max: 40
         },
         {
             name: 'Mức độ ô nhiễm không khí',
-            value: `${this.getRandomArbitrary(35, 40)}`
+            value: false,
+            min: 35,
+            max: 40
         },
         {
             name: 'Nắng Nóng',
-            value: this.harshStatus[this.getHarshStatus()]
+            value: true
         },
         {
             name: 'Mưa đá',
-            value: this.harshStatus[this.getHarshStatus()]
+            value: true
         },
         {
             name: 'Lốc xoáy',
-            value: this.harshStatus[this.getHarshStatus()]
+            value: true
         },
     ]
 
@@ -146,4 +156,13 @@ export default class DataPageComponent extends Vue {
         const num = random_boolean ? 1 : 0;
         return num
     }
+
+    getData(status, min, max) {
+        if(status) {
+            return this.harshStatus[this.getHarshStatus()];
+        } else {
+            return this.getRandomArbitrary(min, max);
+        }
+    }
+
 }
