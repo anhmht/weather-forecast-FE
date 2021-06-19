@@ -1,12 +1,14 @@
 import { DATE } from '@/constant/common-constant';
 import { ForecastServices } from '@/service/forecast-service/forecast.service';
+import { WeatherServices } from '@/service/weather-service/weather.service';
 import { DataHelper } from '@/utils/data-helper';
 import moment from 'moment';
 import 'moment/locale/vi';
 import Vue from "vue";
 import Component from "vue-class-component";
 import { Prop, Watch } from 'vue-property-decorator';
-
+import { WEATHER_TYPE } from '@/constant/forcast-station-constant';
+import { ForecastSearchParam, IForecastSearchParam } from '@/model/forecast';
 
 @Component({
     template: require("./template.html").default,
@@ -23,7 +25,9 @@ export default class WeatherToolComponent extends Vue {
     selectedHours: number = null;
     currentDay: string = null;
     forecastService: ForecastServices = new ForecastServices();
+    weatherService: WeatherServices = new WeatherServices();
     dataResult: any = null;
+    searchParam: IForecastSearchParam = new ForecastSearchParam();
 
     context:any = {
         icon: null,
@@ -99,51 +103,51 @@ export default class WeatherToolComponent extends Vue {
 
     prepareMinMaxWindSpeedResult(data, date) {
         const currentDate = moment(this.forecastDates[date].title, 'dddd, DD/MM/YYYY').date();
-        const refData = data.windSpeedByDays.find(x => moment(x.date).date() === currentDate);
+        const refData = data.weatherInformationByDays.find(x => moment(x.date).date() === currentDate);
         this.dataResult = {
             ...this.dataResult,
-            currentDayMinWindSpeed: refData.windSpeedMin,
-            currentDayMaxWindSpeed: refData.windSpeedMax,
+            currentDayMinWindSpeed: refData.minValue,
+            currentDayMaxWindSpeed: refData.maxValue,
         }
     }
 
     prepareMinMaxWindLevelResult(data, date) {
         const currentDate = moment(this.forecastDates[date].title, 'dddd, DD/MM/YYYY').date();
-        const refData = data.windLevelByDays.find(x => moment(x.date).date() === currentDate);
+        const refData = data.weatherInformationByDays.find(x => moment(x.date).date() === currentDate);
         this.dataResult = {
             ...this.dataResult,
-            currentDayMinWindLevel: refData.windLevelMin,
-            currentDayMaxWindLevel: refData.windLevelMax,
+            currentDayMinWindLevel: refData.minValue,
+            currentDayMaxWindLevel: refData.maxValue,
         }
     }
 
     prepareMinMaxHumdityResult(data, date) {
         const currentDate = moment(this.forecastDates[date].title, 'dddd, DD/MM/YYYY').date();
-        const refData = data.humidityByDays.find(x => moment(x.date).date() === currentDate);
+        const refData = data.weatherInformationByDays.find(x => moment(x.date).date() === currentDate);
         this.dataResult = {
             ...this.dataResult,
-            currentDayMinHumidity: refData.humidityMin,
-            currentDayMaxHumidity: refData.humidityMax,
+            currentDayMinHumidity: refData.minValue,
+            currentDayMaxHumidity: refData.maxValue,
         }
     }
 
     prepareMinMaxRainResult(data, date) {
         const currentDate = moment(this.forecastDates[date].title, 'dddd, DD/MM/YYYY').date();
-        const refData = data.rainAmountByDays.find(x => moment(x.date).date() === currentDate);
+        const refData = data.weatherInformationByDays.find(x => moment(x.date).date() === currentDate);
         this.dataResult = {
             ...this.dataResult,
-            currentDayMinRain: refData.rainAmountMin,
-            currentDayMaxRain: refData.rainAmountMax,
+            currentDayMinRain: refData.minValue,
+            currentDayMaxRain: refData.maxValue,
         }
     }
 
     prepareMinMaxTempResult(data, date) {
         const currentDate = moment(this.forecastDates[date].title, 'dddd, DD/MM/YYYY').date();
-        const refData = data.temperatureByDays.find(x => moment(x.date).date() === currentDate);
+        const refData = data.weatherInformationByDays.find(x => moment(x.date).date() === currentDate);
         this.dataResult = {
             ...this.dataResult,
-            currentDayMinTemp: refData.temperatureMin,
-            currentDayMaxTemp: refData.temperatureMax,
+            currentDayMinTemp: refData.minValue,
+            currentDayMaxTemp: refData.maxValue,
         }
     }
 
@@ -171,7 +175,7 @@ export default class WeatherToolComponent extends Vue {
         return DataHelper.getDataByDateHour(data, date, Number(hour));
     }
 
-    getTemprature() {
+    /* getTemprature() {
         this.isLoading = true;
         this.forecastService.getTemperatureByStation(this.stationInfo.id).then((res: any) => {
             this.prepareResult(res, this.context.date, this.context.time);
@@ -181,94 +185,84 @@ export default class WeatherToolComponent extends Vue {
             console.log(err);
             this.isLoading = false;
         })
-    }
+    } */
 
-    getMinMaxTemprature() {
+    getHorizontal() {
+        this.searchParam = new ForecastSearchParam();
         this.isLoading = true;
-        this.forecastService.getMinMaxTemperatureByStation(this.stationInfo.id).then((res: any) => {
-            this.context.minMaxTemp = res;
-            this.prepareMinMaxTempResult(res, this.context.date);
+        this.searchParam.stationIds = [this.stationInfo.id];
+        this.searchParam.fromDate = moment().format("YYYY-MM-DD");
+        this.searchParam.toDate = moment(this.searchParam.fromDate).add(1, 'days').subtract(1, 'minutes').format();
+        this.searchParam.weatherTypes = [
+            WEATHER_TYPE.Temperature, 
+            WEATHER_TYPE.Weather
+        ];
+
+        this.weatherService.getHorizontal(this.searchParam).then((res: any) => {
+            let tempArray = res.getWeatherInformationHorizontals.filter(x => x.weatherType === WEATHER_TYPE.Temperature);
+            let iconArray = res.getWeatherInformationHorizontals.filter(x => x.weatherType === WEATHER_TYPE.Weather);
+
+            this.context.temp = tempArray[0];
+            this.context.icon = iconArray[0];
+            this.prepareResult(tempArray[0], this.context.date, this.context.time);
+            this.prepareIconResult(iconArray[0], this.context.date, this.context.time);
             this.isLoading = false;
         }).catch(err => {
             console.log(err);
             this.isLoading = false;
-        })
+        });
     }
 
-    getIcon() {
+    getDetail() {
+        this.searchParam = new ForecastSearchParam();
         this.isLoading = true;
-        this.forecastService.getIconWeather(this.stationInfo.id).then((res: any) => {
-            this.context.icon = res;
-            this.prepareIconResult(res, this.context.date, this.context.time);
+        this.searchParam.stationIds = [this.stationInfo.id];
+        this.searchParam.fromDate = moment().format("YYYY-MM-DD");
+        this.searchParam.toDate = moment(this.searchParam.fromDate).add(1, 'days').subtract(1, 'minutes').format();
+        this.searchParam.weatherTypes = [
+            WEATHER_TYPE.Humidity, 
+            WEATHER_TYPE.WindLevel, 
+            WEATHER_TYPE.Temperature, 
+            WEATHER_TYPE.WindSpeed, 
+            WEATHER_TYPE.RainAmount
+        ];
+
+        this.weatherService.getDetail(this.searchParam).then((res: any) => {
+            let humidArray = res.weatherInformationByStations.filter(x => x.weatherType === WEATHER_TYPE.Humidity);
+            let windLvlArray = res.weatherInformationByStations.filter(x => x.weatherType === WEATHER_TYPE.WindLevel);
+            let tempArray = res.weatherInformationByStations.filter(x => x.weatherType === WEATHER_TYPE.Temperature);
+            let windSpdArray = res.weatherInformationByStations.filter(x => x.weatherType === WEATHER_TYPE.WindSpeed);
+            let rainAmtArray = res.weatherInformationByStations.filter(x => x.weatherType === WEATHER_TYPE.RainAmount);
+
+            this.context.minMaxHumidity = humidArray[0];
+            this.context.minMaxWindLevel = windLvlArray[0];
+            this.context.minMaxTemp = tempArray[0];
+            this.context.minMaxWindSpeed = windSpdArray[0];
+            this.context.minMaxRain = rainAmtArray[0];
+            
+            this.prepareMinMaxHumdityResult(humidArray[0], this.context.date);
+            this.prepareMinMaxWindLevelResult(windLvlArray[0], this.context.date);
+            this.prepareMinMaxTempResult(tempArray[0], this.context.date);
+            this.prepareMinMaxWindSpeedResult(windSpdArray[0], this.context.date);
+            this.prepareMinMaxRainResult(rainAmtArray[0], this.context.date);
             this.isLoading = false;
         }).catch(err => {
             console.log(err);
             this.isLoading = false;
-        })
-    }
-
-    getPrecipitationByStation() {
-        this.isLoading = true;
-        this.forecastService.getMinMaxPrecipitationByStation(this.stationInfo.id).then((res: any) => {
-            this.context.minMaxRain = res;
-            this.prepareMinMaxRainResult(res, this.context.date);
-            this.isLoading = false;
-        }).catch(err => {
-            console.log(err);
-            this.isLoading = false;
-        })
-    }
-
-    getMinMaxHumidityByStation() {
-        this.isLoading = true;
-        this.forecastService.getMinMaxHumidityByStation(this.stationInfo.id).then((res: any) => {
-            this.context.minMaxHumidity = res;
-            this.prepareMinMaxHumdityResult(res, this.context.date);
-            this.isLoading = false;
-        }).catch(err => {
-            console.log(err);
-            this.isLoading = false;
-        })
-    }
-
-    getMinMaxWindLevelByStation() {
-        this.isLoading = true;
-        this.forecastService.getMinMaxWindLevelByStation(this.stationInfo.id).then((res: any) => {
-            this.context.minMaxWindLevel = res;
-            this.prepareMinMaxWindLevelResult(res, this.context.date);
-            this.isLoading = false;
-        }).catch(err => {
-            console.log(err);
-            this.isLoading = false;
-        })
-    }
-
-    getMinMaxWindSpeedByStation() {
-        this.isLoading = true;
-        this.forecastService.getMinMaxWindSpeedByStation(this.stationInfo.id).then((res: any) => {
-            this.context.minMaxWindSpeed = res;
-            this.prepareMinMaxWindSpeedResult(res, this.context.date);
-            this.isLoading = false;
-        }).catch(err => {
-            console.log(err);
-            this.isLoading = false;
-        })
+        });
     }
 
     mounted() {
         moment.locale('vi');
         this.currentDay = moment().format('dddd, DD/MM/YYYY');
-        this.getTemprature();
-        this.getIcon();
-        this.getMinMaxTemprature();
-        this.getPrecipitationByStation();
-        this.getMinMaxHumidityByStation();
-        this.getMinMaxWindLevelByStation();
-        this.getMinMaxWindSpeedByStation();
+
+        this.getHorizontal();
+        this.getDetail();
     }
 
     @Watch('stationInfo')
     handleChangeStationInfo(val, old) {
-        this.getTemprature();
+        // this.getTemprature();
+        this.getHorizontal();
     }
 }

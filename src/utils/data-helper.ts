@@ -1,5 +1,6 @@
 
 import { BASE_CLOUD_URL } from './../constant/common-constant';
+import { WEATHER_TYPE } from '@/constant/forcast-station-constant';
 import moment from 'moment';
 export class DataHelper {
     static deepClone<T>(source: any): T {
@@ -76,6 +77,36 @@ export class DataHelper {
 
             }
         }
+
+        const hashmap = arr.reduce((acc, val) => {
+            acc[val] = (acc[val] || 0 ) + 1
+            return acc
+        },{})
+        return Object.keys(hashmap).reduce((a, b) => hashmap[a] > hashmap[b] ? a : b);
+    }
+
+    static getMostFrequent(temp, weatherType) {
+        const currentHour = new Date().getHours();
+        let arr = new Array();
+
+        if (weatherType === WEATHER_TYPE.WindDirection) {
+            for (let i = 0; i < 24; i++) {
+                arr.push(temp[i].value);
+            }
+        } else if (weatherType === WEATHER_TYPE.Weather) {
+            if (currentHour >= 6 && currentHour <= 18) {
+                for (let i = 6; i <= 18; i++) {
+                    arr.push(temp[i].value);
+                }
+            } else {
+                for (let i = 0; i < 24; i++) {
+                    if (i < 6 || i > 18) {
+                        arr.push(temp[i].value);
+                    }
+                }
+            }
+        }
+        
 
         const hashmap = arr.reduce((acc, val) => {
             acc[val] = (acc[val] || 0 ) + 1
