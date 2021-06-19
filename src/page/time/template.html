@@ -35,8 +35,8 @@
                                         Cấp gió: {{currentDayMinWindLvl}} - {{currentDayMaxWindLvl}}
                                         <br>
                                         Tốc độ gió: {{currentDayMinWindSpd}} - {{currentDayMaxWindSpd}} m/s
-                                        <!-- <br>
-                                        Hướng gió: {{currentDayMinWindDir}} -->
+                                        <br>
+                                        Hướng gió: {{currentDayWindDir}}
                                         <br>
                                         Độ ẩm: {{currentDayMinHumid}}% - {{currentDayMaxHumid}}%
                                     </div>
@@ -51,7 +51,7 @@
                                                 {{item.day}}
                                             </div>
                                             <div class="time-page-container_section_1_main--next_icon">
-                                                <img :src="item.imageUrl">
+                                                <img :src="item.icon">
                                             </div>
                                             <div class="time-page-container_section_1_main--next_temp">
                                                 {{item.temp}}
@@ -65,9 +65,9 @@
                                             <div class="time-page-container_section_1_main--next_wind_spd">
                                                 Tốc độ gió: {{item.windSpd}}
                                             </div>
-                                            <!-- <div class="time-page-container_section_1_main--next_wind_dir">
+                                            <div class="time-page-container_section_1_main--next_wind_dir">
                                                 Hướng gió: {{item.windDir}}
-                                            </div> -->
+                                            </div>
                                             <div class="time-page-container_section_1_main--next_humid">
                                                 Độ ẩm: {{item.humid}}
                                             </div>
@@ -81,14 +81,14 @@
                     <div class="li-tab" v-if="activeTab === 2">
                         <div class="time-page-container_section_2_main--time">
                             <div class="time-page-container_section_2_main--time_detail"
-                                v-for="(item,index) in weatherByTime" :key="index">
+                                v-for="(item,index) in weatherByHour" :key="index">
                                 <div class="time-page-container_section_2_main--time_detail_hour">
                                     {{item.date}}
                                     <br>
                                     {{item.time}}
                                 </div>
                                 <div class="time-page-container_section_2_main--time_detail_icon">
-                                    <img :src="item.imageUrl">
+                                    <img :src="item.icon">
                                 </div>
                                 <div class="time-page-container_section_2_main--time_detail_temp">
                                     <v-icon color="#fff">mdi-thermometer</v-icon> {{item.temp}}°C
@@ -102,9 +102,9 @@
                                 <div class="time-page-container_section_2_main--time_detail_wind_spd">
                                     <v-icon color="#fff">mdi-tailwind</v-icon> {{item.windSpd}} m/s
                                 </div>
-                                <!-- <div class="time-page-container_section_2_main--time_detail_wind_dir">
+                                <div class="time-page-container_section_2_main--time_detail_wind_dir">
                                     <v-icon color="#fff">mdi-weather-windy-variant</v-icon> {{item.windDir}}
-                                </div> -->
+                                </div>
                                 <div class="time-page-container_section_2_main--time_detail_humid">
                                     <v-icon color="#fff">mdi-water-percent</v-icon> {{item.humid}}%
                                 </div>

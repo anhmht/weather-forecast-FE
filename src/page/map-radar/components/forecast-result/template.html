@@ -5,7 +5,7 @@
     <div class="weahter-tool-result--body">
         <div class="weahter-tool-result--body_temp">
             <div class="weahter-tool-result--body_temp--value">
-                {{data.currentTemp}}°
+                {{data.currentTemp}}°C
             </div>
             <div class="weahter-tool-result--body_temp--icon">
                 <img :src="Icon" />
@@ -13,11 +13,11 @@
         </div>
         <div>
             <div>Mô tả: {{IconDescription}}</div>
-            <div>Nhiệt độ: {{data.currentDayMinTemp}}° - {{data.currentDayMaxTemp}}°</div>
-            <div>Lượng mưa: {{data.currentDayMinRain}}mm - {{data.currentDayMaxRain}}mm</div>
+            <div>Nhiệt độ: {{data.currentDayMinTemp}}°C - {{data.currentDayMaxTemp}}°C</div>
+            <div>Lượng mưa: {{data.currentDayMinRain}} - {{data.currentDayMaxRain}} mm</div>
             <div>Độ ẩm: {{data.currentDayMinHumidity}}% - {{data.currentDayMaxHumidity}}%</div>
             <div>Cấp gió: Cấp {{data.currentDayMinWindLevel}} - Cấp {{data.currentDayMaxWindLevel}}</div>
-            <div>Tốc độ gió: Cấp {{data.currentDayMinWindSpeed}} - Cấp {{data.currentDayMaxWindSpeed}}</div>
+            <div>Tốc độ gió: {{data.currentDayMinWindSpeed}} - {{data.currentDayMaxWindSpeed}} m/s</div>
         </div>
     </div>
 </div>
