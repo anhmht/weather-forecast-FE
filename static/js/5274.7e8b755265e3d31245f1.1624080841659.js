@@ -1,1 +1,0 @@
-(self.webpackChunktemp=self.webpackChunktemp||[]).push([[5274],{5274:(e,p,b)=>{"use strict";e.exports=b.p+"static/img/b4bcb6bd14081d5461b5.jpg"}}]);
