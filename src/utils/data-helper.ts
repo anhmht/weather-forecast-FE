@@ -31,7 +31,7 @@ export class DataHelper {
         const hours = Object.keys(temp).filter(x => x.includes('_'));
         let refDate = Object.keys(temp).filter(x => x.includes('refDate'));
         const diffHours = moment().add(offset, 'hours').diff(moment(temp[refDate[0]]), 'hours');
-        const result = diffHours - 1;
+        const result = diffHours;
         return temp[hours[result]];
     }
 
@@ -90,23 +90,29 @@ export class DataHelper {
         let arr = new Array();
 
         if (weatherType === WEATHER_TYPE.WindDirection) {
-            for (let i = 0; i < 24; i++) {
-                arr.push(temp[i].value);
-            }
+            temp.forEach(element => {
+                arr.push(element.value);
+            });
         } else if (weatherType === WEATHER_TYPE.Weather) {
             if (currentHour >= 6 && currentHour <= 18) {
                 for (let i = 6; i <= 18; i++) {
+                    if (!temp[i]) {
+                        break;
+                    }
                     arr.push(temp[i].value);
                 }
             } else {
                 for (let i = 0; i < 24; i++) {
                     if (i < 6 || i > 18) {
+                        if (!temp[i]) {
+                            break;
+                        }
                         arr.push(temp[i].value);
                     }
                 }
             }
         }
-        
+
 
         const hashmap = arr.reduce((acc, val) => {
             acc[val] = (acc[val] || 0 ) + 1
@@ -119,7 +125,7 @@ export class DataHelper {
         const hours = Object.keys(temp).filter(x => x.includes('_'));
         let refDate = Object.keys(temp).filter(x => x.includes('refDate'));
         const diffHours = moment().add(date, 'days').hours(time).diff(moment(temp[refDate[0]]), 'hours');
-        const result = diffHours -1;
+        const result = diffHours;
         return temp[hours[result]];
     }
 

@@ -29,7 +29,7 @@ export default class WeatherForecastComponent extends Vue {
 
     isLoading: boolean = false;
     selectedDateMenu: string = null;
-    selectedDate: string = null;
+    selectedDate: string = new Date().toISOString().substr(0, 10);
 
     weatherService: WeatherServices = new WeatherServices();
     searchParam: IForecastSearchParam = new ForecastSearchParam();

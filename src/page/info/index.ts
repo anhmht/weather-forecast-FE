@@ -1,10 +1,11 @@
+import { WEATHER_TYPE } from './../../constant/common-constant';
 import { Action } from 'vuex-class';
 import { Getter } from 'vuex-class';
 import { namespace } from 'vuex-class';
 import Vue from "vue";
 import Component from "vue-class-component";
 import { Carousel, Slide } from 'vue-carousel';
-import { ForecastServices } from "@/service/forecast-service/forecast.service";
+// import { ForecastServices } from "@/service/forecast-service/forecast.service";
 // import { displayLocation } from "@/utils/location-helper";
 import { STATION } from "@/constant/forcast-station-constant";
 import { ROUTE_NAME } from "../../constant/route-constant";
@@ -12,12 +13,14 @@ import { PostServices } from '../../service/post-service/post.service';
 import { CategoryServices } from '../../service/category-service/category.service';
 import { displayLocation } from "@/utils/location-helper";
 import { DataHelper } from "@/utils/data-helper";
-import { DATE } from "@/constant/common-constant";
+// import { DATE } from "@/constant/common-constant";
 import { storeModules } from '@/store';
 import lookupTypesStore from '@/store/lookup/lookup-types.store';
 import IStatus from '@/model/status/status.model';
 import moment from 'moment';
 import { ICON } from '@/constant/icon-constant';
+import { ForecastSearchParam } from '@/model/forecast';
+import { WeatherServices } from '@/service/weather-service/weather.service';
 
 const LookupGetter = namespace(storeModules.Lookup, Getter);
 const LookupAction = namespace(storeModules.Lookup, Action);
@@ -31,7 +34,7 @@ const LookupAction = namespace(storeModules.Lookup, Action);
     }
 })
 export default class InfoPageComponent extends Vue {
-    forecastService: ForecastServices = new ForecastServices();
+    weatherService: WeatherServices = new WeatherServices();
     postService: PostServices = new PostServices();
     categoryService: CategoryServices = new CategoryServices();
     currentPosition: any = null;
@@ -148,10 +151,15 @@ export default class InfoPageComponent extends Vue {
         const placeId = this.currentPosition.regionCode;
         const station = STATION.find(x => x.place_id === placeId);
         if (station) {
-            this.forecastService.getIconWeather(station.id).then((res) => {
-                const mostFrequentIcon = DataHelper.getMostFrequentIcon(res, 0);
+            const searchParam = new ForecastSearchParam();
+            searchParam.stationIds = [station.id];
+            searchParam.fromDate = moment().format("YYYY-MM-DD");
+            searchParam.toDate = moment(searchParam.fromDate).add(1, 'days').subtract(1, 'minutes').format();
+            searchParam.weatherTypes = [WEATHER_TYPE.WEATHER];
+            this.weatherService.getHorizontal(searchParam).then((res: any) => {
+                const data = res.getWeatherInformationHorizontals.find(x => x.weatherType === WEATHER_TYPE.WEATHER);
+                const mostFrequentIcon = DataHelper.getMostFrequentIcon(data, 0);
                 const icon = ICON.find(x => x.id === mostFrequentIcon)
-
                 if (icon) {
                     this.temparatureData = {
                         ... this.temparatureData,
@@ -174,13 +182,18 @@ export default class InfoPageComponent extends Vue {
         const placeId = this.currentPosition.regionCode;
         const station = STATION.find(x => x.place_id === placeId);
         if(station) {
-            this.forecastService.getTemperatureByStation(station.id).then((res) => {
-                const minMaxTemp = DataHelper.getMinMaxTemp(res, DATE.CURRENT);
+            const searchParam = new ForecastSearchParam();
+            searchParam.stationIds = [station.id];
+            searchParam.fromDate = moment().format("YYYY-MM-DD");
+            searchParam.toDate = moment(searchParam.fromDate).add(1, 'days').subtract(1, 'minutes').format();
+            searchParam.weatherTypes = [WEATHER_TYPE.TEMPERATURE];
+            this.weatherService.getDetail(searchParam).then((res: any) => {
+                const minMaxTemp = res.weatherInformationByStations.find(x => x.weatherType === WEATHER_TYPE.TEMPERATURE);
                 this.temparatureData = {
                     ... this.temparatureData,
-                    current: DataHelper.getDataByHour(res, 0),
-                    min: minMaxTemp.min,
-                    max: minMaxTemp.max
+                    current: minMaxTemp.weatherInformationByDays[0].weatherInformationByHours.find(x => x.hour === moment().hour()).value,
+                    min: minMaxTemp.minValue,
+                    max: minMaxTemp.maxValue
                 }
             }).catch(err => {
                 console.log(err);

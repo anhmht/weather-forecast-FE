@@ -2,17 +2,17 @@
 export const ICON = [
     {
         description: 'Quang mây, không mưa',
-        url: 'https://weatherstoragevn.blob.core.windows.net/images/icons/0001.png',
+        url: 'https://weatherstoragevn.blob.core.windows.net/images/icons/0001-0002.gif',
         id: '0001'
     },
     {
         description: 'Quang mây, ngày trời nắng',
-        url: 'https://weatherstoragevn.blob.core.windows.net/images/icons/0001.png',
+        url: 'https://weatherstoragevn.blob.core.windows.net/images/icons/0001-0002.gif',
         id: '0002'
     },
     {
         description: 'Quang mây, đêm không mưa',
-        url: 'https://weatherstoragevn.blob.core.windows.net/images/icons/0003.png',
+        url: 'https://weatherstoragevn.blob.core.windows.net/images/icons/0003.gif',
         id: '0003'
     },
     {
@@ -47,17 +47,17 @@ export const ICON = [
     },
     {
         description: 'Ít mây, không mưa',
-        url: 'https://weatherstoragevn.blob.core.windows.net/images/icons/1001-1002.png',
+        url: 'https://weatherstoragevn.blob.core.windows.net/images/icons/1001-1002.gif',
         id: '1001'
     },
     {
         description: 'Ít mây, ngày trời nắng',
-        url: 'https://weatherstoragevn.blob.core.windows.net/images/icons/1001-1002.png',
+        url: 'https://weatherstoragevn.blob.core.windows.net/images/icons/1001-1002.gif',
         id: '1002'
     },
     {
         description: 'Ít mây, đêm không mưa',
-        url: 'https://weatherstoragevn.blob.core.windows.net/images/icons/1003.png',
+        url: 'https://weatherstoragevn.blob.core.windows.net/images/icons/1003.gif',
         id: '1003'
     },
     {
@@ -107,47 +107,47 @@ export const ICON = [
     },
     {
         description: 'Có mây, không mưa',
-        url: 'https://weatherstoragevn.blob.core.windows.net/images/icons/2001-2002.png',
+        url: 'https://weatherstoragevn.blob.core.windows.net/images/icons/2001-2002.gif',
         id: '2001'
     },
     {
         description: 'Có mây, ngày không mưa',
-        url: 'https://weatherstoragevn.blob.core.windows.net/images/icons/2001-2002.png',
+        url: 'https://weatherstoragevn.blob.core.windows.net/images/icons/2001-2002.gif',
         id: '2002'
     },
     {
         description: 'Có mây, đêm không mưa',
-        url: 'https://weatherstoragevn.blob.core.windows.net/images/icons/2003.png',
+        url: 'https://weatherstoragevn.blob.core.windows.net/images/icons/2003.gif',
         id: '2003'
     },
     {
         description: 'Có mây, có mưa rào',
-        url: 'https://weatherstoragevn.blob.core.windows.net/images/icons/2301-2302.png',
+        url: 'https://weatherstoragevn.blob.core.windows.net/images/icons/2301-2302.gif',
         id: '2301'
     },
     {
         description: 'Có mây, ngày có mưa rào',
-        url: 'https://weatherstoragevn.blob.core.windows.net/images/icons/2301-2302.png',
+        url: 'https://weatherstoragevn.blob.core.windows.net/images/icons/2301-2302.gif',
         id: '2302'
     },
     {
         description: 'Có mây, đêm có mưa rào',
-        url: 'https://weatherstoragevn.blob.core.windows.net/images/icons/2303.png',
+        url: 'https://weatherstoragevn.blob.core.windows.net/images/icons/2303.gif',
         id: '2303'
     },
     {
         description: 'Có mây, có mưa rào và dông',
-        url: 'https://weatherstoragevn.blob.core.windows.net/images/icons/2501-2502.png',
+        url: 'https://weatherstoragevn.blob.core.windows.net/images/icons/2501-2502.gif',
         id: '2501'
     },
     {
         description: 'Có mây, ngày có mưa rào và dông',
-        url: 'https://weatherstoragevn.blob.core.windows.net/images/icons/2501-2502.png',
+        url: 'https://weatherstoragevn.blob.core.windows.net/images/icons/2501-2502.gif',
         id: '2502'
     },
     {
         description: 'Có mây, đêm có mưa rào và dông',
-        url: 'https://weatherstoragevn.blob.core.windows.net/images/icons/2503.png',
+        url: 'https://weatherstoragevn.blob.core.windows.net/images/icons/2503.gif',
         id: '2503'
     },
     {
@@ -187,7 +187,7 @@ export const ICON = [
     },
     {
         description: 'Nhiều mây, có mưa; trời rét hại kèm khả năng băng giá, mưa tuyết',
-        url: 'https://weatherstoragevn.blob.core.windows.net/images/icons/4391.png',
+        url: 'https://weatherstoragevn.blob.core.windows.net/images/icons/4391.gif',
         id: '4391'
     },
     {
@@ -197,7 +197,7 @@ export const ICON = [
     },
     {
         description: 'Nhiều mây, có mưa phùn',
-        url: 'https://weatherstoragevn.blob.core.windows.net/images/icons/4101.png',
+        url: 'https://weatherstoragevn.blob.core.windows.net/images/icons/4101-4201-4301-4401-4601.gif',
         id: '4101'
     },
     {
@@ -207,27 +207,27 @@ export const ICON = [
     },
     {
         description: 'Nhiều mây, có mưa nhỏ',
-        url: 'https://weatherstoragevn.blob.core.windows.net/images/icons/4201.png',
+        url: 'https://weatherstoragevn.blob.core.windows.net/images/icons/4101-4201-4301-4401-4601.gif',
         id: '4201'
     },
     {
         description: 'Nhiều mây, có mưa, mưa rào',
-        url: 'https://weatherstoragevn.blob.core.windows.net/images/icons/4301.png',
+        url: 'https://weatherstoragevn.blob.core.windows.net/images/icons/4101-4201-4301-4401-4601.png',
         id: '4301'
     },
     {
         description: 'Nhiều mây, có mưa vừa',
-        url: 'https://weatherstoragevn.blob.core.windows.net/images/icons/4401.png',
+        url: 'https://weatherstoragevn.blob.core.windows.net/images/icons/4101-4201-4301-4401-4601.png',
         id: '4401'
     },
     {
         description: 'Nhiều mây, có mưa dông',
-        url: 'https://weatherstoragevn.blob.core.windows.net/images/icons/4541.png',
+        url: 'https://weatherstoragevn.blob.core.windows.net/images/icons/4541.gif',
         id: '4541'
     },
     {
         description: 'Nhiều mây, có mưa to',
-        url: 'https://weatherstoragevn.blob.core.windows.net/images/icons/4601.png',
+        url: 'https://weatherstoragevn.blob.core.windows.net/images/icons/4101-4201-4301-4401-4601.png',
         id: '4601'
     },
     {

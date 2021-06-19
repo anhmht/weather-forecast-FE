@@ -68,10 +68,10 @@ export default class TimePageComponent extends Vue {
         this.searchParam.fromDate = moment().format("YYYY-MM-DD");
         this.searchParam.toDate = moment(this.searchParam.fromDate).add(1, 'days').subtract(1, 'minutes').format();
         this.searchParam.weatherTypes = [
-            WEATHER_TYPE.Humidity, 
-            WEATHER_TYPE.WindLevel, 
-            WEATHER_TYPE.Temperature, 
-            WEATHER_TYPE.WindSpeed, 
+            WEATHER_TYPE.Humidity,
+            WEATHER_TYPE.WindLevel,
+            WEATHER_TYPE.Temperature,
+            WEATHER_TYPE.WindSpeed,
             WEATHER_TYPE.RainAmount,
             WEATHER_TYPE.WindDirection,
             WEATHER_TYPE.Weather
@@ -113,10 +113,10 @@ export default class TimePageComponent extends Vue {
         this.searchParam.fromDate = moment().format("YYYY-MM-DD");
         this.searchParam.toDate = moment(this.searchParam.fromDate).add(5, 'days').subtract(1, 'minutes').format();
         this.searchParam.weatherTypes = [
-            WEATHER_TYPE.Humidity, 
-            WEATHER_TYPE.WindLevel, 
-            WEATHER_TYPE.Temperature, 
-            WEATHER_TYPE.WindSpeed, 
+            WEATHER_TYPE.Humidity,
+            WEATHER_TYPE.WindLevel,
+            WEATHER_TYPE.Temperature,
+            WEATHER_TYPE.WindSpeed,
             WEATHER_TYPE.RainAmount,
             WEATHER_TYPE.WindDirection,
             WEATHER_TYPE.Weather
