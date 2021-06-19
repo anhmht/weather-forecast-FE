@@ -59,6 +59,9 @@ export default class ListDataComponent extends Vue {
     buildUploadDocumentParams(document) {
         const formData = new FormData();
         formData.append('file', document.Data, document.FileName);
+        formData.append('stationId', this.model.provinceId);
+        const name = MAP_PROVINCE.find(x => x.id === this.model.provinceId).name
+        formData.append('stationName', name);
         return formData;
     }
 

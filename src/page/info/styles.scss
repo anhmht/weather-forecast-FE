@@ -32,7 +32,7 @@
     &_section_4 {
         background-color: #eeeeee;
     }
-    
+
 
     .info-current-forecast {
         background:#fff;
@@ -180,7 +180,7 @@
                 line-height: 21px;
                 display: -webkit-box;
                 -webkit-line-clamp: 2;
-                -webkit-box-orient: vertical;  
+                -webkit-box-orient: vertical;
                 overflow: hidden;
             }
         }
@@ -290,6 +290,7 @@
     }
 
     .nav-sticky {
+        text-transform: uppercase;
         background: $primary-color;
         text-align: center;
         overflow: hidden;
@@ -308,6 +309,6 @@
                     background-color: rgba(0, 0, 0, 0.1)
                 }
             }
-        } 
+        }
     }
 }

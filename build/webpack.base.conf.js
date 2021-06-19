@@ -7,7 +7,7 @@ const { VueLoaderPlugin } = require('vue-loader')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const WorkerPlugin = require('worker-plugin');
-// const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 var webpack = require("webpack");
 const CKEditorWebpackPlugin = require("@ckeditor/ckeditor5-dev-webpack-plugin");
 const { styles } = require("@ckeditor/ckeditor5-dev-utils");
@@ -33,7 +33,7 @@ module.exports = {
             process.env.NODE_ENV === "production"
                 ? config.build.assetsPublicPath
                 : config.dev.assetsPublicPath,
-        assetModuleFilename: "static/[hash][ext][query]"
+        pathinfo: false
     },
 
     resolve: {
@@ -52,7 +52,8 @@ module.exports = {
                     {
                         loader: "ts-loader",
                         options: {
-                            appendTsSuffixTo: ["//.vue$/"]
+                            appendTsSuffixTo: ["//.vue$/"],
+                            transpileOnly: true
                         }
                     }
                 ]
@@ -64,6 +65,7 @@ module.exports = {
             },
             {
                 test: /\.(js|jsx)$/,
+                include: path.resolve(__dirname, "src"),
                 loader: "babel-loader"
             },
             {
@@ -72,17 +74,11 @@ module.exports = {
                 exclude: [
                     /ckeditor5-[^/\\]+[/\\]theme[/\\]icons[/\\][^/\\]+\.svg$/,
                     /ckeditor5-[^/\\]+[/\\]theme[/\\].+\.css/
-                ],
-                generator: {
-                    filename: "static/img/[hash][ext][query]"
-                }
+                ]
             },
             {
                 test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
-                type: "asset/resource",
-                generator: {
-                    filename: "static/media/[hash][ext][query]"
-                }
+                type: "asset/resource"
             },
             {
                 test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
@@ -157,32 +153,22 @@ module.exports = {
             }
         ]
     },
-    // optimization: {
-    //     minimizer: [
-    //         new UglifyJsPlugin({
-    //             test: /\.js(\?.*)?$/i,
-    //             cache: true,
-    //             parallel: true
-    //         })
-    //     ]
-    // },
+    optimization: {
+        minimizer: [
+            new UglifyJsPlugin({
+                test: /\.js(\?.*)?$/i,
+                cache: true,
+                parallel: true
+            })
+        ],
+        runtimeChunk: true
+    },
     plugins: [
-        new CleanWebpackPlugin(),
-        new WorkerPlugin(),
         new VueLoaderPlugin({}),
         new CKEditorWebpackPlugin({
             // See https://ckeditor.com/docs/ckeditor5/latest/features/ui-language.html
             language: "en",
             translationsOutputFile: /app/
-        }),
-        new MiniCssExtractPlugin({
-            filename: devMode
-                ? "app/css/[name]." + random + ".css"
-                : "app/css/app.[name].[hash]." + random + ".css",
-            chunkFilename: devMode
-                ? "app/css/[id]." + random + ".css"
-                : "app/css/[name].[hash]." + random + ".css",
-            ignoreOrder: true
         })
     ]
 };

@@ -1,4 +1,4 @@
 export default {
     uploadImage: 'api/Media/uploadImage/',
-    uploadCSV: 'api/WeatherInformation/import'
+    uploadCSV: 'api/WeatherInformation/import-single-station'
 }
