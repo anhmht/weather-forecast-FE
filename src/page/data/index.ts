@@ -50,6 +50,49 @@ export default class DataPageComponent extends Vue {
         },
     ]
 
+    harshStatus = [
+        '', 'O'
+    ]
+
+    disasters = [
+        {
+            name: 'Hạn hán',
+            value: this.harshStatus[this.getHarshStatus()]
+        },
+        {
+            name: 'Gió',
+            value: `${this.getRandomArbitrary(0, 5)} m/s`
+        },
+        {
+            name: 'Bão',
+            value: `${this.getRandomArbitrary(0, 5)}`
+        },
+        {
+            name: 'Độ ẩm',
+            value: `${this.getRandomArbitrary(50, 80)} %`
+        },
+        {
+            name: 'Sương mù',
+            value: `${this.getRandomArbitrary(35, 40)}`
+        },
+        {
+            name: 'Mức độ ô nhiễm không khí',
+            value: `${this.getRandomArbitrary(35, 40)}`
+        },
+        {
+            name: 'Nắng Nóng',
+            value: this.harshStatus[this.getHarshStatus()]
+        },
+        {
+            name: 'Mưa đá',
+            value: this.harshStatus[this.getHarshStatus()]
+        },
+        {
+            name: 'Lốc xoáy',
+            value: this.harshStatus[this.getHarshStatus()]
+        },
+    ]
+
     riversEstuaries = [
         {
             name: 'Sông Tiền',
@@ -83,9 +126,7 @@ export default class DataPageComponent extends Vue {
         },
     ]
 
-    harshStatus = [
-        '', 'O'
-    ]
+
 
     handleChangeTab(tab) {
         this.activeTab = tab;
@@ -101,7 +142,8 @@ export default class DataPageComponent extends Vue {
     }
 
     getHarshStatus() {
-        const num = this.getRandomArbitrary(0, 2);
+        const random_boolean = Math.random() < 0.5
+        const num = random_boolean ? 1 : 0;
         return num
     }
 }

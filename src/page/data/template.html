@@ -73,43 +73,14 @@
                             <template v-slot:default>
                                 <thead>
                                     <tr>
-                                        <th >
-                                            Hiện tượng cực đoan
-                                        </th>
-                                        <th >
-                                            Xâm nhập mặn
-                                        </th>
-                                        <th >
-                                            Hạn hán
-                                        </th>
-                                        <th >
-                                            Gió
-                                        </th>
-                                        <th >
-                                            Bão
-                                        </th>
-                                        <th >
-                                            Độ ẩm
-                                        </th>
-                                        <th >
-                                            Sương mù
-                                        </th>
-                                        <th >
-                                            Mức độ ô nhiễm không khí
-                                        </th>
-                                        <th >
-                                            Nắng Nóng
-                                        </th>
-                                        <th >
-                                            Mưa đá
-                                        </th>
-                                        <th >
-                                            Lốc xoáy
+                                        <th>Hiện tượng cực đoan</th>
+                                        <th v-for="(item,index) in wardInfo" :key="index">
+                                            {{item.name}}
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="item in wardInfo" :key="item.name">
+                                    <tr v-for="(item, index) in disasters" :key="item">
                                         <td>{{ item.name }}</td>
                                         <td>{{ harshStatus[getHarshStatus()] }}</td>
                                         <td>{{ harshStatus[getHarshStatus()] }}</td>
@@ -118,8 +89,6 @@
                                         <td>{{ getRandomArbitrary(35, 40) }}</td>
                                         <td>{{ harshStatus[getHarshStatus()] }}</td>
                                         <td>{{ getRandomArbitrary(17, 25) }}</td>
-                                        <td>{{ harshStatus[getHarshStatus()] }}</td>
-                                        <td>{{ harshStatus[getHarshStatus()] }}</td>
                                         <td>{{ harshStatus[getHarshStatus()] }}</td>
                                     </tr>
                                 </tbody>

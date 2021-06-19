@@ -512,7 +512,7 @@ export const REGION = [
             // fill: false
         },
         provinceIds: [
-            '02', '06', '68', '71', '01', '05', '14'
+            '02', '06', '71', '01', '05', '14'
         ],
     },
     {
@@ -527,7 +527,7 @@ export const REGION = [
             // fill: false
         },
         provinceIds: [
-            '03', '04', '53', '09', '07',
+            '03', '04', '53', '09', '07', '68',
             '69', '54', '13'
         ],
     },
@@ -648,7 +648,7 @@ export const MAP_PROVINCE = [
 
     },
     {
-        id: 'ha_noi',
+        id: 'DIEMVN_17',
         lat: 21.0245,
         lon: 105.84117,
         name: "Hà Nội",
@@ -700,7 +700,7 @@ export const MAP_PROVINCE = [
         }
     },
     {
-        id: 'bac_giang',
+        id: 'DIEMVN_11',
         name: "Bắc Giang",
         zoom: 12,
         geojson: 'bac_giang',
@@ -712,7 +712,7 @@ export const MAP_PROVINCE = [
         }
     },
     {
-        id: 'bac_kan',
+        id: 'DIEMVN_5',
         name: "Bắc Kạn",
         zoom: 12,
         geojson: 'bac_kan',
@@ -736,7 +736,7 @@ export const MAP_PROVINCE = [
         }
     },
     {
-        id: 'bac_ninh',
+        id: 'DIEMVN_16',
         name: "Bắc Ninh",
         zoom: 12,
         geojson: 'bac_ninh',
@@ -760,7 +760,7 @@ export const MAP_PROVINCE = [
         }
     },
     {
-        id: "binh_dinh",
+        id: "DIEMVN_36",
         name: "Bình Định",
         zoom: 12,
         geojson: 'binh_dinh',
@@ -796,7 +796,7 @@ export const MAP_PROVINCE = [
         }
     },
     {
-        id: "binh_thuan",
+        id: "DIEMVN_44",
         name: "Bình Thuận",
         zoom: 12,
         geojson: 'binh_thuan',
@@ -832,7 +832,7 @@ export const MAP_PROVINCE = [
         }
     },
     {
-        id: "cao_bang",
+        id: "DIEMVN_2",
         name: "Cao Bằng",
         zoom: 12,
         geojson: 'cao_bang',
@@ -844,7 +844,7 @@ export const MAP_PROVINCE = [
         }
     },
     {
-        id: "da_nang",
+        id: "DIEMVN_32",
         name: "Đà Nẵng",
         zoom: 12,
         geojson: 'da_nang',
@@ -856,7 +856,7 @@ export const MAP_PROVINCE = [
         }
     },
     {
-        id: "dak_lak",
+        id: "DIEMVN_39",
         name: "Đắk Lắk",
         zoom: 12,
         geojson: 'dak_lak',
@@ -868,7 +868,7 @@ export const MAP_PROVINCE = [
         }
     },
     {
-        id: "dak_nong",
+        id: "DIEMVN_41",
         name: "Đắk Nông",
         zoom: 12,
         geojson: 'dak_nong',
@@ -880,7 +880,7 @@ export const MAP_PROVINCE = [
         }
     },
     {
-        id: "dien_bien",
+        id: "DIEMVN_9",
         name: "Điện Biên",
         zoom: 12,
         geojson: 'dien_bien',
@@ -916,7 +916,7 @@ export const MAP_PROVINCE = [
         }
     },
     {
-        id: "gia_lai",
+        id: "DIEMVN_37",
         name: "Gia Lai",
         zoom: 12,
         geojson: 'gia_lai',
@@ -928,7 +928,7 @@ export const MAP_PROVINCE = [
         }
     },
     {
-        id: "ha_giang",
+        id: "DIEMVN_1",
         name: "Hà Giang",
         zoom: 12,
         geojson: 'ha_giang',
@@ -940,7 +940,7 @@ export const MAP_PROVINCE = [
         }
     },
     {
-        id: "ha_nam",
+        id: "DIEMVN_22",
         name: "Hà Nam",
         zoom: 12,
         geojson: 'ha_nam',
@@ -952,7 +952,7 @@ export const MAP_PROVINCE = [
         }
     },
     {
-        id: "ha_tinh",
+        id: "DIEMVN_28",
         name: "Hà Tĩnh",
         zoom: 12,
         geojson: 'ha_tinh',
@@ -964,7 +964,7 @@ export const MAP_PROVINCE = [
         }
     },
     {
-        id: "hai_duong",
+        id: "DIEMVN_18",
         name: "Hải Dương",
         zoom: 12,
         geojson: 'hai_duong',
@@ -976,7 +976,7 @@ export const MAP_PROVINCE = [
         }
     },
     {
-        id: "hai_phong",
+        id: "DIEMVN_20",
         name: "Hải Phòng",
         zoom: 12,
         geojson: 'hai_phong',
@@ -988,7 +988,7 @@ export const MAP_PROVINCE = [
         }
     },
     {
-        id: "hau_giang",
+        id: "DiemNB10_15",
         name: "Hậu Giang",
         zoom: 12,
         geojson: 'hau_giang',
@@ -1000,7 +1000,7 @@ export const MAP_PROVINCE = [
         }
     },
     {
-        id: "hoa_binh",
+        id: "DIEMVN_21",
         name: "Hòa Bình",
         zoom: 12,
         geojson: 'hoa_binh',
@@ -1012,7 +1012,7 @@ export const MAP_PROVINCE = [
         }
     },
     {
-        id: "hung_yen",
+        id: "DIEMVN_19",
         name: "Hưng Yên",
         zoom: 12,
         geojson: 'hung_yen',
@@ -1024,7 +1024,7 @@ export const MAP_PROVINCE = [
         }
     },
     {
-        id: "khanh_hoa",
+        id: "DIEMVN_40",
         name: "Khánh Hòa",
         zoom: 12,
         geojson: 'khanh_hoa',
@@ -1048,7 +1048,7 @@ export const MAP_PROVINCE = [
         }
     },
     {
-        id: "kon_tum",
+        id: "DIEMVN_35",
         name: "Kon Tum",
         zoom: 12,
         geojson: 'kon_tum',
@@ -1060,7 +1060,7 @@ export const MAP_PROVINCE = [
         }
     },
     {
-        id: "lai_chau",
+        id: "DIEMVN_4",
         name: "Lai Châu",
         zoom: 12,
         geojson: 'lai_chau',
@@ -1072,7 +1072,7 @@ export const MAP_PROVINCE = [
         }
     },
     {
-        id: "lam_dong",
+        id: "DIEMVN_42",
         name: "Lâm Đồng",
         zoom: 12,
         geojson: 'lam_dong',
@@ -1084,7 +1084,7 @@ export const MAP_PROVINCE = [
         }
     },
     {
-        id: "lang_son",
+        id: "DIEMVN_7",
         name: "Lạng Sơn",
         zoom: 12,
         geojson: 'lang_son',
@@ -1096,7 +1096,7 @@ export const MAP_PROVINCE = [
         }
     },
     {
-        id: "lao_cai",
+        id: "DIEMVN_3",
         name: "Lào Cai",
         zoom: 12,
         geojson: 'lao_cai',
@@ -1120,7 +1120,7 @@ export const MAP_PROVINCE = [
         }
     },
     {
-        id: "nam_dinh",
+        id: "DIEMVN_24",
         name: "Nam Định",
         zoom: 12,
         geojson: 'nam_dinh',
@@ -1132,7 +1132,7 @@ export const MAP_PROVINCE = [
         }
     },
     {
-        id: "nghe_an",
+        id: "DIEMVN_27",
         name: "Nghệ An",
         zoom: 12,
         geojson: 'nghe_an',
@@ -1144,7 +1144,7 @@ export const MAP_PROVINCE = [
         }
     },
     {
-        id: "ninh_binh",
+        id: "DIEMVN_25",
         name: "Ninh Bình",
         zoom: 12,
         geojson: 'ninh_binh',
@@ -1156,7 +1156,7 @@ export const MAP_PROVINCE = [
         }
     },
     {
-        id: "ninh_thuan",
+        id: "DIEMVN_43",
         name: "Ninh Thuận",
         zoom: 12,
         geojson: 'ninh_thuan',
@@ -1168,7 +1168,7 @@ export const MAP_PROVINCE = [
         }
     },
     {
-        id: "phu_tho",
+        id: "DIEMVN_13",
         name: "Phú Thọ",
         zoom: 12,
         geojson: 'phu_tho',
@@ -1180,7 +1180,7 @@ export const MAP_PROVINCE = [
         }
     },
     {
-        id: "phu_yen",
+        id: "DIEMVN_38",
         name: "Phú Yên",
         zoom: 12,
         geojson: 'phu_yen',
@@ -1192,7 +1192,7 @@ export const MAP_PROVINCE = [
         }
     },
     {
-        id: "quang_binh",
+        id: "DIEMVN_29",
         name: "Quảng Bình",
         zoom: 12,
         geojson: 'quang_binh',
@@ -1204,7 +1204,7 @@ export const MAP_PROVINCE = [
         }
     },
     {
-        id: "quang_nam",
+        id: "DIEMVN_33",
         name: "Quảng Nam",
         zoom: 12,
         geojson: 'quang_nam',
@@ -1216,7 +1216,7 @@ export const MAP_PROVINCE = [
         }
     },
     {
-        id: "quang_ngai",
+        id: "DIEMVN_34",
         name: "Quảng Ngãi",
         zoom: 12,
         geojson: 'quang_ngai',
@@ -1228,7 +1228,7 @@ export const MAP_PROVINCE = [
         }
     },
     {
-        id: "quang_ninh",
+        id: "DIEMVN_14",
         name: "Quảng Ninh",
         zoom: 12,
         geojson: 'quang_ninh',
@@ -1240,7 +1240,7 @@ export const MAP_PROVINCE = [
         }
     },
     {
-        id: "quang_tri",
+        id: "DIEMVN_30",
         name: "Quảng Trị",
         zoom: 12,
         geojson: 'quang_tri',
@@ -1264,7 +1264,7 @@ export const MAP_PROVINCE = [
         }
     },
     {
-        id: "son_la",
+        id: "DIEMVN_15",
         name: "Sơn La",
         zoom: 12,
         geojson: 'son_la',
@@ -1288,7 +1288,7 @@ export const MAP_PROVINCE = [
         }
     },
     {
-        id: "thai_binh",
+        id: "DIEMVN_23",
         name: "Thái Bình",
         zoom: 12,
         geojson: 'thai_binh',
@@ -1300,7 +1300,7 @@ export const MAP_PROVINCE = [
         }
     },
     {
-        id: "thai_nguyen",
+        id: "DIEMVN_10",
         name: "Thái Nguyên",
         zoom: 12,
         geojson: 'thai_nguyen',
@@ -1312,7 +1312,7 @@ export const MAP_PROVINCE = [
         }
     },
     {
-        id: "thanh_hoa",
+        id: "DIEMVN_26",
         name: "Thanh Hóa",
         zoom: 12,
         geojson: 'thanh_hoa',
@@ -1324,7 +1324,7 @@ export const MAP_PROVINCE = [
         }
     },
     {
-        id: "thua_thien_hue",
+        id: "DIEMVN_31",
         name: "Thừa Thiên Huế",
         zoom: 12,
         geojson: 'thua_thien_hue',
@@ -1360,7 +1360,7 @@ export const MAP_PROVINCE = [
         }
     },
     {
-        id: "tuyen_quang",
+        id: "DIEMVN_6",
         name: "Tuyên Quang",
         zoom: 12,
         geojson: 'tuyen_quang',
@@ -1372,7 +1372,7 @@ export const MAP_PROVINCE = [
         }
     },
     {
-        id: "vinh_phuc",
+        id: "DIEMVN_12",
         name: "Vĩnh Phúc",
         zoom: 12,
         geojson: 'vinh_phuc',
@@ -1384,7 +1384,7 @@ export const MAP_PROVINCE = [
         }
     },
     {
-        id: "yen_bai",
+        id: "DIEMVN_8",
         name: "Yên Bái",
         zoom: 12,
         geojson: 'yen_bai',
