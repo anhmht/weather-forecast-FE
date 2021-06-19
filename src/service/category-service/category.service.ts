@@ -8,4 +8,11 @@ export class CategoryServices extends GenericServices {
             return Promise.resolve(response)
         }).catch(error => Promise.reject(error))
     }
+
+    getCategoryById(id: string): Promise<ApiResponse> {
+        const uri = Uri.categoryId.replace(":id", id)
+        return this.executeSelecting(null, uri).then((response: ApiResponse) => {
+            return Promise.resolve(response)
+        }).catch(error => Promise.reject(error))
+    }
 }

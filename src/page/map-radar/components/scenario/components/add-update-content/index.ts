@@ -22,6 +22,7 @@ export default class AddUpdateContentComponent extends Vue {
         { text: '10 giây', value: 10000 },
     ]
 
+    valid: boolean = true;
     actionList = SCENARIO_ACTION
 
     data = {
@@ -58,18 +59,33 @@ export default class AddUpdateContentComponent extends Vue {
         return ELEVATION;
     }
 
+    rules = {
+        actionRules: [v => !!v || 'Vui lòng chọn hàng động'],
+        methodRules: [v => !!v || 'Vui lòng chọn khu vực hoặc tỉnh thành'],
+        regionRules: [v => !!v || 'Vui lòng chọn khu vực'],
+        provinceRules: [v => !!v || 'Vui lòng chọn tỉnh thành'],
+        mapTypeRules: [v => !!v || 'Vui lòng chọn loại bản đồ'],
+        zoomRules: [v => !!v || 'Vui lòng chọn độ thu phóng bản đồ'],
+        elevationRules: [v => !!v || 'Vui lòng chọn độ cao bản đồ'],
+    }
+
     handleSave() {
-        if (this.data.action === 'customMapStatusControl') {
-            this.data.method = 'handleClick';
+        //@ts-ignore
+        this.valid = this.$refs.contentForm.validate();
+
+        if(this.valid) {
+            if (this.data.action === 'customMapStatusControl') {
+                this.data.method = 'handleClick';
+            }
+            if (this.data.action === 'customZoomControl') {
+                this.data.duration = 1000;
+            }
+            if (this.data.action === 'customLevelControl') {
+                this.data.method = 'handleChangeLevel';
+            }
+            this.$emit('save', this.data);
+            this.visibleAddItem = false
         }
-        if (this.data.action === 'customZoomControl') {
-            this.data.duration = 1000;
-        }
-        if (this.data.action === 'customLevelControl') {
-            this.data.method = 'handleChangeLevel';
-        }
-        this.$emit('save', this.data);
-        this.visibleAddItem = false
     }
 
     handleChangeAction(value) {
@@ -79,6 +95,9 @@ export default class AddUpdateContentComponent extends Vue {
             data: null,
             duration: 0
         }
+
+        //@ts-ignore
+        this.$refs.contentForm.resetValidation();
     }
 
     @Watch('value')

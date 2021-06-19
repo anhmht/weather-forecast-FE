@@ -7,31 +7,33 @@
             <v-toolbar-title>Tạo nội dung</v-toolbar-title>
         </v-toolbar>
         <v-card-text>
-            <v-select v-model="data.action" @change="handleChangeAction" :items="actionList" label="Chọn hàng động" item-value="value"></v-select>
-            <div v-if="data.action === 'customLocationControl'">
-                <v-radio-group v-model="data.method" row>
-                    <v-radio label="Khu Vực" value="handleClickRegion"></v-radio>
-                    <v-radio label="Tỉnh Thành" value="handleClick"></v-radio>
-                </v-radio-group>
-                <v-select v-if="data.method === 'handleClickRegion'" v-model="data.data" :items="regions"
-                    label="Khu Vực" item-text="name" item-value="placeId"></v-select>
-                <v-select v-if="data.method === 'handleClick'" v-model="data.data" :items="locations" label="Tỉnh Thành"
-                    item-text="name" item-value="placeId"></v-select>
-                <v-select v-model="data.duration" :items="durations" label="Chọn thời lượng" item-value="value">
-                </v-select>
-            </div>
-            <div v-if="data.action === 'customMapStatusControl'">
-                <v-select v-model="data.data" :items="mapTypes" label="trạng thái bản đồ"
-                    item-text="name" item-value="type"></v-select>
-            </div>
-            <div v-if="data.action === 'customZoomControl'">
-                <v-select v-model="data.data" :items="zooms" label="thu phóng bản đồ"
-                    item-text="name" item-value="type"></v-select>
-            </div>
-            <div v-if="data.action === 'customLevelControl'">
-                <v-select v-model="data.data" :items="elevations" label="độ cao bản đồ"
-                    item-text="label" item-value="data"></v-select>
-            </div>
+            <v-form ref="contentForm" v-model="valid" lazy-validation>
+                <v-select v-model="data.action" @change="handleChangeAction" :items="actionList" label="Chọn hàng động" item-value="value" :rules="rules.actionRules"></v-select>
+                <div v-if="data.action === 'customLocationControl'">
+                    <v-radio-group v-model="data.method" row :rules="rules.methodRules">
+                        <v-radio label="Khu Vực" value="handleClickRegion"></v-radio>
+                        <v-radio label="Tỉnh Thành" value="handleClick"></v-radio>
+                    </v-radio-group>
+                    <v-select v-if="data.method === 'handleClickRegion'" v-model="data.data" :items="regions"
+                        label="Khu Vực" item-text="name" item-value="placeId" :rules="rules.regionRules"></v-select>
+                    <v-select v-if="data.method === 'handleClick'" v-model="data.data" :items="locations" label="Tỉnh Thành"
+                        item-text="name" item-value="placeId" :rules="rules.provinceRules"></v-select>
+                    <v-select v-model="data.duration" :items="durations" label="Chọn thời lượng" item-value="value">
+                    </v-select>
+                </div>
+                <div v-if="data.action === 'customMapStatusControl'">
+                    <v-select v-model="data.data" :items="mapTypes" label="Loại bản đồ"
+                        item-text="name" item-value="type" :rules="rules.mapTypeRules"></v-select>
+                </div>
+                <div v-if="data.action === 'customZoomControl'">
+                    <v-select v-model="data.data" :items="zooms" label="Độ thu phóng bản đồ"
+                        item-text="name" item-value="type" :rules="rules.zoomRules"></v-select>
+                </div>
+                <div v-if="data.action === 'customLevelControl'">
+                    <v-select v-model="data.data" :items="elevations" label="Độ cao bản đồ"
+                        item-text="label" item-value="data" :rules="rules.elevationRules"></v-select>
+                </div>
+            </v-form>
         </v-card-text>
         <v-card-actions>
             <v-spacer></v-spacer>

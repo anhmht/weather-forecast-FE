@@ -7,7 +7,9 @@
             <v-toolbar-title>Tạo kịch bản</v-toolbar-title>
         </v-toolbar>
         <v-card-text>
-            <v-text-field v-if="data" label="Tiêu đề kịch bản" v-model="data.scenarioName"></v-text-field>
+            <v-form ref="scenarioForm" v-model="valid" lazy-validation>
+                <v-text-field v-if="data" label="Tiêu đề kịch bản" v-model="data.scenarioName" :rules="rules.scenarioNameRules"></v-text-field>
+            </v-form>
         </v-card-text>
         <v-card-actions>
             <v-spacer></v-spacer>

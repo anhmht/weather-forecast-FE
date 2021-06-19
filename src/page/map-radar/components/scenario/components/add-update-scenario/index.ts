@@ -15,6 +15,7 @@ export default class AddUpdateScenarioComponent extends Vue {
     @Prop({type: Object, default: null})
     content
 
+    valid: boolean = true;
     data: IScenario = null;
     buttonLoading: boolean = false;
 
@@ -28,23 +29,33 @@ export default class AddUpdateScenarioComponent extends Vue {
         this.$emit('input', value)
     }
 
+    rules = {
+        scenarioNameRules: [v => !!v || 'Vui lòng nhập tiêu đề kịch bản']
+    }
+
     handleSave() {
-        this.buttonLoading = true;
-        let requestHolder: Promise<any>;
-        if(this.content) {
-            requestHolder = this.scenarioService.updateScenario(this.data);
-        } else {
-            requestHolder = this.scenarioService.createScenario(this.data);
+        //@ts-ignore
+        this.valid = this.$refs.scenarioForm.validate();
+
+        if(this.valid) {
+            this.buttonLoading = true;
+            let requestHolder: Promise<any>;
+            if(this.content) {
+                requestHolder = this.scenarioService.updateScenario(this.data);
+            } else {
+                requestHolder = this.scenarioService.createScenario(this.data);
+            }
+            requestHolder.then((res:any) => {
+                this.buttonLoading = false;
+                this.data.scenarioId = res;
+                this.$emit('save', this.data);
+                this.visibleAddItem = false
+            }).catch(err => {
+                console.log(err);
+                this.buttonLoading = false;
+            });
         }
-        requestHolder.then((res:any) => {
-            this.buttonLoading = false;
-            this.data.scenarioId = res;
-            this.$emit('save', this.data);
-            this.visibleAddItem = false
-        }).catch(err => {
-            console.log(err);
-            this.buttonLoading = false;
-        })
+        
     }
 
     @Watch('value')
