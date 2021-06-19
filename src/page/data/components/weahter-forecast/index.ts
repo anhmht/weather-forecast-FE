@@ -37,6 +37,7 @@ export default class WeatherForecastComponent extends Vue {
     data: any = [];
 
     get title() {
+        if(this.all) return 'Tỉnh thành';
         if (this.province) return MAP_PROVINCE.find(x => x.placeId === this.province).name;
         return REGION.find(x => x.placeId === this.region).name;
     }
@@ -57,13 +58,14 @@ export default class WeatherForecastComponent extends Vue {
     }
 
     getRegionStationId() {
+        if(this.all) {
+            return MAP_PROVINCE.map(x => x.id);
+        }
         const regions = REGION.find(x => x.placeId === this.region);
         const stations = [];
         regions.provinceIds.forEach(element => {
-            const stationID = STATION.find(x => x.place_id === element);
-            if(stationID) {
-                stations.push(stationID.id);
-            }
+            const stationID = MAP_PROVINCE.find(x => x.placeId === element);
+            stations.push(stationID.id);
         })
         return stations;
     }
@@ -76,9 +78,7 @@ export default class WeatherForecastComponent extends Vue {
         }
         province.districtIds.forEach(element => {
             const stationID = STATION.find(x => x.place_id === element);
-            if (stationID) {
-                stations.push(stationID.id);
-            }
+            stations.push(stationID.id);
         });
         return stations;
     }
@@ -101,80 +101,66 @@ export default class WeatherForecastComponent extends Vue {
                 data: groups[item]
             };
         });
-
         const result = []
-        groupArrays.forEach((element, index) => {
-            result.push({
-                StationId: element.id,
-                Name: STATION.find(x => x.id === element.id).ten,
-                Temprature: {
-                    min: element.data.find(x => x.weatherType === WEATHER_TYPE.Temperature).minValue,
-                    max: element.data.find(x => x.weatherType === WEATHER_TYPE.Temperature).maxValue
-                },
-                Humidity: {
-                    min: element.data.find(x => x.weatherType === WEATHER_TYPE.Humidity).minValue,
-                    max: element.data.find(x => x.weatherType === WEATHER_TYPE.Humidity).maxValue
-                },
-                WindLevel: {
-                    min: element.data.find(x => x.weatherType === WEATHER_TYPE.WindLevel).minValue,
-                    max: element.data.find(x => x.weatherType === WEATHER_TYPE.WindLevel).maxValue
-                },
-                WindSpeed: {
-                    min: element.data.find(x => x.weatherType === WEATHER_TYPE.WindSpeed).minValue,
-                    max: element.data.find(x => x.weatherType === WEATHER_TYPE.WindSpeed).maxValue
-                },
-                RainAmount: {
-                    min: element.data.find(x => x.weatherType === WEATHER_TYPE.RainAmount).minValue,
-                    max: element.data.find(x => x.weatherType === WEATHER_TYPE.RainAmount).maxValue
-                }
-            })
-        });
+        this.searchParam.stationIds.forEach((element, index) => {
+            const hasData = groupArrays.find(x => x.id === element)
+            if(hasData) {
+                result.push({
+                    StationId: hasData.id,
+                    Name: STATION.find(x => x.id === hasData.id).ten,
+                    Temprature: {
+                        min: hasData.data.find(x => x.weatherType === WEATHER_TYPE.Temperature).minValue,
+                        max: hasData.data.find(x => x.weatherType === WEATHER_TYPE.Temperature).maxValue
+                    },
+                    Humidity: {
+                        min: hasData.data.find(x => x.weatherType === WEATHER_TYPE.Humidity).minValue,
+                        max: hasData.data.find(x => x.weatherType === WEATHER_TYPE.Humidity).maxValue
+                    },
+                    WindLevel: {
+                        min: hasData.data.find(x => x.weatherType === WEATHER_TYPE.WindLevel).minValue,
+                        max: hasData.data.find(x => x.weatherType === WEATHER_TYPE.WindLevel).maxValue
+                    },
+                    WindSpeed: {
+                        min: hasData.data.find(x => x.weatherType === WEATHER_TYPE.WindSpeed).minValue,
+                        max: hasData.data.find(x => x.weatherType === WEATHER_TYPE.WindSpeed).maxValue
+                    },
+                    RainAmount: {
+                        min: hasData.data.find(x => x.weatherType === WEATHER_TYPE.RainAmount).minValue,
+                        max: hasData.data.find(x => x.weatherType === WEATHER_TYPE.RainAmount).maxValue
+                    }
+                })
+            } else {
+                result.push(this.getDummyData(element));
+            }
+        })
         return result;
     }
 
-    getDummyData(all: boolean = false) {
-        const regions = REGION.find(x => x.placeId === this.region);
-        let stations = [];
-
-        if (all) {
-            stations = MAP_PROVINCE;
-        } else {
-            regions.provinceIds.forEach(element => {
-                const dummy = MAP_PROVINCE.find(x => x.placeId === element);
-                if (dummy) {
-                    stations.push(dummy);
-                }
-            })
+    getDummyData(element) {
+        return {
+            StationId: element,
+            Name: MAP_PROVINCE.find(x => x.id === element).name,
+            Temprature: {
+                min: this.getRandomArbitrary(20, 25),
+                max: this.getRandomArbitrary(30, 35),
+            },
+            Humidity: {
+                min: this.getRandomArbitrary(0, 50),
+                max: this.getRandomArbitrary(50, 100),
+            },
+            WindLevel: {
+                min: this.getRandomArbitrary(0, 5),
+                max: this.getRandomArbitrary(5, 10),
+            },
+            WindSpeed: {
+                min: 0,
+                max: this.getRandomArbitrary(0, 5),
+            },
+            RainAmount: {
+                min: 0,
+                max: this.getRandomArbitrary(0, 5),
+            }
         }
-
-        const result = []
-        stations.forEach(element => {
-            result.push({
-                StationId: element.placeId,
-                Name: element.name,
-                Temprature: {
-                    min: this.getRandomArbitrary(20, 25),
-                    max: this.getRandomArbitrary(30, 35),
-                },
-                Humidity: {
-                    min: this.getRandomArbitrary(0, 50),
-                    max: this.getRandomArbitrary(50, 100),
-                },
-                WindLevel: {
-                    min: this.getRandomArbitrary(0, 5),
-                    max: this.getRandomArbitrary(5, 10),
-                },
-                WindSpeed: {
-                    min: 0,
-                    max: this.getRandomArbitrary(0, 5),
-                },
-                RainAmount: {
-                    min: 0,
-                    max: this.getRandomArbitrary(0, 5),
-                }
-            })
-        });
-        return result;
     }
 
     getRandomArbitrary(min, max) {
@@ -182,6 +168,7 @@ export default class WeatherForecastComponent extends Vue {
     }
 
     getDetail() {
+        this.isLoading = true;
         if (this.selectedDate) {
             this.searchParam.fromDate = moment(this.selectedDate).format();
             this.searchParam.toDate = moment(this.selectedDate).add(1, 'days').subtract(1, 'minutes').format();
@@ -196,21 +183,13 @@ export default class WeatherForecastComponent extends Vue {
             this.isLoading = false;
         });
     }
-    
-    mounted() {
-        if(this.dummy) {
-            this.data = this.getDummyData(this.all);
-            return;
-        }
 
-        this.isLoading = true;
+    mounted() {
         if(this.province) {
             this.searchParam.stationIds = this.getProvinceStationId();
         } else {
             this.searchParam.stationIds = this.getRegionStationId();
         }
-        if (this.searchParam.stationIds.length === 0) return;
-        
         this.getDetail();
     }
 }

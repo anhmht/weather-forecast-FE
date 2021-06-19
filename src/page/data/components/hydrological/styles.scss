@@ -51,6 +51,8 @@
                 .v-select__selections {
                     justify-content: flex-end;
                 }
+
+
             }
             &__body {
                 height: 400px;
@@ -106,6 +108,16 @@
                         text-align: right;
                         border: 1px solid;
                         border-radius: 5px;
+
+                        &.mua {
+                            background-color: #7d7d7d;
+                        }
+                        &.khituong {
+                            background-color: #00a012;
+                        }
+                        &.thuyvan {
+                            background-color: #00a2f6;
+                        }
                     }
                 }
 

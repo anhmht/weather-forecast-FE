@@ -22,7 +22,7 @@
                     class="data-page-container_content-station--item" :class="index === activeStation ? 'active' : ''">
                     <div class="data-page-container_content-station--item-header">
                         <div class="data-page-container_content-station--item-header-name">{{item.name}}</div>
-                        <div class="data-page-container_content-station--item-header-type">
+                        <div class="data-page-container_content-station--item-header-type" :class="`${item.stationType}`">
                             {{$formatStationType(item.stationType)}}
                         </div>
                     </div>
