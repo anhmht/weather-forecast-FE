@@ -1,3 +1,5 @@
+import { UploadServices } from './../../../../service/upload-service/upload.service';
+import { MAP_PROVINCE } from '@/constant/forcast-station-constant';
 import Vue from "vue";
 import Component from "vue-class-component";
 
@@ -5,62 +7,68 @@ import Component from "vue-class-component";
     template: require("./template.html").default,
 })
 export default class ListDataComponent extends Vue {
-    totalItems: number = 100;
-    totalPages: number = 15;
-    currentPage: number = 1;
-    limitPerPage: number[] = [5, 10, 15, 20];
-    pageSize: number = 5;
-    numPostsInPage: number = 20;
-    isDisplayDialog: boolean = false;
-
-    get TotalPageVisible() {
-        if (this.totalPages < 7)
-            return this.totalPages
-        else
-            return 7
-    }
-
-    data: any = [
-        {
-            province: "Cần Thơ",
-            minTemp: "30",
-            maxTemp: "35",
-            status: "Nắng nóng",
-        },
-        {
-            province: "Long An",
-            minTemp: "30",
-            maxTemp: "35",
-            status: "Nắng nóng",
-        },
-        {
-            province: "Tiền Giang",
-            minTemp: "30",
-            maxTemp: "35",
-            status: "Nắng nóng",
-        },
-        {
-            province: "Bến Tre",
-            minTemp: "30",
-            maxTemp: "35",
-            status: "Nắng nóng",
-        },
-        {
-            province: "Vĩnh Long",
-            minTemp: "30",
-            maxTemp: "35",
-            status: "Nắng nóng",
-        },
-    ];
-
+    model: any = {
+        provinceId: null,
+        name: null,
+    };
+    valid: boolean = true;
     rules = {
-        provinceRules: [v => !!v || 'Vui lòng nhập tên tỉnh thành'],
-        minTempRules: [v => !!v || 'Vui lòng nhập nhiệt độ thấp nhất'],
-        maxTempRules: [v => !!v || 'Vui lòng nhập nhiệt độ cao nhất'],
-        statusRules: [v => !!v || 'Vui lòng nhập trạng thái đặc biệt']
+        provinceRules: [v => !!v || 'Vui lòng chọn tỉnh thành'],
+    }
+    uploadservice: UploadServices = new UploadServices();
+
+    province: any = MAP_PROVINCE
+    isUploading: boolean = false;
+    progress: Number = 0;
+
+    onChangeDocuments(files) {
+        if (files.length > 0) {
+            this.isUploading = true;
+            this.progress = 0;
+            this.uploadDocument({
+                Data: files[0],
+                FileName: `${new Date().getTime()}_${files[0].name}`,
+            });
+        }
     }
 
-    toEditData(id) {
-        this.isDisplayDialog = true;
+    uploadDocument(document) {
+        const formData = this.buildUploadDocumentParams(document);
+        document.isUploading = true;
+        const config = {
+            headers: {
+                "content-type": "multipart/form-data"
+            },
+            onUploadProgress: function (progressEvent) {
+                var value = (progressEvent.loaded * 100) / progressEvent.total;
+                var percent = Math.round(value);
+                this.progress = percent;
+            }.bind(this)
+        };
+        this.uploadservice.uploadCSV(formData, config).then(response => {
+            this.isUploading = false;
+            this.progress = 0;
+            console.log(response);
+
+        }).catch(err => {
+            this.isUploading = false;
+            console.error(err);
+        });
     }
+
+    buildUploadDocumentParams(document) {
+        const formData = new FormData();
+        formData.append('file', document.Data, document.FileName);
+        return formData;
+    }
+
+    upload() {
+        //@ts-ignore
+        this.valid = this.$refs.importForm.validate();
+        if (this.valid) {
+            const upload = this.$refs.upload as any;
+            upload.click();
+        }
+    }
+
 }
