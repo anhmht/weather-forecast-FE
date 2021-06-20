@@ -1,15 +1,18 @@
 .cms-menu {
-    padding: 0 30px;
+    padding: 0 15px;
     &--item {
-        padding: 10px 30px;
+        padding: 10px;
         color: #fff;
         display: flex;
         align-items: center;
         cursor: pointer;
-        &.active {
-            background: #111850;
-            font-weight: 600;
+        transition: all;
+        &.active, &:hover {
+            background:rgba(255,255,255,0.1);
             border-radius: 6px;
+            i {
+                color: #2196f3 ;
+            }
         }
         i {
             margin-right: 10px;

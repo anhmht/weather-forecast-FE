@@ -51,7 +51,7 @@
             color: #fff;
         }
         &-body {
-            padding: 30px 50px;
+            padding: 30px;
             &-icon {
                 font-size: 30px;
                 .col {
@@ -135,11 +135,13 @@
                     height: 150px;
                     width: 100%;
                     display: block;
+                    object-fit: cover;
+                    border:1px solid #eee;
                 }
                 h4 {
                     padding: 10px 0;
                     font-size: 14px;
-                    height: 64px;
+                    height: 50px;
                     width: 100%;
                     display: -webkit-box;
                     -webkit-line-clamp: 3;

@@ -1,15 +1,17 @@
 .base-cms-right--body {
     &_top {
-        display: flex;
-
+        display: table;
+        width: 100%;;
         // title
         p {
-            font-size: 30px;
+            font-size: 23px;
+            float: left;
+            margin: 5px 0 0 0;
         }
 
         // create new button
         button {
-            margin-left: 1008px;
+            float: right;
         }
     }
 
@@ -17,22 +19,25 @@
         background-color: #fff;
 
         &_header {
-            font-size: 16px !important;
+            font-size: 14px;
+            color: #949494;
+            white-space: nowrap;
+        }
+        &_action {
+            white-space: nowrap;
+            font-size: 14px !important;
+            cursor: pointer;
         }
 
         &_image {
             img {
                 margin-right: 20px;
-                width: 70px;
-                height: 70px;
+                width: 50px;
+                height: 50px;
                 border-radius: 4px;
+                object-fit: cover;
             }
         }
-
-        &_action {
-            cursor: pointer;
-        }
-
         &_footer_page_num {
             display: flex;
             align-items: center;

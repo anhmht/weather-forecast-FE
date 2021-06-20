@@ -10,11 +10,11 @@
         </div>
         <div class="base-cms-right--body_table">
             <template>
-                <v-simple-table fixed-header height="574px">
+                <v-simple-table fixed-header height="calc(100vh - 261px)">
                     <template v-slot:default>
                         <thead>
                             <tr>
-                                <th class="base-cms-right--body_table_header_checkbox">
+                                <th class="base-cms-right--body_table_header_checkbox" style="width: 40px;">
                                     <v-checkbox color="primary" hide-details>
                                     </v-checkbox>
                                 </th>
@@ -50,8 +50,8 @@
                                 <td>{{ item.categoryName }}</td>
                                 <td>{{ item.statusName }}</td>
                                 <td class="base-cms-right--body_table_action">
-                                    <v-icon @click.native="handleDeletePost(item.eventId)">mdi-delete</v-icon>
-                                    <v-icon @click.native="editPost(item.eventId)">mdi-square-edit-outline</v-icon>
+                                    <v-icon @click.native="editPost(item.eventId)" class="edit-action">mdi-square-edit-outline</v-icon>
+                                    <v-icon @click.native="handleDeletePost(item.eventId)" class="delete-action">mdi-delete</v-icon>
                                 </td>
                             </tr>
                         </tbody>
