@@ -74,7 +74,7 @@
                             </tr>
                             <tr v-for="(item, index) in precipitationArray" :key="index">
                                 <td>{{$formatDateTime(item.date)}}</td>
-                                <td>{{item.rainQuantity}}</td>
+                                <td>{{item.rainQuantity}} mm</td>
                             </tr>
                         </tbody>
                     </template>
@@ -85,7 +85,7 @@
                         <thead>
                             <tr>
                                 <th>Thời gian</th>
-                                <th>Bay hơi</th>
+                                <th>Bốc hơi</th>
                                 <th>Bức xạ</th>
                                 <th>Độ ẩm</th>
                                 <th>Hướng gió</th>
@@ -106,19 +106,19 @@
                             </tr>
                             <tr v-for="(item, index) in meteorologicalArray" :key="index">
                                 <td>{{$formatDateTime(item.date)}}</td>
-                                <td>{{item.evaporation}}</td>
-                                <td>{{item.radiation}}</td>
-                                <td>{{item.humidity}}</td>
-                                <td>{{item.windDirection}}</td>
-                                <td>{{item.barometric}}</td>
-                                <td>{{item.hga10}}</td>
-                                <td>{{item.hgm60}}</td>
-                                <td>{{item.rain}}</td>
-                                <td>{{item.temperature}}</td>
-                                <td>{{item.tdga10}}</td>
-                                <td>{{item.tdgm60}}</td>
-                                <td>{{item.windSpeed}}</td>
-                                <td>{{item.zluyKe}}</td>
+                                <td>{{item.evaporation}} mm</td>
+                                <td>{{item.radiation}} W/mq</td>
+                                <td>{{item.humidity}}%</td>
+                                <td>{{item.windDirection}}°</td>
+                                <td>{{item.barometric}} hPa</td>
+                                <td>{{item.hga10}}°</td>
+                                <td>{{item.hgm60}}°</td>
+                                <td>{{item.rain}} mm</td>
+                                <td>{{item.temperature}}°C</td>
+                                <td>{{item.tdga10}} m/s</td>
+                                <td>{{item.tdgm60}} m/s</td>
+                                <td>{{item.windSpeed}} m/s</td>
+                                <td>{{item.zluyKe}} mm</td>
                             </tr>
                         </tbody>
                     </template>
@@ -140,9 +140,9 @@
                             </tr>
                             <tr v-for="(item, index) in hydrologicalArray" :key="index">
                                 <td>{{$formatDateTime(item.date)}}</td>
-                                <td>{{item.rain}}</td>
-                                <td>{{item.waterLevel}}</td>
-                                <td>{{item.zLuyKe}}</td>
+                                <td>{{item.rain}} mm</td>
+                                <td>{{item.waterLevel}} m</td>
+                                <td>{{item.zLuyKe}} mm</td>
                             </tr>
                         </tbody>
                     </template>
