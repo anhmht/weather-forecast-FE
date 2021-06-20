@@ -49,6 +49,7 @@ export default class ListPostComponent extends Vue {
             this.searchParams.page -= 1;
         }
         this.getPostsByPaging();
+        this.visibleConfirm = false;
     }
 
     async getPostsByLimit(value = null) {
