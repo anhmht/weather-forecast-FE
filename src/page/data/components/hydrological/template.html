@@ -6,12 +6,16 @@
         </div>
         <div class="data-page-container_search--item">
             Tỉnh thành: <v-select color="white" dark :items="ProvincesByRegion" item-text="name" item-value="code"
-                style="margin: 0px 20px;" hide-details dense v-model="province"></v-select>
+                style="margin: 0px 20px;" hide-details dense v-model="province" @change="handleChangeProvince"></v-select>
+        </div>
+        <div v-if="province === '86'" class="data-page-container_search--item">
+            Loại Trạm: <v-select color="white" dark :items="types" item-text="name" item-value="value"
+                style="margin: 0px 20px;" hide-details dense v-model="hydrologicalType" @change="handleChangeHydrologicalType"></v-select>
         </div>
     </div>
     <div class="data-page-container_content">
         <div class="data-page-container_content-station">
-            <div class="data-page-container_content-station__header">
+            <div v-if="hydrologicalType === 0" class="data-page-container_content-station__header">
                 <div class="data-page-container_content-station__header--title">Trạm khí tượng thủy văn</div>
                 <v-select color="white" dark :items="stationTypes" item-text="name" item-value="value" hide-details
                     dense v-model="type"></v-select>
@@ -31,7 +35,7 @@
             </div>
         </div>
         <div class="data-page-container_content-result">
-            <div class="data-page-container_content-result-filter">
+            <div v-if="hydrologicalType === 0" class="data-page-container_content-result-filter">
                 <div style="margin-right: 20px; display: flex;">
                     Thời gian từ:
                     <v-menu v-model="fromDateMenu" :close-on-content-click="false" :nudge-right="40"
@@ -123,7 +127,7 @@
                         </tbody>
                     </template>
                 </v-simple-table>
-                <v-simple-table v-if="currentStationType === stationConstant.HYDROLOGICAL_STATION" fixed-header
+                <v-simple-table v-if="currentStationType === stationConstant.HYDROLOGICAL_STATION && hydrologicalType === 0" fixed-header
                     height="400px">
                     <template v-slot:default>
                         <thead>
@@ -143,6 +147,25 @@
                                 <td>{{item.rain}} mm</td>
                                 <td>{{item.waterLevel}} m</td>
                                 <td>{{item.zLuyKe}} mm</td>
+                            </tr>
+                        </tbody>
+                    </template>
+                </v-simple-table>
+                <v-simple-table v-if="currentStationType === stationConstant.HYDROLOGICAL_STATION && hydrologicalType === 1"
+                    fixed-header height="400px">
+                    <template v-slot:default>
+                        <thead>
+                            <tr>
+                                <th style="min-width: 150px;">Dự báo thuỷ văn</th>
+                                <th style="min-width: 170px;" v-for="(item,index) in hydrologicalArray.data" :key="index">
+                                    {{formatDate(item.date)}}
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr >
+                                <td style="min-width: 150px;">Mực nước</td>
+                                <td style="min-width: 170px;" v-for="(item,index) in hydrologicalArray.data" :key="index">{{item.value}}</td>
                             </tr>
                         </tbody>
                     </template>

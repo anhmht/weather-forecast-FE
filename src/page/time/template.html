@@ -8,6 +8,8 @@
                         5 ngày trong tuần</div>
                     <div class="item-tab" :class="activeTab === 2 ? 'active' : ''" @click="handleChangeTab(2)">
                         24 H/ngày</div>
+                    <div class="item-tab" :class="activeTab === 3 ? 'active' : ''" @click="handleChangeTab(3)">
+                        Dự báo hôm nay và ngày mai</div>
                 </div>
                 <div class="content-tab">
                     <div class="li-tab" v-if="activeTab === 1">
@@ -110,6 +112,10 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+
+                    <div class="li-tab" v-if="activeTab === 3" >
+                        <weather-24h :position="currentPosition" />
                     </div>
                 </div>
             </div>

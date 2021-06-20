@@ -15,7 +15,8 @@ import { ForecastSearchParam, IForecastSearchParam } from '@/model/forecast';
 @Component({
     template: require("./template.html").default,
     components: {
-        "base-container": () => import("../../components/base-container/BaseContainerComponent.vue")
+        "base-container": () => import("../../components/base-container/BaseContainerComponent.vue"),
+        "weather-24h": () => import("./components/weather-forcast-24h/WeatherForecast24hComponent.vue")
     }
 })
 export default class TimePageComponent extends Vue {
