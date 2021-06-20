@@ -1,0 +1,40 @@
+<div class="weather-forcast-24h">
+    <div class="weather-forcast-24h--left">
+        <div class="menu">
+            <div class="menu-item" :class="activeTab === 0 ? 'active' : ''" @click="handleClick(0)">Dự báo đất liền 24H</div>
+            <div class="menu-item" :class="activeTab === 1 ? 'active' : ''" @click="handleClick(1)">Dự Báo Biển 24H</div>
+            <div class="menu-item" :class="activeTab === 2 ? 'active' : ''" @click="handleClick(2)">Thủy văn 24H</div>
+        </div>
+    </div>
+    <div class="weather-forcast-24h--right">
+        <div v-if="activeTab === 0">
+            <forecast-item v-for="(item,index) in forecastData" :key="index"
+                :class="index === 0 ? 'first' : ''"
+                :title="item.title"
+                :icon="item.icon"
+                :desc="item.desc"
+            />
+        </div>
+        <div v-if="activeTab === 1">
+            <forecast-item v-for="(item,index) in forcastSea" :key="index"
+                :class="index === 0 ? 'first' : ''"
+                :title="item.title"
+                :icon="item.icon"
+                :desc="item.desc"
+            />
+        </div>
+        <div v-if="activeTab === 2">
+            <div>
+                <img style="width: 100%;" src="https://weatherstoragevn.blob.core.windows.net/images/song-huong-2.jpg" />
+            </div>
+            <ul>
+                <li>
+                    <a style="color: #fff;" href="https://weatherstoragevn.blob.core.windows.net/file/pdf/dbqg_10tb_20210620_1530.pdf" download="newfilename">BẢN TIN DỰ BÁO THỦY VĂN HẠN NGẮN CÁC SÔNG TRUNG BỘ, TÂY NGUYÊN VÀ NAM BỘ</a>
+                </li>
+                <li>
+                    <a style="color: #fff;" href="https://weatherstoragevn.blob.core.windows.net/file/pdf/DBQG_TVTB_20210619_1030.pdf" download="newfilename">BẢN TIN DỰ BÁO THỦY VĂN HẠN VỪA CÁC SÔNG TRUNG BỘ, TÂY NGUYÊN VÀ NAM BỘ</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

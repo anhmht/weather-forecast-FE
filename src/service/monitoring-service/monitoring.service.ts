@@ -18,4 +18,9 @@ export class MonitoringServices extends GenericServices {
             return Promise.resolve(response)
             }).catch(error => Promise.reject(error))
     }
+    getHydrologicalForecast(limit: number, page: number, stationId: string, dateFrom: string, dateTo: string): Promise<ApiResponse> {
+        return this.executeSelectingPost({ limit, page, stationId, dateFrom, dateTo}, Uri.getHydrologicalForecast).then((response: ApiResponse) => {
+            return Promise.resolve(response)
+            }).catch(error => Promise.reject(error))
+    }
 }

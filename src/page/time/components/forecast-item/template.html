@@ -1,0 +1,13 @@
+<div class="weather-item">
+    <div class="weather-item--image">
+        <img :src="icon"  width="100"/>
+    </div>
+    <div class="weather-item--content">
+        <div class="weather-item--content_title">
+            {{title}}
+        </div>
+        <div class="weather-item--content_des" v-html="desc">
+
+        </div>
+    </div>
+</div>

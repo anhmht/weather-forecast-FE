@@ -34,9 +34,21 @@ export default class HydrologicalComponent extends Vue {
     toDate: string = null;
     totalPages: number = 0;
     page: number = 1;
-    currentStationId: string = null;
+    currentStationId: any = null;
 
     activeStation: number = 0;
+
+    types = [
+        {
+            name: 'Khí tượng',
+            value: 0
+        },
+        {
+            name: 'Dự báo thuỷ văn',
+            value: 1
+        }
+    ]
+    hydrologicalType: number = 0;
 
     get TotalPageVisible() {
         if (this.totalPages < 7)
@@ -127,12 +139,27 @@ export default class HydrologicalComponent extends Vue {
         return;
     }
 
+    formatDate(item) {
+        return moment(item).format('DD/MM/YYYY');
+    }
+
+    handleChangeProvince(value) {
+        this.hydrologicalType = 0;
+    }
+
+    handleChangeHydrologicalType(value) {
+        if(value === 1) {
+            this.type = STATION_TYPE.HYDROLOGICAL_STATION;
+            this.fromDate = moment().subtract(1, 'days').format('YYYY-MM-DD');
+        }
+    }
+
     getStationData(stationId, stationType, index, isPaging) {
         if (!isPaging) {
             this.page = 1;
         }
 
-        this.currentStationId = stationId;
+        this.currentStationId =  stationId;
         this.currentStationType = stationType;
         this.activeStation = index;
         if (this.fromDate === null) {
@@ -160,13 +187,23 @@ export default class HydrologicalComponent extends Vue {
                 console.log(error);
             })
         } else if (stationType === this.stationConstant.HYDROLOGICAL_STATION) {
-            this.monitoringService.getHydrological(10, this.page, stationId, this.fromDate, this.toDate)
-            .then((res: any) => {
-                this.hydrologicalArray = res.hydrologicals;
-                this.totalPages = res.totalPages;
-            }).catch(error => {
-                console.log(error);
-            })
+            if(this.hydrologicalType === 0) {
+                this.monitoringService.getHydrological(10, this.page, stationId, this.fromDate, this.toDate)
+                    .then((res: any) => {
+                        this.hydrologicalArray = res.hydrologicals;
+                        this.totalPages = res.totalPages;
+                    }).catch(error => {
+                        console.log(error);
+                    })
+            } else {
+                this.monitoringService.getHydrologicalForecast(10, this.page, stationId, this.fromDate, this.toDate)
+                    .then((res: any) => {
+                        this.hydrologicalArray = res.getHydrologicalForecasts[0];
+                        this.totalPages = res.totalPages;
+                    }).catch(error => {
+                        console.log(error);
+                    })
+            }
         }
     }
 
