@@ -1,14 +1,10 @@
 <div class="base-cms-right--body_wrapper">
     <div class="base-cms-right--body_top">
-        <v-btn
-        class="ma-2"
-        color=""
-        dark
-      >
-        <v-icon dark left >
-          mdi-arrow-left
-        </v-icon>Back
-      </v-btn>
+        <v-btn class="ma-2" color="" dark @click="handleBack()">
+            <v-icon dark left>
+                mdi-arrow-left
+            </v-icon>Back
+        </v-btn>
         <p>Chỉnh sửa tin</p>
     </div>
     <v-form ref="postForm" v-model="valid" lazy-validation>

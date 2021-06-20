@@ -45,6 +45,11 @@ export default class CreatePostComponent extends Vue {
     @LookupGetter(lookupTypesStore.Get.STATUS) status: IStatus[]
     @LookupAction getLookupData: (type: string) => void;
 
+
+    handleBack() {
+        this.$router.go(-1);
+    }
+
     createPost() {
         //@ts-ignore
         this.valid = this.$refs.postForm.validate();

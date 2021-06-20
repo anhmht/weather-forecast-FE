@@ -69,6 +69,10 @@ export default class EditPostComponent extends Vue {
         }
     }
 
+    handleBack() {
+        this.$router.go(-1);
+    }
+
     handleClickBrowse() {
         const upload = this.$refs.upload as any;
         upload.click();

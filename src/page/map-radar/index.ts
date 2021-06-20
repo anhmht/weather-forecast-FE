@@ -350,8 +350,8 @@ export default class HomePageComponent extends Vue {
         // this.currentPosition = await displayLocation() as any;
         const options = {
             // Required: API key
-            // key: "PsLAtXpsPTZexBwUkO7Mx5I", // REPLACE WITH YOUR KEY !!!
-            key: 'yw7vbuA1PQmaUPe0SNECjxmOIv5AJ4FC', // Production Github Page !!!
+            key: "PsLAtXpsPTZexBwUkO7Mx5I", // REPLACE WITH YOUR KEY !!!
+            // key: 'yw7vbuA1PQmaUPe0SNECjxmOIv5AJ4FC', // Production Github Page !!!
             // key: 'oixjdU358Nvzz8CGDQhcBAswQ2ngOshM', // Production Azure web static!!!
             // Put additional console output
             // verbose: true,
