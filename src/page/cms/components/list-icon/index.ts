@@ -10,7 +10,7 @@ export default class ListIconComponent extends Vue {
     totalPages: number = 15;
     currentPage: number = 1;
     limitPerPage: number[] = [5, 10, 15, 20];
-    pageSize: number = 5;
+    pageSize: number = 10;
     numPostsInPage: number = 20;
     isDisplayDialog: boolean = false;
     uploadedDocs: any = NO_IMAGE;

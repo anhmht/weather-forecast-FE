@@ -12,7 +12,7 @@ export class PostSearchParameter implements IPostSearchParameter {
     statusId?: string;
 
     constructor(option?: any) {
-        this.limit = option.limit || 5;
+        this.limit = option.limit || 10;
         this.page = option.page || 1;
         this.categoryId = option.categoryId || null;
         this.statusId = option.statusId || null;
