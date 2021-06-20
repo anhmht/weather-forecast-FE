@@ -5,7 +5,6 @@ import { storeModules } from '@/store';
 import lookupTypesStore from '@/store/lookup/lookup-types.store';
 import { WeatherServices } from '@/service/weather-service/weather.service';
 
-
 const LookupAction = namespace(storeModules.Lookup, Action);
 const LookupGetter = namespace(storeModules.Lookup, Getter);
 @Component({
@@ -50,56 +49,51 @@ export default class DataPageComponent extends Vue {
         },
     ]
 
-    harshStatus = [
-        '', 'O'
-    ]
-
     disasters = [
         {
             name: 'Hạn hán',
-            value: true
+            min: 1,
+            max: 3
         },
         {
             name: 'Gió',
-            value: false,
-            min: 0,
-            max: 5
+            min: 1,
+            max: 3
         },
         {
             name: 'Bão',
-            value: false,
             min: 1,
-            max: 10
+            max: 3
         },
         {
             name: 'Độ ẩm',
-            value: false,
-            min: 0,
-            max: 100
+            min: 1,
+            max: 3
         },
         {
             name: 'Sương mù',
-            value: false,
-            min: 35,
-            max: 40
+            min: 1,
+            max: 3
         },
         {
             name: 'Mức độ ô nhiễm không khí',
-            value: false,
-            min: 35,
-            max: 40
+            min: 1,
+            max: 3
         },
         {
             name: 'Nắng Nóng',
-            value: true
+            min: 1,
+            max: 3
         },
         {
             name: 'Mưa đá',
-            value: true
+            min: 1,
+            max: 3
         },
         {
             name: 'Lốc xoáy',
-            value: true
+            min: 1,
+            max: 3
         },
     ]
 
@@ -136,8 +130,6 @@ export default class DataPageComponent extends Vue {
         },
     ]
 
-
-
     handleChangeTab(tab) {
         this.activeTab = tab;
     }
@@ -145,24 +137,4 @@ export default class DataPageComponent extends Vue {
     getRandomArbitrary(min, max) {
         return Math.ceil(Math.random() * (max - min) + min);
     }
-
-    getStatus() {
-        const num = this.getRandomArbitrary(0, 6);
-        return num
-    }
-
-    getHarshStatus() {
-        const random_boolean = Math.random() < 0.5
-        const num = random_boolean ? 1 : 0;
-        return num
-    }
-
-    getData(status, min, max) {
-        if(status) {
-            return this.harshStatus[this.getHarshStatus()];
-        } else {
-            return this.getRandomArbitrary(min, max);
-        }
-    }
-
 }

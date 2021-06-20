@@ -66,7 +66,7 @@
             </div>
         </v-row>
         <v-row v-if="activeTab === 6" class="data-page-container-wrapper" style="padding: 2vw 0">
-            <div class="data-page-container-wrapper-col">
+            <div class="data-page-container-wrapper-col-harsh">
                 <div class="simple-table">
                     <template>
                         <v-simple-table fixed-header height="500px">
@@ -81,15 +81,71 @@
                                 </thead>
                                 <tbody>
                                     <tr v-for="(item, index) in disasters" :key="index">
-                                        <td>{{ item.name }}</td>
-                                        <td>{{ getData(item.value, item.min, item.max) }}</td>
-                                        <td>{{ getData(item.value, item.min, item.max) }}</td>
-                                        <td>{{ getData(item.value, item.min, item.max) }}</td>
-                                        <td>{{ getData(item.value, item.min, item.max) }}</td>
-                                        <td>{{ getData(item.value, item.min, item.max) }}</td>
-                                        <td>{{ getData(item.value, item.min, item.max) }}</td>
-                                        <td>{{ getData(item.value, item.min, item.max) }}</td>
-                                        <td>{{ getData(item.value, item.min, item.max) }}</td>
+                                        <th>{{ item.name }}</th>
+                                        <td>{{ getRandomArbitrary(item.min, item.max) }}</td>
+                                        <td>{{ getRandomArbitrary(item.min, item.max) }}</td>
+                                        <td>{{ getRandomArbitrary(item.min, item.max) }}</td>
+                                        <td>{{ getRandomArbitrary(item.min, item.max) }}</td>
+                                        <td>{{ getRandomArbitrary(item.min, item.max) }}</td>
+                                        <td>{{ getRandomArbitrary(item.min, item.max) }}</td>
+                                        <td>{{ getRandomArbitrary(item.min, item.max) }}</td>
+                                        <td>{{ getRandomArbitrary(item.min, item.max) }}</td>
+                                    </tr>
+                                </tbody>
+                            </template>
+                        </v-simple-table>
+                    </template>
+                </div>
+                <div class="legend-table">
+                    <template>
+                        <v-simple-table fixed-header height="500px">
+                            <template v-slot:default>
+                                <thead>
+                                    <tr>
+                                        <th>Cấp độ rủi ro</th>
+                                        <th>Mô tả chi tiết</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="background-color: blue;">Cấp 1 (Rủi ro thấp)</td>
+                                        <td>
+                                            - Ít có khả năng gây thiệt hại về người, vật nuôi. <br>
+                                            - Ít thiệt hại đến tài sản, công trình hạ tầng. <br>
+                                            - Tác hại ít đến môi trường.
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="background-color: gold;">Cấp 2 (Rủi ro trung bình)</td>
+                                        <td>
+                                            - Có khả năng gây thiệt hại về người, vật nuôi. <br>
+                                            - Thiệt hại đáng kể đến tài sản, công trình hạ tầng. <br>
+                                            - Tác hại tương đối lớn đến môi trường.
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="background-color: orange;">Cấp 3 (Rủi ro lớn)</td>
+                                        <td>
+                                            - Nhiều khả năng gây thiệt hại về người, vật nuôi. <br>
+                                            - Thiệt hại lớn đến tài sản, công trình hạ tầng. <br>
+                                            - Có tác động rất xấu và để lại hậu quả nghiêm trọng đến môi trường.
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="background-color: red;">Cấp 4 (Rủi ro rất lớn)</td>
+                                        <td>
+                                            - Có khả năng gây thiệt hại lớn về người, vật nuôi. <br>
+                                            - Thiệt hại nặng nề về tài sản, công trình hạ tầng. <br>
+                                            - Môi trường bị phá hủy, để lại hậu quả lâu dài.
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="background-color: purple;">Cấp 5 (Thảm họa)</td>
+                                        <td>
+                                            - Thiệt hại rất lớn về người, vật nuôi. <br>
+                                            - Phá hủy tài sản, các công trình hạ tầng. <br>
+                                            - Môi trường bị tàn phá nặng nề, hậu quả nghiêm trọng và lâu dài.
+                                        </td>
                                     </tr>
                                 </tbody>
                             </template>
