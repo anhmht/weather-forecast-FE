@@ -212,12 +212,12 @@ export const ICON = [
     },
     {
         description: 'Nhiều mây, có mưa, mưa rào',
-        url: 'https://weatherstoragevn.blob.core.windows.net/images/icons/4101-4201-4301-4401-4601.png',
+        url: 'https://weatherstoragevn.blob.core.windows.net/images/icons/4101-4201-4301-4401-4601.gif',
         id: '4301'
     },
     {
         description: 'Nhiều mây, có mưa vừa',
-        url: 'https://weatherstoragevn.blob.core.windows.net/images/icons/4101-4201-4301-4401-4601.png',
+        url: 'https://weatherstoragevn.blob.core.windows.net/images/icons/4101-4201-4301-4401-4601.gif',
         id: '4401'
     },
     {
@@ -227,7 +227,7 @@ export const ICON = [
     },
     {
         description: 'Nhiều mây, có mưa to',
-        url: 'https://weatherstoragevn.blob.core.windows.net/images/icons/4101-4201-4301-4401-4601.png',
+        url: 'https://weatherstoragevn.blob.core.windows.net/images/icons/4101-4201-4301-4401-4601.gif',
         id: '4601'
     },
     {
