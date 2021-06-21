@@ -237,6 +237,7 @@ export default class ScenarioComponent extends Vue {
             this.makeSortAbleList();
         }).catch(err => {
             console.log(err);
+            this.isLoading = false
         })
     }
 

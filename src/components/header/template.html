@@ -3,7 +3,7 @@
         <div class="base-container-header-logo" @click="handleClick">
             <img src="/static/img/header/logo.png" />
         </div>
-        <menu-bar :class="menuClick ? 'show' : ''"/>
+        <menu-bar :class="menuClick ? 'show' : ''" @close-menu="handleClose"/>
         <div class="nav-click" :class="menuClick ? 'active' : ''" @click="menuClick = !menuClick">
             <span></span>
         </div>

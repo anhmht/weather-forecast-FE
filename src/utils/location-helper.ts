@@ -24,26 +24,16 @@ export const getIpAddress = () => new Promise(async (resolve, reject) => {
 
 export const displayLocation = (coordinate = null)  => new Promise( async (resolve) => {
     var locationService = new LocationServices();
-    let lon = null;
-    let lat = null;
-    if (coordinate) {
-        lon = coordinate.lon;
-        lat = coordinate.lat;
-    } else {
-        const position = await getCurrentLocation() as any;
-        lon = position.coords.longitude;
-        lat = position.coords.latitude
-    }
+    const ipAddress = await getIpAddress() as any;
     const cached = sessionStorage.getItem('position');
     if (cached) {
         resolve(JSON.parse(cached));
     } else {
-        const ipAddress = await getIpAddress() as any;
-        locationService.getCurrentLocation(lat, lon, ipAddress).then((res: any) => {
+        locationService.getCurrentLocation(ipAddress).then((res: any) => {
             let regionCode = res.region_code;
             let region = res.region_name;
-            sessionStorage.setItem('position', JSON.stringify({ lat, lon, regionCode, region }));
-            resolve({ lat, lon, regionCode, region });
+            sessionStorage.setItem('position', JSON.stringify({ ipAddress, regionCode, region }));
+            resolve({ regionCode, region });
         }).catch(error => {
             console.log(error);
         })

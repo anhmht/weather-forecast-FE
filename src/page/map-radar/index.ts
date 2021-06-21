@@ -62,6 +62,8 @@ export default class HomePageComponent extends Vue {
         temp: [],
         station: []
     }
+    isWebView: boolean = false;
+    menuClick: boolean = false;
 
     handleBack() {
         this.$router.push(PATH.INFO);
@@ -149,6 +151,7 @@ export default class HomePageComponent extends Vue {
     }
 
     async handleChangeRegion(mapData) {
+        this.menuClick = false;
         const { map } = this.windy;
         //@ts-ignore
         this.regionGroup = new L.LayerGroup();
@@ -164,11 +167,12 @@ export default class HomePageComponent extends Vue {
         this.addPopUPLayer(mapData.provinceIds);
         this.layerGroup.addLayer(this.regionGroup);
         if (mapData.zoom) {
-            map.setZoom(mapData.zoom)
+            map.setZoom(this.isWebView ? mapData.zoom -1 : mapData.zoom)
         }
     }
 
     async handleChangeLocation(mapData) {
+        this.menuClick = false;
         const { map } = this.windy;
         //Remove geojson layer
         // Move map with Geojson data
@@ -346,6 +350,13 @@ export default class HomePageComponent extends Vue {
         }
     }
 
+    created() {
+        const webView = (this as any).$route.query.isWebview;
+        this.isWebView = webView ? true : false;
+        console.log(this.isWebView);
+
+    }
+
     async mounted() {
         // this.currentPosition = await displayLocation() as any;
         const options = {
@@ -356,8 +367,6 @@ export default class HomePageComponent extends Vue {
             // Put additional console output
             // verbose: true,
             // Optional: Initial state of the map
-            lat: 16.06778,
-            lon: 108.22083,
             zoom: 7,
         };
 
@@ -415,6 +424,7 @@ export default class HomePageComponent extends Vue {
                     fillOpacity: 0.2
                 }
             });
+            map.flyToBounds(vnBorder.getBounds(), { maxZoom: 12, duration: 1.5, easeLinearity: 0.2 });
             this.layerGroup.addLayer(vnBorder);
             this.layerGroup.addTo(map);
         });

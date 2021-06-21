@@ -14,4 +14,8 @@ export default class HeaderComponent extends Vue {
     handleClick() {
         this.$router.push(PATH.INFO);
     }
+
+    handleClose() {
+        this.menuClick = false
+    }
 }

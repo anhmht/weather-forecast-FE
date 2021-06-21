@@ -2,6 +2,13 @@
     #windy {
         width: 100%;
         height: 100vh;
+        &.resize {
+            height: calc(100vh - 300px);
+        }
+
+    }
+    .result {
+        height: 300px;
     }
     #logo {
         display: none;
@@ -40,6 +47,16 @@
         top:  20px;
         &-row {
             display: flex;
+        }
+        &.webview {
+            position: fixed;
+            width: 38px;
+            height: 38px;
+            cursor: pointer;
+            display: none;
+            top: 19px;
+            right: 31px;
+            z-index: 999;
         }
     }
 }
@@ -124,4 +141,91 @@
             width: 50px;
         }
     }
+}
+
+.menu-icon {
+    position: fixed;
+    width: 38px;
+    height: 38px;
+    cursor: pointer;
+    display: none;
+    top: 20px;
+    left: 20px;
+    z-index: 999;
+    &::before, &::after {
+        content: '';
+        background-color: #fff;
+        position: absolute;
+        top: 9px;
+        left: 0px;
+        width: 35px;
+        height: 3px;
+        pointer-events: none;
+        -webkit-transition: all 150ms ease-in-out;
+        transition: all 150ms ease-in-out;
+        -webkit-transform-origin: 50% 50%;
+        transform-origin: 50% 50%;
+    }
+    &::after {
+        top: 27px;
+    }
+    span {
+        content: '';
+        background-color: #fff;
+        position: absolute;
+        top: 18px;
+        left: 0px;
+        width: 35px;
+        height: 3px;
+        pointer-events: none;
+        -webkit-transition: all 150ms ease-in-out;
+        transition: all 150ms ease-in-out;
+    }
+    &.active {
+        &::before {
+            width: 70%;
+            left: 17%;
+            -webkit-transform: rotate3d(0, 0, 1, 45deg);
+            transform: rotate3d(0, 0, 1, 45deg);
+            top: 43%;
+        }
+        &::after {
+            width: 70%;
+            left: 15%;
+            -webkit-transform: rotate3d(0, 0, 1, -45deg);
+            transform: rotate3d(0, 0, 1, -45deg);
+            top: 41%;
+        }
+        span {
+            opacity: 0
+        }
+    }
+}
+
+@media all and (min-width: 320px) and (max-width: 1000px) {
+    .menu-icon {
+        display: block;
+        right: 20px;
+    }
+    .tool-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 300px;
+        height: 100vh;
+        background-color: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), rgba(121, 120, 120, 0.5);
+        max-width: 100%;
+        -webkit-transition: all 0.3s ease-in-out;
+        transition: all 0.3s ease-in-out;
+        z-index: 999;
+        -webkit-transform: translateX(-170%);
+        transform: translateX(-170%);
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        &.show {
+            -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
 }

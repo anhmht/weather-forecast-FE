@@ -3,8 +3,8 @@ import { GenericServices } from "../generic-service/generic.service";
 import Uri from "@/constant/uri/user-constant";
 
 export class LocationServices extends GenericServices {
-    getCurrentLocation(lat: number, lon: number, ipAddress: string): Promise<ApiResponse> {
-        return this.executeSelecting({ lat, lon, ipAddress }, Uri.getCurrentLocation).then((response: ApiResponse) => {
+    getCurrentLocation(ipAddress: string): Promise<ApiResponse> {
+        return this.executeSelecting({ ipAddress }, Uri.getCurrentLocation).then((response: ApiResponse) => {
             return Promise.resolve(response)
         }).catch(error => Promise.reject(error))
     }
