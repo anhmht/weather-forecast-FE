@@ -11,6 +11,11 @@ const SocialPageComponent = () => import("../page/social/SocialPageComponent.vue
 const LoginPageComponent = () => import("../page/login/LoginPageComponent.vue");
 const PageNotFoundComponent = () => import("../page/not-found/PageNotFoundComponent.vue");
 
+const UserProfileComponent = () => import("../page/user-profile/UserProfileComponent.vue");
+const UserInfoComponent = () => import("../page/user-profile/components/user-info/UserInfoComponent.vue");
+const SocialPostComponent = () => import("../page/user-profile/components/social-post/SocialPostComponent.vue");
+const ChangePasswordComponent = () => import("../page/user-profile/components/change-password/ChangePasswordComponent.vue");
+
 const AdminComponent = () => import("../page/cms/CMSComponent.vue");
 const ListPostComponent = () => import("../page/cms/components/list-posts/ListPostComponent.vue")
 const CreatePostComponent = () => import("../page/cms/components/create-post/CreatePostComponent.vue")
@@ -86,6 +91,48 @@ const homeRoutes = [
     }
 ];
 
+const userProfileRoutes = [
+    {
+        path: PATH.USER_PROFILE,
+        name: ROUTE_NAME.USER_PROFILE,
+        component: UserProfileComponent,
+        props: {},
+        meta: {
+            requiresAuth: true
+        },
+        children: [
+            { path: PATH.USER_PROFILE, redirect: { path: PATH.USER_INFO } },
+            {
+                path: PATH.USER_INFO,
+                name: ROUTE_NAME.USER_INFO,
+                component: UserInfoComponent,
+                meta: {
+                    requiresAuth: true
+                },
+                props: {}
+            },
+            {
+                path: PATH.SOCIAL_POST,
+                name: ROUTE_NAME.SOCIAL_POST,
+                component: SocialPostComponent,
+                meta: {
+                    requiresAuth: true
+                },
+                props: {}
+            },
+            {
+                path: PATH.CHANGE_PASSWORD,
+                name: ROUTE_NAME.CHANGE_PASSWORD,
+                component: ChangePasswordComponent,
+                meta: {
+                    requiresAuth: true
+                },
+                props: {}
+            },
+        ]
+    },
+]
+
 const adminRoutes = [
     {
         path: PATH.ADMIN,
@@ -148,5 +195,6 @@ const adminRoutes = [
 
 export default [
     ...homeRoutes,
-    ...adminRoutes
+    ...adminRoutes,
+    ...userProfileRoutes
 ]

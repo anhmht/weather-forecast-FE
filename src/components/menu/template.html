@@ -1,6 +1,23 @@
 <div class="base-header-menu">
-    <div class="base-header-menu-item" :class="isActive === index ? 'active' : ''" v-for="(item,index) in menuItems" @click="handleClick(index)">
+    <div v-if="isShowLoginButton(item.path)" class="base-header-menu-item" :class="isActive === index ? 'active' : ''"
+        v-for="(item,index) in menuItems" @click="handleClick(index)">
         {{item.name}}
     </div>
-    
+    <v-menu v-if="checkIsLogin()" open-on-hover bottom offset-y>
+        <template v-slot:activator="{ on, attrs }">
+            <div v-bind="attrs" v-on="on" class="base-header-menu-item login" @click="handleUserProfile">
+                <v-avatar color="teal" size="30">
+                    <span class="white--text">TA</span>
+                </v-avatar> <span v-if="loginInfo">{{loginInfo.userName}}</span>
+            </div>
+        </template>
+        <v-list>
+            <v-list-item>
+                <v-list-item-content>
+                    <v-list-item-title @click="handleMoveToAdmin" class="base-header-menu--sub">Trang Quản lý</v-list-item-title>
+                </v-list-item-content>
+            </v-list-item>
+        </v-list>
+    </v-menu>
+
 </div>

@@ -1,12 +1,17 @@
+import { EVENT_BUS } from './../../constant/event-bus-constant';
+import { getLocalStorage } from '@/utils/appConfig';
+import { Watch } from 'vue-property-decorator';
 import { PATH } from "@/constant/route-constant";
 import Vue from "vue";
 import Component from "vue-class-component";
+import EventBus from '@/utils/event-bus';
 
 @Component({
     template: require("./template.html").default
 })
 export default class MenuComponent extends Vue {
     isActive: Number = 0;
+    loginInfo: any = null;
     get menuItems() {
         return [
             {
@@ -40,6 +45,24 @@ export default class MenuComponent extends Vue {
         ];
     }
 
+    isShowLoginButton(path) {
+        if (path === PATH.LOGIN && this.checkIsLogin()) {
+            return false;
+        }
+        return true;
+    }
+
+    checkIsLogin() {
+        if (this.loginInfo) {
+            return true;
+        }
+        return false;
+    }
+
+    handleUserProfile() {
+        this.$router.push(PATH.USER_PROFILE);
+    }
+
     handleClick(index) {
         this.isActive = index;
         const type = this.menuItems[index];
@@ -56,7 +79,27 @@ export default class MenuComponent extends Vue {
         this.isActive = index;
     }
 
+    handleCheckLogin() {
+        this.loginInfo = getLocalStorage('auth');
+    }
+
+    handleMoveToAdmin() {
+        this.$router.push(PATH.ADMIN);
+    }
+
     mounted() {
+        this.loginInfo = getLocalStorage('auth');
         this.setActiveMenu();
+        EventBus.$on(EVENT_BUS.LOGIN, this.handleCheckLogin)
+    }
+
+    beforeDestroy() {
+        EventBus.$off(EVENT_BUS.LOGIN, this.handleCheckLogin)
+    }
+
+    @Watch('$route.path')
+    handleRouteChange(val) {
+        const index = this.menuItems.findIndex(x => this.$route.path.includes(x.path));
+        this.isActive = index;
     }
 }
