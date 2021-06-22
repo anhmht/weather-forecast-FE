@@ -8,6 +8,7 @@ export const ROUTE_NAME = {
     TIME: 'time',
     ICON: 'icon',
     SOCIAL: 'social',
+    USER_PROFILE: 'user-profile',
     NOT_FOUND: 'not-found',
     LOGIN: 'login',
     MANAGEMENT: 'management',
@@ -17,6 +18,9 @@ export const ROUTE_NAME = {
     DELETE_POST: 'deletePost',
     LIST_ICON: 'listIcon',
     LIST_DATA: 'listData',
+    USER_INFO: 'user-info',
+    SOCIAL_POST: 'social-post',
+    CHANGE_PASSWORD: 'change-password',
 }
 
 export const PATH = {
@@ -29,6 +33,10 @@ export const PATH = {
     ICON: '/icon',
     SOCIAL: '/social',
     NOT_FOUND: '/not-found',
+    USER_PROFILE: '/user-profile',
+    USER_INFO: '/user-info',
+    SOCIAL_POST: '/social-post',
+    CHANGE_PASSWORD: '/change-password',
     LOGIN: '/login',
     MANAGEMENT: '/management',
     ADMIN: '/admin',

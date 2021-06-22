@@ -297,6 +297,7 @@ export default class HomePageComponent extends Vue {
                 vm.videoStream .start();
             })
             .catch(err => {
+                this.handleClearTimeout()
                 vm.isRecording = false;
             });
     }

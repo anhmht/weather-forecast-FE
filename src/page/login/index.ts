@@ -1,8 +1,10 @@
+import { EVENT_BUS } from './../../constant/event-bus-constant';
 import { UserServices } from './../../service/user-service/user.service';
 import Vue from "vue";
 import Component from "vue-class-component";
 import { PATH } from '@/constant/route-constant';
 import { setAxiosHeader, setLocalStorage } from '@/utils/appConfig';
+import EventBus from '@/utils/event-bus';
 
 @Component({
     template: require("./template.html").default,
@@ -40,7 +42,8 @@ export default class LoginPageComponent extends Vue {
             }).then(res => {
                 this.isLoading = false;
                 this.setAuthenticate(res);
-                vm.$router.push(PATH.ADMIN);
+                EventBus.$emit(EVENT_BUS.LOGIN);
+                vm.$router.push(PATH.USER_PROFILE);
             }).catch(err => {
                 console.log(err);
                 this.isLoading = false;

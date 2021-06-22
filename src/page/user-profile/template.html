@@ -1,0 +1,23 @@
+<div class="user-profile-container">
+    <base-container>
+        <div class="user-profile-container--section">
+            <div class="user-profile container">
+                <div class="user-profile-menu">
+                    <div :class="index === activeTab ? 'active' : ''" @click="handleClick(item, index)" class="user-profile-menu--item"
+                        v-for="(item, index) in menus" :key="index">
+                        <v-icon>
+                            {{item.icon}}
+                        </v-icon>
+                        {{item.name}} <v-spacer></v-spacer>
+                        <v-icon v-if="index === activeTab">
+                            mdi-chevron-right
+                        </v-icon>
+                    </div>
+                </div>
+                <div class="user-profile-contents">
+                    <router-view></router-view>
+                </div>
+            </div>
+        </div>
+    </base-container>
+</div>

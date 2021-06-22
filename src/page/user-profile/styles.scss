@@ -1,0 +1,38 @@
+.user-profile {
+    display: flex;
+    &-container {
+        &--section {
+            background-color: #eeeeee;
+            padding: 40px;
+        }
+    }
+    &-menu {
+        border-radius: 5px;
+        background: #fff;
+        width: 350px;
+        &--item {
+            cursor: pointer;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            border-top: solid 1px #e9e9e9;
+            i {
+                margin-right: 10px;
+                color: #949494;
+            }
+            &.active {
+                color: #2d68c3;
+                i {
+                    color: #2d68c3;
+                }
+            }
+        }
+    }
+    &-contents {
+        background: #fff;
+        border-radius: 5px;
+        padding: 15px;
+        flex: 1;
+        margin-left: 30px;
+    }
+}
