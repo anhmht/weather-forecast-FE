@@ -1,5 +1,4 @@
 import { DATE } from '@/constant/common-constant';
-import { ForecastServices } from '@/service/forecast-service/forecast.service';
 import { WeatherServices } from '@/service/weather-service/weather.service';
 import { DataHelper } from '@/utils/data-helper';
 import moment from 'moment';
@@ -24,7 +23,6 @@ export default class WeatherToolComponent extends Vue {
     selectedDate: number = 0;
     selectedHours: number = null;
     currentDay: string = null;
-    forecastService: ForecastServices = new ForecastServices();
     weatherService: WeatherServices = new WeatherServices();
     dataResult: any = null;
     searchParam: IForecastSearchParam = new ForecastSearchParam();
@@ -175,18 +173,6 @@ export default class WeatherToolComponent extends Vue {
         return DataHelper.getDataByDateHour(data, date, Number(hour));
     }
 
-    /* getTemprature() {
-        this.isLoading = true;
-        this.forecastService.getTemperatureByStation(this.stationInfo.id).then((res: any) => {
-            this.prepareResult(res, this.context.date, this.context.time);
-            this.context.temp = res;
-            this.isLoading = false;
-        }).catch(err => {
-            console.log(err);
-            this.isLoading = false;
-        })
-    } */
-
     getHorizontal() {
         this.searchParam = new ForecastSearchParam();
         this.isLoading = true;
@@ -262,7 +248,6 @@ export default class WeatherToolComponent extends Vue {
 
     @Watch('stationInfo')
     handleChangeStationInfo(val, old) {
-        // this.getTemprature();
         this.getHorizontal();
     }
 }

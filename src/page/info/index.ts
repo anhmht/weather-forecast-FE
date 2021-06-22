@@ -1,19 +1,16 @@
-import { WEATHER_TYPE } from './../../constant/common-constant';
+import { WEATHER_TYPE } from '@/constant/forcast-station-constant';
 import { Action } from 'vuex-class';
 import { Getter } from 'vuex-class';
 import { namespace } from 'vuex-class';
 import Vue from "vue";
 import Component from "vue-class-component";
 import { Carousel, Slide } from 'vue-carousel';
-// import { ForecastServices } from "@/service/forecast-service/forecast.service";
-// import { displayLocation } from "@/utils/location-helper";
 import { STATION } from "@/constant/forcast-station-constant";
 import { ROUTE_NAME } from "../../constant/route-constant";
 import { PostServices } from '../../service/post-service/post.service';
 import { CategoryServices } from '../../service/category-service/category.service';
 import { displayLocation } from "@/utils/location-helper";
 import { DataHelper } from "@/utils/data-helper";
-// import { DATE } from "@/constant/common-constant";
 import { storeModules } from '@/store';
 import lookupTypesStore from '@/store/lookup/lookup-types.store';
 import IStatus from '@/model/status/status.model';
@@ -155,9 +152,9 @@ export default class InfoPageComponent extends Vue {
             searchParam.stationIds = [station.id];
             searchParam.fromDate = moment().format("YYYY-MM-DD");
             searchParam.toDate = moment(searchParam.fromDate).add(1, 'days').subtract(1, 'minutes').format();
-            searchParam.weatherTypes = [WEATHER_TYPE.WEATHER];
+            searchParam.weatherTypes = [WEATHER_TYPE.Weather];
             this.weatherService.getHorizontal(searchParam).then((res: any) => {
-                const data = res.getWeatherInformationHorizontals.find(x => x.weatherType === WEATHER_TYPE.WEATHER);
+                const data = res.getWeatherInformationHorizontals.find(x => x.weatherType === WEATHER_TYPE.Weather);
                 const mostFrequentIcon = DataHelper.getMostFrequentIcon(data, 0);
                 const icon = ICON.find(x => x.id === mostFrequentIcon)
                 if (icon) {
@@ -186,9 +183,9 @@ export default class InfoPageComponent extends Vue {
             searchParam.stationIds = [station.id];
             searchParam.fromDate = moment().format("YYYY-MM-DD");
             searchParam.toDate = moment(searchParam.fromDate).add(1, 'days').subtract(1, 'minutes').format();
-            searchParam.weatherTypes = [WEATHER_TYPE.TEMPERATURE];
+            searchParam.weatherTypes = [WEATHER_TYPE.Temperature];
             this.weatherService.getDetail(searchParam).then((res: any) => {
-                const minMaxTemp = res.weatherInformationByStations.find(x => x.weatherType === WEATHER_TYPE.TEMPERATURE);
+                const minMaxTemp = res.weatherInformationByStations.find(x => x.weatherType === WEATHER_TYPE.Temperature);
                 this.temparatureData = {
                     ... this.temparatureData,
                     current: minMaxTemp.weatherInformationByDays[0].weatherInformationByHours.find(x => x.hour === moment().hour()).value,

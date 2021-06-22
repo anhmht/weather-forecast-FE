@@ -1,8 +1,7 @@
 import { PATH } from './../../constant/route-constant';
 import { getGeoJson } from './../../utils/location-helper';
-// import { displayLocation } from '@/utils/location-helper';
 import { STATION } from '@/constant/forcast-station-constant';
-import { ForecastServices } from '@/service/forecast-service/forecast.service';
+import { WeatherServices } from '@/service/weather-service/weather.service';
 import Vue from 'vue';
 import Component from "vue-class-component";
 import { DataHelper } from '@/utils/data-helper';
@@ -10,6 +9,8 @@ import moment from 'moment';
 import { ICON } from '@/constant/icon-constant';
 import { sleep } from '@/utils/common-utils';
 import { Watch } from 'vue-property-decorator';
+import { IForecastSearchParam, ForecastSearchParam } from '@/model/forecast';
+import { WEATHER_TYPE } from '@/constant/forcast-station-constant';
 
 const COLOR = [
     'red', 'green', 'blue', 'yellow', 'DeepPink', 'DeepSkyBlue', 'GreenYellow', 'Lime', 'Thistle', 'NavajoWhite',
@@ -34,7 +35,8 @@ export default class HomePageComponent extends Vue {
     isReview: boolean = false;
     isHideIconPicker: boolean = true;
     isDisplayDialog: boolean = false;
-    forecastService: ForecastServices = new ForecastServices();
+    weatherService: WeatherServices = new WeatherServices();
+    searchParam: IForecastSearchParam = new ForecastSearchParam();
 
     layerGroup: any;
     layerProvice: any;
@@ -80,7 +82,7 @@ export default class HomePageComponent extends Vue {
                             <div class="map-pop-up-name">${station.ten}</div>
                             <div class="map-pop-up-data">
                                 <div class="map-pop-up-data--image"><img src="${iconUrl.url}"/></div>
-                                <div class="map-pop-up-data--temp">${temp}℃</div>
+                                <div class="map-pop-up-data--temp">${temp}°C</div>
                             </div>
                         </div>`);
                 this.layerPopup._layers[element].update();
@@ -109,20 +111,30 @@ export default class HomePageComponent extends Vue {
         store.set("level", data);
     }
 
-    getTemprature(station) {
-        return new Promise((resolve, reject) => {
-            this.forecastService.getTemperatureByStation(station.id).then((res) => {
-                resolve(res);
-            }).catch(err => {
-                console.log(err);
-            })
-        })
-    }
+    getHorizontal(ids) {
+        let stationId: any = [];
+        ids.forEach(element => {
+            const station = STATION.find(x => x.place_id === element);
+            if (station) {
+                stationId.push(station.id);
+            }
+        });
 
-    getIcon(station) {
+        this.searchParam = new ForecastSearchParam();
+        this.searchParam.stationIds = stationId;
+        this.searchParam.fromDate = moment().format("YYYY-MM-DD");
+        this.searchParam.toDate = moment().format("YYYY-MM-DD");
+        this.searchParam.weatherTypes = [
+            WEATHER_TYPE.Temperature,
+            WEATHER_TYPE.Weather
+        ];
+
         return new Promise((resolve, reject) => {
-            this.forecastService.getIconWeather(station.id).then((res) => {
-                resolve(res);
+            this.weatherService.getHorizontal(this.searchParam).then((res: any) => {
+                let tempArray = res.getWeatherInformationHorizontals.filter(x => x.weatherType === WEATHER_TYPE.Temperature);
+                let iconArray = res.getWeatherInformationHorizontals.filter(x => x.weatherType === WEATHER_TYPE.Weather);
+
+                resolve([tempArray, iconArray]);
             }).catch(err => {
                 console.log(err);
             })
@@ -226,11 +238,16 @@ export default class HomePageComponent extends Vue {
         // @ts-ignore
         this.layerPopup = new L.LayerGroup();
         this.layerGroup.addLayer(this.layerPopup);
+
+        const returnPromise = await this.getHorizontal(ids);
+        const tempArray = returnPromise[0];
+        const iconArray = returnPromise[1];
+
         ids.forEach(async element => {
             const station = STATION.find(x => x.place_id === element);
             if (station) {
-                const contextTemp = await this.getTemprature(station);
-                const contextIcon = await this.getIcon(station);
+                const contextTemp = tempArray.filter(x => x.stationId === station.id)[0];
+                const contextIcon = iconArray.filter(x => x.stationId === station.id)[0];
                 this.context.temp.push(contextTemp);
                 this.context.icon.push(contextIcon);
                 this.context.station.push(station);
@@ -244,7 +261,7 @@ export default class HomePageComponent extends Vue {
                             <div class="map-pop-up-name">${station.ten}</div>
                             <div class="map-pop-up-data">
                                 <div class="map-pop-up-data--image"><img src="${iconUrl.url}"/></div>
-                                <div class="map-pop-up-data--temp">${temp}℃</div>
+                                <div class="map-pop-up-data--temp">${temp}°C</div>
                             </div>
                         </div>`)
                 this.layerPopup.addLayer(layer);
