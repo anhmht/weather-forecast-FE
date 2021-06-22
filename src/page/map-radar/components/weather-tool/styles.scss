@@ -1,32 +1,96 @@
-.weahter-tool {
-    &-picker {
-        width: fit-content;
-        display: flex;
-        background: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5)), rgba(121, 120, 120, 0.5);
-        color: #fff;
-        padding: 10px;
-        > span {
-            margin: 0 10px;
-        }
-        &-list {
-            background: linear-gradient(rgb(0 0 0), rgb(0 0 0 / 67%)), rgba(121, 120, 120, 0.5)  !important;
-            &--item {
-                .v-list-item__title {
-                    color: #fff !important;
+// .weahter-tool {
+//     &-picker {
+//         width: fit-content;
+//         display: flex;
+//         background: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5)), rgba(121, 120, 120, 0.5);
+//         color: #fff;
+//         padding: 10px;
+//         > span {
+//             margin: 0 10px;
+//         }
+//         &-list {
+//             background: linear-gradient(rgb(0 0 0), rgb(0 0 0 / 67%)), rgba(121, 120, 120, 0.5)  !important;
+//             &--item {
+//                 .v-list-item__title {
+//                     color: #fff !important;
+//                 }
+//             }
+//         }
+//     }
+//     &-result {
+//         position: relative;
+//         min-height: 280px;
+//         margin-top: 20px;
+//         background: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5)), rgba(121, 120, 120, 0.5);
+//         color: #fff;
+//         padding: 20px;
+//     }
+// }
+// .v-menu__content {
+//     min-width: none;
+//     max-height: 400px;
+// }
+.overlay-wind[data-map='sznmap'] {
+    overflow: hidden;
+}
+@media all and (min-width: 320px) and (max-width: 700px) {
+    
+    .weahter-tool {
+        font-size: 13px;
+        
+        &-picker {
+            background: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5)), rgba(121, 120, 120, 0.5);
+            color: #fff;
+            padding: 10px;
+            width: 100%;
+            text-align: center;
+            > div {
+                display: inline-block;
+            }
+            > span {
+                margin: 0 10px;
+            }
+            &-list {
+                background: linear-gradient(rgb(0 0 0), rgb(0 0 0 / 67%)), rgba(121, 120, 120, 0.5)  !important;
+                &--item {
+                    .v-list-item__title {
+                        color: #fff !important;
+                    }
                 }
             }
         }
+        &-result {
+            position: relative;
+            background: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5)), rgba(121, 120, 120, 0.5);
+            color: #fff;
+            padding: 20px;
+            padding-top: 0;
+            border-top:1px solid rgba(255, 255, 255, 0.1);
+            height: 261px;
+            overflow: auto;
+            &--header {
+                display: none;
+            }
+            &--body {
+            }
+        }
     }
-    &-result {
-        position: relative;
-        min-height: 280px;
-        margin-top: 20px;
-        background: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5)), rgba(121, 120, 120, 0.5);
-        color: #fff;
-        padding: 20px;
+    .v-menu__content {
+        min-width: none;
+        max-height: 400px;
     }
-}
-.v-menu__content {
-    min-width: none;
-    max-height: 400px;
+    #windy {
+        .leaflet-popup-content {
+            margin: 5px;
+            font-size: 12px;
+            width: 90px !important;
+            .map-pop-up {
+                font-size: 13px;
+                img {
+                    width: 30px;
+                }
+            }
+        }
+
+    }
 }

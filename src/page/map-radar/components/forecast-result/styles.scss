@@ -7,24 +7,22 @@
         &--body {
             padding-top: 10px;
             &_temp {
-                display: flex;
-                width: 280px;
                 > div {
-                    width: 50%;
+                    display: inline-block;
+                    vertical-align: middle;
+                    margin-right: 20px;
                 }
                 &--value {
-                    display: flex;
                     align-items: center;
                     justify-content: center;
-                    font-size: 70px;
+                    font-size: 40px;
                     text-align: center;
                 }
                 &--icon {
-                    display: flex;
                     align-items: center;
                     justify-content: center;
                     img {
-                        width: 100px;
+                        width: 50px;
                     }
                 }
             }
