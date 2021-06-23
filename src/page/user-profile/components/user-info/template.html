@@ -1,3 +1,72 @@
 <div class="user-info">
-    User info
+    <div class="user-info-header">
+        Thông tin tài khoản
+    </div>
+    <div class="user-info-body">
+        <div class="user-info-form">
+            <v-form ref="form" v-model="isValid" lazy-validation>
+                <div class="user-info-form--item">
+                    <div class="user-info-form--item_label">
+                        Ảnh đại diện
+                    </div>
+                    <div class="user-info-form--item_content">
+                        <div class="user-info-form--avatar">
+                            <div class="user-info-form--avatar_image">
+                                <img :src="uploadedDocs" />
+                                <v-progress-circular v-if="progress > 0" class="progress-bar" :rotate="-90" :size="100" :width="15"
+                                    :value="progress" color="primary">
+                                    {{ progress }}
+                                </v-progress-circular>
+                            </div>
+                            <div class="user-info-form--avatar_button">
+                                <input ref="upload" type="file" @change="onChangeDocuments($event.target.files)" title="" hidden
+                                    accept="image/*" />
+                                <v-btn color="#707070" outlined raised @click="handleClickBrowse">Upload Hình</v-btn>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="user-info-form--item">
+                    <div class="user-info-form--item_label">
+                        Tên tài khoản
+                    </div>
+                    <div class="user-info-form--item_content">
+                        <div>
+                            <v-text-field :rules="rules.username" v-model="data.username" label="Tên tài khoản" outlined></v-text-field>
+                        </div>
+                    </div>
+                </div>
+                <div class="user-info-form--item">
+                    <div class="user-info-form--item_label">
+                        E-mail
+                    </div>
+                    <div class="user-info-form--item_content">
+                        <div>
+                            <v-text-field :rules="rules.email"  v-model="data.email"  label="E-mail" outlined></v-text-field>
+                        </div>
+                    </div>
+                </div>
+                <div class="user-info-form--item">
+                    <div class="user-info-form--item_label">
+                        Số điện thoại
+                    </div>
+                    <div class="user-info-form--item_content">
+                        <div>
+                            <v-text-field label="Số điện thoại" v-model="data.phone" outlined></v-text-field>
+                        </div>
+                    </div>
+                </div>
+                <div class="user-info-form--item">
+                    <div class="user-info-form--item_label">
+                    </div>
+                    <div class="user-info-form--item_content">
+                        <v-btn depressed color="primary" class="save-btn">
+                            Lưu
+                        </v-btn>
+                    </div>
+                </div>
+            </v-form>
+        </div>
+    </div>
+    <loading :is-loading="isLoading" absolute />
 </div>

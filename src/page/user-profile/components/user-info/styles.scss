@@ -1,3 +1,65 @@
 .user-info {
-
+    position: relative;
+    &-header {
+        padding: 20px;
+        font-size: larger;
+        font-weight: 800;
+        border-bottom: 1px solid #cecece;
+    }
+    &-body {
+        padding: 20px;
+        padding-left: 50px;
+        padding-right: 150px;
+    }
+    &-form {
+        margin: auto;
+        &--item {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            &_label {
+                width: 170px;
+                padding: 20px;
+                padding-right: 40px;
+                display: flex;
+                justify-content: flex-end;
+            }
+            &_content {
+                flex: 1;
+            }
+        }
+        &--avatar {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-radius: 3px;
+            border: 1px dashed #cecece;
+            img {
+                width: 100px;
+                height: 100px;
+                object-fit: cover;
+                object-position: center;
+            }
+            &_image {
+                position: relative;
+                display: flex;
+                .progress-bar {
+                    height: 100px;
+                    width: 100px;
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                }
+            }
+            &_button {
+                display: flex;
+                flex: 1;
+                justify-content: center;
+            }
+        }
+        .save-btn {
+            padding: 0 25px !important;
+        }
+    }
 }
