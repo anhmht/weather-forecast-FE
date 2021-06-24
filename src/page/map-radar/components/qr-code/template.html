@@ -1,0 +1,26 @@
+<div class="qr-code">
+    <v-dialog v-model="isDisplayDialog" persistent max-width="500">
+        <div class="qr-code">
+            <div class="qr-code-header">
+                <div class="qr-code-header--title">
+                    Quét mã QR để điều khiển
+                </div>
+                <div class="qr-code-header--action">
+                    <v-btn @click="isDisplayDialog = false" icon color="white">
+                        <v-icon>mdi-close</v-icon>
+                    </v-btn>
+                </div>
+            </div>
+            <div class="qr-code-body">
+                <v-img :src="qrCode" max-width="500" max-height="300" contain>
+                    <template v-slot:placeholder>
+                        <v-row  class="fill-height ma-0" align="center" justify="center">
+                            <v-progress-circular v-if="!qrCode" indeterminate color="grey lighten-5"></v-progress-circular>
+                        </v-row>
+                    </template>
+                </v-img>
+            </div>
+        </div>
+    </v-dialog>
+
+</div>

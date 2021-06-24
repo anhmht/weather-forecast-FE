@@ -45,6 +45,9 @@
             mdi-keyboard-backspace
         </v-icon>
     </v-btn>
+    <v-btn class="qr-code-scan" icon color="white" v-show="!isRecording && !isWebView" @click="visibleQR = !visibleQR">
+        <v-icon>mdi-qrcode-scan</v-icon>
+    </v-btn>
 
     <v-dialog  v-model="isDisplayDialog" persistent max-width="1400">
         <div class="preview-dialog">
@@ -76,7 +79,7 @@
 
     <scenario-modal v-model="drawer" @preview="handlePreview" @capture="(e) => handlePreview(e,true)"/>
 
-
+    <qr-code v-model="visibleQR"/>
     <div v-if="isRecording && !isReview" style="
         position: fixed;
         top: 0;

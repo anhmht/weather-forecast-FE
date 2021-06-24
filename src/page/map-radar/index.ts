@@ -24,7 +24,8 @@ const COLOR = [
         "location-picker": () => import("./components/location/LocationComponent.vue"),
         "tool-bar": () => import("./components/weather-tool/WeatherToolComponent.vue"),
         "elevation-picker": () => import("./components/elevation/ElevationComponent.vue"),
-        "scenario-modal": () => import("./components/scenario/ScenarioComponent.vue")
+        "scenario-modal": () => import("./components/scenario/ScenarioComponent.vue"),
+        "qr-code": () => import("./components/qr-code/QRCodeComponent.vue")
     }
 })
 export default class HomePageComponent extends Vue {
@@ -35,6 +36,7 @@ export default class HomePageComponent extends Vue {
     isReview: boolean = false;
     isHideIconPicker: boolean = true;
     isDisplayDialog: boolean = false;
+    visibleQR: boolean = false;
     weatherService: WeatherServices = new WeatherServices();
     searchParam: IForecastSearchParam = new ForecastSearchParam();
 

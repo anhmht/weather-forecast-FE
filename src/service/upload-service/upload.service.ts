@@ -31,6 +31,31 @@ export class UploadServices extends GenericServices {
             });
     }
 
+    uploadAvatar(formData, config, id = null) {
+        return this.executeSelectingPost(formData, Uri.uploadAvatar, {
+            ...config, cancelToken: new this.CancelToken((c) => {
+                // An executor function receives a cancel function as a parameter
+                this.cancels.push({ cancel: c, id });
+            })
+        })
+            .then((response: any) => {
+                const index = this.cancels.findIndex(x => x.id === id);
+                this.cancels.splice(index, 1);
+                return Promise.resolve(response.url);
+            })
+            .catch(ex => {
+                const index = this.cancels.findIndex(x => x.id === id);
+                this.cancels.splice(index, 1);
+                if (axios.isCancel(ex)) {
+                    console.log('Request canceled', ex.message);
+                } else {
+                    // handle error
+                    console.log(ex)
+                    return Promise.reject(ex)
+                }
+            });
+    }
+
     uploadCSV(formData, config, id = null) {
         return this.executeSelectingPost(formData, Uri.uploadCSV, {
             ...config, cancelToken: new this.CancelToken((c) => {

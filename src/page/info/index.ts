@@ -10,7 +10,6 @@ import { ROUTE_NAME } from "../../constant/route-constant";
 import { PostServices } from '../../service/post-service/post.service';
 import { CategoryServices } from '../../service/category-service/category.service';
 import { displayLocation } from "@/utils/location-helper";
-import { DataHelper } from "@/utils/data-helper";
 import { storeModules } from '@/store';
 import lookupTypesStore from '@/store/lookup/lookup-types.store';
 import IStatus from '@/model/status/status.model';
@@ -155,8 +154,8 @@ export default class InfoPageComponent extends Vue {
             searchParam.weatherTypes = [WEATHER_TYPE.Weather];
             this.weatherService.getHorizontal(searchParam).then((res: any) => {
                 const data = res.getWeatherInformationHorizontals.find(x => x.weatherType === WEATHER_TYPE.Weather);
-                const mostFrequentIcon = DataHelper.getMostFrequentIcon(data, 0);
-                const icon = ICON.find(x => x.id === mostFrequentIcon)
+                const iconId = data[`_${new Date().getHours()}`]
+                const icon = ICON.find(x => x.id === iconId)
                 if (icon) {
                     this.temparatureData = {
                         ... this.temparatureData,

@@ -1,7 +1,10 @@
+import { IUser, User } from './../../../../model/user/user-authenticate.model';
+import { getLocalStorage } from './../../../../utils/appConfig';
 import { UploadServices } from '@/service/upload-service/upload.service';
 import Vue from 'vue';
 import Component from 'vue-class-component';
 import NO_IMAGE from '../../../../../static/img/no-image/no-image.png';
+import { UserServices } from '@/service/user-service/user.service';
 
 @Component({
     template: require("./template.html").default,
@@ -13,21 +16,17 @@ export default class UserInfoComponent extends Vue {
     progress: number = 0;
     isUploading: boolean = false;
     uploadservice: UploadServices = new UploadServices();
+    userService: UserServices = new UserServices();
 
     rules = {
-        username: [v => !!v || 'Vui lòng nhập tên tài khoản'],
+        userName: [v => !!v || 'Vui lòng nhập tên tài khoản'],
         email: [
             v => !!v || 'Vui lòng nhập E-mail',
             v => /.+@.+\..+/.test(v) || 'Định dạng E-mail không đúng',
         ],
     }
 
-    data = {
-        username: null,
-        email: null,
-        imageUrl: null,
-        phone: null
-    }
+    data: IUser = new User({});
     isValid: boolean = false;
 
     handleClickBrowse() {
@@ -91,11 +90,11 @@ export default class UserInfoComponent extends Vue {
                 this.progress = percent;
             }.bind(this)
         };
-        this.uploadservice.upload(formData, config).then(response => {
+        this.uploadservice.uploadAvatar(formData, config).then(response => {
             this.isUploading = false;
             this.toBase64(document.Data);
             this.progress = 0;
-            this.data.imageUrl = response;
+            this.data.avatarUrl = response;
         }).catch(err => {
             this.isUploading = false;
             console.error(err);
@@ -104,7 +103,25 @@ export default class UserInfoComponent extends Vue {
 
     buildUploadDocumentParams(document) {
         const formData = new FormData();
-        formData.append('file', document.Data, document.FileName);
+        const cached = getLocalStorage('auth');
+        formData.append('Image', document.Data, document.FileName);
+        formData.append('UserId', cached.id);
         return formData;
+    }
+
+    handleSave() {
+        this.userService.updateInfo(this.data).then(res => {
+            console.log(res);
+
+        }).catch(err => {
+            console.log(err);
+        })
+    }
+
+    mounted() {
+        const userInfo = getLocalStorage('auth');
+        if(userInfo) {
+            this.data = new User(userInfo);
+        }
     }
 }

@@ -28,11 +28,31 @@
                 </div>
                 <div class="user-info-form--item">
                     <div class="user-info-form--item_label">
+                        Họ
+                    </div>
+                    <div class="user-info-form--item_content">
+                        <div>
+                            <v-text-field v-model="data.lastName" label="Họ" outlined></v-text-field>
+                        </div>
+                    </div>
+                </div>
+                <div class="user-info-form--item">
+                    <div class="user-info-form--item_label">
+                        Tên
+                    </div>
+                    <div class="user-info-form--item_content">
+                        <div>
+                            <v-text-field v-model="data.firstName" label="Tên" outlined></v-text-field>
+                        </div>
+                    </div>
+                </div>
+                <div class="user-info-form--item">
+                    <div class="user-info-form--item_label">
                         Tên tài khoản
                     </div>
                     <div class="user-info-form--item_content">
                         <div>
-                            <v-text-field :rules="rules.username" v-model="data.username" label="Tên tài khoản" outlined></v-text-field>
+                            <v-text-field :rules="rules.userName" v-model="data.userName" label="Tên tài khoản" outlined></v-text-field>
                         </div>
                     </div>
                 </div>
@@ -52,7 +72,7 @@
                     </div>
                     <div class="user-info-form--item_content">
                         <div>
-                            <v-text-field label="Số điện thoại" v-model="data.phone" outlined></v-text-field>
+                            <v-text-field label="Số điện thoại" v-model="data.phoneNumber" outlined></v-text-field>
                         </div>
                     </div>
                 </div>
@@ -60,7 +80,7 @@
                     <div class="user-info-form--item_label">
                     </div>
                     <div class="user-info-form--item_content">
-                        <v-btn depressed color="primary" class="save-btn">
+                        <v-btn depressed color="primary" class="save-btn" @click="handleSave">
                             Lưu
                         </v-btn>
                     </div>
