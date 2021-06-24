@@ -1,35 +1,36 @@
-// .weahter-tool {
-//     &-picker {
-//         width: fit-content;
-//         display: flex;
-//         background: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5)), rgba(121, 120, 120, 0.5);
-//         color: #fff;
-//         padding: 10px;
-//         > span {
-//             margin: 0 10px;
-//         }
-//         &-list {
-//             background: linear-gradient(rgb(0 0 0), rgb(0 0 0 / 67%)), rgba(121, 120, 120, 0.5)  !important;
-//             &--item {
-//                 .v-list-item__title {
-//                     color: #fff !important;
-//                 }
-//             }
-//         }
-//     }
-//     &-result {
-//         position: relative;
-//         min-height: 280px;
-//         margin-top: 20px;
-//         background: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5)), rgba(121, 120, 120, 0.5);
-//         color: #fff;
-//         padding: 20px;
-//     }
-// }
-// .v-menu__content {
-//     min-width: none;
-//     max-height: 400px;
-// }
+.weahter-tool {
+    &-picker {
+        width: fit-content;
+        display: flex;
+        background: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5)), rgba(121, 120, 120, 0.5);
+        color: #fff;
+        padding: 10px;
+        width: 100%;
+        > span {
+            margin: 0 10px;
+        }
+        &-list {
+            background: linear-gradient(rgb(0 0 0), rgb(0 0 0 / 67%)), rgba(121, 120, 120, 0.5)  !important;
+            &--item {
+                .v-list-item__title {
+                    color: #fff !important;
+                }
+            }
+        }
+    }
+    &-result {
+        position: relative;
+        min-height: 280px;
+        margin-top: 20px;
+        background: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5)), rgba(121, 120, 120, 0.5);
+        color: #fff;
+        padding: 20px;
+    }
+}
+.v-menu__content {
+    min-width: none;
+    max-height: 400px;
+}
 .overlay-wind[data-map='sznmap'] {
     overflow: hidden;
 }
@@ -68,6 +69,7 @@
             border-top:1px solid rgba(255, 255, 255, 0.1);
             height: 261px;
             overflow: auto;
+            margin: 0;
             &--header {
                 display: none;
             }
