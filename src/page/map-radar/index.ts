@@ -107,8 +107,6 @@ export default class HomePageComponent extends Vue {
     }
 
     handleChangeLevel(data) {
-        console.log(data);
-
         const { store } = this.windy;
         store.set("level", data);
     }
@@ -248,8 +246,8 @@ export default class HomePageComponent extends Vue {
         ids.forEach(async element => {
             const station = STATION.find(x => x.place_id === element);
             if (station) {
-                const contextTemp = tempArray.filter(x => x.stationId === station.id)[0];
-                const contextIcon = iconArray.filter(x => x.stationId === station.id)[0];
+                const contextTemp = tempArray.find(x => x.stationId === station.id);
+                const contextIcon = iconArray.find(x => x.stationId === station.id);
                 this.context.temp.push(contextTemp);
                 this.context.icon.push(contextIcon);
                 this.context.station.push(station);
@@ -410,14 +408,10 @@ export default class HomePageComponent extends Vue {
             map.baseLayer.options.subdomains = ["mt0", "mt1", "mt2", "mt3"];
             map.options.minZoom = 4;
             map.options.maxZoom = 18;
-            map.baseLayer.setUrl(
-                "https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lines/{z}/{x}/{y}.png"
-            );
-            map.baseLayer.setUrl("https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}",
+            map.baseLayer.setUrl("https://{s}.google.com/vt/lyrs=y&hl=vi&x={x}&y={y}&z={z}",
                 {
                     attribution: "Trung tâm thông tin & dữ liệu KTTV",
-                    minZoom: 4,
-                    maxZoom: 16
+                    maxZoom: 16,
                 });
             map.baseLayer.setOpacity(0.5);
             map.on('zoomend', function () {

@@ -6,6 +6,8 @@ import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import Sortable from "sortablejs";
 import { sleep } from '@/utils/common-utils';
 import { MAP_PROVINCE, REGION, MAP_TYPE } from '@/constant/forcast-station-constant';
+import { ForecastSearchParam, IForecastSearchParam } from '@/model/forecast';
+import { WeatherServices } from '@/service/weather-service/weather.service';
 @Component({
     template: require("./template.html").default,
     components: {
@@ -30,6 +32,8 @@ export default class ScenarioComponent extends Vue {
     visibleConfirm: boolean = false;
     scenario: IScenario = null;
     searchParams: ISearchScenarioParameters = new SearchScenarioParameters({});
+    forcastSearchParam: IForecastSearchParam = new ForecastSearchParam();
+    weatherService: WeatherServices = new WeatherServices();
 
     scenarioService = new ScenarioServices();
     scenarioIndex = 0;
@@ -114,12 +118,80 @@ export default class ScenarioComponent extends Vue {
         return item.data
     }
 
+    // prepareStation() {
+    //     let stations = [];
+    //     let result = []
+    //     stations = this.Contents.filter(x => x.action === 'customLocationControl');
+    //     stations.forEach(item => {
+    //         if (item.method === SCENARIO_LOCATION_METHOD[0].value) {
+    //             const region = REGION.find(x => x.placeId === item.data)
+    //             if(region) {
+    //                 region.provinceIds.forEach(element => {
+    //                     const station = STATION.find(x => x.place_id === element);
+    //                     result.push(station);
+    //                 });
+    //             }
+    //         } else {
+    //             const province = MAP_PROVINCE.find(x => x.placeId === item.data)
+    //             const provinceStation = STATION.find(x => x.id === province.id);
+    //             result.push(provinceStation);
+    //             if(province.districtIds) {
+    //                 province.districtIds.forEach(element => {
+    //                     const station = STATION.find(x => x.place_id === element);
+    //                     result.push(station);
+    //                 });
+    //             }
+    //         }
+    //     });
+    //     result = _.uniq(result);
+
+    //     return result;
+    // }
+
+    // getDataFromServer(ids) {
+    //     let stationId: any = ids;
+    //     this.forcastSearchParam = new ForecastSearchParam();
+    //     this.forcastSearchParam.stationIds = stationId;
+    //     this.forcastSearchParam.fromDate = moment().format("YYYY-MM-DD");
+    //     this.forcastSearchParam.toDate = moment().format("YYYY-MM-DD");
+    //     this.forcastSearchParam.weatherTypes = [
+    //         WEATHER_TYPE.Temperature,
+    //         WEATHER_TYPE.Weather
+    //     ];
+
+    //     return new Promise((resolve, reject) => {
+    //         this.weatherService.getHorizontal(this.forcastSearchParam).then((res: any) => {
+    //             let tempArray = res.getWeatherInformationHorizontals.filter(x => x.weatherType === WEATHER_TYPE.Temperature);
+    //             let iconArray = res.getWeatherInformationHorizontals.filter(x => x.weatherType === WEATHER_TYPE.Weather);
+
+    //             resolve({tempArray, iconArray});
+    //         }).catch(err => {
+    //             console.log(err);
+    //         })
+    //     })
+    // }
+
+    // async prepareData() {
+    //     const result = [];
+    //     const stations = this.prepareStation();
+    //     const data = await this.getDataFromServer(stations.map(x => x.id)) as any;
+    //     stations.forEach(element => {
+    //         result.push({
+    //             ...element,
+    //             tempArray: data.tempArray,
+    //             iconArray: data.iconArray
+    //         })
+    //     });
+    //     console.log(result);
+    // }
+
     handlePreview(isRecord) {
         this.drawer = false;
         if (isRecord) {
             this.$emit('capture', this.Contents);
             return;
         }
+        // this.prepareData();
         this.$emit('preview', this.Contents)
     }
 

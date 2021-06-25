@@ -125,7 +125,7 @@ export class DataHelper {
         const hours = Object.keys(temp).filter(x => x.includes('_'));
         let refDate = Object.keys(temp).filter(x => x.includes('refDate'));
         const diffHours = moment().add(date, 'days').hours(time).diff(moment(temp[refDate[0]]), 'hours');
-        const result = diffHours;
+        const result = diffHours > 0 ? diffHours : 1;
         return temp[hours[result]];
     }
 

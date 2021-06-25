@@ -34,7 +34,7 @@
                                         <br>
                                         Lượng mưa: {{currentDayMinPrecip}} - {{currentDayMaxPrecip}} mm
                                         <br>
-                                        Cấp gió: {{currentDayMinWindLvl}} - {{currentDayMaxWindLvl}}
+                                        Gió giật: {{currentDayMinWindLvl}} - {{currentDayMaxWindLvl}}m/s
                                         <br>
                                         Tốc độ gió: {{currentDayMinWindSpd}} - {{currentDayMaxWindSpd}} m/s
                                         <br>
@@ -62,7 +62,7 @@
                                                 Lượng mưa: {{item.precip}}
                                             </div>
                                             <div class="time-page-container_section_1_main--next_wind_lvl">
-                                                Cấp gió: {{item.windLvl}}
+                                                Gió giật: {{item.windLvl}} m/s
                                             </div>
                                             <div class="time-page-container_section_1_main--next_wind_spd">
                                                 Tốc độ gió: {{item.windSpd}}
@@ -99,7 +99,7 @@
                                     <v-icon color="#fff">mdi-weather-rainy</v-icon> {{item.precip}} mm
                                 </div>
                                 <div class="time-page-container_section_2_main--time_detail_wind_lvl">
-                                    <v-icon color="#fff">mdi-weather-windy</v-icon> Cấp {{item.windLvl}}
+                                    <v-icon color="#fff">mdi-weather-windy</v-icon> {{item.windLvl}} m/s
                                 </div>
                                 <div class="time-page-container_section_2_main--time_detail_wind_spd">
                                     <v-icon color="#fff">mdi-tailwind</v-icon> {{item.windSpd}} m/s
