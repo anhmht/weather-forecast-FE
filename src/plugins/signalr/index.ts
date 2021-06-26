@@ -3,6 +3,7 @@ import _Vue from 'vue';
 import * as signalR from '@microsoft/signalr';
 
 interface ISocketConnection {
+    isReady: boolean;
     options: any;
     connection: any;
     socket: any;
@@ -17,12 +18,14 @@ class SocketConnection implements ISocketConnection {
     connection: any;
     socket: any;
     remoteId: any;
+    isReady: boolean;
 
     constructor(connection) {
         this.connection = connection;
         this.socket = false;
         this.options = {};
-        this.remoteId = null
+        this.remoteId = null;
+        this.isReady = false;
     }
 
     async _initialize(connection = "") {
@@ -36,6 +39,7 @@ class SocketConnection implements ISocketConnection {
                 transport: signalR.HttpTransportType.WebSockets
             }).build();
             await this.socket.start();
+            this.isReady = true;
         } catch (error) {
             console.log(error);
 

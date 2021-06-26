@@ -56,6 +56,9 @@ export default class QRCodeComponent extends Vue {
     }
 
     mounted() {
+        if (this.$socket.isReady) {
+            this.$socket.invoke(this.connectionId);
+        }
         EventBus.$on(EVENT_BUS.NOTIFICATION.CONNECTED, this.createRemoteGroup)
         this.$socket.onEvent('ReceiveMessage', this.handleMessage);
     }
