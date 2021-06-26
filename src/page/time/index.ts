@@ -9,7 +9,7 @@ import { ForecastServices } from "../../service/forecast-service/forecast.servic
 import moment from "moment";
 import 'moment/locale/vi';
 import { WeatherServices } from '@/service/weather-service/weather.service';
-import { WEATHER_TYPE } from '@/constant/forcast-station-constant';
+import { WEATHER_TYPE, WIND_DIRECTION } from '@/constant/forcast-station-constant';
 import { ForecastSearchParam, IForecastSearchParam } from '@/model/forecast';
 
 @Component({
@@ -206,7 +206,7 @@ export default class TimePageComponent extends Vue {
         this.currentDayMaxWindSpd = this.windSpdMinMaxByDay[0].max;
         this.currentDayMinPrecip = this.precipMinMaxByDay[0].min;
         this.currentDayMaxPrecip = this.precipMinMaxByDay[0].max;
-        this.currentDayWindDir = this.windDirByDay[0].data;
+        this.currentDayWindDir = WIND_DIRECTION[this.windDirByDay[0].data].abbr;
 
         for (let i = DATE.NEXT_DAY; i <= DATE.NEXT_4_DAY; i++) {
             this.weatherByDay.push({
@@ -217,7 +217,7 @@ export default class TimePageComponent extends Vue {
                 windLvl: this.windLvlMinMaxByDay[i].min + ' - ' + this.windLvlMinMaxByDay[i].max,
                 windSpd: this.windSpdMinMaxByDay[i].min + ' - ' + this.windSpdMinMaxByDay[i].max + ' m/s',
                 humid: this.humidMinMaxByDay[i].min + '% - ' + this.humidMinMaxByDay[i].max + '%',
-                windDir: this.windDirByDay[i].data
+                windDir: WIND_DIRECTION[this.windDirByDay[i].data].abbr
             });
         }
     }
@@ -233,7 +233,7 @@ export default class TimePageComponent extends Vue {
                 windLvl: this.windLvlByHour[i].data,
                 windSpd: this.windSpdByHour[i].data,
                 humid: this.humidByHour[i].data,
-                windDir: this.windDirByHour[i].data,
+                windDir: WIND_DIRECTION[this.windDirByHour[i].data].abbr,
             });
         }
     }

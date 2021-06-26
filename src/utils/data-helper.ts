@@ -121,6 +121,19 @@ export class DataHelper {
         return Object.keys(hashmap).reduce((a, b) => hashmap[a] > hashmap[b] ? a : b);
     }
 
+    static getMostFrequentByHorizontal(temp) {
+        let arr: any = [];
+        temp.forEach(element => {
+            arr.push(element);
+        });
+
+        const hashmap = arr.reduce((acc, val) => {
+            acc[val] = (acc[val] || 0 ) + 1
+            return acc
+        },{})
+        return Object.keys(hashmap).reduce((a, b) => hashmap[a] > hashmap[b] ? a : b);
+    }
+
     static getDataByDateHour(temp, date, time) {
         const hours = Object.keys(temp).filter(x => x.includes('_'));
         let refDate = Object.keys(temp).filter(x => x.includes('refDate'));

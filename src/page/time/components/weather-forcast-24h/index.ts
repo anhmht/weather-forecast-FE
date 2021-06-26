@@ -1,6 +1,13 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
+import { WeatherServices } from '@/service/weather-service/weather.service';
+import { REGION, STATION, WEATHER_TYPE, WIND_DIRECTION } from '@/constant/forcast-station-constant';
+import { ForecastSearchParam, IForecastSearchParam } from '@/model/forecast/forecast.model';
+import moment from 'moment';
+import { DataHelper } from '@/utils/data-helper';
+import _ from 'lodash';
+import { ICON } from '@/constant/icon-constant';
 
 @Component({
     template: require("./template.html").default,
@@ -9,6 +16,9 @@ import { Prop } from 'vue-property-decorator';
     }
 })
 export default class WeatherForecast24hComponent extends Vue {
+    weatherService: WeatherServices = new WeatherServices();
+    searchParam: IForecastSearchParam = new ForecastSearchParam();
+
     @Prop({type: String, default: null})
     position
 
@@ -17,52 +27,48 @@ export default class WeatherForecast24hComponent extends Vue {
     forecastData = [
         {
             title: null,
-            icon:'https://weatherstoragevn.blob.core.windows.net/images/icons/1031-1032.png',
-            desc: `Ít mây, đêm không mưa, ngày nắng nóng đặc biệt gay gắt. Gió tây nam đến nam cấp 2-3. <br/>
-                Nhiệt độ thấp nhất từ : 29-32 độ. <br/>
-                Nhiệt độ cao nhất từ : 39-41 độ.`
+            icon: null,
+            desc: null
         },
         {
             title: 'Phía Tây Bắc Bộ',
-            icon: 'https://weatherstoragevn.blob.core.windows.net/images/icons/1031-1032.png',
-            desc: `Có mây, chiều tối và đêm có mưa rào và dông vài nơi, ngày nắng nóng gay gắt và đặc biệt gay gắt. Gió nhẹ. Trong mưa dông có khả năng xảy ra lốc, sét và gió giật mạnh.<br/>
-                    Nhiệt độ thấp nhất từ : 27-30 độ, riêng khu Tây Bắc 24-27 độ.<br/>
-                    Nhiệt độ cao nhất từ : 38-41 độ, có nơi trên 41 độ; riêng Lai Châu-Điện Biên 32-35 độ.`
+            icon: null,
+            desc: null
         },
         {
             title: 'Phía Đông Bắc Bộ',
-            icon: 'https://weatherstoragevn.blob.core.windows.net/images/icons/1031-1032.png',
-            desc: `Ít mây, đêm không mưa, ngày nắng nóng gay gắt và đặc biệt gay gắt. Gió tây nam đến nam cấp 2-3. <br/>
-                    Nhiệt độ thấp nhất từ : 28-31 độ, vùng núi có nơi dưới 28 độ. <br/>
-                    Nhiệt độ cao nhất từ : 38-41 độ`
+            icon: null,
+            desc: null
+        },
+        {
+            title: 'Đồng bằng sông Hồng',
+            icon: null,
+            desc: null
         },
         {
             title: 'Thanh Hoá - Thừa Thiên Huế',
-            icon: 'https://weatherstoragevn.blob.core.windows.net/images/icons/1031-1032.png',
-            desc: `Ít mây, đêm không mưa, ngày nắng nóng gay gắt và đặc biệt gay gắt. Gió tây nam cấp 2-3.<br/>
-                    Nhiệt độ thấp nhất từ : 28-31 độ <br/>
-                    Nhiệt độ cao nhất từ : 38-41 độ, có nơi trên 41 độ`
+            icon: null,
+            desc: null
         },
         {
             title: 'Đà Nẵng đến Bình Thuận',
-            icon: 'https://weatherstoragevn.blob.core.windows.net/images/icons/1021-1022.png',
-            desc: `Có mây, chiều tối và đêm có mưa rào và dông vài nơi; ngày nắng nóng, riêng phía Bắc có nắng nóng gay gắt và đặc biệt gay gắt. Gió tây nam cấp 2-3. Trong mưa dông có khả năng xảy ra lốc, sét và gió giật mạnh. <br/>
-                    Nhiệt độ thấp nhất từ : 26-29 độ. <br/>
-                    Nhiệt độ cao nhất từ : Phía Bắc 37-40 độ; phía Nam 33-36 độ.`
+            icon: null,
+            desc: null
         },
         {
             title: 'Tây Nguyên',
-            icon: 'https://weatherstoragevn.blob.core.windows.net/images/icons/4571.png',
-            desc: `Có mây, đêm có mưa rào và dông vài nơi; ngày nắng, riêng phía Nam chiều tối và tối mai có mưa rào và dông rải rác. Gió tây nam cấp 2-3. Trong mưa dông có khả năng xảy ra lốc, sét và gió giật mạnh. <br/>
-                    Nhiệt độ thấp nhất từ : 19-22 độ. <br/>
-                    Nhiệt độ cao nhất từ : 30-33 độ, có nơi trên 33 độ.`
+            icon: null,
+            desc: null
         },
         {
-            title: 'Nam Bộ',
-            icon: 'https://weatherstoragevn.blob.core.windows.net/images/icons/4571.png',
-            desc: `Có mây, đêm có mưa rào và dông vài nơi, ngày nắng, riêng chiều tối và tối mai có mưa rào và dông rải rác. Gió tây nam cấp 2-3. Trong mưa dông có khả năng xảy ra lốc, sét và gió giật mạnh. <br/>
-                    Nhiệt độ thấp nhất từ : 24-27 độ. <br/>
-                    Nhiệt độ cao nhất từ : 32-35 độ, có nơi trên 35 độ`
+            title: 'Đông Nam Bộ',
+            icon: null,
+            desc: null
+        },
+        {
+            title: 'Đồng bằng sông Cửu Long',
+            icon: null,
+            desc: null
         },
     ]
 
@@ -153,11 +159,395 @@ export default class WeatherForecast24hComponent extends Vue {
         },
     ]
 
+    getStationIdByRegion(regionCode) {
+        const foundRegion = REGION.find(x => x.placeId === regionCode);
+        if (foundRegion) {
+            const provinceId = foundRegion.provinceIds;
+            let stationId: any = [];
+            for (let i = 0; i < provinceId.length; i++) {
+                const foundStation = STATION.find(x => x.place_id === provinceId[i]);
+                if (foundStation) {
+                    stationId.push(foundStation.id);
+                }
+            }
+
+            return stationId;
+        }
+
+        return;
+    }
+
+    getStationIdByPosition(positionName) {
+        const foundStation = STATION.find(x => x.ten === positionName);
+        if (foundStation) {
+            return foundStation.id;
+        }
+
+        return;
+    }
+
+    getHorizontal(stationId) {
+        debugger;
+        this.searchParam = new ForecastSearchParam();
+        if (Array.isArray(stationId)) {
+            this.searchParam.stationIds = stationId;
+        } else {
+            this.searchParam.stationIds = [stationId];
+        }
+        this.searchParam.fromDate = moment().format("YYYY-MM-DD") + 'T00:00:00';
+        this.searchParam.toDate = moment().format("YYYY-MM-DD") + 'T00:00:00';
+        this.searchParam.weatherTypes = [
+            WEATHER_TYPE.Weather,
+            WEATHER_TYPE.WindDirection,
+            WEATHER_TYPE.WindLevel,
+            WEATHER_TYPE.Temperature
+        ];
+
+        return new Promise((resolve, reject) => {
+            this.weatherService.getHorizontal(this.searchParam).then((res: any) => {
+                let iconArray = res.getWeatherInformationHorizontals.filter(x => x.weatherType === WEATHER_TYPE.Weather && x.refDate === this.searchParam.fromDate);
+                let windDirArray = res.getWeatherInformationHorizontals.filter(x => x.weatherType === WEATHER_TYPE.WindDirection && x.refDate === this.searchParam.fromDate);
+                let windLvlArray = res.getWeatherInformationHorizontals.filter(x => x.weatherType === WEATHER_TYPE.WindLevel && x.refDate === this.searchParam.fromDate);
+                let tempArray = res.getWeatherInformationHorizontals.filter(x => x.weatherType === WEATHER_TYPE.Temperature && x.refDate === this.searchParam.fromDate);
+
+                let mostFreqIcon = this.getMostFrequentData(iconArray, WEATHER_TYPE.Weather);
+                let mostFreqWindDir = this.getMostFrequentData(windDirArray, WEATHER_TYPE.WindDirection);
+                let mostFreqWindLvl = this.getMostFrequentData(windLvlArray, WEATHER_TYPE.WindLevel);
+                let tempRange = this.getMinMaxData(tempArray);
+
+                resolve({mostFreqIcon, mostFreqWindDir, mostFreqWindLvl, tempRange});
+            }).catch(err => {
+                console.log(err);
+            })
+        })
+    }
+
+    getMostFrequentData(inputData, type) {
+        if (type === WEATHER_TYPE.Weather) {
+            let filteredDayData: string[] = [];
+            let filteredNightData: string[] = [];
+            let mostFreqDay: string = null;
+            let mostFreqNight: string = null;
+
+            for (let i = 0; i < inputData.length; i++) {
+                const currentElement = inputData[i];
+                let hours = Object.keys(currentElement).filter(x => x.includes('_'));
+                hours = _.orderBy(hours, [hours], ['asc']);
+                for (let j = 0; j < 48; j++) {
+                    if ((j >= 6 && j <= 18) || (j >= 30 && j <= 42)) {
+                        filteredDayData.push(currentElement[hours[j]]);
+                    }
+                    else {
+                        filteredNightData.push(currentElement[hours[j]]);
+                    }
+                }
+            }
+            mostFreqDay = DataHelper.getMostFrequentByHorizontal(filteredDayData);
+            mostFreqNight = DataHelper.getMostFrequentByHorizontal(filteredNightData);
+
+            return {mostFreqDay, mostFreqNight};
+        } else {
+            let filteredData: any = [];
+            let mostFreqData: any = null;
+
+            for (let i = 0; i < inputData.length; i++) {
+                const currentElement = inputData[i];
+                let hours = Object.keys(currentElement).filter(x => x.includes('_'));
+                hours = _.orderBy(hours, [hours], ['asc']);
+                for (let j = 0; j < 48; j++) {
+                    filteredData.push(currentElement[hours[j]]);
+                }
+            }
+            mostFreqData = DataHelper.getMostFrequentByHorizontal(filteredData);
+
+            return mostFreqData;
+        }
+    }
+
+    getMinMaxData(inputData) {
+        let filteredData: number[] = [];
+        let min: number = null;
+        let max: number = null;
+
+        for (let i = 0; i < inputData.length; i++) {
+            const currentElement = inputData[i];
+            let hours = Object.keys(currentElement).filter(x => x.includes('_'));
+            hours = _.orderBy(hours, [hours], ['asc']);
+            for (let j = 0; j < 48; j++) {
+                filteredData.push(currentElement[hours[j]]);
+            }
+        }
+        min = Math.min(...filteredData);
+        max = Math.max(...filteredData);
+
+        return {min, max};
+    }
+
     handleClick(index) {
         this.activeTab = index;
     }
 
     mounted() {
+        const currentHour = new Date().getHours();
+        let iconDay = null;
+        let iconNight = null;
+        let iconDayUrl = null;
+        let iconNightUrl = null;
+        let weatherDescDay = null;
+        let weatherDescNight = null;
+        let windDir = null;
+
         this.forecastData[0].title = this.position;
+        this.getHorizontal(this.getStationIdByPosition(this.position)).then((res: any) => {
+            iconDay = ICON.find(x => x.id === res.mostFreqIcon.mostFreqDay);
+            if (iconDay) {
+                iconDayUrl = iconDay.url;
+                weatherDescDay = iconDay.description;
+            }
+
+            iconNight = ICON.find(x => x.id === res.mostFreqIcon.mostFreqNight);
+            if (iconNight) {
+                iconNightUrl = iconNight.url;
+                weatherDescNight = iconNight.description;
+            }
+
+            windDir = WIND_DIRECTION[res.mostFreqWindDir].full;
+
+            if (currentHour >= 6 && currentHour <= 18) {
+                this.forecastData[0].icon = iconDayUrl;
+            } else {
+                this.forecastData[0].icon = iconNightUrl;
+            }
+            this.forecastData[0].desc = weatherDescDay + ". " + weatherDescNight
+                + ". Gió " + windDir + " cấp " + res.mostFreqWindLvl + ".<br/>"
+                + "Nhiệt độ thấp nhất: " + res.tempRange.min + ".<br/>"
+                + "Nhiệt độ cao nhất: " + res.tempRange.max + ".<br/>";
+        }).catch(err => {
+            console.log(err);
+        })
+
+        this.getHorizontal(this.getStationIdByRegion("TBB")).then((res: any) => {
+            iconDay = ICON.find(x => x.id === res.mostFreqIcon.mostFreqDay);
+            if (iconDay) {
+                iconDayUrl = iconDay.url;
+                weatherDescDay = iconDay.description;
+            }
+
+            iconNight = ICON.find(x => x.id === res.mostFreqIcon.mostFreqNight);
+            if (iconNight) {
+                iconNightUrl = iconNight.url;
+                weatherDescNight = iconNight.description;
+            }
+
+            windDir = WIND_DIRECTION[res.mostFreqWindDir].full;
+
+            if (currentHour >= 6 && currentHour <= 18) {
+                this.forecastData[1].icon = iconDayUrl;
+            } else {
+                this.forecastData[1].icon = iconNightUrl;
+            }
+            this.forecastData[1].desc = weatherDescDay + ". " + weatherDescNight
+                + ". Gió " + windDir + " cấp " + res.mostFreqWindLvl + ".<br/>"
+                + "Nhiệt độ thấp nhất: " + res.tempRange.min + ".<br/>"
+                + "Nhiệt độ cao nhất: " + res.tempRange.max + ".<br/>";
+        }).catch(err => {
+            console.log(err);
+        })
+
+        this.getHorizontal(this.getStationIdByRegion("DBB")).then((res: any) => {
+            iconDay = ICON.find(x => x.id === res.mostFreqIcon.mostFreqDay);
+            if (iconDay) {
+                iconDayUrl = iconDay.url;
+                weatherDescDay = iconDay.description;
+            }
+
+            iconNight = ICON.find(x => x.id === res.mostFreqIcon.mostFreqNight);
+            if (iconNight) {
+                iconNightUrl = iconNight.url;
+                weatherDescNight = iconNight.description;
+            }
+
+            windDir = WIND_DIRECTION[res.mostFreqWindDir].full;
+
+            if (currentHour >= 6 && currentHour <= 18) {
+                this.forecastData[2].icon = iconDayUrl;
+            } else {
+                this.forecastData[2].icon = iconNightUrl;
+            }
+            this.forecastData[2].desc = weatherDescDay + ". " + weatherDescNight
+                + ". Gió " + windDir + " cấp " + res.mostFreqWindLvl + ".<br/>"
+                + "Nhiệt độ thấp nhất: " + res.tempRange.min + ".<br/>"
+                + "Nhiệt độ cao nhất: " + res.tempRange.max + ".<br/>";
+        }).catch(err => {
+            console.log(err);
+        })
+
+        this.getHorizontal(this.getStationIdByRegion("DBSH")).then((res: any) => {
+            iconDay = ICON.find(x => x.id === res.mostFreqIcon.mostFreqDay);
+            if (iconDay) {
+                iconDayUrl = iconDay.url;
+                weatherDescDay = iconDay.description;
+            }
+
+            iconNight = ICON.find(x => x.id === res.mostFreqIcon.mostFreqNight);
+            if (iconNight) {
+                iconNightUrl = iconNight.url;
+                weatherDescNight = iconNight.description;
+            }
+
+            windDir = WIND_DIRECTION[res.mostFreqWindDir].full;
+
+            if (currentHour >= 6 && currentHour <= 18) {
+                this.forecastData[3].icon = iconDayUrl;
+            } else {
+                this.forecastData[3].icon = iconNightUrl;
+            }
+            this.forecastData[3].desc = weatherDescDay + ". " + weatherDescNight
+                + ". Gió " + windDir + " cấp " + res.mostFreqWindLvl + ".<br/>"
+                + "Nhiệt độ thấp nhất: " + res.tempRange.min + ".<br/>"
+                + "Nhiệt độ cao nhất: " + res.tempRange.max + ".<br/>";
+        }).catch(err => {
+            console.log(err);
+        })
+
+        this.getHorizontal(this.getStationIdByRegion("BTB")).then((res: any) => {
+            iconDay = ICON.find(x => x.id === res.mostFreqIcon.mostFreqDay);
+            if (iconDay) {
+                iconDayUrl = iconDay.url;
+                weatherDescDay = iconDay.description;
+            }
+
+            iconNight = ICON.find(x => x.id === res.mostFreqIcon.mostFreqNight);
+            if (iconNight) {
+                iconNightUrl = iconNight.url;
+                weatherDescNight = iconNight.description;
+            }
+
+            windDir = WIND_DIRECTION[res.mostFreqWindDir].full;
+
+            if (currentHour >= 6 && currentHour <= 18) {
+                this.forecastData[4].icon = iconDayUrl;
+            } else {
+                this.forecastData[4].icon = iconNightUrl;
+            }
+            this.forecastData[4].desc = weatherDescDay + ". " + weatherDescNight
+                + ". Gió " + windDir + " cấp " + res.mostFreqWindLvl + ".<br/>"
+                + "Nhiệt độ thấp nhất: " + res.tempRange.min + ".<br/>"
+                + "Nhiệt độ cao nhất: " + res.tempRange.max + ".<br/>";
+        }).catch(err => {
+            console.log(err);
+        })
+
+        this.getHorizontal(this.getStationIdByRegion("NTB")).then((res: any) => {
+            iconDay = ICON.find(x => x.id === res.mostFreqIcon.mostFreqDay);
+            if (iconDay) {
+                iconDayUrl = iconDay.url;
+                weatherDescDay = iconDay.description;
+            }
+
+            iconNight = ICON.find(x => x.id === res.mostFreqIcon.mostFreqNight);
+            if (iconNight) {
+                iconNightUrl = iconNight.url;
+                weatherDescNight = iconNight.description;
+            }
+
+            windDir = WIND_DIRECTION[res.mostFreqWindDir].full;
+
+            if (currentHour >= 6 && currentHour <= 18) {
+                this.forecastData[5].icon = iconDayUrl;
+            } else {
+                this.forecastData[5].icon = iconNightUrl;
+            }
+            this.forecastData[5].desc = weatherDescDay + ". " + weatherDescNight
+                + ". Gió " + windDir + " cấp " + res.mostFreqWindLvl + ".<br/>"
+                + "Nhiệt độ thấp nhất: " + res.tempRange.min + ".<br/>"
+                + "Nhiệt độ cao nhất: " + res.tempRange.max + ".<br/>";
+        }).catch(err => {
+            console.log(err);
+        })
+
+        this.getHorizontal(this.getStationIdByRegion("TN")).then((res: any) => {
+            iconDay = ICON.find(x => x.id === res.mostFreqIcon.mostFreqDay);
+            if (iconDay) {
+                iconDayUrl = iconDay.url;
+                weatherDescDay = iconDay.description;
+            }
+
+            iconNight = ICON.find(x => x.id === res.mostFreqIcon.mostFreqNight);
+            if (iconNight) {
+                iconNightUrl = iconNight.url;
+                weatherDescNight = iconNight.description;
+            }
+
+            windDir = WIND_DIRECTION[res.mostFreqWindDir].full;
+
+            if (currentHour >= 6 && currentHour <= 18) {
+                this.forecastData[6].icon = iconDayUrl;
+            } else {
+                this.forecastData[6].icon = iconNightUrl;
+            }
+            this.forecastData[6].desc = weatherDescDay + ". " + weatherDescNight
+                + ". Gió " + windDir + " cấp " + res.mostFreqWindLvl + ".<br/>"
+                + "Nhiệt độ thấp nhất: " + res.tempRange.min + ".<br/>"
+                + "Nhiệt độ cao nhất: " + res.tempRange.max + ".<br/>";
+        }).catch(err => {
+            console.log(err);
+        })
+
+        this.getHorizontal(this.getStationIdByRegion("DNB")).then((res: any) => {
+            iconDay = ICON.find(x => x.id === res.mostFreqIcon.mostFreqDay);
+            if (iconDay) {
+                iconDayUrl = iconDay.url;
+                weatherDescDay = iconDay.description;
+            }
+
+            iconNight = ICON.find(x => x.id === res.mostFreqIcon.mostFreqNight);
+            if (iconNight) {
+                iconNightUrl = iconNight.url;
+                weatherDescNight = iconNight.description;
+            }
+
+            windDir = WIND_DIRECTION[res.mostFreqWindDir].full;
+
+            if (currentHour >= 6 && currentHour <= 18) {
+                this.forecastData[7].icon = iconDayUrl;
+            } else {
+                this.forecastData[7].icon = iconNightUrl;
+            }
+            this.forecastData[7].desc = weatherDescDay + ". " + weatherDescNight
+                + ". Gió " + windDir + " cấp " + res.mostFreqWindLvl + ".<br/>"
+                + "Nhiệt độ thấp nhất: " + res.tempRange.min + ".<br/>"
+                + "Nhiệt độ cao nhất: " + res.tempRange.max + ".<br/>";
+        }).catch(err => {
+            console.log(err);
+        })
+
+        this.getHorizontal(this.getStationIdByRegion("TNB")).then((res: any) => {
+            iconDay = ICON.find(x => x.id === res.mostFreqIcon.mostFreqDay);
+            if (iconDay) {
+                iconDayUrl = iconDay.url;
+                weatherDescDay = iconDay.description;
+            }
+
+            iconNight = ICON.find(x => x.id === res.mostFreqIcon.mostFreqNight);
+            if (iconNight) {
+                iconNightUrl = iconNight.url;
+                weatherDescNight = iconNight.description;
+            }
+
+            windDir = WIND_DIRECTION[res.mostFreqWindDir].full;
+
+            if (currentHour >= 6 && currentHour <= 18) {
+                this.forecastData[8].icon = iconDayUrl;
+            } else {
+                this.forecastData[8].icon = iconNightUrl;
+            }
+            this.forecastData[8].desc = weatherDescDay + ". " + weatherDescNight
+                + ". Gió " + windDir + " cấp " + res.mostFreqWindLvl + ".<br/>"
+                + "Nhiệt độ thấp nhất: " + res.tempRange.min + ".<br/>"
+                + "Nhiệt độ cao nhất: " + res.tempRange.max + ".<br/>";
+        }).catch(err => {
+            console.log(err);
+        })
     }
 }

@@ -1437,3 +1437,22 @@ export const WEATHER_TYPE = {
     Temperature: 6,
     Weather: 7
 }
+
+export const WIND_DIRECTION = {
+    N: { abbr: "B", full: "Bắc" },
+    NNE: { abbr: "BĐB", full: "Bắc Đông Bắc" },
+    NE: { abbr: "ĐB", full: "Đông Bắc" },
+    ENE: { abbr: "ĐĐB", full: "Đông Đông Bắc" },
+    E: { abbr: "Đ", full: "Đông" },
+    ESE: { abbr: "ĐĐN", full: "Đông Đông Nam" },
+    SE: { abbr: "ĐN", full: "Đông Nam" },
+    SSE: { abbr: "NĐN", full: "Nam Đông Nam" },
+    S: { abbr: "N", full: "Nam" },
+    SSW: { abbr: "NTN", full: "Nam Tây Nam" },
+    SW: { abbr: "TN", full: "Tây Nam" },
+    WSW: { abbr: "TTN", full: "Tây Tây Nam" },
+    W: { abbr: "T", full: "Tây" },
+    WNW: { abbr: "TTB", full: "Tây Tây Bắc" },
+    NW: { abbr: "TB", full: "Tây Bắc" },
+    NNW: { abbr: "BTB", full: "Bắc Tây Bắc" },
+}
