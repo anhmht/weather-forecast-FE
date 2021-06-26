@@ -1,7 +1,11 @@
+import { sleep } from './../../../../utils/common-utils';
+import { EVENT_BUS } from './../../../../constant/event-bus-constant';
+import { DataHelper } from '@/utils/data-helper';
 import { MediaServices } from './../../../../service/media-service/media.service';
 import Vue from 'vue';
 import Component from 'vue-class-component';
 import { Prop, Watch } from 'vue-property-decorator';
+import EventBus from '@/utils/event-bus';
 
 @Component({
     template: require("./template.html").default,
@@ -12,6 +16,7 @@ export default class QRCodeComponent extends Vue {
     value
 
     qrCode: string = null;
+    connectionId: string = DataHelper.create_UUID();
     mediaService: MediaServices = new MediaServices()
 
     get isDisplayDialog() {
@@ -24,12 +29,39 @@ export default class QRCodeComponent extends Vue {
 
     generateQRCode() {
         if(!this.qrCode) {
-            this.mediaService.generateQRCode('test').then((res: any) => {
+            this.mediaService.generateQRCode(this.connectionId).then((res: any) => {
                 this.qrCode = res.url
             }).catch(err => {
                 console.log(err);
             })
         }
+    }
+
+    async handleMessage(message) {
+        console.log(message);
+        if (message.event === 'START') {
+            let clear = { timeout: null };
+            this.$toast.success('Kết nối thành công');
+            await sleep(500, clear);
+            this.isDisplayDialog = false;
+            await sleep(500, clear);
+            EventBus.$emit(EVENT_BUS.NOTIFICATION.START, message);
+        } else if (message.event === 'MOVE') {
+            EventBus.$emit(EVENT_BUS.NOTIFICATION.MOVE, message);
+        }
+    }
+
+    createRemoteGroup() {
+        this.$socket.invoke(this.connectionId);
+    }
+
+    mounted() {
+        EventBus.$on(EVENT_BUS.NOTIFICATION.CONNECTED, this.createRemoteGroup)
+        this.$socket.onEvent('ReceiveMessage', this.handleMessage);
+    }
+
+    beforeDestroy() {
+        EventBus.$off(EVENT_BUS.NOTIFICATION.CONNECTED, this.createRemoteGroup)
     }
 
     @Watch('value')

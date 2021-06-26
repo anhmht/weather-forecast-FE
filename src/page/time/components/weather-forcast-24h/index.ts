@@ -187,7 +187,6 @@ export default class WeatherForecast24hComponent extends Vue {
     }
 
     getHorizontal(stationId) {
-        debugger;
         this.searchParam = new ForecastSearchParam();
         if (Array.isArray(stationId)) {
             this.searchParam.stationIds = stationId;

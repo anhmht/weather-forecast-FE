@@ -11,7 +11,6 @@ export default class IconDragDropComponent extends IconViewModel {
     isRecording;
 
     handleRemoveIcon(id) {
-        // debugger
         const index = this.listIcon.findIndex(x => x.name === id);
         // let icon = document.getElementById(id);
         // icon.remove();

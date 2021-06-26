@@ -1,3 +1,4 @@
+import { EVENT_BUS } from './../../../../constant/event-bus-constant';
 import { DataHelper } from './../../../../utils/data-helper';
 import { ScenarioServices } from './../../../../service/scenario-service/scenario.service';
 import { IScenario, ISearchScenarioParameters, SearchScenarioParameters } from './../../../../model/scenario/scenario.model';
@@ -8,6 +9,7 @@ import { sleep } from '@/utils/common-utils';
 import { MAP_PROVINCE, REGION, MAP_TYPE } from '@/constant/forcast-station-constant';
 import { ForecastSearchParam, IForecastSearchParam } from '@/model/forecast';
 import { WeatherServices } from '@/service/weather-service/weather.service';
+import EventBus from '@/utils/event-bus';
 @Component({
     template: require("./template.html").default,
     components: {
@@ -260,6 +262,17 @@ export default class ScenarioComponent extends Vue {
         })
     }
 
+    handleRemoteStart(message) {
+        const scenario = this.scenarios.find(x => x.scenarioId === message.scenarioId);
+        this.$emit('remote', { message, scenario});
+    }
+
+    handleRemoteMove(message) {
+        const scenario = this.scenarios.find(x => x.scenarioId === message.scenarioId);
+        const step = scenario.scenarioContent[message.step];
+        this.$emit('remote-move', { message, step });
+    }
+
     async handleChangeScenario(index) {
         this.selectedItem = index;
         let clear = {timeout: null};
@@ -311,6 +324,12 @@ export default class ScenarioComponent extends Vue {
             console.log(err);
             this.isLoading = false
         })
+    }
+
+    mounted() {
+        this.initData();
+        EventBus.$on(EVENT_BUS.NOTIFICATION.START, this.handleRemoteStart);
+        EventBus.$on(EVENT_BUS.NOTIFICATION.MOVE, this.handleRemoteMove);
     }
 
     @Watch('value')

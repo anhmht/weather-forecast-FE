@@ -59,6 +59,27 @@ export default class TimePageComponent extends Vue {
     humidByHour: any = [];
     iconByHour: any = [];
     activeTab: number = 1
+
+
+    // handleTest() {
+    //     const message = {
+    //         event: 'START',
+    //         scenarioId: '0',
+
+    //     }
+    //     this.$socket.sendMessage(JSON.stringify(message));
+    // }
+
+    // handleMove() {
+    //     const message = {
+    //         event: 'MOVE',
+    //         scenarioId: '0',
+    //         requestID: '123',
+    //         step: 0
+    //     }
+    //     this.$socket.sendMessage(JSON.stringify(message));
+    // }
+
     handleChangeTab(tab) {
         this.activeTab = tab;
     }
@@ -251,4 +272,5 @@ export default class TimePageComponent extends Vue {
         this.getHorizontal();
         this.getDetail();
     }
+
 }

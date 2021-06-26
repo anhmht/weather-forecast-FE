@@ -363,6 +363,7 @@ export default class HomePageComponent extends Vue {
         clearTimeout(this.clearTimeout.timeout);
         this.isRecording = false;
         this.isStop = true;
+        this.isShowButtonStop = false;
         if (!isRecord) {
             this.drawer = true;
         }
@@ -442,6 +443,27 @@ export default class HomePageComponent extends Vue {
             this.layerGroup.addLayer(vnBorder);
             this.layerGroup.addTo(map);
         });
+    }
+
+    handleRemote({ scenario, message }) {
+        this.$toast.info(`Bắt đầu điều khiển: ${scenario.scenarioName}`);
+        this.isRecording = true;
+        this.isShowButtonStop = true;
+        this.isReview = true;
+        const send = {
+            event: 'SUCCESS',
+            requestID: message.requestID
+        }
+        this.$socket.sendMessage(JSON.stringify(send));
+    }
+
+    handleMove({ step, message }) {
+        this[step.action] = step;
+        const send = {
+            event: 'SUCCESS',
+            requestID: message.requestID
+        }
+        this.$socket.sendMessage(JSON.stringify(send));
     }
 
     @Watch('customZoomControl')

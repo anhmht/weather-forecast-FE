@@ -10,6 +10,9 @@ import Loading from './components/loading';
 import { DateFormatterPlugin } from './plugins/date-format';
 import store from "./store";
 import { StringFormatterPlugin } from './plugins/string-format';
+import SignalRPlugin from './plugins/signalr';
+import VueToast from 'vue-toast-notification';
+import 'vue-toast-notification/dist/theme-sugar.css';
 
 Vue.config.productionTip = false;
 
@@ -22,6 +25,13 @@ axios.defaults.headers.post['Access-Control-Allow-Headers'] = 'Content-Type, Aut
 Vue.component('loading', Loading);
 Vue.use(DateFormatterPlugin);
 Vue.use(StringFormatterPlugin);
+Vue.use(VueToast, {
+    position: 'top-right'
+});
+
+Vue.use(SignalRPlugin, {
+    url: 'https://weathermanagement.azurewebsites.net/notifications'
+});
 @Component({
     template: "<App/>",
     components: {

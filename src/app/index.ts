@@ -1,4 +1,6 @@
+import { EVENT_BUS } from './../constant/event-bus-constant';
 import { ROUTE_NAME } from "@/constant/route-constant";
+import EventBus from "@/utils/event-bus";
 import Vue from "vue";
 import Component from "vue-class-component";
 
@@ -26,5 +28,13 @@ export default class App extends Vue {
             default:
                 return true;
         }
+    }
+
+    mounted() {
+        this.$socket.start().then(() => {
+            EventBus.$emit(EVENT_BUS.NOTIFICATION.CONNECTED);
+        }).catch(err => {
+            console.log(err);
+        });
     }
 }

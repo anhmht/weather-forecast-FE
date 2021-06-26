@@ -77,7 +77,7 @@
         </div>
     </v-dialog>
 
-    <scenario-modal v-model="drawer" @preview="handlePreview" @capture="(e) => handlePreview(e,true)"/>
+    <scenario-modal @remote="handleRemote" @remote-move="handleMove" v-model="drawer" @preview="handlePreview" @capture="(e) => handlePreview(e,true)"/>
 
     <qr-code v-model="visibleQR"/>
     <div v-if="isRecording && !isReview" style="
