@@ -2,6 +2,7 @@
 import { BASE_CLOUD_URL } from './../constant/common-constant';
 import { WEATHER_TYPE } from '@/constant/forcast-station-constant';
 import moment from 'moment';
+
 export class DataHelper {
     static deepClone<T>(source: any): T {
         if (source === undefined) return undefined;
@@ -28,7 +29,10 @@ export class DataHelper {
     }
 
     static getDataByHour(temp, offset) {
-        const hours = Object.keys(temp).filter(x => x.includes('_'));
+        let hours = Object.keys(temp).filter(x => x.includes('_'));
+        hours = hours.sort((a,b) => {
+            return parseInt(a.substr(1), 10) - parseInt(b.substr(1), 10);
+        });
         let refDate = Object.keys(temp).filter(x => x.includes('refDate'));
         const diffHours = moment().add(offset, 'hours').diff(moment(temp[refDate[0]]), 'hours');
         const result = diffHours;

@@ -6,7 +6,6 @@ import { REGION, STATION, WEATHER_TYPE, WIND_DIRECTION } from '@/constant/forcas
 import { ForecastSearchParam, IForecastSearchParam } from '@/model/forecast/forecast.model';
 import moment from 'moment';
 import { DataHelper } from '@/utils/data-helper';
-import _ from 'lodash';
 import { ICON } from '@/constant/icon-constant';
 
 @Component({
@@ -231,7 +230,9 @@ export default class WeatherForecast24hComponent extends Vue {
             for (let i = 0; i < inputData.length; i++) {
                 const currentElement = inputData[i];
                 let hours = Object.keys(currentElement).filter(x => x.includes('_'));
-                hours = _.orderBy(hours, [hours], ['asc']);
+                hours = hours.sort((a,b) => {
+                    return parseInt(a.substr(1), 10) - parseInt(b.substr(1), 10);
+                });
                 for (let j = 0; j < 48; j++) {
                     if ((j >= 6 && j <= 18) || (j >= 30 && j <= 42)) {
                         filteredDayData.push(currentElement[hours[j]]);
@@ -252,7 +253,9 @@ export default class WeatherForecast24hComponent extends Vue {
             for (let i = 0; i < inputData.length; i++) {
                 const currentElement = inputData[i];
                 let hours = Object.keys(currentElement).filter(x => x.includes('_'));
-                hours = _.orderBy(hours, [hours], ['asc']);
+                hours = hours.sort((a,b) => {
+                    return parseInt(a.substr(1), 10) - parseInt(b.substr(1), 10);
+                });
                 for (let j = 0; j < 48; j++) {
                     filteredData.push(currentElement[hours[j]]);
                 }
@@ -271,7 +274,9 @@ export default class WeatherForecast24hComponent extends Vue {
         for (let i = 0; i < inputData.length; i++) {
             const currentElement = inputData[i];
             let hours = Object.keys(currentElement).filter(x => x.includes('_'));
-            hours = _.orderBy(hours, [hours], ['asc']);
+            hours = hours.sort((a,b) => {
+                return parseInt(a.substr(1), 10) - parseInt(b.substr(1), 10);
+            });
             for (let j = 0; j < 48; j++) {
                 filteredData.push(currentElement[hours[j]]);
             }

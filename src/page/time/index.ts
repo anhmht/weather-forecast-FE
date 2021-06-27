@@ -87,8 +87,8 @@ export default class TimePageComponent extends Vue {
     getHorizontal() {
         this.searchParam = new ForecastSearchParam();
         this.searchParam.stationIds = [this.currentForecastStationId];
-        this.searchParam.fromDate = moment().format("YYYY-MM-DD");
-        this.searchParam.toDate = moment(this.searchParam.fromDate).add(1, 'days').subtract(1, 'minutes').format();
+        this.searchParam.fromDate = moment().format("YYYY-MM-DD") + 'T00:00:00';
+        this.searchParam.toDate = moment().format("YYYY-MM-DD") + 'T00:00:00';
         this.searchParam.weatherTypes = [
             WEATHER_TYPE.Humidity,
             WEATHER_TYPE.WindLevel,
@@ -100,28 +100,28 @@ export default class TimePageComponent extends Vue {
         ];
 
         this.weatherService.getHorizontal(this.searchParam).then((res: any) => {
-            let humidArray = res.getWeatherInformationHorizontals.filter(x => x.weatherType === WEATHER_TYPE.Humidity);
-            let windLvlArray = res.getWeatherInformationHorizontals.filter(x => x.weatherType === WEATHER_TYPE.WindLevel);
-            let tempArray = res.getWeatherInformationHorizontals.filter(x => x.weatherType === WEATHER_TYPE.Temperature);
-            let windSpdArray = res.getWeatherInformationHorizontals.filter(x => x.weatherType === WEATHER_TYPE.WindSpeed);
-            let rainAmtArray = res.getWeatherInformationHorizontals.filter(x => x.weatherType === WEATHER_TYPE.RainAmount);
-            let windDirArray = res.getWeatherInformationHorizontals.filter(x => x.weatherType === WEATHER_TYPE.WindDirection);
-            let iconArray = res.getWeatherInformationHorizontals.filter(x => x.weatherType === WEATHER_TYPE.Weather);
+            let humidArray = res.getWeatherInformationHorizontals.find(x => x.weatherType === WEATHER_TYPE.Humidity && x.refDate === this.searchParam.fromDate);
+            let windLvlArray = res.getWeatherInformationHorizontals.find(x => x.weatherType === WEATHER_TYPE.WindLevel && x.refDate === this.searchParam.fromDate);
+            let tempArray = res.getWeatherInformationHorizontals.find(x => x.weatherType === WEATHER_TYPE.Temperature && x.refDate === this.searchParam.fromDate);
+            let windSpdArray = res.getWeatherInformationHorizontals.find(x => x.weatherType === WEATHER_TYPE.WindSpeed && x.refDate === this.searchParam.fromDate);
+            let rainAmtArray = res.getWeatherInformationHorizontals.find(x => x.weatherType === WEATHER_TYPE.RainAmount && x.refDate === this.searchParam.fromDate);
+            let windDirArray = res.getWeatherInformationHorizontals.find(x => x.weatherType === WEATHER_TYPE.WindDirection && x.refDate === this.searchParam.fromDate);
+            let iconArray = res.getWeatherInformationHorizontals.find(x => x.weatherType === WEATHER_TYPE.Weather && x.refDate === this.searchParam.fromDate);
 
-            this.currentTemp = DataHelper.getDataByHour(tempArray[0], 0);
-            const dataByHour = DataHelper.getDataByHour(iconArray[0], 0);
+            this.currentTemp = DataHelper.getDataByHour(tempArray, 0);
+            const dataByHour = DataHelper.getDataByHour(iconArray, 0);
             const icon = ICON.find(x => x.id === dataByHour);
             if (icon) {
                 this.currentIcon = icon.url;
             }
 
-            this.getDataByHour(humidArray[0], this.humidByHour, WEATHER_TYPE.Humidity);
-            this.getDataByHour(windLvlArray[0], this.windLvlByHour, WEATHER_TYPE.WindLevel);
-            this.getDataByHour(tempArray[0], this.tempByHour, WEATHER_TYPE.Temperature);
-            this.getDataByHour(windSpdArray[0], this.windSpdByHour, WEATHER_TYPE.WindSpeed);
-            this.getDataByHour(rainAmtArray[0], this.precipByHour, WEATHER_TYPE.RainAmount);
-            this.getDataByHour(windDirArray[0], this.windDirByHour, WEATHER_TYPE.WindDirection);
-            this.getDataByHour(iconArray[0], this.iconByHour, WEATHER_TYPE.Weather);
+            this.getDataByHour(humidArray, this.humidByHour, WEATHER_TYPE.Humidity);
+            this.getDataByHour(windLvlArray, this.windLvlByHour, WEATHER_TYPE.WindLevel);
+            this.getDataByHour(tempArray, this.tempByHour, WEATHER_TYPE.Temperature);
+            this.getDataByHour(windSpdArray, this.windSpdByHour, WEATHER_TYPE.WindSpeed);
+            this.getDataByHour(rainAmtArray, this.precipByHour, WEATHER_TYPE.RainAmount);
+            this.getDataByHour(windDirArray, this.windDirByHour, WEATHER_TYPE.WindDirection);
+            this.getDataByHour(iconArray, this.iconByHour, WEATHER_TYPE.Weather);
 
             this.displayWeatherByHour();
         }).catch(err => {
@@ -132,7 +132,7 @@ export default class TimePageComponent extends Vue {
     getDetail() {
         this.searchParam = new ForecastSearchParam();
         this.searchParam.stationIds = [this.currentForecastStationId];
-        this.searchParam.fromDate = moment().format("YYYY-MM-DD");
+        this.searchParam.fromDate = moment().format("YYYY-MM-DD") + 'T00:00:00';
         this.searchParam.toDate = moment(this.searchParam.fromDate).add(5, 'days').subtract(1, 'minutes').format();
         this.searchParam.weatherTypes = [
             WEATHER_TYPE.Humidity,
@@ -145,21 +145,21 @@ export default class TimePageComponent extends Vue {
         ];
 
         this.weatherService.getDetail(this.searchParam).then((res: any) => {
-            let humidArray = res.weatherInformationByStations.filter(x => x.weatherType === WEATHER_TYPE.Humidity);
-            let windLvlArray = res.weatherInformationByStations.filter(x => x.weatherType === WEATHER_TYPE.WindLevel);
-            let tempArray = res.weatherInformationByStations.filter(x => x.weatherType === WEATHER_TYPE.Temperature);
-            let windSpdArray = res.weatherInformationByStations.filter(x => x.weatherType === WEATHER_TYPE.WindSpeed);
-            let rainAmtArray = res.weatherInformationByStations.filter(x => x.weatherType === WEATHER_TYPE.RainAmount);
-            let windDirArray = res.weatherInformationByStations.filter(x => x.weatherType === WEATHER_TYPE.WindDirection);
-            let iconArray = res.weatherInformationByStations.filter(x => x.weatherType === WEATHER_TYPE.Weather);
+            let humidArray = res.weatherInformationByStations.find(x => x.weatherType === WEATHER_TYPE.Humidity);
+            let windLvlArray = res.weatherInformationByStations.find(x => x.weatherType === WEATHER_TYPE.WindLevel);
+            let tempArray = res.weatherInformationByStations.find(x => x.weatherType === WEATHER_TYPE.Temperature);
+            let windSpdArray = res.weatherInformationByStations.find(x => x.weatherType === WEATHER_TYPE.WindSpeed);
+            let rainAmtArray = res.weatherInformationByStations.find(x => x.weatherType === WEATHER_TYPE.RainAmount);
+            let windDirArray = res.weatherInformationByStations.find(x => x.weatherType === WEATHER_TYPE.WindDirection);
+            let iconArray = res.weatherInformationByStations.find(x => x.weatherType === WEATHER_TYPE.Weather);
 
-            this.getMinMaxByDay(humidArray[0], this.humidMinMaxByDay);
-            this.getMinMaxByDay(windLvlArray[0], this.windLvlMinMaxByDay);
-            this.getMinMaxByDay(tempArray[0], this.tempMinMaxByDay);
-            this.getMinMaxByDay(windSpdArray[0], this.windSpdMinMaxByDay);
-            this.getMinMaxByDay(rainAmtArray[0], this.precipMinMaxByDay);
-            this.getMostFrequentByDay(windDirArray[0], this.windDirByDay, WEATHER_TYPE.WindDirection);
-            this.getMostFrequentByDay(iconArray[0], this.iconByDay, WEATHER_TYPE.Weather);
+            this.getMinMaxByDay(humidArray, this.humidMinMaxByDay);
+            this.getMinMaxByDay(windLvlArray, this.windLvlMinMaxByDay);
+            this.getMinMaxByDay(tempArray, this.tempMinMaxByDay);
+            this.getMinMaxByDay(windSpdArray, this.windSpdMinMaxByDay);
+            this.getMinMaxByDay(rainAmtArray, this.precipMinMaxByDay);
+            this.getMostFrequentByDay(windDirArray, this.windDirByDay, WEATHER_TYPE.WindDirection);
+            this.getMostFrequentByDay(iconArray, this.iconByDay, WEATHER_TYPE.Weather);
 
             this.displayWeatherByDay();
         }).catch(err => {
@@ -235,7 +235,7 @@ export default class TimePageComponent extends Vue {
                 icon: this.iconByDay[i].data,
                 temp: this.tempMinMaxByDay[i].min + '°C - ' + this.tempMinMaxByDay[i].max + '°C',
                 precip: this.precipMinMaxByDay[i].min + ' - ' + this.precipMinMaxByDay[i].max + ' mm',
-                windLvl: this.windLvlMinMaxByDay[i].min + ' - ' + this.windLvlMinMaxByDay[i].max,
+                windLvl: this.windLvlMinMaxByDay[i].min + ' - ' + this.windLvlMinMaxByDay[i].max + ' m/s',
                 windSpd: this.windSpdMinMaxByDay[i].min + ' - ' + this.windSpdMinMaxByDay[i].max + ' m/s',
                 humid: this.humidMinMaxByDay[i].min + '% - ' + this.humidMinMaxByDay[i].max + '%',
                 windDir: WIND_DIRECTION[this.windDirByDay[i].data].abbr
