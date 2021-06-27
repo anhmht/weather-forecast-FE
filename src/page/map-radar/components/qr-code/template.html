@@ -1,5 +1,5 @@
 <div class="qr-code">
-    <v-dialog v-model="isDisplayDialog" persistent max-width="500">
+    <v-dialog v-model="isDisplayDialog" persistent max-width="1000">
         <div class="qr-code">
             <div class="qr-code-header">
                 <div class="qr-code-header--title">
@@ -12,13 +12,24 @@
                 </div>
             </div>
             <div class="qr-code-body">
-                <v-img :src="qrCode" max-width="500" max-height="300" contain>
-                    <template v-slot:placeholder>
-                        <v-row  class="fill-height ma-0" align="center" justify="center">
-                            <v-progress-circular v-if="!qrCode" indeterminate color="grey lighten-5"></v-progress-circular>
-                        </v-row>
-                    </template>
-                </v-img>
+                <div class="qr-code-body--tutorial">
+                    <v-img :src="tutorial" max-width="500" max-height="500" contain>
+                    </v-img>
+                    <div>
+                        <p><b>Bước 1:</b> Mở app Dự báo thời tiết của đài KTTV</p>
+                        <p><b>Bước 2:</b> Quét mã QR để bắt đầu điều khiển</p>
+                    </div>
+                </div>
+                <div class="qr-code-body--image">
+                    <v-img :src="qrCode" max-width="500" max-height="300" contain>
+                        <template v-slot:placeholder>
+                            <v-row class="fill-height ma-0" align="center" justify="center">
+                                <v-progress-circular v-if="!qrCode" indeterminate color="grey lighten-5"></v-progress-circular>
+                            </v-row>
+                        </template>
+                    </v-img>
+                </div>
+
             </div>
         </div>
     </v-dialog>

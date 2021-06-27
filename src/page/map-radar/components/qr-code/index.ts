@@ -6,6 +6,7 @@ import Vue from 'vue';
 import Component from 'vue-class-component';
 import { Prop, Watch } from 'vue-property-decorator';
 import EventBus from '@/utils/event-bus';
+import tutorial from '../../../../../static/img/qrcode/tutorial.gif';
 
 @Component({
     template: require("./template.html").default,
@@ -16,6 +17,7 @@ export default class QRCodeComponent extends Vue {
     value
 
     qrCode: string = null;
+    tutorial:any = tutorial;
     connectionId: string = DataHelper.create_UUID();
     mediaService: MediaServices = new MediaServices()
 

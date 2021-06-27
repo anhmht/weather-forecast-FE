@@ -14,7 +14,10 @@
     &-body {
         padding: 2vw;
         display: flex;
-        height: 400px;
+
+        &--image {
+            flex: 1;
+        }
     }
 
 }
