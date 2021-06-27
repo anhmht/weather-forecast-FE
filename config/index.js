@@ -33,7 +33,7 @@ module.exports = {
      */
 
     // https://webpack.js.org/configuration/devtool/#development
-    devtool: "source-map",
+    devtool: "eval-source-map",
     devServer: {
       hot: true,
       open: true

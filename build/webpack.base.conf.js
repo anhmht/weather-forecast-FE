@@ -154,13 +154,13 @@ module.exports = {
         ]
     },
     optimization: {
-        // minimizer: [
-        //     new UglifyJsPlugin({
-        //         test: /\.js(\?.*)?$/i,
-        //         cache: true,
-        //         parallel: true
-        //     })
-        // ],
+        minimizer: [
+            new UglifyJsPlugin({
+                test: /\.js(\?.*)?$/i,
+                cache: true,
+                parallel: true
+            })
+        ],
         runtimeChunk: true
     },
     plugins: [

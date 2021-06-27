@@ -24,6 +24,7 @@ export default class App extends Vue {
             case ROUTE_NAME.CREATE_POST:
             case ROUTE_NAME.LIST_ICON:
             case ROUTE_NAME.LIST_DATA:
+            case ROUTE_NAME.LIST_USER:
                 return false;
             default:
                 return true;

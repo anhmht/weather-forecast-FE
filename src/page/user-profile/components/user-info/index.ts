@@ -122,6 +122,7 @@ export default class UserInfoComponent extends Vue {
         const userInfo = getLocalStorage('auth');
         if(userInfo) {
             this.data = new User(userInfo);
+            this.uploadedDocs = userInfo.avartarUrl;
         }
     }
 }

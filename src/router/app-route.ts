@@ -23,6 +23,9 @@ const EditPostComponent = () => import("../page/cms/components/edit-post/EditPos
 const ListIconComponent = () => import("../page/cms/components/list-icon/ListIconComponent.vue")
 const ListDataComponent = () => import("../page/cms/components/list-data/ListDataComponent.vue")
 
+const ListUserComponent = () => import("../page/cms/components/list-user/ListUserComponent.vue")
+
+
 const homeRoutes = [
     { path: "/", redirect: { path: PATH.INFO } },
     {
@@ -152,7 +155,7 @@ const adminRoutes = [
                 },
                 props: {}
             },
-            { path: "/admin", redirect: { path: PATH.LIST_POST, query: { categoryId: 'e78c78b7-80d1-4f3b-3014-08d91e5e4dfa' } } },
+            { path: "/admin", redirect: { path: PATH.LIST_USER, params: { role: 'admin' } } },
             {
                 path: PATH.CREATE_POST,
                 name: ROUTE_NAME.CREATE_POST,
@@ -184,6 +187,15 @@ const adminRoutes = [
                 path: PATH.LIST_DATA,
                 name: ROUTE_NAME.LIST_DATA,
                 component: ListDataComponent,
+                meta: {
+                    requiresAuth: true
+                },
+                props: {}
+            },
+            {
+                path: PATH.LIST_USER,
+                name: ROUTE_NAME.LIST_USER,
+                component: ListUserComponent,
                 meta: {
                     requiresAuth: true
                 },

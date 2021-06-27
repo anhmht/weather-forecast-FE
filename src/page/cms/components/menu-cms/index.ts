@@ -12,6 +12,18 @@ export default class MenuCMSComponent extends Vue {
     activeMenu: number = 0;
     menuList= [
         {
+            title: 'Danh sách quản trị viên',
+            icon: 'mdi-account-cog',
+            name: ROUTE_NAME.LIST_USER,
+            param: {role: 'admin'},
+        },
+        {
+            title: 'Danh sách người dùng',
+            icon: 'mdi-account-group',
+            name: ROUTE_NAME.LIST_USER,
+            param: { role: 'user' }
+        },
+        {
             title: 'Cảnh báo thiên tai',
             icon: 'mdi-home',
             name: ROUTE_NAME.LIST_POST,
@@ -51,7 +63,12 @@ export default class MenuCMSComponent extends Vue {
         const type = this.menuList[index];
         this.$router.push({
             name: type.name,
-            query: type.query || null
+            query: type.query || null,
+            params: type.param || undefined
+        }).catch(err => {
+            if (err.name != "NavigationDuplicated") {
+                throw err;
+            }
         })
     }
 

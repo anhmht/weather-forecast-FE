@@ -1,7 +1,7 @@
 import { IPostSearchParameter } from './../../model/post/post-filter.model';
 import { ApiResponse } from "@/model/app-config";
 import { GenericServices } from "../generic-service/generic.service";
-import Uri from "@/constant/uri/user-constant";
+import Uri from "@/constant/uri/post-consants";
 import IPost from "@/model/post/post.model";
 
 export class PostServices extends GenericServices {

@@ -1,3 +1,4 @@
+import { IUserSearchParam } from './../../model/user/user-info.model';
 import { ApiResponse } from "@/model/app-config";
 import { GenericServices } from "../generic-service/generic.service";
 import  Uri  from "@/constant/uri/user-constant";
@@ -18,6 +19,12 @@ export class UserServices extends GenericServices {
 
     updateInfo(userInfo: IUser): Promise<ApiResponse> {
         return this.executeSelectingPut(userInfo, Uri.updateUserInfo).then((response: ApiResponse) => {
+            return Promise.resolve(response)
+        }).catch(error => Promise.reject(error))
+    }
+
+    getAllUser(userSearchParam: IUserSearchParam): Promise<ApiResponse> {
+        return this.executeSelectingPost(userSearchParam, Uri.getAllUser).then((response: ApiResponse) => {
             return Promise.resolve(response)
         }).catch(error => Promise.reject(error))
     }
