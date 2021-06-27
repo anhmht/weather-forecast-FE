@@ -14,5 +14,5 @@ export const removeLocalStorage = (key: string) => {
 }
 
 export const setAxiosHeader = (token) => {
-    axios.defaults.headers.common['Authorization'] = token;
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 }
