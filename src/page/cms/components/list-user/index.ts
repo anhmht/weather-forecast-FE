@@ -3,6 +3,7 @@ import { IUserSearchParam, UserSearchParam } from './../../../../model/user/user
 import { UserServices } from "@/service/user-service/user.service";
 import Vue from "vue";
 import Component from "vue-class-component";
+import { ROUTE_NAME } from '@/constant/route-constant';
 
 @Component({
     template: require("./template.html").default,
@@ -17,6 +18,13 @@ export default class ListUserComponent extends Vue {
     }
     get createUserTitle() {
         return this.$route.params.role === 'admin' ? 'Tạo quản trị viên' : 'Tạo người dùng'
+    }
+
+    toCreateUser() {
+        this.$router.push({
+            name: ROUTE_NAME.CREATE_USER,
+            params: { role: this.$route.params.role }
+        });
     }
 
     mounted() {

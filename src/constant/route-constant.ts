@@ -21,7 +21,8 @@ export const ROUTE_NAME = {
     USER_INFO: 'user-info',
     SOCIAL_POST: 'social-post',
     CHANGE_PASSWORD: 'change-password',
-    LIST_USER: 'list-user'
+    LIST_USER: 'list-user',
+    CREATE_USER: 'createUser',
 }
 
 export const PATH = {
@@ -47,5 +48,6 @@ export const PATH = {
     DELETE_POST: 'delete-post/:id',
     LIST_ICON: 'list-icon',
     LIST_DATA: 'list-data',
-    LIST_USER: 'list-user/:role'
+    LIST_USER: 'list-user/:role',
+    CREATE_USER: 'create-user/:role',
 }
