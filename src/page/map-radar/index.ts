@@ -172,15 +172,15 @@ export default class HomePageComponent extends Vue {
         //@ts-ignore
         const layer = L.geoJSON(geojson, { style: mapData.style })
         this.regionGroup.addLayer(layer);
-        map.flyToBounds(layer.getBounds(), { maxZoom: mapData.zoom, animate: true, duration: 1, easeLinearity: 1 });
-        await sleep(1000, this.clearTimeout);
+        map.fitBounds(layer.getBounds(), { maxZoom: mapData.zoom, animate: true, duration: 2, easeLinearity: 0.2});
+        await sleep(2000, this.clearTimeout);
         const provinces = JSON.parse(mapData.province);
         this.addProvinceLayer(provinces);
         this.addPopUPLayer(mapData.provinceIds);
         this.layerGroup.addLayer(this.regionGroup);
-        if (mapData.zoom) {
-            map.setZoom(this.isWebView ? mapData.zoom -1 : mapData.zoom)
-        }
+        // if (mapData.zoom) {
+        //     map.setZoom(this.isWebView ? mapData.zoom - 1 : mapData.zoom, { duration: 3 })
+        // }
     }
 
     async handleChangeLocation(mapData) {
@@ -194,7 +194,8 @@ export default class HomePageComponent extends Vue {
         //@ts-ignore
         const provinceLayer = L.geoJSON(geojson, { style: mapData.style })
         this.layerProvice.addLayer(provinceLayer);
-        map.flyToBounds(provinceLayer.getBounds(), { maxZoom: mapData.zoom, duration: 1.5, easeLinearity: 0.2 });
+        map.flyToBounds(provinceLayer.getBounds(), { maxZoom: mapData.zoom, animate: true, duration: 2, easeLinearity: 0.2 });
+        await sleep(2000, this.clearTimeout);
         const districts = JSON.parse(mapData.district);
         this.addDistrictLayer(districts);
         this.addPopUPLayer(mapData.districtIds);
@@ -400,6 +401,9 @@ export default class HomePageComponent extends Vue {
             const levels = store.getAllowed('availLevels');
             console.log(levels);
 
+            //@ts-ignore
+            L.gridLayer({ updateWhenZooming: true, updateWhenIdle: true, noWrap: true, keepBuffer: 10000 })
+
             overlays.wind.setMetric('km/h');
             map.setZoom(this.customZoomControl);
             //@ts-ignore
@@ -442,6 +446,8 @@ export default class HomePageComponent extends Vue {
             map.flyToBounds(vnBorder.getBounds(), { maxZoom: 12, duration: 1.5, easeLinearity: 0.2 });
             this.layerGroup.addLayer(vnBorder);
             this.layerGroup.addTo(map);
+
+
         });
     }
 

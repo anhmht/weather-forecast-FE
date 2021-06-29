@@ -139,7 +139,10 @@ export class DataHelper {
     }
 
     static getDataByDateHour(temp, date, time) {
-        const hours = Object.keys(temp).filter(x => x.includes('_'));
+        let hours = Object.keys(temp).filter(x => x.includes('_'));
+        hours = hours.sort((a, b) => {
+            return parseInt(a.substr(1), 10) - parseInt(b.substr(1), 10);
+        });
         let refDate = Object.keys(temp).filter(x => x.includes('refDate'));
         const diffHours = moment().add(date, 'days').hours(time).diff(moment(temp[refDate[0]]), 'hours');
         const result = diffHours > 0 ? diffHours : 1;

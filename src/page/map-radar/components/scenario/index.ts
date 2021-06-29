@@ -65,7 +65,10 @@ export default class ScenarioComponent extends Vue {
 
     updateScenario(data) {
         if (this.scenario) {
+            const index = this.scenarios.findIndex(x => x.scenarioId === this.scenario.scenarioId);
+            Vue.set(this.scenarios[index], 'scenarioName', data.scenarioName);
 
+            this.$forceUpdate();
         } else {
             const scenario = DataHelper.deepClone(data) as any;
             scenario.scenarioContent = JSON.parse(scenario.scenarioContent);
@@ -75,7 +78,7 @@ export default class ScenarioComponent extends Vue {
 
     updateContent(data) {
         if(this.content) {
-            this.Contents[this.selectContentIndex].scenarioContent = DataHelper.deepClone(data);
+            this.Contents[this.selectContentIndex] = DataHelper.deepClone(data);
         } else {
             this.Contents.push(DataHelper.deepClone(data));
         }
@@ -317,9 +320,6 @@ export default class ScenarioComponent extends Vue {
             })
             this.scenarios = this.scenarios.concat(sceneArray);
             this.searchParams.total = res.totalPages
-            let clear = { timeout: null };
-            await sleep(500, clear);
-            this.makeSortAbleList();
         }).catch(err => {
             console.log(err);
             this.isLoading = false
@@ -333,9 +333,11 @@ export default class ScenarioComponent extends Vue {
     }
 
     @Watch('value')
-    dialogVisible(visible) {
+    async dialogVisible(visible) {
         if (visible) {
-            this.initData()
+            let clear = { timeout: null };
+            await sleep(500, clear);
+            this.makeSortAbleList();
             setTimeout(() => {
                 this.buttonLoading = false;
             }, 2000);

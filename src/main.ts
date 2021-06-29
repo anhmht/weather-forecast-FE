@@ -13,6 +13,7 @@ import { StringFormatterPlugin } from './plugins/string-format';
 import SignalRPlugin from './plugins/signalr';
 import VueToast from 'vue-toast-notification';
 import 'vue-toast-notification/dist/theme-sugar.css';
+import '../static/js/leaflet.edgebuffer.js';
 
 Vue.config.productionTip = false;
 
