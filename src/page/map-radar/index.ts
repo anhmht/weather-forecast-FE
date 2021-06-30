@@ -69,6 +69,8 @@ export default class HomePageComponent extends Vue {
     isWebView: boolean = false;
     menuClick: boolean = false;
 
+    centerLatlng: any = null
+
     handleBack() {
         this.$router.push(PATH.INFO);
     }
@@ -172,15 +174,27 @@ export default class HomePageComponent extends Vue {
         //@ts-ignore
         const layer = L.geoJSON(geojson, { style: mapData.style })
         this.regionGroup.addLayer(layer);
-        map.fitBounds(layer.getBounds(), { maxZoom: mapData.zoom, animate: true, duration: 2, easeLinearity: 0.2});
-        await sleep(2000, this.clearTimeout);
+        let duration = 2;
+        if(this.centerLatlng) {
+            const distance = map.distance(this.centerLatlng, layer.getBounds().getCenter())
+            if(distance >= 800000) {
+                duration = 8
+            }
+        }
+        map.flyToBounds(layer.getBounds(), { maxZoom: mapData.zoom, animate: true, duration, easeLinearity: 0.2});
+
+        await sleep(duration * 1000, this.clearTimeout);
+
         const provinces = JSON.parse(mapData.province);
         this.addProvinceLayer(provinces);
         this.addPopUPLayer(mapData.provinceIds);
-        this.layerGroup.addLayer(this.regionGroup);
-        // if (mapData.zoom) {
-        //     map.setZoom(this.isWebView ? mapData.zoom - 1 : mapData.zoom, { duration: 3 })
-        // }
+
+        if (mapData.zoom) {
+            await sleep(500, this.clearTimeout);
+            this.centerLatlng = layer.getBounds().getCenter();
+            map.flyTo(this.centerLatlng, mapData.zoom, { animate: true, duration: 1.5, easeLinearity: 0.2 })
+            this.layerGroup.addLayer(this.regionGroup);
+        }
     }
 
     async handleChangeLocation(mapData) {
@@ -194,13 +208,23 @@ export default class HomePageComponent extends Vue {
         //@ts-ignore
         const provinceLayer = L.geoJSON(geojson, { style: mapData.style })
         this.layerProvice.addLayer(provinceLayer);
-        map.flyToBounds(provinceLayer.getBounds(), { maxZoom: mapData.zoom, animate: true, duration: 2, easeLinearity: 0.2 });
-        await sleep(2000, this.clearTimeout);
+        let duration = 2;
+        if (this.centerLatlng) {
+            const distance = map.distance(this.centerLatlng, provinceLayer.getBounds().getCenter())
+            if (distance >= 800000) {
+                map.flyTo(this.centerLatlng, 10, { animate: true, duration: 5, easeLinearity: 2 })
+                await sleep(5000, this.clearTimeout);
+                duration = 8
+            }
+        }
+        map.flyToBounds(provinceLayer.getBounds(), { maxZoom: mapData.zoom, animate: true, duration, easeLinearity: 2 });
+        await sleep(duration * 1000, this.clearTimeout);
         const districts = JSON.parse(mapData.district);
         this.addDistrictLayer(districts);
         this.addPopUPLayer(mapData.districtIds);
         this.layerGroup.addLayer(this.layerProvice);
         this.forecastData = STATION.find(x => x.place_id === mapData.placeId);
+        this.centerLatlng = provinceLayer.getBounds().getCenter();
     }
 
     addDistrictLayer(districts) {
@@ -279,7 +303,11 @@ export default class HomePageComponent extends Vue {
         this.isRecording = true;
         const vm = this as any;
         //@ts-ignore
-        return await navigator.mediaDevices.getDisplayMedia({ video: { mediaSource: "screen", cursor: false } })
+        return await navigator.mediaDevices.getDisplayMedia({
+            video: {
+                width: { ideal: 1280 },
+                height: { ideal: 720 },
+                mediaSource: "screen", cursor: false  } })
             .then(function (stream) {
                 //@ts-ignore
                 vm.videoStream  = new MediaRecorder(stream);
@@ -330,6 +358,7 @@ export default class HomePageComponent extends Vue {
         this.isRecording = true;
         if (isRecord) {
             await this.capture();
+            await sleep(2000, this.clearTimeout);
         } else {
             this.isShowButtonStop = true;
             this.isReview = true;
@@ -402,7 +431,7 @@ export default class HomePageComponent extends Vue {
             console.log(levels);
 
             //@ts-ignore
-            L.gridLayer({ updateWhenZooming: true, updateWhenIdle: true, noWrap: true, keepBuffer: 10000 })
+            L.gridLayer({ updateWhenZooming: true, updateWhenIdle: true, noWrap: true, keepBuffer: 5000 })
 
             overlays.wind.setMetric('km/h');
             map.setZoom(this.customZoomControl);
@@ -438,16 +467,18 @@ export default class HomePageComponent extends Vue {
             const vnBorder = L.geoJSON(VietNamGeojson, {
                 style: {
                     color: "#fff",
-                    weight: 1,
-                    opacity: 1,
-                    fillOpacity: 0.2
+                    weight: 2,
+                    opacity: 0.5,
+                    fillOpacity: 0
                 }
             });
             map.flyToBounds(vnBorder.getBounds(), { maxZoom: 12, duration: 1.5, easeLinearity: 0.2 });
+            map.invalidateSize()
             this.layerGroup.addLayer(vnBorder);
             this.layerGroup.addTo(map);
-
-
+            setInterval(function () {
+                map.invalidateSize();
+            }, 100);
         });
     }
 

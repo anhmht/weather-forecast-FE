@@ -67,6 +67,7 @@ export const SCENARIO_DURATION = {
     [3000]: '3 giây',
     [5000]: '5 giây',
     [10000]: '10 giây',
+    [15000]: '15 giây',
     [20000]: '20 giây',
     [0]: '-',
 }

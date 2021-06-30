@@ -20,6 +20,8 @@ export default class AddUpdateContentComponent extends Vue {
         { text: '3 giây', value: 3000 },
         { text: '5 giây', value: 5000 },
         { text: '10 giây', value: 10000 },
+        { text: '15 giây', value: 15000 },
+        { text: '20 giây', value: 20000 },
     ]
 
     valid: boolean = true;

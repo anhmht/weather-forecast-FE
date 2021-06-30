@@ -502,7 +502,7 @@ export const STATION = [
 export const REGION = [
     {
         name: "Tây Bắc Bộ",
-        zoom: 9,
+        zoom: 8,
         placeId: 'TBB',
         geojson: 'tay_bac_bo',
         style: {
@@ -517,7 +517,7 @@ export const REGION = [
     },
     {
         name: "Đông Bắc Bộ",
-        zoom: 9,
+        zoom: 8,
         placeId: 'DBB',
         geojson: 'dong_bac_bo',
         style: {
