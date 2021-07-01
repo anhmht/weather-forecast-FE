@@ -7,8 +7,7 @@ export interface IUser {
     password?: string;
     avatarUrl?: string;
     phoneNumber?: string;
-    role?: string;
-    statusId?: string;
+    roleNames?: string[];
 }
 
 export class User implements IUser {
@@ -20,8 +19,7 @@ export class User implements IUser {
     password?: string;
     avatarUrl?: string;
     phoneNumber?: string;
-    role?: string;
-    statusId?: string;
+    roleNames?: string[];
 
     constructor(option?: any) {
         this.id = option.id || null;
@@ -32,7 +30,6 @@ export class User implements IUser {
         this.password = option.password || null
         this.avatarUrl = option.avatarUrl || null
         this.phoneNumber = option.phoneNumber || null
-        this.role = option.role || null
-        this.statusId = option.statusId || null
+        this.roleNames = option.roleNames || []
     }
 }

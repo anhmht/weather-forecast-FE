@@ -28,4 +28,10 @@ export class UserServices extends GenericServices {
             return Promise.resolve(response)
         }).catch(error => Promise.reject(error))
     }
+
+    createUser(userInfo: IUser): Promise<ApiResponse> {
+        return this.executeSelectingPost(userInfo, Uri.createUser).then((response: ApiResponse) => {
+            return Promise.resolve(response)
+        }).catch(error => Promise.reject(error))
+    }
 }
