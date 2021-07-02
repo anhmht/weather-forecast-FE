@@ -34,4 +34,10 @@ export class UserServices extends GenericServices {
             return Promise.resolve(response)
         }).catch(error => Promise.reject(error))
     }
+
+    getAllRole(): Promise<ApiResponse> {
+        return this.executeSelecting(null, Uri.getAllRole).then((response: ApiResponse) => {
+            return Promise.resolve(response)
+        }).catch(error => Promise.reject(error))
+    }
 }

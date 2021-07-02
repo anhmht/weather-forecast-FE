@@ -119,7 +119,7 @@ export default class CreateUserComponent extends Vue {
                 this.progress = percent;
             }.bind(this)
         };
-        this.uploadservice.upload(formData, config).then(response => {
+        this.uploadservice.uploadAvatar(formData, config).then(response => {
             this.isUploading = false;
             this.toBase64(document.Data);
             this.progress = 0;
@@ -132,11 +132,7 @@ export default class CreateUserComponent extends Vue {
 
     buildUploadDocumentParams(document) {
         const formData = new FormData();
-        formData.append('file', document.Data, document.FileName);
+        formData.append('Image', document.Data, document.FileName);
         return formData;
-    }
-
-    mounted() {
-
     }
 }

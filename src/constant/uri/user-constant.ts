@@ -3,5 +3,6 @@ export default {
     register: '/api/Account/register',
     updateUserInfo: '/api/Account/updateProfile',
     getAllUser: '/api/Account/GetAllUsers',
-    createUser: '/api/Account/createUser'
+    createUser: '/api/Account/createUser',
+    getAllRole: '/api/Account/GetAllRoles'
 }
