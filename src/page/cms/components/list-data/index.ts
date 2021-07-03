@@ -46,11 +46,11 @@ export default class ListDataComponent extends Vue {
             }.bind(this)
         };
         this.uploadservice.uploadCSV(formData, config).then(response => {
+            this.$toast.success('Tải dữ liệu thành công');
             this.isUploading = false;
             this.progress = 0;
-            console.log(response);
-
         }).catch(err => {
+            this.$toast.error('Có lỗi khi tải dữ liệu');
             this.isUploading = false;
             console.error(err);
         });

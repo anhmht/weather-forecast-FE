@@ -50,9 +50,11 @@ export default class CreateUserComponent extends Vue {
         if (this.valid) {
             this.isLoading = true;
             this.userService.createUser(this.userModel).then(res => {
+                this.$toast.success('Tạo tài khoản mới thành công');
                 vm.$router.go(-1);
                 this.isLoading = false;
             }).catch(err => {
+                this.$toast.error('Có lỗi khi tạo tài khoản mới');
                 console.log(err);
                 this.isLoading = false;
             })

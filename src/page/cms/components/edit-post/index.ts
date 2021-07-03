@@ -60,9 +60,11 @@ export default class EditPostComponent extends Vue {
             this.postModel.imageNormalAdds = imageData.imageNormalAdd;
             this.postModel.imageNormalDeletes = imageData.imageNormalDelete;
             this.postService.editPost(this.postModel).then(res => {
+                this.$toast.success('Chỉnh sửa tin thành công');
                 this.isLoading = false;
                 vm.$router.push({ name: ROUTE_NAME.LIST_POST});
             }).catch(err => {
+                this.$toast.error('Có lỗi khi chỉnh sửa tin');
                 console.log(err);
                 this.isLoading = false;
             })
