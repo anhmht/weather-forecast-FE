@@ -40,17 +40,25 @@ export default class AddUpdateScenarioComponent extends Vue {
         if(this.valid) {
             this.buttonLoading = true;
             let requestHolder: Promise<any>;
+            let successMessage: string = null;
+            let errorMessage: string = null;
             if(this.content) {
                 requestHolder = this.scenarioService.updateScenario(this.data);
+                successMessage = 'Chỉnh sửa kịch bản thành công';
+                errorMessage = 'Có lỗi khi chỉnh sửa kịch bản';
             } else {
                 requestHolder = this.scenarioService.createScenario(this.data);
+                successMessage = 'Tạo kịch bản thành công';
+                errorMessage = 'Có lỗi khi tạo kịch bản';
             }
             requestHolder.then((res:any) => {
+                this.$toast.success(successMessage);
                 this.buttonLoading = false;
                 this.data.scenarioId = res;
                 this.$emit('save', this.data);
                 this.visibleAddItem = false
             }).catch(err => {
+                this.$toast.error(errorMessage);
                 console.log(err);
                 this.buttonLoading = false;
             });

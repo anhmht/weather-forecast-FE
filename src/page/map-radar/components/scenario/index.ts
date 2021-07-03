@@ -244,8 +244,10 @@ export default class ScenarioComponent extends Vue {
     deleteScenario() {
         const id = this.scenarios[this.scenarioIndex].scenarioId;
         this.scenarioService.deleteScenario(id).then(res => {
+            this.$toast.success('Xóa kịch bản thành công');
             this.visibleConfirm = false;
         }).catch(err => {
+            this.$toast.error('Có lỗi khi xóa kịch bản');
             console.log(err);
         })
     }
@@ -259,8 +261,10 @@ export default class ScenarioComponent extends Vue {
         const saveData = DataHelper.deepClone(this.scenarios[this.selectedItem]) as any;
         saveData.scenarioContent = JSON.stringify(saveData.scenarioContent);
         this.scenarioService.updateScenario(saveData).then(res => {
+            this.$toast.success('Lưu kịch bản thành công');
             this.buttonLoading = false;
         }).catch(err => {
+            this.$toast.error('Có lỗi khi lưu kịch bản');
             this.buttonLoading = false;
         })
     }
