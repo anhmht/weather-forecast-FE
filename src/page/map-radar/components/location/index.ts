@@ -45,6 +45,10 @@ export default class LocationComponent extends Vue {
 
     async handleClickRegion(index) {
         this.$emit('clear')
+        if(index === -1) {
+            this.$emit("change-region-map", { placeId: 'TQ'});
+            return;
+        }
         this.activeTabRegion = index;
         const mapLocation = DataHelper.deepClone(this.regions[index]) as any;
         const geojson = await getGeoJson('region', mapLocation.geojson) as any;

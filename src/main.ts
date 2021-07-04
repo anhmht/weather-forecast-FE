@@ -12,6 +12,7 @@ import store from "./store";
 import { StringFormatterPlugin } from './plugins/string-format';
 import SignalRPlugin from './plugins/signalr';
 import VueToast from 'vue-toast-notification';
+import 'animate.css/animate.min.css';
 import 'vue-toast-notification/dist/theme-sugar.css';
 import '../static/js/leaflet.edgebuffer.js';
 

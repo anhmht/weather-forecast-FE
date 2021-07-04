@@ -51,6 +51,11 @@ export const SCENARIO_ACTION = [
         value: 'customZoomControl',
         color: 'black'
     },
+    {
+        text: 'Chờ',
+        value: 'customWaitControl',
+        color: 'yellow'
+    },
 ]
 export const SCENARIO_LOCATION_METHOD = [
     {
@@ -63,12 +68,15 @@ export const SCENARIO_LOCATION_METHOD = [
     },
 ]
 export const SCENARIO_DURATION = {
+    [1000]: '1 giây',
     [2000]: '2 giây',
     [3000]: '3 giây',
     [5000]: '5 giây',
     [10000]: '10 giây',
     [15000]: '15 giây',
     [20000]: '20 giây',
+    [25000]: '20 giây',
+    [30000]: '30 giây',
     [0]: '-',
 }
 

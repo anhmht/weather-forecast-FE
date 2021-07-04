@@ -107,7 +107,7 @@ export default class ScenarioComponent extends Vue {
         if (item.action === 'customLocationControl') {
             if (item.method === SCENARIO_LOCATION_METHOD[0].value) {
                 const region = REGION.find(x => x.placeId === item.data)
-                return region ? region.name : null
+                return region ? region.name : 'Toàn Quốc'
             }
             if (item.method === SCENARIO_LOCATION_METHOD[1].value) {
                 const province = MAP_PROVINCE.find(x => x.placeId === item.data)

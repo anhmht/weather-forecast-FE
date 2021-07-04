@@ -514,6 +514,10 @@ export const REGION = [
         provinceIds: [
             '02', '06', '71', '01', '05', '14'
         ],
+        paddingBottomRight: [1000, 0],
+        paddingTopLeft: [0, 0],
+        titlePosition: 'right animate__fadeInRightBig',
+        animation: 'animate__fadeInTopRight'
     },
     {
         name: "Đông Bắc Bộ",
@@ -530,6 +534,10 @@ export const REGION = [
             '03', '04', '53', '09', '07', '68',
             '69', '54', '13'
         ],
+        paddingBottomRight: [0, 0],
+        paddingTopLeft: [1000, 0],
+        titlePosition: 'left animate__fadeInLeftBig',
+        animation: 'animate__zoomIn'
     },
     {
         name: "Đồng Bằng Sông Hồng",
@@ -546,6 +554,9 @@ export const REGION = [
             'HN', 'HP', '56', '63', '61',
             '66', '67', '18', '20', '70'
         ],
+        paddingBottomRight: [0, 0],
+        paddingTopLeft: [0, 0],
+        animation: 'animate__fadeInDown'
     },
     {
         name: "Bắc Trung Bộ",
@@ -561,22 +572,29 @@ export const REGION = [
         provinceIds: [
             '21', '22','23', '24', '25', '26'
         ],
+        paddingBottomRight: [1000, 0],
+        paddingTopLeft: [0, 0],
+        animation: 'animate__fadeInTopRight'
     },
     {
         name: "Nam Trung Bộ",
-        zoom: 8,
+        zoom: 7.3,
         placeId: 'NTB',
         geojson: 'nam_trung_bo',
         provinceIds: [
             'DN', '27', '29', '31', '32',
             '34', '36', '40'
         ],
+        size: 'small',
         style: {
             color: "#ff7800",
             weight: 3,
             opacity: 0.5,
             // fill: false
-        }
+        },
+        paddingBottomRight: [0, 0],
+        paddingTopLeft: [0, 0],
+        animation: 'animate__bounceInRight'
     },
     {
         name: "Tây Nguyên",
@@ -591,7 +609,10 @@ export const REGION = [
             weight: 3,
             opacity: 0.5,
             // fill: false
-        }
+        },
+        paddingBottomRight: [0, 0],
+        paddingTopLeft: [0, 0],
+        animation: 'animate__rotateInDownLeft'
     },
     {
         name: "Đông Nam Bộ",
@@ -606,7 +627,10 @@ export const REGION = [
             weight: 3,
             opacity: 0.5,
             // fill: false
-        }
+        },
+        paddingBottomRight: [0, 0],
+        paddingTopLeft: [0, 0],
+        animation: 'animate__fadeInUpBig'
     },
     {
         name: "Tây Nam Bộ",
@@ -622,7 +646,11 @@ export const REGION = [
             weight: 3,
             opacity: 0.5,
             // fill: false
-        }
+        },
+        paddingBottomRight: [0, 0],
+        paddingTopLeft: [0, 0],
+        titlePosition: 'left animate__fadeInLeftBig',
+        animation: 'animate__fadeInBottomLeft'
     },
 ]
 

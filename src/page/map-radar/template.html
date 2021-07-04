@@ -1,8 +1,13 @@
 <div class="home-page-container">
-    <div style="width: 100%; height: 100vh;" viewBox="0 0 4000 2080">
+    <div id="test" style="width: 100%; height: 100vh;" viewBox="0 0 4000 2080">
         <div :class="forecastData && isWebView ? 'resize' : ''" id="windy"></div>
     </div>
-
+    <div v-if="isRecording" class="fake-transition" :class="!isDisplayFake ? 'hide' : ''">
+        <img :src="fakeImage" />
+    </div>
+    <div v-show="isShowMapTitle" class="map-title animate__animated" :class="mapTitle.position">
+        Khu vực: {{mapTitle ? mapTitle.name : ''}}
+    </div>
     <div v-if="forecastData && isWebView" class="result">
         <tool-bar v-if="forecastData" :station-info="forecastData" @changeTime="updateDistrictPopUp" />
     </div>
