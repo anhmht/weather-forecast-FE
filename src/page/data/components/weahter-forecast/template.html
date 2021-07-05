@@ -1,13 +1,12 @@
 <div class="weather-forecast">
     <v-menu v-model="selectedDateMenu" :close-on-content-click="false" :nudge-right="40"
         transition="scale-transition" offset-y min-width="auto">
-        </div>
-        <div class="calendar-input">
-            <template v-slot:activator="{ on, attrs }">
-                <v-text-field  v-model="FormattedSelectedDate" prepend-icon="mdi-calendar"
-                    readonly v-bind="attrs" v-on="on"></v-text-field>
-            </template>
-        </div>
+        <template v-slot:activator="{ on, attrs }">
+            <div class="calendar-input">
+                <v-text-field v-model="FormattedSelectedDate" prepend-icon="mdi-calendar" readonly v-bind="attrs" v-on="on">
+                </v-text-field>
+            </div>
+        </template>
         <v-date-picker v-model="selectedDate" @input="selectedDateMenu = false" locale="vi-vn"
             :min="CalendarMinDate" :max="CalendarMaxDate" @change="getDetail()">
         </v-date-picker>
