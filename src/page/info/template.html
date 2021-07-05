@@ -19,14 +19,16 @@
                         <!-- <h1>Thông tin thời tiết</h1> -->
                         <div class="info-current-forecast">
                             <div class="info-current-forecast-header">
-                                {{address}} <br/> {{timestamp}}
+                                <v-select :items="allRegions" item-text="title" return-object
+                                    style="margin: 0px 20px;" hide-details dense v-model="region"
+                                    @change="handleChangeRegion">
+                                </v-select>
+                                <br/> {{timestamp}}
                             </div>
                             <div class="info-current-forecast-body">
                                 <div justify="center" class="info-current-forecast-body-icon">
-                                        Nhiệt độ {{currentTemp}}°
-                                        <img :src="currentIcon">
-                                        <div class="info-current-forecast-body--info">Nhiệt độ thấp nhất: {{minTemp}}°C</div>
-                                        <div class="info-current-forecast-body--info">Nhiệt độ cao nhất: {{maxTemp}}°C</div>
+                                        <img :src="temparatureData.icon">
+                                        <div class="info-current-forecast-body--info">{{temparatureData.desc}}</div>
                                 </div>
                             </div>
                         </div>

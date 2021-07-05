@@ -5,7 +5,7 @@ import { namespace } from 'vuex-class';
 import Vue from "vue";
 import Component from "vue-class-component";
 import { Carousel, Slide } from 'vue-carousel';
-import { STATION } from "@/constant/forcast-station-constant";
+import { STATION, REGION, WIND_DIRECTION } from "@/constant/forcast-station-constant";
 import { ROUTE_NAME } from "../../constant/route-constant";
 import { PostServices } from '../../service/post-service/post.service';
 import { CategoryServices } from '../../service/category-service/category.service';
@@ -15,8 +15,9 @@ import lookupTypesStore from '@/store/lookup/lookup-types.store';
 import IStatus from '@/model/status/status.model';
 import moment from 'moment';
 import { ICON } from '@/constant/icon-constant';
-import { ForecastSearchParam } from '@/model/forecast';
+import { ForecastSearchParam, IForecastSearchParam } from '@/model/forecast';
 import { WeatherServices } from '@/service/weather-service/weather.service';
+import { DataHelper } from '@/utils/data-helper';
 
 const LookupGetter = namespace(storeModules.Lookup, Getter);
 const LookupAction = namespace(storeModules.Lookup, Action);
@@ -49,28 +50,12 @@ export default class InfoPageComponent extends Vue {
     recommendPosts: any = [];
     otherPosts: any = [];
     slideIndex:number = 0;
+    region: any = null;
+    allRegions: any = [];
+    searchParam: IForecastSearchParam = new ForecastSearchParam();
 
     @LookupGetter(lookupTypesStore.Get.STATUS) status: IStatus[]
     @LookupAction getLookupData: (type: string) => Promise<void>;
-
-    get address() {
-        return this.currentPosition ? STATION.find(x => x.place_id === this.currentPosition.regionCode).ten : null
-    }
-
-    get currentTemp() {
-        return this.temparatureData ? this.temparatureData.current : null;
-    }
-
-    get currentIcon() {
-        return this.temparatureData ? this.temparatureData.icon : null;
-    }
-
-    get minTemp() {
-        return this.temparatureData ? this.temparatureData.min : null;
-    }
-    get maxTemp() {
-        return this.temparatureData ? this.temparatureData.max : null;
-    }
 
     get firstWarningPost() {
         return this.warningPosts.length > 0 ? this.warningPosts[0] : {}
@@ -98,6 +83,181 @@ export default class InfoPageComponent extends Vue {
         console.log(result);
 
         return result;
+    }
+
+    getStationIdByRegion(regionCode) {
+        const foundRegion = REGION.find(x => x.placeId === regionCode);
+        if (foundRegion) {
+            const provinceId = foundRegion.provinceIds;
+            let stationId: any = [];
+            for (let i = 0; i < provinceId.length; i++) {
+                const foundStation = STATION.find(x => x.place_id === provinceId[i]);
+                if (foundStation) {
+                    stationId.push(foundStation.id);
+                }
+            }
+
+            return stationId;
+        }
+
+        return;
+    }
+
+    getMostFrequentData(inputData, type) {
+        if (type === WEATHER_TYPE.Weather) {
+            let filteredDayData: string[] = [];
+            let filteredNightData: string[] = [];
+            let mostFreqDay: string = null;
+            let mostFreqNight: string = null;
+
+            for (let i = 0; i < inputData.length; i++) {
+                const currentElement = inputData[i];
+                let hours = Object.keys(currentElement).filter(x => x.includes('_'));
+                hours = hours.sort((a,b) => {
+                    return parseInt(a.substr(1), 10) - parseInt(b.substr(1), 10);
+                });
+                for (let j = 0; j < 24; j++) {
+                    if (j >= 6 && j <= 18) {
+                        filteredDayData.push(currentElement[hours[j]]);
+                    }
+                    else {
+                        filteredNightData.push(currentElement[hours[j]]);
+                    }
+                }
+            }
+            mostFreqDay = DataHelper.getMostFrequentByHorizontal(filteredDayData);
+            mostFreqNight = DataHelper.getMostFrequentByHorizontal(filteredNightData);
+
+            return {mostFreqDay, mostFreqNight};
+        } else {
+            let filteredData: any = [];
+            let mostFreqData: any = null;
+
+            for (let i = 0; i < inputData.length; i++) {
+                const currentElement = inputData[i];
+                let hours = Object.keys(currentElement).filter(x => x.includes('_'));
+                hours = hours.sort((a,b) => {
+                    return parseInt(a.substr(1), 10) - parseInt(b.substr(1), 10);
+                });
+                for (let j = 0; j < 24; j++) {
+                    filteredData.push(currentElement[hours[j]]);
+                }
+            }
+            mostFreqData = DataHelper.getMostFrequentByHorizontal(filteredData);
+
+            return mostFreqData;
+        }
+    }
+
+    getMinMaxData(inputData) {
+        let filteredData: number[] = [];
+        let min: number = null;
+        let max: number = null;
+
+        for (let i = 0; i < inputData.length; i++) {
+            const currentElement = inputData[i];
+            let hours = Object.keys(currentElement).filter(x => x.includes('_'));
+            hours = hours.sort((a,b) => {
+                return parseInt(a.substr(1), 10) - parseInt(b.substr(1), 10);
+            });
+            for (let j = 0; j < 24; j++) {
+                filteredData.push(currentElement[hours[j]]);
+            }
+        }
+        min = Math.min(...filteredData);
+        max = Math.max(...filteredData);
+
+        return {min, max};
+    }
+
+    getHorizontal(stationId) {
+        this.searchParam = new ForecastSearchParam();
+        if (Array.isArray(stationId)) {
+            this.searchParam.stationIds = stationId;
+        } else {
+            this.searchParam.stationIds = [stationId];
+        }
+        this.searchParam.fromDate = moment().format("YYYY-MM-DD") + 'T00:00:00';
+        this.searchParam.toDate = moment().format("YYYY-MM-DD") + 'T00:00:00';
+        this.searchParam.weatherTypes = [
+            WEATHER_TYPE.Weather,
+            WEATHER_TYPE.WindDirection,
+            WEATHER_TYPE.WindRank,
+            WEATHER_TYPE.Temperature
+        ];
+
+        return new Promise((resolve, reject) => {
+            this.weatherService.getHorizontal(this.searchParam).then((res: any) => {
+                let iconArray = res.getWeatherInformationHorizontals.filter(x => x.weatherType === WEATHER_TYPE.Weather && x.refDate === this.searchParam.fromDate);
+                let windDirArray = res.getWeatherInformationHorizontals.filter(x => x.weatherType === WEATHER_TYPE.WindDirection && x.refDate === this.searchParam.fromDate);
+                let windRankArray = res.getWeatherInformationHorizontals.filter(x => x.weatherType === WEATHER_TYPE.WindRank && x.refDate === this.searchParam.fromDate);
+                let tempArray = res.getWeatherInformationHorizontals.filter(x => x.weatherType === WEATHER_TYPE.Temperature && x.refDate === this.searchParam.fromDate);
+
+                let mostFreqIcon = this.getMostFrequentData(iconArray, WEATHER_TYPE.Weather);
+                let mostFreqWindDir = this.getMostFrequentData(windDirArray, WEATHER_TYPE.WindDirection);
+                let mostFreqWindRank = this.getMostFrequentData(windRankArray, WEATHER_TYPE.WindRank);
+                let tempRange = this.getMinMaxData(tempArray);
+
+                resolve({mostFreqIcon, mostFreqWindDir, mostFreqWindRank, tempRange});
+            }).catch(err => {
+                console.log(err);
+            })
+        })
+    }
+
+    handleChangeRegion(value) {
+        const currentHour = new Date().getHours();
+        let iconDay = null;
+        let iconNight = null;
+        let iconDayUrl = null;
+        let iconNightUrl = null;
+        let weatherDescDay = null;
+        let weatherDescNight = null;
+        let windDir = null;
+        let stationId = null;
+
+        if (value.region) {
+            stationId = this.getStationIdByRegion(value.region);
+        } else if (value.currentPosition) {
+            stationId = value.currentPosition;
+        }
+
+        this.getHorizontal(stationId).then((res: any) => {
+            iconDay = ICON.find(x => x.id === res.mostFreqIcon.mostFreqDay);
+            if (iconDay) {
+                iconDayUrl = iconDay.url;
+                weatherDescDay = iconDay.description;
+            }
+
+            iconNight = ICON.find(x => x.id === res.mostFreqIcon.mostFreqNight);
+            if (iconNight) {
+                iconNightUrl = iconNight.url;
+                weatherDescNight = iconNight.description;
+            }
+
+            windDir = WIND_DIRECTION[res.mostFreqWindDir].full;
+
+            if (currentHour >= 6 && currentHour <= 18) {
+                this.temparatureData = {
+                    ... this.temparatureData,
+                    icon: iconDayUrl
+                }
+            } else {
+                this.temparatureData = {
+                    ... this.temparatureData,
+                    icon: iconNightUrl
+                }
+            }
+            this.temparatureData = {
+                ... this.temparatureData,
+                desc: weatherDescDay + ". " + weatherDescNight
+                    + ". Hướng gió " + windDir + ", " + res.mostFreqWindRank + ". "
+                    + "Nhiệt độ thấp nhất: " + res.tempRange.min + "°C. "
+                    + "Nhiệt độ cao nhất: " + res.tempRange.max + "°C."
+            }
+        }).catch(err => {
+            console.log(err);
+        })
     }
 
     transformImage(url) {
@@ -143,66 +303,6 @@ export default class InfoPageComponent extends Vue {
         });
     }
 
-    getIcon() {
-        const placeId = this.currentPosition.regionCode;
-        const station = STATION.find(x => x.place_id === placeId);
-        if (station) {
-            const searchParam = new ForecastSearchParam();
-            searchParam.stationIds = [station.id];
-            searchParam.fromDate = moment().format("YYYY-MM-DD");
-            searchParam.toDate = moment(searchParam.fromDate).add(1, 'days').subtract(1, 'minutes').format();
-            searchParam.weatherTypes = [WEATHER_TYPE.Weather];
-            this.weatherService.getHorizontal(searchParam).then((res: any) => {
-                const data = res.getWeatherInformationHorizontals.find(x => x.weatherType === WEATHER_TYPE.Weather);
-                let hour = new Date().getHours();
-                const iconId = data[`_${hour ? hour : 1}`]
-                const icon = ICON.find(x => x.id === iconId)
-                if (icon) {
-                    this.temparatureData = {
-                        ... this.temparatureData,
-                        icon: icon.url
-                    }
-                }
-
-            }).catch(err => {
-                console.log(err);
-            })
-        } else {
-            this.temparatureData = {
-                ... this.temparatureData,
-                icon: null
-            }
-        }
-    }
-
-    getTemperature() {
-        const placeId = this.currentPosition.regionCode;
-        const station = STATION.find(x => x.place_id === placeId);
-        if(station) {
-            const searchParam = new ForecastSearchParam();
-            searchParam.stationIds = [station.id];
-            searchParam.fromDate = moment().format("YYYY-MM-DD");
-            searchParam.toDate = moment(searchParam.fromDate).add(1, 'days').subtract(1, 'minutes').format();
-            searchParam.weatherTypes = [WEATHER_TYPE.Temperature];
-            this.weatherService.getDetail(searchParam).then((res: any) => {
-                const minMaxTemp = res.weatherInformationByStations.find(x => x.weatherType === WEATHER_TYPE.Temperature);
-                this.temparatureData = {
-                    ... this.temparatureData,
-                    current: minMaxTemp.weatherInformationByDays[0].weatherInformationByHours.find(x => x.hour === moment().hour()).value,
-                    min: minMaxTemp.minValue,
-                    max: minMaxTemp.maxValue
-                }
-            }).catch(err => {
-                console.log(err);
-            })
-        } else {
-            this.temparatureData = {
-                ... this.temparatureData,
-                current: '32'
-            }
-        }
-    }
-
     async mounted() {
         await this.getLookupData(lookupTypesStore.Set.STATUS);
         this.publishStatusId = this.status.find(x => x.name === this.publishStatusName).statusId;
@@ -246,7 +346,74 @@ export default class InfoPageComponent extends Vue {
         })
         setInterval(this.getNow, 1000);
         this.currentPosition = await displayLocation() as any;
-        this.getTemperature();
-        this.getIcon();
+
+        this.allRegions = [
+            {
+                title: this.currentPosition ? STATION.find(x => x.place_id === this.currentPosition.regionCode).ten : null,
+                icon: null,
+                desc: null,
+                region: null,
+                currentPosition: this.currentPosition ? STATION.find(x => x.place_id === this.currentPosition.regionCode).id : null
+            },
+            {
+                title: 'Phía Tây Bắc Bộ',
+                icon: null,
+                desc: null,
+                region: 'TBB',
+                currentPosition: null
+            },
+            {
+                title: 'Phía Đông Bắc Bộ',
+                icon: null,
+                desc: null,
+                region: 'DBB',
+                currentPosition: null
+            },
+            {
+                title: 'Đồng bằng sông Hồng',
+                icon: null,
+                desc: null,
+                region: 'DBSH',
+                currentPosition: null
+            },
+            {
+                title: 'Thanh Hoá - Thừa Thiên Huế',
+                icon: null,
+                desc: null,
+                region: 'BTB',
+                currentPosition: null
+            },
+            {
+                title: 'Đà Nẵng đến Bình Thuận',
+                icon: null,
+                desc: null,
+                region: 'NTB',
+                currentPosition: null
+            },
+            {
+                title: 'Tây Nguyên',
+                icon: null,
+                desc: null,
+                region: 'TN',
+                currentPosition: null
+            },
+            {
+                title: 'Đông Nam Bộ',
+                icon: null,
+                desc: null,
+                region: 'DNB',
+                currentPosition: null
+            },
+            {
+                title: 'Tây Nam Bộ',
+                icon: null,
+                desc: null,
+                region: 'TNB',
+                currentPosition: null
+            }
+        ];
+
+        this.region = this.allRegions[0];
+        this.handleChangeRegion(this.region);
     }
 }
