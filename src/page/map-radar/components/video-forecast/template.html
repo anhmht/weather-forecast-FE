@@ -1,0 +1,10 @@
+<div v-if="forecastData" class="video-weather-item">
+    <div class="video-weather-item--image">
+        <img :src="forecastData.icon" width="100" />
+    </div>
+    <div class="video-weather-item--content">
+        <div class="video-weather-item--content_des" v-html="forecastData.desc">
+
+        </div>
+    </div>
+</div>

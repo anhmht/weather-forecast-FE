@@ -1,0 +1,23 @@
+.video-weather-item {
+    display: flex;
+    width: 100%;
+    padding: 20px 0;
+    &.first {
+        padding-top: 0;
+    }
+    &--image {
+        width: 150px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    &--content {
+        padding: 0 20px;
+        &_title {
+            text-transform: uppercase;
+            font-weight: 800;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+    }
+}

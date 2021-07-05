@@ -1,10 +1,10 @@
+import { DataHelper } from './../../utils/data-helper';
 import { PATH } from './../../constant/route-constant';
 import { getGeoJson } from './../../utils/location-helper';
 import { STATION } from '@/constant/forcast-station-constant';
 import { WeatherServices } from '@/service/weather-service/weather.service';
 import Vue from 'vue';
 import Component from "vue-class-component";
-import { DataHelper } from '@/utils/data-helper';
 import moment from 'moment';
 import { ICON } from '@/constant/icon-constant';
 import { sleep } from '@/utils/common-utils';
@@ -29,7 +29,9 @@ const COLOR = [
         "tool-bar": () => import("./components/weather-tool/WeatherToolComponent.vue"),
         "elevation-picker": () => import("./components/elevation/ElevationComponent.vue"),
         "scenario-modal": () => import("./components/scenario/ScenarioComponent.vue"),
-        "qr-code": () => import("./components/qr-code/QRCodeComponent.vue")
+        "qr-code": () => import("./components/qr-code/QRCodeComponent.vue"),
+        "video-forecast": () => import("./components/video-forecast/VideoForecastComponent.vue"),
+        "video-forecast-province": () => import("./components/video-forecast-province/VideoForecastProvinceComponent.vue"),
     }
 })
 export default class HomePageComponent extends Vue {
@@ -84,6 +86,13 @@ export default class HomePageComponent extends Vue {
 
     mapTitle: any = {};
     isShowMapTitle: boolean = false;
+    isShowVideoForecase: boolean = false;
+    boxData: string = null;
+
+    provinceData: string = null;
+    isShowVideoForecaseProvince: boolean = false;
+    videoForecastAnimation: string = ''
+    isProvinceData: boolean = false;
 
     handleBack() {
         this.$router.push(PATH.INFO);
@@ -157,7 +166,7 @@ export default class HomePageComponent extends Vue {
         })
     }
 
-    handleResetLayer() {
+    async handleResetLayer() {
         if (this.regionGroup) {
             this.layerGroup.removeLayer(this.regionGroup);
             this.regionGroup = null;
@@ -176,8 +185,18 @@ export default class HomePageComponent extends Vue {
             station: []
         }
         this.forecastData = null;
+        if (this.videoForecastAnimation.includes('right')) {
+            this.videoForecastAnimation = 'right animate__fadeOutRightBig'
+        } else {
+            this.videoForecastAnimation = 'left animate__fadeOutLeftBig'
+        }
+        await sleep(500, this.clearTimeout);
         this.isShowMapTitle = false;
-        this.mapTitle = {};
+        this.isShowVideoForecase = false;
+        this.boxData = null;
+        this.isShowVideoForecaseProvince = false;
+        this.provinceData = null;
+
     }
 
     getFakeImage(placeId) {
@@ -207,19 +226,51 @@ export default class HomePageComponent extends Vue {
                     name: 'Toàn Quốc',
                     position: 'right animate__fadeInRightBig'
                 }
+                this.videoForecastAnimation = 'right'
+                break;
+            case 'TNB':
+                this.mapTitle = {
+                    name: mapData.name,
+                    position: mapData.titlePosition ? mapData.titlePosition : 'right animate__fadeInRightBig'
+                }
+                this.videoForecastAnimation = 'tnb-right'
+                break;
+            case 'VL':
+                this.mapTitle = {
+                    name: mapData.name,
+                    position: mapData.titlePosition ? mapData.titlePosition : 'left animate__fadeInLeftBig'
+                }
+                this.videoForecastAnimation = 'vl-left'
                 break;
             default:
                 this.mapTitle = {
                     name: mapData.name,
                     position: mapData.titlePosition ? mapData.titlePosition : 'right animate__fadeInRightBig'
                 }
+                this.videoForecastAnimation = this.mapTitle.position === 'right animate__fadeInRightBig' ? 'right' : 'left'
                 break;
         }
     }
 
+    async displayEachProvince(placeId) {
+        await sleep(3000, this.clearTimeout);
+        this.mapTitle = {
+            ...this.mapTitle,
+            position: this.mapTitle.position === 'right animate__fadeInRightBig' ? 'right animate__fadeOutRightBig' : 'left animate__fadeOutLeftBig'
+        };
+
+        await sleep(500, this.clearTimeout);
+        this.isShowMapTitle = false;
+        this.isShowVideoForecase = false;
+        this.boxData = null;
+        this.provinceData = placeId;
+        this.isShowVideoForecaseProvince = true;
+
+    }
+
     async handleChangeRegion(mapData) {
         // document.querySelector('.particles-layer').classList.add('hide-animation')
-        this.getMapTtile(mapData);
+        this.isProvinceData = false;
         this.getFakeImage(mapData.placeId);
         await sleep(500, this.clearTimeout);
         this.menuClick = false;
@@ -235,11 +286,19 @@ export default class HomePageComponent extends Vue {
         if (mapData.placeId !== 'TQ') this.regionGroup.addLayer(layer);
         let duration = 2;
         let method = 'flyToBounds';
+        let destination = layer ? layer.getBounds() : null;
         if (mapData.placeId === 'TBB' || mapData.placeId === 'NTB' || mapData.placeId === 'DNB' || mapData.placeId === 'TQ') {
             this.isDisplayFake = true;
             await sleep(500, this.clearTimeout);
             method = 'flyToBounds';
             duration = 0.5;
+        };
+        if (mapData.placeId === 'TNB') {
+            method = 'panTo';
+            destination = {
+                lat: 9.9718322535197,
+                lng: 106.70196533203125
+            }
         };
         if (mapData.placeId === 'TQ') {
             const VietNamGeojson = await getGeoJson('nation', 'viet_nam');
@@ -248,6 +307,9 @@ export default class HomePageComponent extends Vue {
             map.fitBounds(vnBorder.getBounds(), { maxZoom: 12 });
             await sleep(500, this.clearTimeout);
             this.isDisplayFake = false;
+            this.getMapTtile(mapData);
+            this.boxData = DataHelper.deepClone(mapData.placeId);
+            console.log(this.boxData);
             this.isShowMapTitle = true;
             return;
         }
@@ -257,13 +319,13 @@ export default class HomePageComponent extends Vue {
                 duration = 8
             }
         }
-        map[method](layer.getBounds(), {
+        map[method](destination, {
             maxZoom: mapData.zoom ? mapData.zoom : null,
             animate: true,
             duration,
             easeLinearity: 0.2,
-            paddingBottomRight: mapData.paddingBottomRight ? mapData.paddingBottomRight: [0,0],
-            paddingTopLeft: mapData.paddingTopLeft ? mapData.paddingTopLeft: [0,0]
+            paddingBottomRight: mapData.paddingBottomRight ? mapData.paddingBottomRight : [0, 0],
+            paddingTopLeft: mapData.paddingTopLeft ? mapData.paddingTopLeft : [0, 0]
         });
 
         await sleep(duration * 1000, this.clearTimeout);
@@ -274,6 +336,8 @@ export default class HomePageComponent extends Vue {
         if (mapData.zoom) {
             await sleep(500, this.clearTimeout);
             this.centerLatlng = map.getBounds().getCenter();
+            console.log(this.centerLatlng);
+
             map.flyTo(this.centerLatlng, mapData.zoom, { animate: true, duration: 1.5, easeLinearity: 0.2 })
             this.layerGroup.addLayer(this.regionGroup);
         }
@@ -284,10 +348,15 @@ export default class HomePageComponent extends Vue {
         // document.querySelector('.particles-layer').classList.remove('hide-animation')
         this.isDisplayFake = false;
         await sleep(500, this.clearTimeout);
+        this.getMapTtile(mapData);
+        this.boxData = DataHelper.deepClone(mapData.placeId);
         this.isShowMapTitle = true;
+        this.isShowVideoForecase = true;
+        this.displayEachProvince(mapData.placeId);
     }
 
     async handleChangeLocation(mapData) {
+        this.isProvinceData = true;
         this.menuClick = false;
         const { map } = this.windy;
         //Remove geojson layer
@@ -298,7 +367,7 @@ export default class HomePageComponent extends Vue {
         //@ts-ignore
         const provinceLayer = L.geoJSON(geojson, { style: mapData.style })
         this.layerProvice.addLayer(provinceLayer);
-        let duration = 3;
+        let duration = 2;
         if (this.centerLatlng) {
             const distance = map.distance(this.centerLatlng, provinceLayer.getBounds().getCenter())
             if (distance >= 800000) {
@@ -307,14 +376,26 @@ export default class HomePageComponent extends Vue {
                 duration = 8
             }
         }
-        map.flyToBounds(provinceLayer.getBounds(), { maxZoom: mapData.zoom, animate: true, duration, easeLinearity: 2 });
+        map.flyToBounds(provinceLayer.getBounds(), {
+            maxZoom: mapData.zoom,
+            animate: true, duration,
+            easeLinearity: 2,
+            paddingBottomRight: mapData.paddingBottomRight ? mapData.paddingBottomRight : [0, 0],
+            paddingTopLeft: mapData.paddingTopLeft ? mapData.paddingTopLeft : [0, 0]
+        });
         await sleep(duration * 1000, this.clearTimeout);
         const districts = JSON.parse(mapData.district);
+        this.getMapTtile(mapData);
         this.addDistrictLayer(districts);
         this.addPopUPLayer(mapData.districtIds);
         this.layerGroup.addLayer(this.layerProvice);
         this.forecastData = STATION.find(x => x.place_id === mapData.placeId);
         this.centerLatlng = provinceLayer.getBounds().getCenter();
+
+        this.isShowMapTitle = true;
+        this.boxData = DataHelper.deepClone(mapData.placeId);
+        this.isShowVideoForecase = true;
+        this.displayEachProvince(mapData.districtIds);
     }
 
     addDistrictLayer(districts) {
@@ -596,6 +677,7 @@ export default class HomePageComponent extends Vue {
         }
         this.$socket.sendMessage(JSON.stringify(send));
     }
+
 
     @Watch('customZoomControl')
     handleZoomMap(val) {
