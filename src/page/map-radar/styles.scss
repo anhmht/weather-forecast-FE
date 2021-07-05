@@ -303,13 +303,58 @@
     padding: 10px;
     background: #fff;
     border-radius: 10px;
+    font-weight: 600;
+    width: 400px;
+    text-align: center;
     &.right {
-        right: 8vw;
+        right: 12vw;
         top: 5vw;
     }
     &.left {
-        left: 8vw;
+        left: 12vw;
         top: 5vw;
+    }
+}
+
+.video-forecast {
+    position: absolute;
+    padding: 10px;
+    border-radius: 10px;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), rgba(121, 120, 120, 0.5);
+    color: #fff;
+    width: 400px;
+    &.right {
+        right: 12vw;
+        top: 9vw;
+    }
+    &.left {
+        left: 12vw;
+        top: 9vw;
+    }
+}
+
+.video-forecast-province {
+    position: absolute;
+    padding: 10px;
+    border-radius: 10px;
+    // background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), rgba(121, 120, 120, 0.5);
+    color: #fff;
+    width: 800px;
+    &.right {
+        right: 15vw;
+        top: 9vw;
+    }
+    &.left {
+        left: 15vw;
+        top: 9vw;
+    }
+    &.tnb-right {
+        right: 2vw;
+        top: 2vw;
+    }
+    &.vl-left {
+        left: 10vw;
+        top: 2vw;
     }
 }
 

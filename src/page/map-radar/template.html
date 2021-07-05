@@ -5,33 +5,43 @@
     <div v-if="isRecording" class="fake-transition" :class="!isDisplayFake ? 'hide' : ''">
         <img :src="fakeImage" />
     </div>
-    <div v-show="isShowMapTitle" class="map-title animate__animated" :class="mapTitle.position">
+    <div v-if="isShowMapTitle" class="map-title animate__animated" :class="mapTitle.position" >
         Khu vực: {{mapTitle ? mapTitle.name : ''}}
     </div>
-    <div v-if="forecastData && isWebView" class="result">
+
+    <div v-if="isShowVideoForecase" class="video-forecast animate__animated" :class="mapTitle.position">
+        <video-forecast v-if="boxData" :location="boxData" :is-province="isProvinceData"/>
+    </div>
+
+    <div v-if="isShowVideoForecaseProvince" class="video-forecast-province animate__animated" :class="videoForecastAnimation">
+        <video-forecast-province v-if="provinceData" :location="provinceData" :is-province="isProvinceData" />
+    </div>
+
+    <div v-if="!isRecording && forecastData && isWebView" class="result">
         <tool-bar v-if="forecastData" :station-info="forecastData" @changeTime="updateDistrictPopUp" />
     </div>
     <div v-if="!isWebView" class="record-btn">
-        <v-btn v-show="isShowButtonStop" @click="handleClearTimeout" color="primary" depressed elevation="7" rounded x-large>
+        <v-btn v-show="isShowButtonStop" @click="handleClearTimeout" color="primary" depressed elevation="7" rounded
+            x-large>
             Dừng
         </v-btn>
-        <v-btn v-show="!isRecording" style="margin-left: 20px;" @click="handleOpenScenario" color="primary" depressed elevation="7" rounded x-large>
+        <v-btn v-show="!isRecording" style="margin-left: 20px;" @click="handleOpenScenario" color="primary" depressed
+            elevation="7" rounded x-large>
             Kịch Bản
         </v-btn>
-        <v-btn v-show="!isRecording" style="margin-left: 20px;" @click="capture" color="primary" depressed elevation="7" rounded x-large>
+        <v-btn v-show="!isRecording" style="margin-left: 20px;" @click="capture" color="primary" depressed elevation="7"
+            rounded x-large>
             Xuất Video
         </v-btn>
     </div>
     <div class="tool-bar" :class="menuClick ? 'show' : ''">
         <div class="tool-bar-row">
             <div>
-                <location-picker v-show="!isRecording"
-                    :custom="customLocationControl"
-                    @change-map="handleChangeLocation"
-                    @clear="handleResetLayer"
-                    @change-region-map="handleChangeRegion"/>
+                <location-picker v-show="!isRecording" :custom="customLocationControl"
+                    @change-map="handleChangeLocation" @clear="handleResetLayer"
+                    @change-region-map="handleChangeRegion" />
                 <map-type-picker :custom="customMapStatusControl" v-show="!isRecording" @change-map="handleChangeMap" />
-                <elevation-picker v-show="!isRecording" v-model="customLevelControl" @change="handleChangeLevel"/>
+                <elevation-picker v-show="!isRecording" v-model="customLevelControl" @change="handleChangeLevel" />
             </div>
             <div v-if="!isWebView" style="margin-left: 20px;">
                 <tool-bar v-if="forecastData" :station-info="forecastData" @changeTime="updateDistrictPopUp" />
@@ -43,12 +53,15 @@
     </div>
 
 
-    <div v-if="!isRecording && !isWebView" class="home-page-container-icon-picker" @click="isHideIconPicker = !isHideIconPicker">
-        <img src="https://weatherstoragevn.blob.core.windows.net/images/icons/2501-2502.png" width="50" height="50" alt="" />
+    <div v-if="!isRecording && !isWebView" class="home-page-container-icon-picker"
+        @click="isHideIconPicker = !isHideIconPicker">
+        <img src="https://weatherstoragevn.blob.core.windows.net/images/icons/2501-2502.png" width="50" height="50"
+            alt="" />
     </div>
-    <icon-picker v-if="!isWebView" :is-recording="isRecording || isHideIconPicker"  />
+    <icon-picker v-if="!isWebView" :is-recording="isRecording || isHideIconPicker" />
 
-    <v-btn v-show="!isRecording && !isWebView" class="mx-2 back-btn" fab dark large color="primary" @click="handleBack()">
+    <v-btn v-show="!isRecording && !isWebView" class="mx-2 back-btn" fab dark large color="primary"
+        @click="handleBack()">
         <v-icon dark>
             mdi-keyboard-backspace
         </v-icon>
@@ -57,7 +70,7 @@
         <v-icon>mdi-qrcode-scan</v-icon>
     </v-btn>
 
-    <v-dialog  v-model="isDisplayDialog" persistent max-width="1400">
+    <v-dialog v-model="isDisplayDialog" persistent max-width="1400">
         <div class="preview-dialog">
             <div class="preview-dialog-header">
                 <div class="preview-dialog-header--title">
@@ -85,9 +98,10 @@
         </div>
     </v-dialog>
 
-    <scenario-modal @remote="handleRemote" @remote-move="handleMove" v-model="drawer" @preview="handlePreview" @capture="(e) => handlePreview(e,true)"/>
+    <scenario-modal @remote="handleRemote" @remote-move="handleMove" v-model="drawer" @preview="handlePreview"
+        @capture="(e) => handlePreview(e,true)" />
 
-    <qr-code v-model="visibleQR"/>
+    <qr-code v-model="visibleQR" />
     <div v-if="isRecording && !isReview" style="
         position: fixed;
         top: 0;
