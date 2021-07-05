@@ -280,37 +280,12 @@
         }
     }
 
-    .nav-sticky-wrapper {
-        position: sticky;
-        top: 90px;
-        color: #fff;
-        height: 0px;
-        width: fit-content;
-        left: 0;
-        width: 100%;
-        z-index: 99;
-    }
-
-    .nav-sticky {
-        text-transform: uppercase;
-        background: $primary-color;
-        text-align: center;
-        overflow: hidden;
-        height: 40px;
-        ul {
-            display: inline-block;
-            border-right: 1px solid  rgba(255,255,255, 0.1);
-            li {
-                cursor: pointer;
-                padding: 8px;
-                border-left: 1px solid rgba(255,255,255, 0.1);
-                float: left;
-                list-style: none;
-                transition: background-color 0.2s;
-                &:hover, &.active {
-                    background-color: rgba(0, 0, 0, 0.1)
-                }
-            }
-        }
-    }
+    
+}
+.title-warning {
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 15px 25px;
+    border-bottom: 1px solid #ddd;
+    font-size: 18px;
 }

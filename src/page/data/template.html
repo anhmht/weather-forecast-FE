@@ -1,71 +1,75 @@
 <base-container>
     <div class="data-page-container">
-        <v-row class="data-page-container-wrapper">
-            <div class="data-page-container-wrapper--tab" :class="activeTab === 0 ? 'active' : ''"
-                @click="handleChangeTab(0)">
-                TOÀN QUỐC
+        <div class="nav-sticky-wrapper">
+            <div class="nav-sticky">
+                <ul>
+                    <li :class="activeTab === 0 ? 'active' : ''"
+                        @click="handleChangeTab(0)">
+                        TOÀN QUỐC
+                    </li>
+                    <li :class="activeTab === 1 ? 'active' : ''"
+                        @click="handleChangeTab(1)">
+                        BẮC BỘ
+                    </li>
+                    <li :class="activeTab === 2 ? 'active' : ''"
+                        @click="handleChangeTab(2)">
+                        MIỀN TRUNG - TÂY NGUYÊN
+                    </li>
+                    <li :class="activeTab === 3 ? 'active' : ''"
+                        @click="handleChangeTab(3)">
+                        NAM BỘ
+                    </li>
+                    <li :class="activeTab === 4 ? 'active' : ''"
+                        @click="handleChangeTab(4)">
+                        VĨNH LONG
+                    </li>
+                    <li :class="activeTab === 5 ? 'active' : ''"
+                        @click="handleChangeTab(5)">
+                        THỦY VĂN
+                    </li>
+                    <li :class="activeTab === 6 ? 'active' : ''"
+                        @click="handleChangeTab(6)">
+                        HIỆN TƯỢNG CỰC ĐOAN
+                    </li>
+                </ul>
             </div>
-            <div class="data-page-container-wrapper--tab" :class="activeTab === 1 ? 'active' : ''"
-                @click="handleChangeTab(1)">
-                KV BẮC BỘ
-            </div>
-            <div class="data-page-container-wrapper--tab" :class="activeTab === 2 ? 'active' : ''"
-                @click="handleChangeTab(2)">
-                MIỀN TRUNG - TÂY NGUYÊN
-            </div>
-            <div class="data-page-container-wrapper--tab" :class="activeTab === 3 ? 'active' : ''"
-                @click="handleChangeTab(3)">
-                NAM BỘ
-            </div>
-            <div class="data-page-container-wrapper--tab" :class="activeTab === 4 ? 'active' : ''"
-                @click="handleChangeTab(4)">
-                VĨNH LONG
-            </div>
-            <div class="data-page-container-wrapper--tab" :class="activeTab === 5 ? 'active' : ''"
-                @click="handleChangeTab(5)">
-                THỦY VĂN
-            </div>
-            <div class="data-page-container-wrapper--tab" :class="activeTab === 6 ? 'active' : ''"
-                @click="handleChangeTab(6)">
-                HIỆN TƯỢNG CỰC ĐOAN
-            </div>
-        </v-row>
-        <v-row v-if="activeTab === 0" class="data-page-container-wrapper" style="padding: 2vw 0">
+        </div>
+        <v-row v-if="activeTab === 0" class="data-page-container-wrapper">
             <div class="data-page-container-wrapper-col">
                 <weather-forecast region="ALL" key="ALL" all dummy />
             </div>
         </v-row>
-        <v-row v-if="activeTab === 1" class="data-page-container-wrapper" style="padding: 2vw 0">
+        <v-row v-if="activeTab === 1" class="data-page-container-wrapper">
             <div class="data-page-container-wrapper-col">
                 <weather-forecast region="DBB" key="DBB" dummy />
                 <weather-forecast region="TBB" key="TBB" dummy style="margin-top: 20px" />
                 <weather-forecast region="DBSH" key="DBSH" dummy style="margin-top: 20px"/>
             </div>
         </v-row>
-        <v-row v-if="activeTab === 2" class="data-page-container-wrapper" style="padding: 2vw 0">
+        <v-row v-if="activeTab === 2" class="data-page-container-wrapper">
             <div class="data-page-container-wrapper-col">
                 <weather-forecast region="BTB" key="BTB" dummy />
                 <weather-forecast region="NTB" key="NTB" dummy style="margin-top: 20px" />
                 <weather-forecast region="TN" key="TN" dummy style="margin-top: 20px" />
             </div>
         </v-row>
-        <v-row v-if="activeTab === 3" class="data-page-container-wrapper" style="padding: 2vw 0">
+        <v-row v-if="activeTab === 3" class="data-page-container-wrapper">
             <div class="data-page-container-wrapper-col">
                 <weather-forecast region="DNB" :height="350" key="DNB"/>
                 <weather-forecast region="TNB" style="margin-top: 20px" key="TNB"/>
             </div>
         </v-row>
-        <v-row v-if="activeTab === 4" class="data-page-container-wrapper" style="padding: 2vw 0">
+        <v-row v-if="activeTab === 4" class="data-page-container-wrapper">
             <div class="data-page-container-wrapper-col">
                 <weather-forecast region="TNB" province="49" key="49"/>
             </div>
         </v-row>
-        <v-row v-if="activeTab === 5" class="data-page-container-wrapper" style="padding: 2vw 0">
+        <v-row v-if="activeTab === 5" class="data-page-container-wrapper">
             <div class="data-page-container-wrapper-col">
                 <hydrological />
             </div>
         </v-row>
-        <v-row v-if="activeTab === 6" class="data-page-container-wrapper" style="padding: 2vw 0">
+        <v-row v-if="activeTab === 6" class="data-page-container-wrapper">
             <div class="data-page-container-wrapper-col-harsh">
                 <div class="simple-table">
                     <template>

@@ -31,20 +31,28 @@
                                             <img :src="currentIcon">
                                         </div>
                                     </div>
-                                    <div class="time-page-container_section_1_main--current_info">
+                                    <div class="time-page-container_section_1_main--current_info line-info-weather line-info-weather">
+                                            <div>
                                         Nhiệt độ thấp nhất: {{currentDayMinTemp}}°C
-                                        <br>
+                                        </div>
+                                        <div>   
                                         Nhiệt độ cao nhất: {{currentDayMaxTemp}}°C
-                                        <br>
+                                    </div>
+                                    <div>
                                         Lượng mưa: {{currentDayMinPrecip}} - {{currentDayMaxPrecip}} mm
-                                        <br>
+                                    </div>
+                                    <div>
                                         Gió giật: {{currentDayMinWindLvl}} - {{currentDayMaxWindLvl}} m/s
-                                        <br>
+                                    </div>
+                                    <div>
                                         Tốc độ gió: {{currentDayMinWindSpd}} - {{currentDayMaxWindSpd}} m/s
-                                        <br>
+                                    </div>
+                                    <div>
                                         Hướng gió: {{currentDayWindDir}}
-                                        <br>
+                                    </div>
+                                    <div>
                                         Độ ẩm: {{currentDayMinHumid}}% - {{currentDayMaxHumid}}%
+                                        </div>
                                     </div>
                                 </div>
                             </v-col>
@@ -59,6 +67,7 @@
                                             <div class="time-page-container_section_1_main--next_icon">
                                                 <img :src="item.icon">
                                             </div>
+                                            <div class="line-info-weather">
                                             <div class="time-page-container_section_1_main--next_temp">
                                                 {{item.temp}}
                                             </div>
@@ -76,6 +85,7 @@
                                             </div>
                                             <div class="time-page-container_section_1_main--next_humid">
                                                 Độ ẩm: {{item.humid}}
+                                            </div>
                                             </div>
                                         </div>
                                     </div>
@@ -96,23 +106,31 @@
                                 <div class="time-page-container_section_2_main--time_detail_icon">
                                     <img :src="item.icon">
                                 </div>
-                                <div class="time-page-container_section_2_main--time_detail_temp">
-                                    <v-icon color="#fff">mdi-thermometer</v-icon> {{item.temp}}°C
-                                </div>
-                                <div class="time-page-container_section_2_main--time_detail_precip">
-                                    <v-icon color="#fff">mdi-weather-rainy</v-icon> {{item.precip}} mm
-                                </div>
-                                <div class="time-page-container_section_2_main--time_detail_wind_lvl">
-                                    <v-icon color="#fff">mdi-weather-windy</v-icon> {{item.windLvl}} m/s
-                                </div>
-                                <div class="time-page-container_section_2_main--time_detail_wind_spd">
-                                    <v-icon color="#fff">mdi-tailwind</v-icon> {{item.windSpd}} m/s
-                                </div>
-                                <div class="time-page-container_section_2_main--time_detail_wind_dir">
-                                    <v-icon color="#fff">mdi-weather-windy-variant</v-icon> {{item.windDir}}
-                                </div>
-                                <div class="time-page-container_section_2_main--time_detail_humid">
-                                    <v-icon color="#fff">mdi-water-percent</v-icon> {{item.humid}}%
+                                <div class="line-info-weather">
+                                    <div class="time-page-container_section_2_main--time_detail_temp">
+                                        <!-- <v-icon color="#fff">mdi-thermometer</v-icon>  -->
+                                        Nhiệt độ: {{item.temp}}°C
+                                    </div>
+                                    <div class="time-page-container_section_2_main--time_detail_precip">
+                                        <!-- <v-icon color="#fff">mdi-weather-rainy</v-icon>  -->
+                                        Lượng mưa: {{item.precip}} mm
+                                    </div>
+                                    <div class="time-page-container_section_2_main--time_detail_wind_lvl">
+                                        <!-- <v-icon color="#fff">mdi-weather-windy</v-icon>  -->
+                                        Gió giật: {{item.windLvl}} m/s
+                                    </div>
+                                    <div class="time-page-container_section_2_main--time_detail_wind_spd">
+                                        <!-- <v-icon color="#fff">mdi-tailwind</v-icon>  -->
+                                        Tốc độ gió: {{item.windSpd}} m/s
+                                    </div>
+                                    <div class="time-page-container_section_2_main--time_detail_wind_dir">
+                                        <!-- <v-icon color="#fff">mdi-weather-windy-variant</v-icon>  -->
+                                        Hướng gió: {{item.windDir}}
+                                    </div>
+                                    <div class="time-page-container_section_2_main--time_detail_humid">
+                                        <!-- <v-icon color="#fff">mdi-water-percent</v-icon>  -->
+                                        Độ ẩm: {{item.humid}}%
+                                    </div>
                                 </div>
                             </div>
                         </div>

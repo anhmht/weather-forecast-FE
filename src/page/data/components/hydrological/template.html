@@ -1,15 +1,15 @@
 <div>
     <div class="data-page-container_search">
         <div class="data-page-container_search--item">
-            Khu vực: <v-select color="white" dark :items="allRegions" item-text="name" item-value="value"
+            Khu vực: <v-select :items="allRegions" item-text="name" item-value="value"
                 style="margin: 0px 20px;" hide-details dense v-model="region"></v-select>
         </div>
         <div class="data-page-container_search--item">
-            Tỉnh thành: <v-select color="white" dark :items="ProvincesByRegion" item-text="name" item-value="code"
+            Tỉnh thành: <v-select :items="ProvincesByRegion" item-text="name" item-value="code"
                 style="margin: 0px 20px;" hide-details dense v-model="province" @change="handleChangeProvince"></v-select>
         </div>
         <div v-if="province === '86'" class="data-page-container_search--item">
-            Loại Trạm: <v-select color="white" dark :items="types" item-text="name" item-value="value"
+            Loại Trạm: <v-select :items="types" item-text="name" item-value="value"
                 style="margin: 0px 20px;" hide-details dense v-model="hydrologicalType" @change="handleChangeHydrologicalType"></v-select>
         </div>
     </div>
@@ -17,7 +17,7 @@
         <div class="data-page-container_content-station">
             <div v-if="hydrologicalType === 0" class="data-page-container_content-station__header">
                 <div class="data-page-container_content-station__header--title">Trạm khí tượng thủy văn</div>
-                <v-select color="white" dark :items="stationTypes" item-text="name" item-value="value" hide-details
+                <v-select :items="stationTypes" item-text="name" item-value="value" hide-details
                     dense v-model="type"></v-select>
             </div>
             <div class="data-page-container_content-station__body">
@@ -40,10 +40,12 @@
                     Thời gian từ:
                     <v-menu v-model="fromDateMenu" :close-on-content-click="false" :nudge-right="40"
                         transition="scale-transition" offset-y min-width="auto">
+                        <div class="calendar-input">
                         <template v-slot:activator="{ on, attrs }">
-                            <v-text-field color="white" dark v-model="FormattedFromDate" prepend-icon="mdi-calendar"
+                            <v-text-field v-model="FormattedFromDate" prepend-icon="mdi-calendar"
                                 readonly v-bind="attrs" v-on="on"></v-text-field>
                         </template>
+                        </div>
                         <v-date-picker v-model="fromDate" @input="fromDateMenu = false" locale="vi-vn"
                             @change="getStationData(currentStationId, currentStationType, activeStation, 0)">
                         </v-date-picker>
@@ -53,10 +55,12 @@
                     đến:
                     <v-menu v-model="toDateMenu" :close-on-content-click="false" :nudge-right="40"
                         transition="scale-transition" offset-y min-width="auto">
+                        <div class="calendar-input">
                         <template v-slot:activator="{ on, attrs }">
-                            <v-text-field color="white" dark v-model="FormattedToDate" prepend-icon="mdi-calendar"
+                            <v-text-field v-model="FormattedToDate" prepend-icon="mdi-calendar"
                                 readonly v-bind="attrs" v-on="on"></v-text-field>
                         </template>
+                        </div>
                         <v-date-picker v-model="toDate" @input="toDateMenu = false" locale="vi-vn"
                             @change="getStationData(currentStationId, currentStationType, activeStation, 0)">
                         </v-date-picker>
