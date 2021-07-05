@@ -51,7 +51,8 @@
         order: 2;
         flex: 0 0 30%;
         margin-left: 20px;
-        transform: translateY(-243px);
+        transform: translateY(-343px);
+        height: 280px;
         
         .progress-bar {
             height: 100px;
@@ -62,6 +63,7 @@
             transform: translate(-50%, -50%);
         }
         button {
+            margin-top: 20px;
             float: right;
         }
         &--upload {

@@ -11,6 +11,10 @@ import { sleep } from '@/utils/common-utils';
 import { Watch } from 'vue-property-decorator';
 import { IForecastSearchParam, ForecastSearchParam } from '@/model/forecast';
 import { WEATHER_TYPE } from '@/constant/forcast-station-constant';
+import vietnam_image from '/static/img/video/vietnam.png';
+import btb_image from '/static/img/video/BTB.png';
+import ntb_image from '/static/img/video/NTB.png';
+import vl_image from '/static/img/video/VL.png';
 
 const COLOR = [
     'red', 'green', 'blue', 'yellow', 'DeepPink', 'DeepSkyBlue', 'GreenYellow', 'Lime', 'Thistle', 'NavajoWhite',
@@ -52,6 +56,8 @@ export default class HomePageComponent extends Vue {
     customLevelControl: any = 0;
     customMapStatusControl: any = null;
     customZoomControl: any = 6;
+    customWaitControl: any = 1000;
+
     clearTimeout: any = {
         timeout: null,
     }
@@ -70,6 +76,14 @@ export default class HomePageComponent extends Vue {
     menuClick: boolean = false;
 
     centerLatlng: any = null
+
+    isDisplayFake: boolean = false;
+    fakeImage: any = vietnam_image;
+    vietnam: any = vietnam_image;
+    btb: any = btb_image;
+
+    mapTitle: any = {};
+    isShowMapTitle: boolean = false;
 
     handleBack() {
         this.$router.push(PATH.INFO);
@@ -162,39 +176,115 @@ export default class HomePageComponent extends Vue {
             station: []
         }
         this.forecastData = null;
+        this.isShowMapTitle = false;
+        this.mapTitle = {};
+    }
+
+    getFakeImage(placeId) {
+
+        switch (placeId) {
+            case 'TBB':
+                this.fakeImage = vietnam_image;
+                break;
+            case 'NTB':
+                this.fakeImage = btb_image;
+                break;
+            case 'DNB':
+                this.fakeImage = ntb_image;
+                break;
+            case 'TQ':
+                this.fakeImage = vl_image;
+                break;
+            default:
+                break;
+        }
+    }
+
+    getMapTtile(mapData) {
+        switch (mapData.placeId) {
+            case 'TQ':
+                this.mapTitle = {
+                    name: 'Toàn Quốc',
+                    position: 'right animate__fadeInRightBig'
+                }
+                break;
+            default:
+                this.mapTitle = {
+                    name: mapData.name,
+                    position: mapData.titlePosition ? mapData.titlePosition : 'right animate__fadeInRightBig'
+                }
+                break;
+        }
     }
 
     async handleChangeRegion(mapData) {
+        // document.querySelector('.particles-layer').classList.add('hide-animation')
+        this.getMapTtile(mapData);
+        this.getFakeImage(mapData.placeId);
+        await sleep(500, this.clearTimeout);
         this.menuClick = false;
         const { map } = this.windy;
+
         //@ts-ignore
         this.regionGroup = new L.LayerGroup();
 
-        const geojson = JSON.parse(mapData.geojson);
+        const geojson = mapData.geojson ? JSON.parse(mapData.geojson) : null;
         //@ts-ignore
-        const layer = L.geoJSON(geojson, { style: mapData.style })
-        this.regionGroup.addLayer(layer);
+        const layer = geojson ? L.geoJSON(geojson, { style: mapData.style }) : null;
+
+        if (mapData.placeId !== 'TQ') this.regionGroup.addLayer(layer);
         let duration = 2;
-        if(this.centerLatlng) {
+        let method = 'flyToBounds';
+        if (mapData.placeId === 'TBB' || mapData.placeId === 'NTB' || mapData.placeId === 'DNB' || mapData.placeId === 'TQ') {
+            this.isDisplayFake = true;
+            await sleep(500, this.clearTimeout);
+            method = 'flyToBounds';
+            duration = 0.5;
+        };
+        if (mapData.placeId === 'TQ') {
+            const VietNamGeojson = await getGeoJson('nation', 'viet_nam');
+            //@ts-ignore
+            const vnBorder = L.geoJSON(VietNamGeojson);
+            map.fitBounds(vnBorder.getBounds(), { maxZoom: 12 });
+            await sleep(500, this.clearTimeout);
+            this.isDisplayFake = false;
+            this.isShowMapTitle = true;
+            return;
+        }
+        if (this.centerLatlng) {
             const distance = map.distance(this.centerLatlng, layer.getBounds().getCenter())
-            if(distance >= 800000) {
+            if (distance >= 800000) {
                 duration = 8
             }
         }
-        map.flyToBounds(layer.getBounds(), { maxZoom: mapData.zoom, animate: true, duration, easeLinearity: 0.2});
+        map[method](layer.getBounds(), {
+            maxZoom: mapData.zoom ? mapData.zoom : null,
+            animate: true,
+            duration,
+            easeLinearity: 0.2,
+            paddingBottomRight: mapData.paddingBottomRight ? mapData.paddingBottomRight: [0,0],
+            paddingTopLeft: mapData.paddingTopLeft ? mapData.paddingTopLeft: [0,0]
+        });
 
         await sleep(duration * 1000, this.clearTimeout);
 
         const provinces = JSON.parse(mapData.province);
         this.addProvinceLayer(provinces);
-        this.addPopUPLayer(mapData.provinceIds);
 
         if (mapData.zoom) {
             await sleep(500, this.clearTimeout);
-            this.centerLatlng = layer.getBounds().getCenter();
+            this.centerLatlng = map.getBounds().getCenter();
             map.flyTo(this.centerLatlng, mapData.zoom, { animate: true, duration: 1.5, easeLinearity: 0.2 })
             this.layerGroup.addLayer(this.regionGroup);
         }
+        await sleep(500, this.clearTimeout);
+        this.addPopUPLayer(mapData.provinceIds, mapData.placeId === 'NTB', mapData.animation);
+
+        await sleep(1000, this.clearTimeout);
+        // document.querySelector('.particles-layer').classList.remove('hide-animation')
+        this.isDisplayFake = false;
+        await sleep(500, this.clearTimeout);
+        this.isShowMapTitle = true;
     }
 
     async handleChangeLocation(mapData) {
@@ -208,7 +298,7 @@ export default class HomePageComponent extends Vue {
         //@ts-ignore
         const provinceLayer = L.geoJSON(geojson, { style: mapData.style })
         this.layerProvice.addLayer(provinceLayer);
-        let duration = 2;
+        let duration = 3;
         if (this.centerLatlng) {
             const distance = map.distance(this.centerLatlng, provinceLayer.getBounds().getCenter())
             if (distance >= 800000) {
@@ -233,9 +323,10 @@ export default class HomePageComponent extends Vue {
             const layer = L.geoJSON(element, {
                 style: {
                     color: COLOR[index],
-                    weight: 1,
-                    opacity: 1,
-                    fillOpacity: 0.5
+                    weight: 0,
+                    opacity: 0,
+                    fillOpacity: 0.5,
+                    className: 'geojson'
                 }
             })
             this.layerProvice.addLayer(layer);
@@ -257,7 +348,7 @@ export default class HomePageComponent extends Vue {
         });
     }
 
-    async addPopUPLayer(ids) {
+    async addPopUPLayer(ids, size = false, animation = 'animate__bounceInDown') {
         if (!ids) return;
         const vm = this as any;
         // @ts-ignore
@@ -268,7 +359,7 @@ export default class HomePageComponent extends Vue {
         const tempArray = returnPromise[0];
         const iconArray = returnPromise[1];
 
-        ids.forEach(async element => {
+        for (const element of ids) {
             const station = STATION.find(x => x.place_id === element);
             if (station) {
                 const contextTemp = tempArray.find(x => x.stationId === station.id);
@@ -280,18 +371,19 @@ export default class HomePageComponent extends Vue {
                 const icon = vm.getDisplayData(contextIcon, 0, moment().hour())
                 const iconUrl = ICON.find(x => x.id === icon)
                 // @ts-ignore
-                const layer = L.popup({ closeOnClick: false })
+                const layer = L.popup({ closeOnClick: false, closeButton: false, autoClose: true, autoPan: false })
                     .setLatLng([station.y, station.x])
-                    .setContent(`<div class="map-pop-up">
+                    .setContent(`<div class="map-pop-up animate__animated ${animation} ${size ? 'small' : ''}">
                             <div class="map-pop-up-name">${station.ten}</div>
                             <div class="map-pop-up-data">
                                 <div class="map-pop-up-data--image"><img src="${iconUrl.url}"/></div>
                                 <div class="map-pop-up-data--temp">${temp}°C</div>
                             </div>
                         </div>`)
+                await sleep(500, this.clearTimeout);
                 this.layerPopup.addLayer(layer);
             }
-        });
+        }
 
     }
 
@@ -307,10 +399,12 @@ export default class HomePageComponent extends Vue {
             video: {
                 width: { ideal: 1280 },
                 height: { ideal: 720 },
-                mediaSource: "screen", cursor: false  } })
+                mediaSource: "screen", cursor: false
+            }
+        })
             .then(function (stream) {
                 //@ts-ignore
-                vm.videoStream  = new MediaRecorder(stream);
+                vm.videoStream = new MediaRecorder(stream);
                 const chunks = [];
                 vm.videoStream.ondataavailable = e => chunks.push(e.data);
                 stream.getVideoTracks()[0].onended = () => {
@@ -337,10 +431,10 @@ export default class HomePageComponent extends Vue {
 
                     stream.getTracks().forEach(track => track.stop())
                 };
-                vm.videoStream .onerror = () => {
+                vm.videoStream.onerror = () => {
                     vm.isRecording = false;
                 };
-                vm.videoStream .start();
+                vm.videoStream.start();
             })
             .catch(err => {
                 this.handleClearTimeout()
@@ -419,7 +513,7 @@ export default class HomePageComponent extends Vue {
             zoom: 7,
         };
 
-        localStorage.setItem('settings_particles', '{"multiplier":1,"velocity":1.4,"width":0.75,"blending":1.08,"opacity":1.8}')
+        localStorage.setItem('settings_particles', '{"multiplier":0.8,"velocity":1.8,"width":0.5,"blending":0.93,"opacity":0.6}')
         localStorage.setItem('settings_lang', '"vi"')
         // @ts-ignore
         windyInit(options, async windyAPI => {
@@ -472,13 +566,13 @@ export default class HomePageComponent extends Vue {
                     fillOpacity: 0
                 }
             });
-            map.flyToBounds(vnBorder.getBounds(), { maxZoom: 12, duration: 1.5, easeLinearity: 0.2 });
+            map.fitBounds(vnBorder.getBounds(), { maxZoom: 12, duration: 1.5, easeLinearity: 0.2 });
             map.invalidateSize()
             this.layerGroup.addLayer(vnBorder);
             this.layerGroup.addTo(map);
-            setInterval(function () {
-                map.invalidateSize();
-            }, 100);
+            // setInterval(function () {
+            //     map.invalidateSize();
+            // }, 100);
         });
     }
 
@@ -506,11 +600,20 @@ export default class HomePageComponent extends Vue {
     @Watch('customZoomControl')
     handleZoomMap(val) {
         const { map } = this.windy;
-        map.setZoom(val.data);
+        this.handleResetLayer();
+        map.flyTo(this.centerLatlng, val.data, { animate: true, duration: 2.5, easeLinearity: 0.2 })
+
     }
 
     @Watch('customLevelControl')
     handleChangeElevation(val) {
         this.handleChangeLevel(val.data);
+    }
+
+    @Watch('customWaitControl')
+    async handleWait(val) {
+        if (val) {
+            await sleep(val.data, this.clearTimeout);
+        }
     }
 }

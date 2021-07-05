@@ -154,7 +154,8 @@ export default class InfoPageComponent extends Vue {
             searchParam.weatherTypes = [WEATHER_TYPE.Weather];
             this.weatherService.getHorizontal(searchParam).then((res: any) => {
                 const data = res.getWeatherInformationHorizontals.find(x => x.weatherType === WEATHER_TYPE.Weather);
-                const iconId = data[`_${new Date().getHours()}`]
+                let hour = new Date().getHours();
+                const iconId = data[`_${hour ? hour : 1}`]
                 const icon = ICON.find(x => x.id === iconId)
                 if (icon) {
                     this.temparatureData = {

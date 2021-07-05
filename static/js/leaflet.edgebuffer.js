@@ -22,7 +22,7 @@
             );
 
             // Default is to buffer one tiles beyond the pixel bounds (edgeBufferTiles = 1).
-            var edgeBufferTiles = 3;
+            var edgeBufferTiles = 2;
             if (
                 this.options.edgeBufferTiles !== undefined &&
                 this.options.edgeBufferTiles !== null

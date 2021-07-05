@@ -50,6 +50,7 @@ export default class ListPostComponent extends Vue {
         }
         this.getPostsByPaging();
         this.visibleConfirm = false;
+        this.$toast.success('Xóa tin thành công');
     }
 
     async getPostsByLimit(value = null) {

@@ -36,54 +36,54 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- <tr v-for="(item, index) in posts" :key="index">
+                            <tr v-for="(item, index) in users" :key="index">
                                 <td class="base-cms-right--body_table_checkbox">
                                     <v-checkbox color="primary" hide-details></v-checkbox>
                                 </td>
                                 <td>
                                     <div class="base-cms-right--body_table_title">
-                                        <img :src="item.imageUrl">
-                                        {{ item.title }}
+                                        <img :src="item.avatarUrl">
+                                        {{ item.userName }}
                                     </div>
                                 </td>
-                                <td>{{ $formatDateTime(item.datePosted) }}</td>
-                                <td>{{ item.categoryName }}</td>
-                                <td>{{ item.statusName }}</td>
+                                <td>{{ $formatDateTime(item.createdOn) }}</td>
+                                <td>{{ item.roleName }}</td>
+                                <td>{{ item.roleName }}</td>
                                 <td class="base-cms-right--body_table_action">
-                                    <v-icon @click.native="editPost(item.eventId)" class="edit-action">mdi-square-edit-outline</v-icon>
-                                    <v-icon @click.native="handleDeletePost(item.eventId)" class="delete-action">mdi-delete</v-icon>
+                                    <v-icon @click.native="editUser(item.userId)" class="edit-action">mdi-square-edit-outline</v-icon>
+                                    <v-icon @click.native="handleDeleteUser(item.userId)" class="delete-action">mdi-delete</v-icon>
                                 </td>
-                            </tr> -->
+                            </tr>
                         </tbody>
                     </template>
                 </v-simple-table>
             </template>
-            <!-- <div class="base-cms-right--body_table_footer_page_num">
-                <div style="flex: 1;">{{numPostsInPage}}/{{totalItems}} tin</div>
+            <div class="base-cms-right--body_table_footer_page_num">
+                <div style="flex: 1;">{{numUsersInPage}}/{{totalItems}} người</div>
                 <div class="base-cms-right--body_table_footer_page_num_limit">
-                    Số tin mỗi trang
-                    <v-select style="margin-left: 20px;" :items="limitPerPage" v-model="searchParams.limit"
-                        @change="getPostsByLimit"></v-select>
+                    Số người mỗi trang
+                    <v-select style="margin-left: 20px;" :items="limitPerPage" v-model="userSearchParams.limit"
+                        @change="getUsersByLimit"></v-select>
                 </div>
-                <v-pagination v-model="searchParams.page" :length="totalPages" :total-visible="TotalPageVisible"
-                    @input="getPostsByPaging"></v-pagination>
-            </div> -->
+                <v-pagination v-model="userSearchParams.page" :length="totalPages" :total-visible="TotalPageVisible"
+                    @input="getUsersByPaging"></v-pagination>
+            </div>
         </div>
     </div>
-    <!-- <v-dialog v-model="visibleConfirm" max-width="400">
+    <v-dialog v-model="visibleConfirm" max-width="400">
         <v-card>
             <v-card-title class="text-h5">
-                Bạn có muốn xoá bài viết này?
+                Bạn có muốn xoá người dùng này?
             </v-card-title>
             <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn  text @click="visibleConfirm = false">
                     Bỏ qua
                 </v-btn>
-                <v-btn color="primary" @click="deletePost()">
+                <v-btn color="primary" @click="deleteUser()">
                     Đồng ý
                 </v-btn>
             </v-card-actions>
         </v-card>
-    </v-dialog> -->
+    </v-dialog>
 </div>

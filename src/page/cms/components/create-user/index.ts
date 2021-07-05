@@ -3,6 +3,7 @@ import Component from "vue-class-component";
 import NO_IMAGE from '../../../../../static/img/no-image/no-image.png';
 import { UploadServices } from '@/service/upload-service/upload.service';
 import { IUser, User } from "@/model/user";
+import { UserServices } from "@/service/user-service/user.service";
 
 @Component({
     template: require("./template.html").default,
@@ -10,25 +11,54 @@ import { IUser, User } from "@/model/user";
 export default class CreateUserComponent extends Vue {
     isLoading: boolean = false;
     isUploading: boolean = false;
+    isShowPassword: boolean = false;
     uploadservice: UploadServices = new UploadServices();
+    userService: UserServices = new UserServices();
     valid: boolean = true;
     uploadedDocs: any = NO_IMAGE;
     progress: number = 0;
     userModel: IUser = new User({});
 
     rules = {
-        userName: [v => !!v || 'Vui lòng nhập tên tài khoản'],
-        email: [v => !!v || 'Vui lòng nhập email'],
-        password: [v => !!v || 'Vui lòng nhập mật khẩu'],
-        status: [v => !!v || 'Vui lòng chọn trạng thái']
+        firstName: [v => !!v || 'Vui lòng nhập họ'],
+        lastName: [v => !!v || 'Vui lòng nhập tên'],
+        userName: [
+            v => !!v || 'Vui lòng nhập tên tài khoản',
+            v => !!v && v.length >= 6 || 'Tên tài khoản phải dài ít nhất 6 kí tự'
+        ],
+        email: [
+            v => !!v || 'Vui lòng nhập email',
+            v => /.+@.+/.test(v) || 'Địa chỉ email phải hợp lệ',
+        ],
+        password: [
+            v => !!v || 'Vui lòng nhập mật khẩu',
+            v => !!v && v.length >= 6 || 'Mật khẩu phải dài ít nhất 6 kí tự',
+            v => !!v && /(?=.*[!@#\$%\^&\*])/.test(v) || 'Mật khẩu phải chứa ít nhất 1 kí tự đặc biệt',
+            v => !!v && /(?=.*[a-z])/.test(v) || 'Mật khẩu phải chứa ít nhất 1 chữ in thường (a-z)',
+            v => !!v && /(?=.*[A-Z])/.test(v) || 'Mật khẩu phải chứa ít nhất 1 chữ in hoa (A-Z)',
+        ]
     }
 
     handleBack() {
         this.$router.go(-1);
     }
 
-    createPost() {
-
+    createUser() {
+        //@ts-ignore
+        this.valid = this.$refs.postForm.validate();
+        const vm = this as any;
+        if (this.valid) {
+            this.isLoading = true;
+            this.userService.createUser(this.userModel).then(res => {
+                this.$toast.success('Tạo tài khoản mới thành công');
+                vm.$router.go(-1);
+                this.isLoading = false;
+            }).catch(err => {
+                this.$toast.error('Có lỗi khi tạo tài khoản mới');
+                console.log(err);
+                this.isLoading = false;
+            })
+        }
     }
 
     handleClickBrowse() {
@@ -91,11 +121,11 @@ export default class CreateUserComponent extends Vue {
                 this.progress = percent;
             }.bind(this)
         };
-        this.uploadservice.upload(formData, config).then(response => {
+        this.uploadservice.uploadAvatar(formData, config).then(response => {
             this.isUploading = false;
             this.toBase64(document.Data);
             this.progress = 0;
-            // this.postModel.imageUrl = response;
+            this.userModel.avatarUrl = response;
         }).catch(err => {
             this.isUploading = false;
             console.error(err);
@@ -104,11 +134,7 @@ export default class CreateUserComponent extends Vue {
 
     buildUploadDocumentParams(document) {
         const formData = new FormData();
-        formData.append('file', document.Data, document.FileName);
+        formData.append('Image', document.Data, document.FileName);
         return formData;
-    }
-
-    mounted() {
-
     }
 }

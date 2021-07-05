@@ -115,45 +115,56 @@
 
 // Windy popup
 .leaflet-popup-content-wrapper {
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), rgba(121, 120, 120, 0.5) !important;
+    background: transparent !important;
+    font-weight: 700 !important;
+    font-size: 20px;
     color: #fff !important;
     box-shadow: none !important;
     border-radius: 0 !important;
-    border: 3px solid rgba($color: #fff, $alpha: 0.8);
+    border: none;
     position: relative;
     border-radius:5px;
-    &:after {
-        content: " ";
-        width: 0;
-        height: 0;
-        border-left: 8px solid transparent;
-        border-right: 8px solid transparent;
-        border-top: 8px solid rgba($color: #fff, $alpha: 0.8);
-        position: absolute;
-        bottom: -10px;
-        left: 50%;
-        margin-left: -8px;
-    }
+    margin: 0;
+    // &:after {
+    //     content: " ";
+    //     width: 0;
+    //     height: 0;
+    //     border-left: 8px solid transparent;
+    //     border-right: 8px solid transparent;
+    //     border-top: 8px solid rgba($color: #fff, $alpha: 0.8);
+    //     position: absolute;
+    //     bottom: -10px;
+    //     left: 50%;
+    //     margin-left: -8px;
+    // }
 }
 .leaflet-popup-tip-container {
     display: none;
 }
 
 .map-pop-up {
-    font-size: 15px;
+    font-size: 25px;
     &-name {
         min-width: 100px;
     }
     &-data {
         display: flex;
         &--temp {
+            margin-right: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 50%;
         }
         img {
-            width: 30px;
+            width: 70px;
+        }
+    }
+    &.small {
+        font-size: 15px;
+        &-data {
+            img {
+                width: 40px;
+            }
         }
     }
 }
@@ -249,4 +260,59 @@
         }
     }
 
+}
+
+.leaflet-interactive {
+    animation: fadein 0.5s;
+}
+
+.hide-animation {
+    display: none !important;
+}
+
+.particles-layer {
+    animation: fadein 1s;
+}
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@keyframes fadein-hide {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+.fake-transition {
+    // animation: fadein 2s;
+    position: absolute;
+    top: 0;
+    opacity: 1;
+    transition: visibility 0s .5s, opacity .5s linear;
+    &.hide {
+        visibility: hidden;
+        opacity: 0;
+    }
+}
+
+.map-title {
+    position: absolute;
+    color: #000;
+    font-size: 30px;
+    padding: 10px;
+    background: #fff;
+    border-radius: 10px;
+    &.right {
+        right: 8vw;
+        top: 5vw;
+    }
+    &.left {
+        left: 8vw;
+        top: 5vw;
+    }
+}
+
+#progress-bar {
+    display: none !important;
 }

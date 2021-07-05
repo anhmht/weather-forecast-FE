@@ -29,9 +29,9 @@
                     <v-select v-model="data.data" :items="zooms" label="Độ thu phóng bản đồ"
                         item-text="name" item-value="type" :rules="rules.zoomRules"></v-select>
                 </div>
-                <div v-if="data.action === 'customLevelControl'">
-                    <v-select v-model="data.data" :items="elevations" label="Độ cao bản đồ"
-                        item-text="label" item-value="data" :rules="rules.elevationRules"></v-select>
+                <div v-if="data.action === 'customWaitControl'">
+                    <v-select v-model="data.duration" :items="durations" label="Chọn thời lượng" item-value="value">
+                    </v-select>
                 </div>
             </v-form>
         </v-card-text>

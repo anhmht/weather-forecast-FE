@@ -59,9 +59,11 @@ export default class CreatePostComponent extends Vue {
             this.isLoading = true;
             this.postModel.imageNormalUrls = DataHelper.getImageArray(this.postModel.content);
             this.postService.createPost(this.postModel).then(res => {
+                this.$toast.success('Tạo tin mới thành công');
                 vm.$router.go(-1);
                 this.isLoading = false;
             }).catch(err => {
+                this.$toast.error('Có lỗi khi tạo tin mới');
                 console.log(err);
                 this.isLoading = false;
             })

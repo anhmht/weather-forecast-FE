@@ -17,11 +17,14 @@ export default class AddUpdateContentComponent extends Vue {
 
     durations = [
         { text: '0 giây', value: 0 },
+        { text: '1 giây', value: 1000 },
         { text: '3 giây', value: 3000 },
         { text: '5 giây', value: 5000 },
         { text: '10 giây', value: 10000 },
         { text: '15 giây', value: 15000 },
         { text: '20 giây', value: 20000 },
+        { text: '25 giây', value: 25000 },
+        { text: '30 giây', value: 30000 },
     ]
 
     valid: boolean = true;
@@ -35,7 +38,15 @@ export default class AddUpdateContentComponent extends Vue {
     }
 
     get regions() {
-        return REGION;
+        const regions = DataHelper.deepClone(REGION) as any;
+        regions.push({
+            name: "Toàn Quốc",
+            zoom: 6,
+            placeId: 'TQ',
+            paddingBottomRight: [0, 0],
+            paddingTopLeft: [0, 0]
+        })
+        return regions;
     }
     get locations() {
         return MAP_PROVINCE;
