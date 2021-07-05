@@ -2,11 +2,10 @@ import Vue from 'vue';
 import Component from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 import { WeatherServices } from '@/service/weather-service/weather.service';
-import { REGION, STATION, WEATHER_TYPE, WIND_DIRECTION } from '@/constant/forcast-station-constant';
+import { REGION, STATION, WEATHER_TYPE } from '@/constant/forcast-station-constant';
 import { ForecastSearchParam, IForecastSearchParam } from '@/model/forecast/forecast.model';
 import moment from 'moment';
 import { DataHelper } from '@/utils/data-helper';
-import { ICON } from '@/constant/icon-constant';
 
 @Component({
     template: require("./template.html").default,
@@ -23,53 +22,7 @@ export default class WeatherForecast24hComponent extends Vue {
 
     activeTab: number = 0;
 
-    forecastData = [
-        {
-            title: null,
-            icon: null,
-            desc: null
-        },
-        {
-            title: 'Phía Tây Bắc Bộ',
-            icon: null,
-            desc: null
-        },
-        {
-            title: 'Phía Đông Bắc Bộ',
-            icon: null,
-            desc: null
-        },
-        {
-            title: 'Đồng bằng sông Hồng',
-            icon: null,
-            desc: null
-        },
-        {
-            title: 'Thanh Hoá - Thừa Thiên Huế',
-            icon: null,
-            desc: null
-        },
-        {
-            title: 'Đà Nẵng đến Bình Thuận',
-            icon: null,
-            desc: null
-        },
-        {
-            title: 'Tây Nguyên',
-            icon: null,
-            desc: null
-        },
-        {
-            title: 'Đông Nam Bộ',
-            icon: null,
-            desc: null
-        },
-        {
-            title: 'Đồng bằng sông Cửu Long',
-            icon: null,
-            desc: null
-        },
-    ]
+    forecastData: any = [];
 
     forcastSea = [
         {
@@ -292,266 +245,70 @@ export default class WeatherForecast24hComponent extends Vue {
     }
 
     mounted() {
-        const currentHour = new Date().getHours();
-        let iconDay = null;
-        let iconNight = null;
-        let iconDayUrl = null;
-        let iconNightUrl = null;
-        let weatherDescDay = null;
-        let weatherDescNight = null;
-        let windDir = null;
-
-        this.forecastData[0].title = this.position;
-        this.getHorizontal(this.getStationIdByPosition(this.position)).then((res: any) => {
-            iconDay = ICON.find(x => x.id === res.mostFreqIcon.mostFreqDay);
-            if (iconDay) {
-                iconDayUrl = iconDay.url;
-                weatherDescDay = iconDay.description;
-            }
-
-            iconNight = ICON.find(x => x.id === res.mostFreqIcon.mostFreqNight);
-            if (iconNight) {
-                iconNightUrl = iconNight.url;
-                weatherDescNight = iconNight.description;
-            }
-
-            windDir = WIND_DIRECTION[res.mostFreqWindDir].full;
-
-            if (currentHour >= 6 && currentHour <= 18) {
-                this.forecastData[0].icon = iconDayUrl;
-            } else {
-                this.forecastData[0].icon = iconNightUrl;
-            }
-            this.forecastData[0].desc = weatherDescDay + ". " + weatherDescNight
-                + ". Gió " + windDir + " cấp " + res.mostFreqWindLvl + ".<br/>"
-                + "Nhiệt độ thấp nhất: " + res.tempRange.min + ".<br/>"
-                + "Nhiệt độ cao nhất: " + res.tempRange.max + ".<br/>";
-        }).catch(err => {
-            console.log(err);
-        })
-
-        this.getHorizontal(this.getStationIdByRegion("TBB")).then((res: any) => {
-            iconDay = ICON.find(x => x.id === res.mostFreqIcon.mostFreqDay);
-            if (iconDay) {
-                iconDayUrl = iconDay.url;
-                weatherDescDay = iconDay.description;
-            }
-
-            iconNight = ICON.find(x => x.id === res.mostFreqIcon.mostFreqNight);
-            if (iconNight) {
-                iconNightUrl = iconNight.url;
-                weatherDescNight = iconNight.description;
-            }
-
-            windDir = WIND_DIRECTION[res.mostFreqWindDir].full;
-
-            if (currentHour >= 6 && currentHour <= 18) {
-                this.forecastData[1].icon = iconDayUrl;
-            } else {
-                this.forecastData[1].icon = iconNightUrl;
-            }
-            this.forecastData[1].desc = weatherDescDay + ". " + weatherDescNight
-                + ". Gió " + windDir + " cấp " + res.mostFreqWindLvl + ".<br/>"
-                + "Nhiệt độ thấp nhất: " + res.tempRange.min + ".<br/>"
-                + "Nhiệt độ cao nhất: " + res.tempRange.max + ".<br/>";
-        }).catch(err => {
-            console.log(err);
-        })
-
-        this.getHorizontal(this.getStationIdByRegion("DBB")).then((res: any) => {
-            iconDay = ICON.find(x => x.id === res.mostFreqIcon.mostFreqDay);
-            if (iconDay) {
-                iconDayUrl = iconDay.url;
-                weatherDescDay = iconDay.description;
-            }
-
-            iconNight = ICON.find(x => x.id === res.mostFreqIcon.mostFreqNight);
-            if (iconNight) {
-                iconNightUrl = iconNight.url;
-                weatherDescNight = iconNight.description;
-            }
-
-            windDir = WIND_DIRECTION[res.mostFreqWindDir].full;
-
-            if (currentHour >= 6 && currentHour <= 18) {
-                this.forecastData[2].icon = iconDayUrl;
-            } else {
-                this.forecastData[2].icon = iconNightUrl;
-            }
-            this.forecastData[2].desc = weatherDescDay + ". " + weatherDescNight
-                + ". Gió " + windDir + " cấp " + res.mostFreqWindLvl + ".<br/>"
-                + "Nhiệt độ thấp nhất: " + res.tempRange.min + ".<br/>"
-                + "Nhiệt độ cao nhất: " + res.tempRange.max + ".<br/>";
-        }).catch(err => {
-            console.log(err);
-        })
-
-        this.getHorizontal(this.getStationIdByRegion("DBSH")).then((res: any) => {
-            iconDay = ICON.find(x => x.id === res.mostFreqIcon.mostFreqDay);
-            if (iconDay) {
-                iconDayUrl = iconDay.url;
-                weatherDescDay = iconDay.description;
-            }
-
-            iconNight = ICON.find(x => x.id === res.mostFreqIcon.mostFreqNight);
-            if (iconNight) {
-                iconNightUrl = iconNight.url;
-                weatherDescNight = iconNight.description;
-            }
-
-            windDir = WIND_DIRECTION[res.mostFreqWindDir].full;
-
-            if (currentHour >= 6 && currentHour <= 18) {
-                this.forecastData[3].icon = iconDayUrl;
-            } else {
-                this.forecastData[3].icon = iconNightUrl;
-            }
-            this.forecastData[3].desc = weatherDescDay + ". " + weatherDescNight
-                + ". Gió " + windDir + " cấp " + res.mostFreqWindLvl + ".<br/>"
-                + "Nhiệt độ thấp nhất: " + res.tempRange.min + ".<br/>"
-                + "Nhiệt độ cao nhất: " + res.tempRange.max + ".<br/>";
-        }).catch(err => {
-            console.log(err);
-        })
-
-        this.getHorizontal(this.getStationIdByRegion("BTB")).then((res: any) => {
-            iconDay = ICON.find(x => x.id === res.mostFreqIcon.mostFreqDay);
-            if (iconDay) {
-                iconDayUrl = iconDay.url;
-                weatherDescDay = iconDay.description;
-            }
-
-            iconNight = ICON.find(x => x.id === res.mostFreqIcon.mostFreqNight);
-            if (iconNight) {
-                iconNightUrl = iconNight.url;
-                weatherDescNight = iconNight.description;
-            }
-
-            windDir = WIND_DIRECTION[res.mostFreqWindDir].full;
-
-            if (currentHour >= 6 && currentHour <= 18) {
-                this.forecastData[4].icon = iconDayUrl;
-            } else {
-                this.forecastData[4].icon = iconNightUrl;
-            }
-            this.forecastData[4].desc = weatherDescDay + ". " + weatherDescNight
-                + ". Gió " + windDir + " cấp " + res.mostFreqWindLvl + ".<br/>"
-                + "Nhiệt độ thấp nhất: " + res.tempRange.min + ".<br/>"
-                + "Nhiệt độ cao nhất: " + res.tempRange.max + ".<br/>";
-        }).catch(err => {
-            console.log(err);
-        })
-
-        this.getHorizontal(this.getStationIdByRegion("NTB")).then((res: any) => {
-            iconDay = ICON.find(x => x.id === res.mostFreqIcon.mostFreqDay);
-            if (iconDay) {
-                iconDayUrl = iconDay.url;
-                weatherDescDay = iconDay.description;
-            }
-
-            iconNight = ICON.find(x => x.id === res.mostFreqIcon.mostFreqNight);
-            if (iconNight) {
-                iconNightUrl = iconNight.url;
-                weatherDescNight = iconNight.description;
-            }
-
-            windDir = WIND_DIRECTION[res.mostFreqWindDir].full;
-
-            if (currentHour >= 6 && currentHour <= 18) {
-                this.forecastData[5].icon = iconDayUrl;
-            } else {
-                this.forecastData[5].icon = iconNightUrl;
-            }
-            this.forecastData[5].desc = weatherDescDay + ". " + weatherDescNight
-                + ". Gió " + windDir + " cấp " + res.mostFreqWindLvl + ".<br/>"
-                + "Nhiệt độ thấp nhất: " + res.tempRange.min + ".<br/>"
-                + "Nhiệt độ cao nhất: " + res.tempRange.max + ".<br/>";
-        }).catch(err => {
-            console.log(err);
-        })
-
-        this.getHorizontal(this.getStationIdByRegion("TN")).then((res: any) => {
-            iconDay = ICON.find(x => x.id === res.mostFreqIcon.mostFreqDay);
-            if (iconDay) {
-                iconDayUrl = iconDay.url;
-                weatherDescDay = iconDay.description;
-            }
-
-            iconNight = ICON.find(x => x.id === res.mostFreqIcon.mostFreqNight);
-            if (iconNight) {
-                iconNightUrl = iconNight.url;
-                weatherDescNight = iconNight.description;
-            }
-
-            windDir = WIND_DIRECTION[res.mostFreqWindDir].full;
-
-            if (currentHour >= 6 && currentHour <= 18) {
-                this.forecastData[6].icon = iconDayUrl;
-            } else {
-                this.forecastData[6].icon = iconNightUrl;
-            }
-            this.forecastData[6].desc = weatherDescDay + ". " + weatherDescNight
-                + ". Gió " + windDir + " cấp " + res.mostFreqWindLvl + ".<br/>"
-                + "Nhiệt độ thấp nhất: " + res.tempRange.min + ".<br/>"
-                + "Nhiệt độ cao nhất: " + res.tempRange.max + ".<br/>";
-        }).catch(err => {
-            console.log(err);
-        })
-
-        this.getHorizontal(this.getStationIdByRegion("DNB")).then((res: any) => {
-            iconDay = ICON.find(x => x.id === res.mostFreqIcon.mostFreqDay);
-            if (iconDay) {
-                iconDayUrl = iconDay.url;
-                weatherDescDay = iconDay.description;
-            }
-
-            iconNight = ICON.find(x => x.id === res.mostFreqIcon.mostFreqNight);
-            if (iconNight) {
-                iconNightUrl = iconNight.url;
-                weatherDescNight = iconNight.description;
-            }
-
-            windDir = WIND_DIRECTION[res.mostFreqWindDir].full;
-
-            if (currentHour >= 6 && currentHour <= 18) {
-                this.forecastData[7].icon = iconDayUrl;
-            } else {
-                this.forecastData[7].icon = iconNightUrl;
-            }
-            this.forecastData[7].desc = weatherDescDay + ". " + weatherDescNight
-                + ". Gió " + windDir + " cấp " + res.mostFreqWindLvl + ".<br/>"
-                + "Nhiệt độ thấp nhất: " + res.tempRange.min + ".<br/>"
-                + "Nhiệt độ cao nhất: " + res.tempRange.max + ".<br/>";
-        }).catch(err => {
-            console.log(err);
-        })
-
-        this.getHorizontal(this.getStationIdByRegion("TNB")).then((res: any) => {
-            iconDay = ICON.find(x => x.id === res.mostFreqIcon.mostFreqDay);
-            if (iconDay) {
-                iconDayUrl = iconDay.url;
-                weatherDescDay = iconDay.description;
-            }
-
-            iconNight = ICON.find(x => x.id === res.mostFreqIcon.mostFreqNight);
-            if (iconNight) {
-                iconNightUrl = iconNight.url;
-                weatherDescNight = iconNight.description;
-            }
-
-            windDir = WIND_DIRECTION[res.mostFreqWindDir].full;
-
-            if (currentHour >= 6 && currentHour <= 18) {
-                this.forecastData[8].icon = iconDayUrl;
-            } else {
-                this.forecastData[8].icon = iconNightUrl;
-            }
-            this.forecastData[8].desc = weatherDescDay + ". " + weatherDescNight
-                + ". Gió " + windDir + " cấp " + res.mostFreqWindLvl + ".<br/>"
-                + "Nhiệt độ thấp nhất: " + res.tempRange.min + ".<br/>"
-                + "Nhiệt độ cao nhất: " + res.tempRange.max + ".<br/>";
-        }).catch(err => {
-            console.log(err);
-        })
+        this.forecastData = [
+            {
+                title: this.position,
+                icon: null,
+                desc: null,
+                region: null,
+                currentPosition: this.position
+            },
+            {
+                title: 'Phía Tây Bắc Bộ',
+                icon: null,
+                desc: null,
+                region: 'TBB',
+                currentPosition: null
+            },
+            {
+                title: 'Phía Đông Bắc Bộ',
+                icon: null,
+                desc: null,
+                region: 'DBB',
+                currentPosition: null
+            },
+            {
+                title: 'Đồng bằng sông Hồng',
+                icon: null,
+                desc: null,
+                region: 'DBSH',
+                currentPosition: null
+            },
+            {
+                title: 'Thanh Hoá - Thừa Thiên Huế',
+                icon: null,
+                desc: null,
+                region: 'BTB',
+                currentPosition: null
+            },
+            {
+                title: 'Đà Nẵng đến Bình Thuận',
+                icon: null,
+                desc: null,
+                region: 'NTB',
+                currentPosition: null
+            },
+            {
+                title: 'Tây Nguyên',
+                icon: null,
+                desc: null,
+                region: 'TN',
+                currentPosition: null
+            },
+            {
+                title: 'Đông Nam Bộ',
+                icon: null,
+                desc: null,
+                region: 'DNB',
+                currentPosition: null
+            },
+            {
+                title: 'Đồng bằng sông Cửu Long',
+                icon: null,
+                desc: null,
+                region: 'TNB',
+                currentPosition: null
+            },
+        ]
     }
 }

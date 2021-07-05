@@ -1463,7 +1463,8 @@ export const WEATHER_TYPE = {
     WindSpeed: 4,
     RainAmount: 5,
     Temperature: 6,
-    Weather: 7
+    Weather: 7,
+    WindRank: 8
 }
 
 export const WIND_DIRECTION = {
