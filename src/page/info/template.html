@@ -20,7 +20,7 @@
                         <div class="info-current-forecast">
                             <div class="info-current-forecast-header">
                                 <v-select :items="allRegions" item-text="title" return-object
-                                    style="margin: 0px 20px;" hide-details dense v-model="region"
+                                    style="margin: 0px 20px;" hide-details dense v-model="region" dark 
                                     @change="handleChangeRegion">
                                 </v-select>
                                 <br/> {{timestamp}}
@@ -36,7 +36,12 @@
                     <v-col cols="12" md="9">
                         <!-- <h1>Cảnh báo thiên tai</h1> -->
                         <div class="warning-info">
-                            <div class="title-warning">Cảnh báo thiên tai</div>
+                            <div class="title-warning">Cảnh báo thiên tai
+                                    <div class="warning-info-readmore" @click="viewAllWarning()">
+                                        Xem tất cả <v-icon> mdi-chevron-right</v-icon>
+                                    </div>
+
+                            </div>
                             <div class="warning-info-wrapper">
                                 <div @click="handleViewDetail(firstWarningPost.eventId)" class="warning-info-left">
                                     <div class="img-news" :style="{ backgroundImage: 'url(' + firstWarningPost.imageUrl + ')' }"></div>
@@ -49,9 +54,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="warning-info-readmore" @click="viewAllWarning()">
-                                Xem tất cả các cảnh báo thiên tai
-                            </div>
+                            
                         </div>
                     </v-col>
                 </v-row>

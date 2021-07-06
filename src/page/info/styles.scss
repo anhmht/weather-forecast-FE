@@ -91,7 +91,14 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            padding: 10px 0;
+            float: right;
+            font-size: 14px;
+            font-weight: normal;
+            text-transform: inherit;
+            margin: 3px 0 0 0;
+            i {
+                color: $primary-color;
+            }
         }
         &-left {
             padding: 15px;
