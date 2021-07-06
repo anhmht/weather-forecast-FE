@@ -150,7 +150,7 @@ export const STATION = [
         "id": "DiemVL10_3",
         "ten": "Long Hồ",
         "x": 105.968,
-        "y": 10.2204,
+        "y": 10.1594,
         "place_id": "VL_3",
     },
     {
@@ -220,14 +220,14 @@ export const STATION = [
         "id": "DIEMVN_13",
         "ten": "Phú Thọ",
         "x": 105.114,
-        "y": 21.3198,
+        "y": 21.0098,
         "place_id": "68",
     },
     {
         "id": "DIEMVN_14",
         "ten": "Quảng Ninh",
-        "x": 107.298,
-        "y": 21.2551,
+        "x": 107.398,
+        "y": 21.1551,
         "place_id": "13",
     },
     {
@@ -593,8 +593,9 @@ export const REGION = [
             // fill: false
         },
         paddingBottomRight: [0, 0],
-        paddingTopLeft: [0, 0],
-        animation: 'animate__bounceInRight'
+        paddingTopLeft: [500, 20],
+        animation: 'animate__zoomInRight',
+        titlePosition: 'left animate__fadeInLeftBig',
     },
     {
         name: "Tây Nguyên",
@@ -629,7 +630,8 @@ export const REGION = [
             // fill: false
         },
         paddingBottomRight: [0, 0],
-        paddingTopLeft: [0, 0],
+        paddingTopLeft: [1000, 0],
+        titlePosition: 'left animate__fadeInLeftBig',
         animation: 'animate__fadeInUpBig'
     },
     {
@@ -649,7 +651,7 @@ export const REGION = [
         },
         paddingBottomRight: [0, 0],
         paddingTopLeft: [0, 0],
-        titlePosition: 'left animate__fadeInLeftBig',
+        titlePosition: 'right animate__fadeInRightBig',
         animation: 'animate__fadeInBottomLeft'
     },
 ]
@@ -673,7 +675,9 @@ export const MAP_PROVINCE = [
             opacity: 1,
             fillOpacity: 0.5
         },
-
+        paddingBottomRight: [0, 0],
+        paddingTopLeft: [1000, 0],
+        titlePosition: 'left animate__fadeInLeftBig',
     },
     {
         id: 'DIEMVN_17',

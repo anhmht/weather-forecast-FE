@@ -1,0 +1,20 @@
+<div class="video-province">
+    <div class="video-province-item animate__animated animate__bounceInDown" v-for="(item,index) in forecastData" :key="index">
+        <div class="video-province-item--title">
+            {{item.name}}
+        </div>
+        <div class="video-province-item--body">
+            <div class="video-province-item--image">
+                <img :src="item.icon" width="100" />
+            </div>
+            <div class="video-province-item--content">
+                <div class="video-province-item--content_temp">
+                    {{item.temp}} ℃
+                </div>
+                <div class="video-province-item--content_des">
+                    {{item.desc}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

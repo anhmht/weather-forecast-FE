@@ -303,7 +303,7 @@ export default class WeatherForecast24hComponent extends Vue {
                 currentPosition: null
             },
             {
-                title: 'Đồng bằng sông Cửu Long',
+                title: 'Tây Nam Bộ',
                 icon: null,
                 desc: null,
                 region: 'TNB',
