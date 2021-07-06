@@ -1,13 +1,17 @@
 <base-container>
     <div class="icon-page-container">
-        <v-row class="icon-page-container-wrapper">
-            <div class="icon-page-container-wrapper--tab" :class="activeTab === 0 ? 'active' : ''" @click="handleChangeTab(0)">Biểu tượng thời tiết</div>
-            <div class="icon-page-container-wrapper--tab" :class="activeTab === 1 ? 'active' : ''" @click="handleChangeTab(1)">Các trạng thái thời tiết</div>
-        </v-row>
+        <div class="nav-sticky-wrapper">
+            <div class="nav-sticky">
+                <ul>
+                <li :class="activeTab === 0 ? 'active' : ''" @click="handleChangeTab(0)">Biểu tượng thời tiết</li>
+                <li  :class="activeTab === 1 ? 'active' : ''" @click="handleChangeTab(1)">Các trạng thái thời tiết</li>
+                </ul>
+            </div>
+        </div>
         <div v-if="activeTab === 1" class="icon-page-container-wrapper" style="padding-bottom: 2vw;">
             <weaher-status />
         </div>
-        <div v-else>
+        <div v-else class="padding-page">
             <v-row class="icon-page-container-wrapper">
                 <v-col cols="12" md="6">
                     <div class="icon-page-container-wrapper-col">

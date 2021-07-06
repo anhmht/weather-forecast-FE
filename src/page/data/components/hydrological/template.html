@@ -38,33 +38,35 @@
             <div v-if="hydrologicalType === 0" class="data-page-container_content-result-filter">
                 <div style="margin-right: 20px; display: flex;">
                     Thời gian từ:
-                    <v-menu v-model="fromDateMenu" :close-on-content-click="false" :nudge-right="40"
-                        transition="scale-transition" offset-y min-width="auto">
-                        <div class="calendar-input">
-                        <template v-slot:activator="{ on, attrs }">
-                            <v-text-field v-model="FormattedFromDate" prepend-icon="mdi-calendar"
-                                readonly v-bind="attrs" v-on="on"></v-text-field>
-                        </template>
-                        </div>
-                        <v-date-picker v-model="fromDate" @input="fromDateMenu = false" locale="vi-vn"
-                            @change="getStationData(currentStationId, currentStationType, activeStation, 0)">
-                        </v-date-picker>
-                    </v-menu>
+                    <div class="calendar-input">
+                        <v-menu v-model="fromDateMenu" :close-on-content-click="false" :nudge-right="40"
+                            transition="scale-transition" offset-y min-width="auto">
+                        
+                            <template v-slot:activator="{ on, attrs }">
+                                <v-text-field v-model="FormattedFromDate" prepend-icon="mdi-calendar"
+                                    readonly v-bind="attrs" v-on="on"></v-text-field>
+                            </template>
+
+                            <v-date-picker v-model="fromDate" @input="fromDateMenu = false" locale="vi-vn"
+                                @change="getStationData(currentStationId, currentStationType, activeStation, 0)">
+                            </v-date-picker>
+                        </v-menu>
+                    </div>
                 </div>
                 <div style="margin-right: 20px; display: flex;">
                     đến:
+                    <div class="calendar-input">
                     <v-menu v-model="toDateMenu" :close-on-content-click="false" :nudge-right="40"
                         transition="scale-transition" offset-y min-width="auto">
-                        <div class="calendar-input">
                         <template v-slot:activator="{ on, attrs }">
                             <v-text-field v-model="FormattedToDate" prepend-icon="mdi-calendar"
                                 readonly v-bind="attrs" v-on="on"></v-text-field>
                         </template>
-                        </div>
                         <v-date-picker v-model="toDate" @input="toDateMenu = false" locale="vi-vn"
                             @change="getStationData(currentStationId, currentStationType, activeStation, 0)">
                         </v-date-picker>
                     </v-menu>
+                    </div>
                 </div>
             </div>
             <div class="data-page-container_content-result-table">

@@ -49,17 +49,18 @@
 .item-tab {
     display: inline-block;
     text-transform: uppercase;
-    border-bottom: 1px solid transparent;
+    border-bottom: 2px solid #ddd;
     font-weight: bold;
     opacity: 0.5;
     transition: 300ms cubic-bezier(0.4, 0, 0.2, 1);
     margin-right: 20px;
     cursor: pointer;
+    &.active, &:hover {
+        border-color: $primary-color;
+        opacity: 1;
+    }
 }
-.item-tab.active {
-    border-color: #fff;
-    opacity: 1;
-}
+
 .img-news {
     background-repeat: no-repeat;
     background-position: center;
@@ -122,4 +123,10 @@
             }
         }
     }
+}
+.v-text-field {
+    padding: 0;
+}
+.padding-page {
+    padding: 80px 0 40px 0;
 }

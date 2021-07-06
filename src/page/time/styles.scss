@@ -7,14 +7,14 @@
     overflow: hidden;
 
     &_section_1 {
-        background: linear-gradient(rgba(0, 114, 255, 0.3), rgba(0, 43, 255, 0.46)), rgba(0, 0, 0, 0.22);
+        background: #fff;
         border-radius: 25px;
         margin-bottom: 40px;
-        color: #fff;
+        color: #000;
 
         h2 {
             padding: 16px 30px;
-            border-bottom: 1px solid rgba(255,255,255,0.5);
+            border-bottom: 1px solid rgba(0,0,0,0.2);
             border-top-left-radius: 10px;
             border-top-right-radius: 10px;
             font-size: 18px;
@@ -44,12 +44,12 @@
             padding: 30px;
         }
         &_wrapper {
-            border-left: 1px solid #fff;
+            border-left: 1px solid #ddd;
         }
 
         &_main {
             margin: 20px 50px;
-            color: #fff;
+            color: #000;
             display: flex;
 
             &--current {
@@ -155,17 +155,17 @@
                 }
                 /* Handle */
                 &::-webkit-scrollbar-thumb {
-                    background: #ddd;
+                    background: #333;
                     border-radius: 10px;
                 }
                 /* Handle on hover */
                 &::-webkit-scrollbar-thumb:hover {
-                    background: #fff;
+                    background: #000;
                 }
                 &_detail {
                     display: inline-block;
                     width: 140px;
-                    border-left: 1px solid #fff;
+                    border-left: 1px solid #ddd;
                     &_hour {
                         text-align: center;
                     }
@@ -219,7 +219,7 @@
 }
 .line-info-weather {
     > div {
-        border-top: 1px solid rgba($color: #fff, $alpha: 0.1);
+        border-top: 1px solid rgba($color: #000, $alpha: 0.1);
         padding: 3px 10px;
         font-size: 14px;
         text-align: left;

@@ -1,11 +1,9 @@
 .weather-status {
-    background: linear-gradient(rgb(0 114 255 / 30%), rgb(0 43 255 / 46%)),
-        rgb(0 0 0 / 22%);
+    background: #fff;
     border-radius: 10px;
-    padding: 1vw;
-    margin-top: 1vw;
     max-height: 500px;
     overflow: auto;
+    padding: 2vw;
     /* width */
     &::-webkit-scrollbar {
         width: 5px;
@@ -17,11 +15,11 @@
     }
     /* Handle */
     &::-webkit-scrollbar-thumb {
-        background: #ddd;
+        background: #333;
         border-radius: 10px;
     }
     /* Handle on hover */
     &::-webkit-scrollbar-thumb:hover {
-        background: #fff;
+        background: #000;
     }
 }
