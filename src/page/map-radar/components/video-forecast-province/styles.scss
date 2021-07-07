@@ -1,28 +1,33 @@
 .video-province {
+    font-family: 'Inter', sans-serif;
     width: 100%;
     flex-wrap: wrap;
     display: flex;
     &-item {
+        background-image: url(/static/img/video/bg-sd.png);
+        background-size: 100%;
         text-align: center;
-        width: 130px;
+        width: 160px;
+        height: 265px;
         padding: 5px;
         margin: 0 10px;
-        border-radius: 10px;
         margin-bottom: 20px;
         &--title {
-            background: #fff;
+            margin-top: 5px;
             color: #000;
-            font-size: 20px;
+            font-size: 19px;
             font-weight: 600;
         }
         &--body {
-            background: #ff0c04a8;
             padding: 10px;
-            height: 240px;
+            padding-top: 50px;
         }
         &--content {
             &_temp {
-                font-size: 32px;
+                font-size: 27px;
+            }
+            &_des {
+                font-size: 13px;
             }
         }
     }

@@ -235,7 +235,7 @@ export default class HomePageComponent extends Vue {
                 }
                 this.videoForecastAnimation = 'tnb-right'
                 break;
-            case 'VL':
+            case '49':
                 this.mapTitle = {
                     name: mapData.name,
                     position: mapData.titlePosition ? mapData.titlePosition : 'left animate__fadeInLeftBig'
