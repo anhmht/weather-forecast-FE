@@ -33,5 +33,11 @@
 .theme--light.v-data-table.v-data-table--fixed-header thead th {
     background: $primary-color;
     color: #fff !important;
-    padding: 5px 15px;
+    padding: 5px 10px;
+}
+.theme--light tr td {
+    padding: 0 10px !important;
+}
+.legend-table .theme--light tr td {
+    padding: 6px!important;
 }

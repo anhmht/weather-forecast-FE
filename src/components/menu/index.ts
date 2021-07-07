@@ -27,7 +27,7 @@ export default class MenuComponent extends Vue {
                 path: PATH.TIME
             },
             {
-                name: "BIỂU TƯỢNG THỜI TIẾT",
+                name: "Thời tiết - Khí hậu",
                 path: PATH.ICON
             },
             {

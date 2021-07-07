@@ -1,6 +1,5 @@
 <div class="weather-forecast">
-    <v-row class="icon-page-container-wrapper">
-        <v-col cols="12" sm="6" md="4">
+    <div class="icon-page-container-wrapper">
             <div class="calendar-input">
                 <v-menu v-model="selectedDateMenu" :close-on-content-click="false" :nudge-right="40" transition="scale-transition" offset-y min-width="auto">
                         <template v-slot:activator="{ on, attrs }">
@@ -12,8 +11,7 @@
                     </v-date-picker>
                 </v-menu>
             </div>
-        </v-col>
-    </v-row>
+    </div>
     <v-simple-table fixed-header :height="`${height}px`">
         <template v-slot:default>
             <thead>

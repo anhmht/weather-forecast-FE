@@ -47,7 +47,7 @@ export default class MenuCMSComponent extends Vue {
             name: ROUTE_NAME.LIST_DATA,
         },
         {
-            title: 'Biểu tượng thời tiết',
+            title: 'Thời tiết - Khí hậu',
             icon: 'mdi-weather-hail',
             name: ROUTE_NAME.LIST_ICON,
         },

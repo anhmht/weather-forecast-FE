@@ -130,3 +130,44 @@
 .padding-page {
     padding: 80px 0 40px 0;
 }
+.v-text-field>.v-input__control>.v-input__slot:after, .theme--light.v-text-field>.v-input__control>.v-input__slot:before {
+    border-color: #ddd;
+}
+.calendar-input {
+    width: 140px;
+    .v-text-field__slot{
+        position: relative;
+        &:after {
+            content: "\F035D";
+            display: inline-block;
+            font: normal normal normal 24px/1 "Material Design Icons";
+            font-size: inherit;
+            font-size: 16px;
+            font-size: 21px;
+            color: #666;
+            transition: transform .2s cubic-bezier(.4,0,.6,1);
+            position: absolute;
+            top: -1px;
+            right: -2px;
+        }
+    }
+    .v-input input {
+        font-size: 14px;
+        padding: 0;
+        padding-bottom: 6px;
+    }
+    .v-text-field__details {
+        display: none;
+    }
+    .v-input__append-outer, .v-input__prepend-outer {
+        margin-top: 0;
+    }
+    .v-input--is-focused {
+        .v-text-field__slot{
+            &:after {
+                transform: rotate(180deg);
+                top: -1px;
+            }
+        }
+    }
+}
