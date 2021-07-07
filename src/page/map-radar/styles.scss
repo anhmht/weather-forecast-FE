@@ -339,21 +339,21 @@
     border-radius: 10px;
     // background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), rgba(121, 120, 120, 0.5);
     color: #fff;
-    width: 800px;
+    width: 920px;
     &.right {
-        right: 15vw;
-        top: 9vw;
+        right: 10vw;
+        top: 6vw;
     }
     &.left {
-        left: 15vw;
-        top: 9vw;
+        left: 10vw;
+        top: 6vw;
     }
     &.tnb-right {
-        right: 2vw;
-        top: 2vw;
+        right: 1vw;
+        top: 1vw;
     }
     &.vl-left {
-        left: 10vw;
+        left: 5vw;
         top: 2vw;
     }
 }
