@@ -42,6 +42,30 @@ export default class MenuCMSComponent extends Vue {
             query: { categoryId: 'eededf06-2e83-458d-9e0e-08d92ce117ec' }
         },
         {
+            title: 'Thời tiết du lịch',
+            icon: 'mdi-weather-hail',
+            name: ROUTE_NAME.LIST_POST,
+            query: { categoryId: 'd34d4116-51f8-4539-5d1d-08d942e67599' }
+        },
+        {
+            title: 'Thời tiết nông vụ',
+            icon: 'mdi-weather-hail',
+            name: ROUTE_NAME.LIST_POST,
+            query: { categoryId: '2815e0a9-d15f-4d16-5d1e-08d942e67599' }
+        },
+        {
+            title: 'Thời tiết giao thông',
+            icon: 'mdi-weather-hail',
+            name: ROUTE_NAME.LIST_POST,
+            query: { categoryId: 'fdb895d3-a2e3-49f3-5d1f-08d942e67599' }
+        },
+        {
+            title: 'Thời tiết nguy hiểm',
+            icon: 'mdi-weather-hail',
+            name: ROUTE_NAME.LIST_POST,
+            query: { categoryId: '031d1a69-900e-4b63-5d20-08d942e67599' }
+        },
+        {
             title: 'Dữ liệu KTTV',
             icon: 'mdi-home-account',
             name: ROUTE_NAME.LIST_DATA,

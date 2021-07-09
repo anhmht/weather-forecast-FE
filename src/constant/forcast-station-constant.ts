@@ -514,6 +514,9 @@ export const REGION = [
         provinceIds: [
             '02', '06', '71', '01', '05', '14'
         ],
+        zipCodes: [
+            '11', '17', '12', '14', '10', '15'
+        ],
         paddingBottomRight: [1000, 0],
         paddingTopLeft: [0, 0],
         titlePosition: 'right animate__fadeInRightBig',
@@ -533,6 +536,10 @@ export const REGION = [
         provinceIds: [
             '03', '04', '53', '09', '07', '68',
             '69', '54', '13'
+        ],
+        zipCodes: [
+            '24', '6', '4', '2', '20', '25',
+            '22', '19', '8'
         ],
         paddingBottomRight: [0, 0],
         paddingTopLeft: [1000, 0],
@@ -554,6 +561,10 @@ export const REGION = [
             'HN', 'HP', '56', '63', '61',
             '66', '67', '18', '20', '70'
         ],
+        zipCodes: [
+            '27', '35', '30', '33', '36',
+            '37', '34', '26', '1', '31'
+        ],
         paddingBottomRight: [0, 0],
         paddingTopLeft: [0, 0],
         animation: 'animate__fadeInDown'
@@ -572,6 +583,9 @@ export const REGION = [
         provinceIds: [
             '21', '22','23', '24', '25', '26'
         ],
+        zipCodes: [
+            '38', '40', '42', '44', '45', '46'
+        ],
         paddingBottomRight: [1000, 0],
         paddingTopLeft: [0, 0],
         animation: 'animate__fadeInTopRight'
@@ -584,6 +598,10 @@ export const REGION = [
         provinceIds: [
             'DN', '27', '29', '31', '32',
             '34', '36', '40'
+        ],
+        zipCodes: [
+            '52', '60', '56', '58', '54',
+            '49', '51', '48'
         ],
         size: 'small',
         style: {
@@ -605,6 +623,9 @@ export const REGION = [
         provinceIds: [
             '28', '30', '33', '72', '35'
         ],
+        zipCodes: [
+            '66', '67', '64', '62', '68'
+        ],
         style: {
             color: "#ff7800",
             weight: 3,
@@ -622,6 +643,9 @@ export const REGION = [
         geojson: 'dong_nam_bo',
         provinceIds: [
             'SG', '43', '57', '58', '39', '37'
+        ],
+        zipCodes: [
+            '77', '74', '70', '75', '72', '79'
         ],
         style: {
             color: "#ff7800",
@@ -642,6 +666,11 @@ export const REGION = [
         provinceIds: [
             '49', '44', '45', '55', '50', 'CT',
             '41', '59', '52', '73', '51', '47', '46'
+        ],
+        
+        zipCodes: [
+            '89', '95', '83', '96', '87', '93',
+            '91', '80', '94', '82', '84', '86', '92'
         ],
         style: {
             color: "#49cc90",

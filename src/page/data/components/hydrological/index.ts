@@ -7,6 +7,7 @@ import { PROVINCE } from '@/constant/province-constant';
 import { MonitoringServices } from '@/service/monitoring-service/monitoring.service';
 import { STATION_TYPE } from '@/constant/common-constant';
 import moment from 'moment';
+import { REGION } from '@/constant/forcast-station-constant';
 
 const LookupAction = namespace(storeModules.Lookup, Action);
 const LookupGetter = namespace(storeModules.Lookup, Getter);
@@ -116,6 +117,16 @@ export default class HydrologicalComponent extends Vue {
     }
 
     get StationsByProvince() {
+        if (this.region && !this.province) {
+            let zipCodes = REGION.find(x => x.placeId === this.region).zipCodes;
+            let returnValue: any = [];
+            zipCodes.forEach(element => {
+                const province = this.stations.filter(s => s.zipCode === Number(element));
+                returnValue.push(...province);
+            });
+            return returnValue;
+        }
+
         if (!isNaN(Number(this.province)) && this.stations) {
             if (this.type !== null) {
                 return this.stations.filter(s => s.zipCode === Number(this.province) && s.stationType === this.type);
@@ -124,7 +135,7 @@ export default class HydrologicalComponent extends Vue {
         }
         return [];
     }
-
+    
     get FormattedFromDate() {
         if (this.fromDate) {
             return moment(this.fromDate).format('DD/MM/YYYY');

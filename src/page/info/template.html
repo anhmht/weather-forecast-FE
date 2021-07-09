@@ -7,6 +7,7 @@
                     <li @click="scrollTo('info-page-container_section_4 padding-main')">Chuyên mục KT-VH-XH</li>
                     <li @click="scrollTo('info-page-container_section_1')">THỜI TIẾT 24H - Cảnh báo thiên tai</li>
                     <li @click="scrollTo('info-page-container_section_2 padding-main')">Thông tin khuyến cáo</li>
+                    <li @click="scrollTo('info-page-container_section_5 padding-main')">Thời tiết chuyên đề</li>
                 </ul>
 
             </div>
@@ -147,6 +148,17 @@
                             </v-carousel>
                         </div>
 
+            </div>
+        </div>
+
+        <div class="info-page-container_section_5 padding-main">
+            <div class="info-page-container-wrapper">
+                <div class="weather-type">
+                    <div class="weather-type-title" @click="viewAllWeatherTravel()">Thời tiết du lịch</div>
+                    <div class="weather-type-title" @click="viewAllWeatherAgriculture()">Thời tiết nông vụ</div>
+                    <div class="weather-type-title" @click="viewAllWeatherTraffic()">Thời tiết giao thông</div>
+                    <div class="weather-type-title" @click="viewAllWeatherDanger()">Thời tiết nguy hiểm</div>
+                </div>
             </div>
         </div>
     </base-container>

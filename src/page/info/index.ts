@@ -44,6 +44,14 @@ export default class InfoPageComponent extends Vue {
     warningCategoryName: string = "Cảnh báo thiên tai";
     otherCategoryId: string = "";
     otherCategoryName: string = "Kinh tế - Văn hóa - Xã hội";
+    weatherTravelCategoryId: string = "";
+    weatherTravelCategoryName: string = "Thời tiết du lịch";
+    weatherAgricultureCategoryId: string = "";
+    weatherAgricultureCategoryName: string = "Thời tiết nông vụ";
+    weatherTrafficCategoryId: string = "";
+    weatherTrafficCategoryName: string = "Thời tiết giao thông";
+    weatherDangerCategoryId: string = "";
+    weatherDangerCategoryName: string = "Thời tiết nguy hiểm";
     publishStatusId: string = "";
     publishStatusName: string = "Publish";
     warningPosts: any = [];
@@ -287,6 +295,26 @@ export default class InfoPageComponent extends Vue {
             params: { categoryId: this.warningCategoryId, statusId: this.publishStatusId } })
     }
 
+    viewAllWeatherTravel() {
+        this.$router.push({ name: ROUTE_NAME.WARNING ,
+            params: { categoryId: this.weatherTravelCategoryId, statusId: this.publishStatusId } })
+    }
+
+    viewAllWeatherAgriculture() {
+        this.$router.push({ name: ROUTE_NAME.WARNING ,
+            params: { categoryId: this.weatherAgricultureCategoryId, statusId: this.publishStatusId } })
+    }
+
+    viewAllWeatherTraffic() {
+        this.$router.push({ name: ROUTE_NAME.WARNING ,
+            params: { categoryId: this.weatherTrafficCategoryId, statusId: this.publishStatusId } })
+    }
+
+    viewAllWeatherDanger() {
+        this.$router.push({ name: ROUTE_NAME.WARNING ,
+            params: { categoryId: this.weatherDangerCategoryId, statusId: this.publishStatusId } })
+    }
+
     getNow() {
         this.timestamp = moment().format('DD/MM/YYYY HH:mm:ss');
     }
@@ -318,6 +346,18 @@ export default class InfoPageComponent extends Vue {
                 }
                 if (obj.name === this.otherCategoryName) {
                     this.otherCategoryId = obj.categoryId;
+                }
+                if (obj.name === this.weatherTravelCategoryName) {
+                    this.weatherTravelCategoryId = obj.categoryId;
+                }
+                if (obj.name === this.weatherAgricultureCategoryName) {
+                    this.weatherAgricultureCategoryId = obj.categoryId;
+                }
+                if (obj.name === this.weatherTrafficCategoryName) {
+                    this.weatherTrafficCategoryId = obj.categoryId;
+                }
+                if (obj.name === this.weatherDangerCategoryName) {
+                    this.weatherDangerCategoryId = obj.categoryId;
                 }
             }
         }).catch(error => {
