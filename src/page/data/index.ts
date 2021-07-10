@@ -95,6 +95,11 @@ export default class DataPageComponent extends Vue {
             min: 1,
             max: 3
         },
+        {
+            name: 'Xâm nhập mặn',
+            min: 1,
+            max: 3
+        },
     ]
 
     riversEstuaries = [

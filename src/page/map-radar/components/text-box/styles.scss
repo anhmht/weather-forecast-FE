@@ -1,0 +1,62 @@
+.video-text-box {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    &--containter {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        &_item {
+            position: absolute;
+            padding: 10px;
+            border-radius: 10px;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), rgba(121, 120, 120, 0.5);
+            color: #fff;
+            &.top {
+                top: 6vw;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            &.top-right {
+                top: 6vw;
+                right: 6vw
+            }
+            &.top-left {
+                top: 6vw;
+                left: 6vw
+            }
+
+            &.middle {
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+            &.middle-right {
+                top: 50%;
+                transform: translateY(-50%);
+                right: 9vw
+            }
+            &.middle-left {
+                top: 50%;
+                transform: translateY(-50%);
+                left: 9vw
+            }
+
+            &.bottom {
+                bottom: 4vw;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            &.bottom-right {
+                bottom: 4vw;
+                right: 9vw
+            }
+            &.bottom-left {
+                bottom: 4vw;
+                left: 9vw
+            }
+        }
+    }
+    
+}

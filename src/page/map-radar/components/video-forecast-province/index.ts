@@ -10,8 +10,35 @@ import moment from 'moment';
 import { Prop } from 'vue-property-decorator';
 
 @Component({
-    template: require("./template.html").default,
-    components: {}
+    // template: require("./template.html").default,
+    components: {},
+    render: function (createElement) {
+        if (!this.template) {
+            return createElement("span", "Loading...");
+        } else {
+            return this.template();
+        }
+    },
+    created() {
+        switch (this.templateType) {
+            case '3-3':
+                this.template = Vue.compile(require("./template_3-3.html").default).render;
+                break;
+            case '4-5':
+                this.template = Vue.compile(require("./template_4-5.html").default).render;
+                break;
+            case '4-4':
+                this.template = Vue.compile(require("./template_4-4.html").default).render;
+                break;
+            case '4-4-5':
+                this.template = Vue.compile(require("./template_4-4-5.html").default).render;
+                break;
+            case 'default':
+            default:
+                this.template = Vue.compile(require("./template.html").default).render;
+                break;
+        }
+    }
 })
 export default class VideoForecastComponent extends Vue {
     @Prop({required: true})
@@ -19,6 +46,9 @@ export default class VideoForecastComponent extends Vue {
 
     @Prop({ required: true })
     isProvince
+
+    @Prop({ type: String, default: 'default' })
+    templateType
 
     weatherService: WeatherServices = new WeatherServices();
     searchParam: IForecastSearchParam = new ForecastSearchParam();

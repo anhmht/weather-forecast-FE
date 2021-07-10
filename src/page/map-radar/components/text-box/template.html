@@ -1,0 +1,7 @@
+<div class="video-text-box">
+    <div class="video-text-box--containter">
+        <div v-for="(item,index) in renderData" :key="index" class="video-text-box--containter_item  animate__animated" :class="item.class" v-html="getContent(item.content)">
+        </div>
+    </div>
+    
+</div>

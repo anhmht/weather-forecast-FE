@@ -8,7 +8,8 @@
         </v-toolbar>
         <v-card-text>
             <v-form ref="contentForm" v-model="valid" lazy-validation>
-                <v-select v-model="data.action" @change="handleChangeAction" :items="actionList" label="Chọn hàng động" item-value="value" :rules="rules.actionRules"></v-select>
+                <v-select v-model="data.action" @change="handleChangeAction" :items="actionList" label="Chọn hàng động"
+                    item-value="value" :rules="rules.actionRules"></v-select>
                 <div v-if="data.action === 'customLocationControl'">
                     <v-radio-group v-model="data.method" row :rules="rules.methodRules">
                         <v-radio label="Khu Vực" value="handleClickRegion"></v-radio>
@@ -16,18 +17,59 @@
                     </v-radio-group>
                     <v-select v-if="data.method === 'handleClickRegion'" v-model="data.data" :items="regions"
                         label="Khu Vực" item-text="name" item-value="placeId" :rules="rules.regionRules"></v-select>
-                    <v-select v-if="data.method === 'handleClick'" v-model="data.data" :items="locations" label="Tỉnh Thành"
-                        item-text="name" item-value="placeId" :rules="rules.provinceRules"></v-select>
+                    <v-select v-if="data.method === 'handleClick'" v-model="data.data" :items="locations"
+                        label="Tỉnh Thành" item-text="name" item-value="placeId" :rules="rules.provinceRules">
+                    </v-select>
                     <v-select v-model="data.duration" :items="durations" label="Chọn thời lượng" item-value="value">
                     </v-select>
+                    <v-card v-if="data.data">
+                        <v-toolbar color="blue">
+                            <v-toolbar-title class="white--text" style="margin-top: 54px;">
+                                Text box
+                            </v-toolbar-title>
+                            <v-spacer></v-spacer>
+                            <template v-slot:extension>
+                                <v-btn fab color="white" bottom right absolute
+                                    @click="handleAddContent">
+                                    <v-icon>mdi-plus</v-icon>
+                                </v-btn>
+                            </template>
+                        </v-toolbar>
+                        <v-list two-line subheader>
+                            <v-subheader inset>
+                                Nội dung Text Box
+                            </v-subheader>
+                            <v-list-item link v-for="(item,index) in coTextBox()" :key="generateKey(index)">
+                                <v-list-item-avatar>
+                                    <v-icon>
+                                        mdi-clipboard-text
+                                    </v-icon>
+                                </v-list-item-avatar>
+                                <v-list-item-content>
+                                    <v-list-item-title>{{item.content}}</v-list-item-title>
+                                    <v-list-item-subtitle>Thời gian: xuất hiện sau {{item.time}} - Vị trí xuất hiện: {{item.position}}
+                                    </v-list-item-subtitle>
+                                </v-list-item-content>
+                                <v-list-item-action>
+                                    <v-btn icon color="primary" @click="handleEditTextBox(item, index)">
+                                        <v-icon>mdi-pencil</v-icon>
+                                    </v-btn>
+                                    <v-btn icon color="red" @click="handleDeleteTextBox(index)">
+                                        <v-icon>mdi-delete</v-icon>
+                                    </v-btn>
+                                </v-list-item-action>
+                            </v-list-item>
+                        </v-list>
+                        <add-update-textbox :edit-data="textbox" :visible.sync="visibleAddTexbox" :location="data.data" :is-province="data.method === 'handleClick'" @save="handleSaveTextBox"/>
+                    </v-card>
                 </div>
                 <div v-if="data.action === 'customMapStatusControl'">
-                    <v-select v-model="data.data" :items="mapTypes" label="Loại bản đồ"
-                        item-text="name" item-value="type" :rules="rules.mapTypeRules"></v-select>
+                    <v-select v-model="data.data" :items="mapTypes" label="Loại bản đồ" item-text="name"
+                        item-value="type" :rules="rules.mapTypeRules"></v-select>
                 </div>
                 <div v-if="data.action === 'customZoomControl'">
-                    <v-select v-model="data.data" :items="zooms" label="Độ thu phóng bản đồ"
-                        item-text="name" item-value="type" :rules="rules.zoomRules"></v-select>
+                    <v-select v-model="data.data" :items="zooms" label="Độ thu phóng bản đồ" item-text="name"
+                        item-value="type" :rules="rules.zoomRules"></v-select>
                 </div>
                 <div v-if="data.action === 'customWaitControl'">
                     <v-select v-model="data.duration" :items="durations" label="Chọn thời lượng" item-value="value">
@@ -42,4 +84,5 @@
             </v-btn>
         </v-card-actions>
     </v-card>
+    <confirm-dialog v-model="visibleConfirm" :title="confirmTitle" :action="confirmAction" @confirm="handleConfirm" />
 </v-dialog>

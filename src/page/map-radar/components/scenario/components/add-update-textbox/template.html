@@ -1,0 +1,24 @@
+<v-dialog v-model="visbileTextBox" max-width="500px">
+    <v-card class="textbox-popup">
+        <v-card-text>
+            <div class="textbox-popup-content">
+                <div class="textbox-popup-content--field">
+                    <v-textarea v-model="data.content" label="Nội dung text box"></v-textarea>
+                </div>
+                <div class="textbox-popup-content--suggest">
+                    Nội dung gợi ý: 
+                    <p v-html="forecastData.desc"></p>
+                </div>
+            </div>
+            <v-select :items="durations" v-model="data.time" label="Xuất hiện sau" item-value="value"></v-select>
+            <v-select :items="durations" v-model="data.duration" label="Thời lượng" item-value="value"></v-select>
+            <v-select :items="positions" v-model="data.position" label="Vị trí xuất hiện" item-value="value"></v-select>
+        </v-card-text>
+        <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn text color="primary" @click="handleSaveTextBox">
+                Lưu text box
+            </v-btn>
+        </v-card-actions>
+    </v-card>
+</v-dialog>

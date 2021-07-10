@@ -6,7 +6,10 @@ import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 
 @Component({
     template: require("./template.html").default,
-    components: {}
+    components: {
+        "add-update-textbox": () => import("../add-update-textbox/AddUpdateTextBox.vue"),
+        "confirm-dialog": () => import("../../../../../../components/confirm-action/ConfirmActionComponent.vue")
+    }
 })
 export default class AddUpdateContentComponent extends Vue {
     @Prop({required: true})
@@ -34,8 +37,27 @@ export default class AddUpdateContentComponent extends Vue {
         action: null,
         method: null,
         data: null,
-        duration: 0
+        duration: 0,
+        textBox: []
     }
+
+    rules = {
+        actionRules: [v => !!v || 'Vui lòng chọn hàng động'],
+        methodRules: [v => !!v || 'Vui lòng chọn khu vực hoặc tỉnh thành'],
+        regionRules: [v => !!v || 'Vui lòng chọn khu vực'],
+        provinceRules: [v => !!v || 'Vui lòng chọn tỉnh thành'],
+        mapTypeRules: [v => !!v || 'Vui lòng chọn loại bản đồ'],
+        zoomRules: [v => !!v || 'Vui lòng chọn độ thu phóng bản đồ'],
+        elevationRules: [v => !!v || 'Vui lòng chọn độ cao bản đồ'],
+    }
+
+    visibleAddTexbox: boolean = false;
+    textbox: any = null;
+    selectTextBoxIndex: number = 0;
+
+    confirmTitle: string = null;
+    confirmAction: string = null;
+    visibleConfirm: boolean = false;
 
     get regions() {
         const regions = DataHelper.deepClone(REGION) as any;
@@ -72,14 +94,50 @@ export default class AddUpdateContentComponent extends Vue {
         return ELEVATION;
     }
 
-    rules = {
-        actionRules: [v => !!v || 'Vui lòng chọn hàng động'],
-        methodRules: [v => !!v || 'Vui lòng chọn khu vực hoặc tỉnh thành'],
-        regionRules: [v => !!v || 'Vui lòng chọn khu vực'],
-        provinceRules: [v => !!v || 'Vui lòng chọn tỉnh thành'],
-        mapTypeRules: [v => !!v || 'Vui lòng chọn loại bản đồ'],
-        zoomRules: [v => !!v || 'Vui lòng chọn độ thu phóng bản đồ'],
-        elevationRules: [v => !!v || 'Vui lòng chọn độ cao bản đồ'],
+    coTextBox() {
+        if (this.data.textBox) {
+            return this.data.textBox
+        }
+        return [];
+    }
+
+    handleSaveTextBox(data) {
+        if (this.textbox) {
+            this.data.textBox[this.selectTextBoxIndex] = DataHelper.deepClone(data);
+        } else {
+            if (this.data.textBox) {
+                this.data.textBox.push(DataHelper.deepClone(data));
+            } else {
+                this.data.textBox = [];
+                Vue.set(this.data, 'textBox', [DataHelper.deepClone(data)])
+            }
+        }
+    }
+
+    generateKey(index) {
+        return `${new Date().getTime()}-${index}`
+    }
+
+    handleEditTextBox(content, index) {
+        this.selectTextBoxIndex = index;
+        this.textbox = content;
+        this.visibleAddTexbox = true;
+    }
+    handleDeleteTextBox(index) {
+        this.selectTextBoxIndex = index;
+        this.confirmTitle = 'Bạn có muốn xoá text box này ?'
+        this.confirmAction = 'deleteContent';
+        this.visibleConfirm = true;
+    }
+
+    handleConfirm() {
+        this.data.textBox.splice(this.selectTextBoxIndex, 1);
+        this.visibleConfirm = false;
+    }
+
+    handleAddContent() {
+        this.textbox = null;
+        this.visibleAddTexbox = true;
     }
 
     handleSave() {
@@ -106,7 +164,8 @@ export default class AddUpdateContentComponent extends Vue {
             action: value,
             method: null,
             data: null,
-            duration: 0
+            duration: 0,
+            textBox: []
         }
 
         //@ts-ignore
@@ -120,7 +179,8 @@ export default class AddUpdateContentComponent extends Vue {
                 action: null,
                 method: null,
                 data: null,
-                duration: 0
+                duration: 0,
+                textBox: []
             }
         }
     }

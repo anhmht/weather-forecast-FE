@@ -520,7 +520,8 @@ export const REGION = [
         paddingBottomRight: [1000, 0],
         paddingTopLeft: [0, 0],
         titlePosition: 'right animate__fadeInRightBig',
-        animation: 'animate__fadeInTopRight'
+        animation: 'animate__fadeInTopRight',
+        layout: '3-3'
     },
     {
         name: "Đông Bắc Bộ",
@@ -544,7 +545,8 @@ export const REGION = [
         paddingBottomRight: [0, 0],
         paddingTopLeft: [1000, 0],
         titlePosition: 'left animate__fadeInLeftBig',
-        animation: 'animate__zoomIn'
+        animation: 'animate__zoomIn',
+        layout: '4-5'
     },
     {
         name: "Đồng Bằng Sông Hồng",
@@ -567,7 +569,8 @@ export const REGION = [
         ],
         paddingBottomRight: [0, 0],
         paddingTopLeft: [0, 0],
-        animation: 'animate__fadeInDown'
+        animation: 'animate__fadeInDown',
+        layout: 'default'
     },
     {
         name: "Bắc Trung Bộ",
@@ -588,7 +591,8 @@ export const REGION = [
         ],
         paddingBottomRight: [1000, 0],
         paddingTopLeft: [0, 0],
-        animation: 'animate__fadeInTopRight'
+        animation: 'animate__fadeInTopRight',
+        layout: '3-3'
     },
     {
         name: "Nam Trung Bộ",
@@ -614,6 +618,7 @@ export const REGION = [
         paddingTopLeft: [500, 20],
         animation: 'animate__zoomInRight',
         titlePosition: 'left animate__fadeInLeftBig',
+        layout: '4-4'
     },
     {
         name: "Tây Nguyên",
@@ -634,7 +639,8 @@ export const REGION = [
         },
         paddingBottomRight: [0, 0],
         paddingTopLeft: [0, 0],
-        animation: 'animate__rotateInDownLeft'
+        animation: 'animate__rotateInDownLeft',
+        layout: 'default'
     },
     {
         name: "Đông Nam Bộ",
@@ -656,7 +662,8 @@ export const REGION = [
         paddingBottomRight: [0, 0],
         paddingTopLeft: [1000, 0],
         titlePosition: 'left animate__fadeInLeftBig',
-        animation: 'animate__fadeInUpBig'
+        animation: 'animate__fadeInUpBig',
+        layout: '3-3'
     },
     {
         name: "Tây Nam Bộ",
@@ -681,7 +688,8 @@ export const REGION = [
         paddingBottomRight: [0, 0],
         paddingTopLeft: [0, 0],
         titlePosition: 'right animate__fadeInRightBig',
-        animation: 'animate__fadeInBottomLeft'
+        animation: 'animate__fadeInBottomLeft',
+        layout: '4-4-5'
     },
 ]
 
@@ -707,6 +715,7 @@ export const MAP_PROVINCE = [
         paddingBottomRight: [0, 0],
         paddingTopLeft: [1000, 0],
         titlePosition: 'left animate__fadeInLeftBig',
+        layout: '4-4'
     },
     {
         id: 'DIEMVN_17',

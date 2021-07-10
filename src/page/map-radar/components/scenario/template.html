@@ -58,6 +58,8 @@
                                             <span v-if="item.action === 'customLocationControl'">-
                                                 {{getMethod(item)}}</span>
                                             <span>- <b>{{getData(item)}}</b></span>
+                                            <span v-if="item.textBox && item.textBox.length > 0">-
+                                                (*) Text Box</span>
                                         </v-col>
                                         <v-col cols="1">
                                             <v-btn color="primary" fab small dark @click="handleEditContent(item, index)">

@@ -9,17 +9,20 @@
         Khu vực: {{mapTitle ? mapTitle.name : ''}}
     </div>
 
-    <div v-if="isShowVideoForecase" class="video-forecast animate__animated" :class="mapTitle.position">
+    <!-- <div v-if="isShowVideoForecase" class="video-forecast animate__animated" :class="mapTitle.position">
         <video-forecast v-if="boxData" :location="boxData" :is-province="isProvinceData"/>
-    </div>
+    </div> -->
 
     <div v-if="isShowVideoForecaseProvince" class="video-forecast-province animate__animated" :class="videoForecastAnimation">
-        <video-forecast-province v-if="provinceData" :location="provinceData" :is-province="isProvinceData" />
+        <video-forecast-province v-if="provinceData" :location="provinceData" :is-province="isProvinceData" :template-type="videoLayout"/>
     </div>
+
+    <text-box ref="textBox"/>
 
     <div v-if="!isRecording && forecastData && isWebView" class="result">
         <tool-bar v-if="forecastData" :station-info="forecastData" @changeTime="updateDistrictPopUp" />
     </div>
+
     <div v-if="!isWebView" class="record-btn">
         <v-btn v-show="isShowButtonStop" @click="handleClearTimeout" color="primary" depressed elevation="7" rounded
             x-large>

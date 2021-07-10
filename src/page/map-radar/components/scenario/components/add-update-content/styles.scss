@@ -1,3 +1,10 @@
 .v-card__text {
     padding-top: 20px !important;
 }
+
+.v-toolbar--extended {
+    height: 64px !important;
+    .v-toolbar__content {
+        height: 0 !important;
+    }
+}

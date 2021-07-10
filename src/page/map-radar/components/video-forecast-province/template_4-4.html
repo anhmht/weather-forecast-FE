@@ -1,0 +1,44 @@
+<div class="video-province layout-4-4">
+    <div class="layout-4-4__row-1">
+        <div v-if="index < 4" class="video-province-item animate__animated animate__fadeInLeft" v-for="(item,index) in forecastData"
+            :key="index">
+            <div class="video-province-item--title">
+                {{item.name}}
+            </div>
+            <div class="video-province-item--body">
+                <div class="video-province-item--image">
+                    <img :src="item.icon" width="80" />
+                </div>
+                <div class="video-province-item--content">
+                    <div class="video-province-item--content_temp">
+                        {{item.temp}} ℃
+                    </div>
+                    <div class="video-province-item--content_des">
+                        {{item.desc}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layout-4-4__row-2">
+        <div v-if="index >= 4" class="video-province-item animate__animated animate__fadeInLeft" v-for="(item,index) in forecastData"
+            :key="index">
+            <div class="video-province-item--title">
+                {{item.name}}
+            </div>
+            <div class="video-province-item--body">
+                <div class="video-province-item--image">
+                    <img :src="item.icon" width="80" />
+                </div>
+                <div class="video-province-item--content">
+                    <div class="video-province-item--content_temp">
+                        {{item.temp}} ℃
+                    </div>
+                    <div class="video-province-item--content_des">
+                        {{item.desc}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
