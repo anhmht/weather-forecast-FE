@@ -8,6 +8,10 @@ import { MonitoringServices } from '@/service/monitoring-service/monitoring.serv
 import { STATION_TYPE } from '@/constant/common-constant';
 import moment from 'moment';
 import { REGION } from '@/constant/forcast-station-constant';
+import { PostServices } from '@/service/post-service/post.service';
+import { CategoryServices } from '@/service/category-service/category.service';
+import IStatus from '@/model/status/status.model';
+import { ROUTE_NAME } from '@/constant/route-constant';
 
 const LookupAction = namespace(storeModules.Lookup, Action);
 const LookupGetter = namespace(storeModules.Lookup, Getter);
@@ -23,6 +27,7 @@ export default class HydrologicalComponent extends Vue {
     type: string = null;
     @LookupAction getLookupData: (type: string) => Promise<void>
     @LookupGetter(lookupTypesStore.Get.KTTV) stations
+    @LookupGetter(lookupTypesStore.Get.STATUS) status: IStatus[]
     monitoringService: MonitoringServices = new MonitoringServices();
     precipitationArray: any = [];
     meteorologicalArray: any = [];
@@ -36,6 +41,13 @@ export default class HydrologicalComponent extends Vue {
     totalPages: number = 0;
     page: number = 1;
     currentStationId: any = null;
+    hydrologicalPosts: any = [];
+    postService: PostServices = new PostServices();
+    categoryService: CategoryServices = new CategoryServices();
+    hydrologicalCategoryId: string = "";
+    hydrologicalCategoryName: string = "Thủy văn";
+    publishStatusId: string = "";
+    publishStatusName: string = "Publish";
 
     activeStation: number = 0;
 
@@ -150,6 +162,21 @@ export default class HydrologicalComponent extends Vue {
         return;
     }
 
+    get Hydrological() {
+        const result = []
+        let i, j, chunk = 4;
+        for (i = 0, j = this.hydrologicalPosts.length; i < j; i += chunk) {
+            const temparray = this.hydrologicalPosts.slice(i, i + chunk);
+            result.push(temparray);
+        }
+
+        return result;
+    }
+
+    handleViewDetail(postId) {
+        this.$router.push({ name: ROUTE_NAME.INFO_DETAIL , params: { id: postId } })
+    }
+
     formatDate(item) {
         return moment(item).format('DD/MM/YYYY');
     }
@@ -220,5 +247,26 @@ export default class HydrologicalComponent extends Vue {
 
     async mounted() {
         this.getLookupData(lookupTypesStore.Set.KTTV);
+
+        await this.getLookupData(lookupTypesStore.Set.STATUS);
+        this.publishStatusId = this.status.find(x => x.name === this.publishStatusName).statusId;
+
+        // Get category
+        await this.categoryService.getAllCategories().then((res: any) => {
+            for (let obj of res) {
+                if (obj.name === this.hydrologicalCategoryName) {
+                    this.hydrologicalCategoryId = obj.categoryId;
+                }
+            }
+        }).catch(error => {
+            console.log(error);
+        })
+
+        // Get hydrological posts
+        this.postService.getPostByCategoryAndStatus(this.hydrologicalCategoryId, this.publishStatusId).then((res: any) => {
+            this.hydrologicalPosts = res;
+        }).catch(error => {
+            console.log(error);
+        })
     }
 }

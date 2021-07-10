@@ -66,6 +66,12 @@ export default class MenuCMSComponent extends Vue {
             query: { categoryId: '031d1a69-900e-4b63-5d20-08d942e67599' }
         },
         {
+            title: 'Thủy văn',
+            icon: 'mdi-weather-hail',
+            name: ROUTE_NAME.LIST_POST,
+            query: { categoryId: '92fb2fa2-12e1-4871-2ecf-08d94344e5e0' }
+        },
+        {
             title: 'Dữ liệu KTTV',
             icon: 'mdi-home-account',
             name: ROUTE_NAME.LIST_DATA,

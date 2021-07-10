@@ -255,10 +255,131 @@
 
 }
 
-
 .data-page-container-hydrological {
     background: #fff;
     border-radius: 10px;
     width: 100%;
     color: #000;
+}
+
+.recommend-info {
+    &-item {
+        cursor: pointer;
+        img {
+            width: 100%;
+            height: 260px;
+            object-fit: cover;
+            object-position: center;
+        }
+        h4 {
+            text-align: center;
+        }
+        &:hover {
+            color: $primary-color;
+        }
+    }
+    .content-new-s {
+        padding: 10px;
+        background: #fff;
+        h4 {
+            height: 43px;
+            line-height: 21px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+    }
+    img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        object-position: center;
+        display: block;
+    }
+
+    position: relative;
+    &-prev-btn {
+        position: absolute;
+        top: 115px;
+        left: -50px;
+    }
+    &-next-btn {
+        position: absolute;
+        top: 115px;
+        right: -50px;
+    }
+    .VueCarousel-wrapper {
+        .VueCarousel-slide {
+            padding: 10px;
+
+            position: relative;
+            // @media all and (min-width: 320px) and (max-width: 1200px) {
+            //     display: none;
+            // }
+
+            position: relative;
+            @media all and (min-width: 320px) and (max-width: 1200px) {
+                display: none;
+            }
+            &-prev-btn {
+                position: absolute;
+                top: 115px;
+                left: -50px;
+            }
+            &-next-btn {
+                position: absolute;
+                top: 115px;
+                right: -50px;
+            }
+            .VueCarousel-wrapper {
+                .VueCarousel-slide {
+                    padding: 10px;
+                }
+            }
+
+            position: relative;
+            // @media all and (min-width: 320px) and (max-width: 1200px) {
+            //     display: none;
+            // }
+        }
+        &_section_3 {
+            background-color: #ddd;
+        }
+        .box-overview {
+            background: #fff;
+            padding: 10px;
+            .content-overview {
+                padding: 20px;
+                overflow: auto;
+                height: 578px;
+                /* width */
+                &::-webkit-scrollbar {
+                    width: 5px;
+                    position: absolute;
+                }
+                /* Track */
+                &::-webkit-scrollbar-track {
+                    display: none;
+                }
+                /* Handle */
+                &::-webkit-scrollbar-thumb {
+                    background: #666;
+                    border-radius: 10px;
+                }
+                /* Handle on hover */
+                &::-webkit-scrollbar-thumb:hover {
+                    background: #666;
+                }
+            }
+        }
+    }
+    .bg-cover {
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+    .flex-row {
+        display: flex;
+    }
 }

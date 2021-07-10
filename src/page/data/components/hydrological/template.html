@@ -183,4 +183,25 @@
             </div>
         </div>
     </div>
+    <div class="data-page-container_content">
+        <div class="data-page-container-wrapper">
+            <h1>Dự báo thủy văn</h1>
+            <div class="recommend-info">
+                <v-carousel height="290" v-model="slideIndex" hide-delimiters show-arrows-on-hover>
+                    <v-carousel-item v-for="(items,index) in Hydrological" :key="index">
+                        <v-row no-gutters>
+                            <v-col class="recommend-info-item" style="padding: 5px" v-for="(item, i) in items" :key="i" cols="12" md="3">
+                                <div class="box-recommend">
+                                    <img :src="item.imageUrl? item.imageUrl : null" @click="handleViewDetail(item.eventId)">
+                                    <div class="content-new-s">
+                                        <h4>{{item.title}}</h4>
+                                    </div>
+                                </div>
+                            </v-col>
+                        </v-row>
+                    </v-carousel-item>
+                </v-carousel>
+            </div>
+        </div>
+    </div>
 </div>
