@@ -48,6 +48,7 @@ export default class HydrologicalComponent extends Vue {
     hydrologicalCategoryName: string = "Thủy văn";
     publishStatusId: string = "";
     publishStatusName: string = "Publish";
+    slideIndex: number = 0;
 
     activeStation: number = 0;
 
