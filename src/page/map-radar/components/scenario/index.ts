@@ -246,6 +246,7 @@ export default class ScenarioComponent extends Vue {
         this.scenarioService.deleteScenario(id).then(res => {
             this.$toast.success('Xóa kịch bản thành công');
             this.visibleConfirm = false;
+            this.fetchNewData();
         }).catch(err => {
             this.$toast.error('Có lỗi khi xóa kịch bản');
             console.log(err);
@@ -309,12 +310,17 @@ export default class ScenarioComponent extends Vue {
 
     initData() {
         if (this.scenarios.length > 0) return;
+        this.fetchNewData();
+    }
+
+    fetchNewData() {
+        this.isLoading = true;
+        this.scenarios = [];
         this.scenarios.push({
             scenarioName: 'Kịch bản mặc định',
             scenarioId: '0',
             scenarioContent: DEFAULT_SCENARIOS
         });
-        this.isLoading = true;
         this.scenarioService.getAllScenarios(this.searchParams).then(async (res: any) => {
             const sceneArray = res.scenarios.map(x => {
                 return {
@@ -324,6 +330,7 @@ export default class ScenarioComponent extends Vue {
             })
             this.scenarios = this.scenarios.concat(sceneArray);
             this.searchParams.total = res.totalPages
+            this.isLoading = false
         }).catch(err => {
             console.log(err);
             this.isLoading = false

@@ -33,9 +33,7 @@ const COLOR = [
     },
     methods: {
         pushTextBox(element) {
-            setTimeout(() => {
-                (this.$refs.textBox as any).handleRenderTextBox(element);
-            }, 500);
+            (this.$refs.textBox as any).handleRenderTextBox(element);
         }
     }
 })
@@ -211,6 +209,7 @@ export default class HomePageComponent extends Vue {
     }
 
     getFakeImage(placeId) {
+        if (!this.isRecording) return;
         switch (placeId) {
             case 'TBB':
             case 'NTB':
@@ -300,7 +299,7 @@ export default class HomePageComponent extends Vue {
         let destination = layer ? layer.getBounds() : null;
         if (mapData.placeId === 'TBB' || mapData.placeId === 'NTB' || mapData.placeId === 'DNB' || mapData.placeId === 'TQ') {
             this.isDisplayFake = true;
-            await sleep(2000, this.clearTimeout);
+            await sleep(1000, this.clearTimeout);
             method = 'flyToBounds';
             duration = 0.5;
         };
@@ -331,12 +330,14 @@ export default class HomePageComponent extends Vue {
             this.isShowMapTitle = true;
             return;
         }
-        if (this.centerLatlng) {
-            const distance = map.distance(this.centerLatlng, layer.getBounds().getCenter())
-            if (distance >= 800000) {
-                duration = 8
-            }
-        }
+        // if (this.centerLatlng) {
+        //     const distance = map.distance(this.centerLatlng, layer.getBounds().getCenter())
+        //     if (distance >= 800000) {
+        //         duration = 8
+        //     }
+        // }
+        console.log(duration);
+        
         map[method](destination, {
             maxZoom: mapData.zoom ? mapData.zoom : null,
             animate: true,
@@ -345,11 +346,11 @@ export default class HomePageComponent extends Vue {
             paddingBottomRight: mapData.paddingBottomRight ? mapData.paddingBottomRight : [0, 0],
             paddingTopLeft: mapData.paddingTopLeft ? mapData.paddingTopLeft : [0, 0]
         });
-        await sleep(1000, this.clearTimeout);
+        await sleep(2000, this.clearTimeout);
         this.isDisplayFake = false;
         this.getMapTtile(mapData)
         this.isShowMapTitle = true;
-        await sleep(5 * 1000, this.clearTimeout);
+        await sleep(3000, this.clearTimeout);
 
         const provinces = JSON.parse(mapData.province);
         this.addProvinceLayer(provinces);
@@ -359,15 +360,12 @@ export default class HomePageComponent extends Vue {
             this.centerLatlng = map.getBounds().getCenter();
             console.log(this.centerLatlng);
 
-            map.flyTo(this.centerLatlng, mapData.zoom, { animate: true, duration: 1.5, easeLinearity: 0.2 })
+            map.flyTo(this.centerLatlng, mapData.zoom, { animate: true, duration: 0.5, easeLinearity: 0.2 })
             this.layerGroup.addLayer(this.regionGroup);
         }
         await sleep(500, this.clearTimeout);
         this.addPopUPLayer(mapData.provinceIds, mapData.placeId === 'NTB', mapData.animation);
-
-        await sleep(1000, this.clearTimeout);
         // document.querySelector('.particles-layer').classList.remove('hide-animation')
-        await sleep(500, this.clearTimeout);;
         // this.boxData = DataHelper.deepClone(mapData.placeId);
         this.isShowVideoForecase = true;
         this.displayEachProvince(mapData);
@@ -386,14 +384,14 @@ export default class HomePageComponent extends Vue {
         const provinceLayer = L.geoJSON(geojson, { style: mapData.style })
         this.layerProvice.addLayer(provinceLayer);
         let duration = 2;
-        if (this.centerLatlng) {
-            const distance = map.distance(this.centerLatlng, provinceLayer.getBounds().getCenter())
-            if (distance >= 800000) {
-                map.flyTo(this.centerLatlng, 10, { animate: true, duration: 5, easeLinearity: 2 })
-                await sleep(5000, this.clearTimeout);
-                duration = 8
-            }
-        }
+        // if (this.centerLatlng) {
+        //     const distance = map.distance(this.centerLatlng, provinceLayer.getBounds().getCenter())
+        //     if (distance >= 800000) {
+        //         map.flyTo(this.centerLatlng, 10, { animate: true, duration: 5, easeLinearity: 2 })
+        //         await sleep(5000, this.clearTimeout);
+        //         duration = 8
+        //     }
+        // }
         map.flyToBounds(provinceLayer.getBounds(), {
             maxZoom: mapData.zoom,
             animate: true, duration,
@@ -551,11 +549,11 @@ export default class HomePageComponent extends Vue {
         this.isRecording = true;
         if (isRecord) {
             await this.capture();
-            await sleep(2000, this.clearTimeout);
+            await sleep(1000, this.clearTimeout);
         } else {
             this.isShowButtonStop = true;
             this.isReview = true;
-            await sleep(2000, this.clearTimeout);
+            await sleep(1000, this.clearTimeout);
         }
         for (const iterator of previewData) {
             if (this.isStop) {
