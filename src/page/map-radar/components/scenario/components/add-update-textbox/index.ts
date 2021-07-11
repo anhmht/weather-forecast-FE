@@ -34,7 +34,10 @@ export default class AddUpdateTextBoxComponent extends Vue {
         time: 0,
         position: 'top-right',
         duration: 3000,
-        id: null
+        id: null,
+        customPosition: false,
+        left: 0,
+        top: 0,
     }
 
     get visbileTextBox() {
@@ -260,7 +263,10 @@ export default class AddUpdateTextBoxComponent extends Vue {
                 time: 0,
                 position: 'top-right',
                 duration: 3000,
-                id: DataHelper.create_UUID()
+                id: DataHelper.create_UUID(),
+                customPosition: false,
+                left: 0,
+                top: 0,
             }
         }
     }

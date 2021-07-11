@@ -33,7 +33,9 @@ const COLOR = [
     },
     methods: {
         pushTextBox(element) {
-            (this.$refs.textBox as any).handleRenderTextBox(element);
+            setTimeout(() => {
+                (this.$refs.textBox as any).handleRenderTextBox(element);
+            }, 500);
         }
     }
 })
@@ -256,13 +258,11 @@ export default class HomePageComponent extends Vue {
     }
 
     async displayEachProvince(mapData, isProvince = false) {
-        await sleep(3000, this.clearTimeout);
+        await sleep(7000, this.clearTimeout);
         // this.mapTitle = {
         //     ...this.mapTitle,
         //     position: this.mapTitle.position === 'right animate__fadeInRightBig' ? 'right animate__fadeOutRightBig' : 'left animate__fadeOutLeftBig'
         // };
-
-        await sleep(500, this.clearTimeout);
         // this.isShowMapTitle = false;
         this.isShowVideoForecase = false;
         this.boxData = null;
@@ -548,6 +548,7 @@ export default class HomePageComponent extends Vue {
         } else {
             this.isShowButtonStop = true;
             this.isReview = true;
+            await sleep(2000, this.clearTimeout);
         }
         for (const iterator of previewData) {
             if (this.isStop) {

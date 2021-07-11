@@ -14,10 +14,11 @@ export default class TextBoxComponent extends Vue {
         await sleep(textbox.time, clear);
         this.renderData.push({
             ...textbox,
-            class: `animate__zoomIn ${textbox.position}`
+            class: `animate__zoomIn ${textbox.position}`,
+            style: textbox.customPosition ? `left: ${textbox.left}px; top: ${textbox.top}px; transform: none; right: unset; bottom: unset`: ``
         });
         await sleep(textbox.duration, clear);
-        
+
         const index = this.renderData.findIndex(x => x.id === textbox.id);
         if (index > -1) {
             this.renderData[index].class = `animate__zoomOut ${textbox.position}`

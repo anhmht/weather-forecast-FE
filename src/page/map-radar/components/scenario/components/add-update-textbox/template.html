@@ -12,7 +12,16 @@
             </div>
             <v-select :items="durations" v-model="data.time" label="Xuất hiện sau" item-value="value"></v-select>
             <v-select :items="durations" v-model="data.duration" label="Thời lượng" item-value="value"></v-select>
-            <v-select :items="positions" v-model="data.position" label="Vị trí xuất hiện" item-value="value"></v-select>
+            <div class="textbox-popup-content">
+                <div class="textbox-popup-content--field">
+                    <v-select :disabled="data.customPosition" :items="positions" v-model="data.position" label="Vị trí xuất hiện" item-value="value"></v-select>
+                </div>
+                <div class="textbox-popup-content--suggest">
+                    <v-switch v-model="data.customPosition" label="Hiệu chỉnh nâng cao"></v-switch>
+                    <v-text-field :disabled="!data.customPosition" label="Left" v-model="data.left"></v-text-field>
+                    <v-text-field :disabled="!data.customPosition" label="Top" v-model="data.top"></v-text-field>
+                </div>
+            </div>
         </v-card-text>
         <v-card-actions>
             <v-spacer></v-spacer>
