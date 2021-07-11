@@ -311,6 +311,13 @@ export default class HomePageComponent extends Vue {
                 lng: 106.70196533203125
             }
         };
+        if (mapData.placeId === 'BTB') {
+            method = 'panTo';
+            destination = {
+                lat: 18.33465916334796,
+                lng: 108.77838134765626
+            }
+        };
         if (mapData.placeId === 'TQ') {
             const VietNamGeojson = await getGeoJson('nation', 'viet_nam');
             //@ts-ignore
