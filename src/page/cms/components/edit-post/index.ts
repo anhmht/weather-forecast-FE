@@ -1,7 +1,6 @@
 import { Action } from 'vuex-class';
 import { Getter } from 'vuex-class';
 import { namespace } from 'vuex-class';
-import { ROUTE_NAME } from '@/constant/route-constant';
 import { Post } from '../../../../model/post/post.model';
 import Vue from "vue";
 import Component from "vue-class-component";
@@ -34,6 +33,10 @@ export default class EditPostComponent extends Vue {
     valid: boolean = true;
     uploadedDocs: any = NO_IMAGE;
     progress: number = 0;
+    weatherNewsCategoryName: string = "Bản tin thời tiết";
+    weatherMapCategoryName: string = "Bản đồ thời tiết";
+    isShownButton: boolean = false;
+    isShownTextBox: boolean = false;
 
     postModel: IPost = new Post({});
     originalContent: string = '<div />';
@@ -49,10 +52,18 @@ export default class EditPostComponent extends Vue {
     @LookupGetter(lookupTypesStore.Get.STATUS) status: IStatus[]
     @LookupAction getLookupData: (type: string) => void;
 
+    get YouTubeVideoId() {
+        if (this.isShownTextBox && this.postModel.content) {
+            let id = this.postModel.content.split(/(?:=|&)+/)[1];
+            return 'https://www.youtube.com/embed/' + id;
+        }
+
+        return;
+    }
+
     editPost() {
         //@ts-ignore
         this.valid = this.$refs.postForm.validate();
-        const vm = this as any;
         if (this.valid) {
             this.isLoading = true;
             this.postModel.datePosted = new Date().toISOString();
@@ -62,7 +73,7 @@ export default class EditPostComponent extends Vue {
             this.postService.editPost(this.postModel).then(res => {
                 this.$toast.success('Chỉnh sửa tin thành công');
                 this.isLoading = false;
-                vm.$router.push({ name: ROUTE_NAME.LIST_POST});
+                this.$router.go(-1);
             }).catch(err => {
                 this.$toast.error('Có lỗi khi chỉnh sửa tin');
                 console.log(err);
@@ -169,6 +180,15 @@ export default class EditPostComponent extends Vue {
                 this.postModel = new Post(res);
                 this.originalContent = res.content;
                 this.uploadedDocs = this.postModel.imageUrl;
+
+                let categoryName = res.category.name;
+                if (categoryName === this.weatherNewsCategoryName || categoryName === this.weatherMapCategoryName) {
+                    this.isShownButton = true;
+    
+                    if (categoryName === this.weatherMapCategoryName) {
+                        this.isShownTextBox = true;
+                    }
+                }
             }).catch(err => {
                 console.log(err);
                 this.isLoading = false;

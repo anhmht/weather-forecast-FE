@@ -24,6 +24,18 @@ export default class MenuCMSComponent extends Vue {
             param: { role: 'user' }
         },
         {
+            title: 'Bản tin thời tiết',
+            icon: 'mdi-home',
+            name: ROUTE_NAME.LIST_POST,
+            query: { categoryId: '8a7ca394-930a-4381-2ed0-08d94344e5e0' }
+        },
+        {
+            title: 'Bản đồ thời tiết',
+            icon: 'mdi-home',
+            name: ROUTE_NAME.LIST_POST,
+            query: { categoryId: '944dc7ef-f9a6-4f5c-2ed1-08d94344e5e0' }
+        },
+        {
             title: 'Cảnh báo thiên tai',
             icon: 'mdi-home',
             name: ROUTE_NAME.LIST_POST,

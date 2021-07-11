@@ -30,7 +30,12 @@ export default class CreatePostComponent extends Vue {
     categoryService: CategoryServices = new CategoryServices();
     valid: boolean = true;
     uploadedDocs: any = NO_IMAGE;
-    progress: number = 0
+    progress: number = 0;
+    weatherNewsCategoryName: string = "Bản tin thời tiết";
+    weatherMapCategoryName: string = "Bản đồ thời tiết";
+    isShownButton: boolean = false;
+    isShownTextBox: boolean = false;
+    publishStatus: string = "Publish";
 
     postModel: IPost = new Post({});
 
@@ -45,6 +50,14 @@ export default class CreatePostComponent extends Vue {
     @LookupGetter(lookupTypesStore.Get.STATUS) status: IStatus[]
     @LookupAction getLookupData: (type: string) => void;
 
+    get YouTubeVideoId() {
+        if (this.isShownTextBox && this.postModel.content) {
+            let id = this.postModel.content.split(/(?:=|&)+/)[1];
+            return 'https://www.youtube.com/embed/' + id;
+        }
+
+        return;
+    }
 
     handleBack() {
         this.$router.go(-1);
@@ -58,6 +71,11 @@ export default class CreatePostComponent extends Vue {
             this.postModel.datePosted = new Date().toISOString();
             this.isLoading = true;
             this.postModel.imageNormalUrls = DataHelper.getImageArray(this.postModel.content);
+
+            if (this.postModel.statusId === null) {
+                this.postModel.statusId = this.status.find(x => x.name === this.publishStatus).statusId;
+            }
+
             this.postService.createPost(this.postModel).then(res => {
                 this.$toast.success('Tạo tin mới thành công');
                 vm.$router.go(-1);
@@ -148,12 +166,30 @@ export default class CreatePostComponent extends Vue {
         return formData;
     }
 
-    mounted() {
+    async mounted() {
         this.isLoading = true;
         // Get category
-        this.categoryService.getAllCategories().then((res: any) => {
+        await this.categoryService.getAllCategories().then((res: any) => {
             this.category = res;
             this.postModel.categoryId = this.$route.query.categoryId as any;
+            this.isLoading = false;
+        }).catch(error => {
+            console.log(error);
+            this.isLoading = false;
+        });
+
+        this.isLoading = true;
+        this.categoryService.getCategoryById(this.postModel.categoryId).then((res: any) => {
+            let categoryName = res.name;
+
+            if (categoryName === this.weatherNewsCategoryName || categoryName === this.weatherMapCategoryName) {
+                this.isShownButton = true;
+
+                if (categoryName === this.weatherMapCategoryName) {
+                    this.isShownTextBox = true;
+                }
+            }
+
             this.isLoading = false;
         }).catch(error => {
             console.log(error);

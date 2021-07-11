@@ -30,6 +30,12 @@ export class PostServices extends GenericServices {
             }).catch(error => Promise.reject(error))
     }
 
+    getPostWithContent(categoryId: string, statusId: string): Promise<ApiResponse> {
+        return this.executeSelecting({categoryId, statusId}, Uri.postWithContent).then((response: ApiResponse) => {
+            return Promise.resolve(response)
+            }).catch(error => Promise.reject(error))
+    }
+
     createPost(postInfo: IPost): Promise<ApiResponse> {
         return this.executeSelectingPost(postInfo, Uri.post).then((response: ApiResponse) => {
             return Promise.resolve(response)

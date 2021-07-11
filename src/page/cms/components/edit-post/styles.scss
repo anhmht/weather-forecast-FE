@@ -25,6 +25,11 @@
         .ck-content { height: calc(100vh - 450px); }
     }
 
+    &_action {
+        margin-top: 20px;
+        float: right;
+    }
+
     &_setting {
         background-color: #fff;
         padding: 20px;

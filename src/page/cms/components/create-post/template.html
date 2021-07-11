@@ -12,13 +12,25 @@
             <div class="base-cms-right--body_title">
                 <div>Tiêu đề</div>
                 <v-text-field solo :rules="rules.title" v-model="postModel.title"></v-text-field>
-                <div class="base-cms-right--body_editor">
+                <div v-if="!isShownTextBox" class="base-cms-right--body_editor">
                     <div>Nội dung</div>
                     <custom-ckeditor ref="ckEditor" :rules="rules.title" v-model="postModel.content"/>
                 </div>
+                <div v-if="isShownTextBox" class="base-cms-right--body_editor">
+                    <div>Link YouTube</div>
+                    <v-text-field solo :rules="rules.title" v-model="postModel.content"></v-text-field>
+                    <iframe v-if="YouTubeVideoId" width="560" height="315" :src="YouTubeVideoId"
+                        title="YouTube video player" frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <div v-if="isShownButton" class="base-cms-right--body_action">
+                    <v-btn depressed color="primary" @click="createPost()">Lưu tin</v-btn>
+                </div>
             </div>
 
-            <div class="base-cms-right--body_setting">
+            <div v-if="!isShownButton" class="base-cms-right--body_setting">
                 <div class="base-cms-right--body_setting--upload">
                     <div style="position: relative;">
                         <div>Hình ảnh</div>

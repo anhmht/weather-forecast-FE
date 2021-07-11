@@ -5,9 +5,10 @@
                 <ul>
                     <li @click="scrollTo('info-page-container_section_3 padding-main')">Tổng quan</li>
                     <li @click="scrollTo('info-page-container_section_4 padding-main')">Chuyên mục KT-VH-XH</li>
-                    <li @click="scrollTo('info-page-container_section_1')">THỜI TIẾT 24H - Cảnh báo thiên tai</li>
+                    <li @click="scrollTo('info-page-container_section_1')">Thời tiết 24h - Bản tin thời tiết - Bản đồ thời tiết</li>
                     <li @click="scrollTo('info-page-container_section_2 padding-main')">Thông tin khuyến cáo</li>
                     <li @click="scrollTo('info-page-container_section_5 padding-main')">Thời tiết chuyên đề</li>
+                    <li @click="scrollTo('info-page-container_section_6 padding-main')">Cảnh báo thiên tai</li>
                 </ul>
 
             </div>
@@ -16,7 +17,7 @@
         <div class="info-page-container_section_1">
             <div class="info-page-container-wrapper">
                 <v-row justify="center">
-                    <v-col cols="12" md="3">
+                    <v-col cols="12" md="4">
                         <!-- <h1>Thông tin thời tiết</h1> -->
                         <div class="info-current-forecast">
                             <div class="info-current-forecast-header">
@@ -34,31 +35,62 @@
                             </div>
                         </div>
                     </v-col>
-                    <v-col cols="12" md="9">
-                        <!-- <h1>Cảnh báo thiên tai</h1> -->
-                        <div class="warning-info">
-                            <div class="title-warning">Cảnh báo thiên tai
-                                    <div class="warning-info-readmore" @click="viewAllWarning()">
-                                        Xem tất cả <v-icon> mdi-chevron-right</v-icon>
-                                    </div>
-
+                    <v-col cols="12" md="4">
+                        <div class="info-current-forecast">
+                            <div class="info-current-forecast-header">
+                                <div class="info-current-forecast-header-title">BẢN TIN THỜI TIẾT</div>
+                                NGÀY {{currentDate}}
                             </div>
-                            <div class="warning-info-wrapper">
-                                <div @click="handleViewDetail(firstWarningPost.eventId)" class="warning-info-left">
-                                    <div class="img-news" :style="{ backgroundImage: 'url(' + firstWarningPost.imageUrl + ')' }"></div>
-                                    <h4>{{firstWarningPost.title}}</h4>
-                                </div>
-                                <div class="warning-info-right">
-                                    <div v-for="(item,index) in warningPosts" v-if="index >= 1 && index <= 2" :key="index" @click="handleViewDetail(item.eventId)" class="warning-info-right--item">
-                                        <img width="150" :src="item.imageUrl" />
+                            <div class="info-current-forecast-body">
+                                <div justify="center" v-html="weatherNewsPosts.content" class="info-current-forecast-body-news"></div>
+                            </div>
+                        </div>
+                    </v-col>
+                    <v-col cols="12" md="4">
+                        <div class="info-current-forecast">
+                            <div class="info-current-forecast-header">
+                                <div class="info-current-forecast-header-title">BẢN ĐỒ THỜI TIẾT</div>
+                                NGÀY {{currentDate}}
+                            </div>
+                            <div class="info-current-forecast-body">
+                                <div justify="center" class="info-current-forecast-body-youtube">
+                                    <iframe width="310" height="180" :src="YouTubeVideoId"
+                                        title="YouTube video player" frameborder="0" 
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen>
+                                    </iframe>
+                                    <div class="info-current-forecast-body-youtube-more">Xem thêm</div>
+                                    <div v-for="(item,index) in weatherMapPosts" v-if="index >= 1 && index <= 3" :key="index"
+                                        class="info-current-forecast-body-youtube-item" @click="goToYoutube(item.content)">
                                         <h4>{{item.title}}</h4>
                                     </div>
                                 </div>
                             </div>
-                            
                         </div>
                     </v-col>
                 </v-row>
+            </div>
+        </div>
+
+        <div class="info-page-container_section_6 padding-main">
+            <div class="info-page-container-wrapper">
+                <h1>Cảnh báo thiên tai
+                    <div class="warning-info-readmore" @click="viewAllWarning()">
+                        Xem tất cả <v-icon> mdi-chevron-right</v-icon>
+                    </div>
+                </h1>
+                <div class="warning-info-wrapper">
+                    <div @click="handleViewDetail(firstWarningPost.eventId)" class="warning-info-left">
+                        <div class="img-news" :style="{ backgroundImage: 'url(' + firstWarningPost.imageUrl + ')' }"></div>
+                        <h4>{{firstWarningPost.title}}</h4>
+                    </div>
+                    <div class="warning-info-right">
+                        <div v-for="(item,index) in warningPosts" v-if="index >= 1 && index <= 2" :key="index" @click="handleViewDetail(item.eventId)" class="warning-info-right--item">
+                            <img width="150" :src="item.imageUrl" />
+                            <h4>{{item.title}}</h4>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 

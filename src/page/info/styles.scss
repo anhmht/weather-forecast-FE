@@ -51,6 +51,9 @@
             border-top-right-radius: 10px;
             font-size: 18px;
             color: #fff;
+            &-title {
+                font-size: 35px;
+            }
         }
         &-body {
             padding: 30px;
@@ -70,6 +73,43 @@
                 font-size: 14px;
                 margin-bottom: 0;
                 min-height: 127px;
+            }
+            &-news {
+                overflow-y: scroll;
+                height: 452px;
+                /* width */
+                &::-webkit-scrollbar {
+                    width: 5px;
+                    position: absolute;
+                }
+                /* Track */
+                &::-webkit-scrollbar-track {
+                    display: none;
+                }
+                /* Handle */
+                &::-webkit-scrollbar-thumb {
+                    background: #ddd;
+                    border-radius: 10px;
+                }
+                /* Handle on hover */
+                &::-webkit-scrollbar-thumb:hover {
+                    background: #fff;
+                }
+            }
+            &-youtube {
+                height: 452px;
+
+                &-more {
+                    margin-top: 20px;
+                    color: #2196f3;
+                }
+
+                &-item {
+                    margin-top: 20px;
+                    h4 {
+                        cursor: pointer;
+                    }
+                }
             }
         }
     }

@@ -37,7 +37,12 @@ export default class InfoPageComponent extends Vue {
     currentPosition: any = null;
     navigateTo: number = 0;
     timestamp: any = null;
+    currentDate: any = null;
     temparatureData = null;
+    weatherNewsCategoryId: string = "";
+    weatherNewsCategoryName: string = "Bản tin thời tiết";
+    weatherMapCategoryId: string = "";
+    weatherMapCategoryName: string = "Bản đồ thời tiết";
     recommendCategoryId: string = "";
     recommendCategoryName: string = "Thông tin khuyến cáo";
     warningCategoryId: string = "";
@@ -57,10 +62,15 @@ export default class InfoPageComponent extends Vue {
     warningPosts: any = [];
     recommendPosts: any = [];
     otherPosts: any = [];
+    weatherNewsPosts: any = [];
+    firstWeatherMapPost: any = [];
+    weatherMapPosts: any = [];
     slideIndex:number = 0;
     region: any = null;
     allRegions: any = [];
     searchParam: IForecastSearchParam = new ForecastSearchParam();
+    firstWeatherNewsPostId: string = null;
+    firstWeatherMapPostId: string = null;
 
     @LookupGetter(lookupTypesStore.Get.STATUS) status: IStatus[]
     @LookupAction getLookupData: (type: string) => Promise<void>;
@@ -91,6 +101,15 @@ export default class InfoPageComponent extends Vue {
         console.log(result);
 
         return result;
+    }
+
+    get YouTubeVideoId() {
+        if (this.firstWeatherMapPost) {
+            let id = this.firstWeatherMapPost.content.split(/(?:=|&)+/)[1];
+            return 'https://www.youtube.com/embed/' + id;
+        }
+
+        return;
     }
 
     getStationIdByRegion(regionCode) {
@@ -317,6 +336,7 @@ export default class InfoPageComponent extends Vue {
 
     getNow() {
         this.timestamp = moment().format('DD/MM/YYYY HH:mm:ss');
+        this.currentDate = moment().format('DD/MM/YYYY');
     }
 
     scrollTo(className) {
@@ -329,6 +349,10 @@ export default class InfoPageComponent extends Vue {
             top: offsetPosition,
             behavior: "smooth"
         });
+    }
+
+    goToYoutube(linkId) {
+        window.open(linkId);
     }
 
     async mounted() {
@@ -359,6 +383,12 @@ export default class InfoPageComponent extends Vue {
                 if (obj.name === this.weatherDangerCategoryName) {
                     this.weatherDangerCategoryId = obj.categoryId;
                 }
+                if (obj.name === this.weatherNewsCategoryName) {
+                    this.weatherNewsCategoryId = obj.categoryId;
+                }
+                if (obj.name === this.weatherMapCategoryName) {
+                    this.weatherMapCategoryId = obj.categoryId;
+                }
             }
         }).catch(error => {
             console.log(error);
@@ -384,6 +414,22 @@ export default class InfoPageComponent extends Vue {
         }).catch(error => {
             console.log(error);
         })
+
+        // Get weather news posts
+        await this.postService.getPostWithContent(this.weatherNewsCategoryId, this.publishStatusId).then((res: any) => {
+            this.weatherNewsPosts = res[0];
+        }).catch(error => {
+            console.log(error);
+        })
+
+        // Get weather map posts
+        await this.postService.getPostWithContent(this.weatherMapCategoryId, this.publishStatusId).then((res: any) => {
+            this.firstWeatherMapPost = res[0];
+            this.weatherMapPosts = res; 
+        }).catch(error => {
+            console.log(error);
+        })
+        
         setInterval(this.getNow, 1000);
         this.currentPosition = await displayLocation() as any;
 
