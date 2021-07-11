@@ -11,10 +11,7 @@ import { sleep } from '@/utils/common-utils';
 import { Watch } from 'vue-property-decorator';
 import { IForecastSearchParam, ForecastSearchParam } from '@/model/forecast';
 import { WEATHER_TYPE } from '@/constant/forcast-station-constant';
-import vietnam_image from '/static/img/video/vietnam.png';
-import btb_image from '/static/img/video/BTB.png';
-import ntb_image from '/static/img/video/NTB.png';
-import vl_image from '/static/img/video/VL.png';
+import * as htmlToImage from 'html-to-image';
 
 const COLOR = [
     'red', 'green', 'blue', 'yellow', 'DeepPink', 'DeepSkyBlue', 'GreenYellow', 'Lime', 'Thistle', 'NavajoWhite',
@@ -86,9 +83,7 @@ export default class HomePageComponent extends Vue {
     centerLatlng: any = null
 
     isDisplayFake: boolean = false;
-    fakeImage: any = vietnam_image;
-    vietnam: any = vietnam_image;
-    btb: any = btb_image;
+    fakeImage: any = null;
 
     mapTitle: any = {};
     isShowMapTitle: boolean = false;
@@ -214,20 +209,14 @@ export default class HomePageComponent extends Vue {
     }
 
     getFakeImage(placeId) {
-
         switch (placeId) {
             case 'TBB':
-                this.fakeImage = vietnam_image;
-                break;
             case 'NTB':
-                this.fakeImage = btb_image;
-                break;
             case 'DNB':
-                this.fakeImage = ntb_image;
-                break;
             case 'TQ':
-                this.fakeImage = vl_image;
-                break;
+                return htmlToImage.toPng(document.querySelector("#windy")).then(dataUrl => {
+                    this.fakeImage = dataUrl;
+                });
             default:
                 break;
         }
@@ -294,8 +283,7 @@ export default class HomePageComponent extends Vue {
     async handleChangeRegion(mapData) {
         // document.querySelector('.particles-layer').classList.add('hide-animation')
         this.isProvinceData = false;
-        this.getFakeImage(mapData.placeId);
-        await sleep(500, this.clearTimeout);
+        await this.getFakeImage(mapData.placeId);
         this.menuClick = false;
         const { map } = this.windy;
 
@@ -312,7 +300,7 @@ export default class HomePageComponent extends Vue {
         let destination = layer ? layer.getBounds() : null;
         if (mapData.placeId === 'TBB' || mapData.placeId === 'NTB' || mapData.placeId === 'DNB' || mapData.placeId === 'TQ') {
             this.isDisplayFake = true;
-            await sleep(4000, this.clearTimeout);
+            await sleep(2000, this.clearTimeout);
             method = 'flyToBounds';
             duration = 0.5;
         };
@@ -328,7 +316,7 @@ export default class HomePageComponent extends Vue {
             //@ts-ignore
             const vnBorder = L.geoJSON(VietNamGeojson);
             map.fitBounds(vnBorder.getBounds(), { maxZoom: 12 });
-            await sleep(4000, this.clearTimeout);
+            await sleep(2000, this.clearTimeout);
             this.isDisplayFake = false;
             this.getMapTtile(mapData);
             this.boxData = DataHelper.deepClone(mapData.placeId);
@@ -350,11 +338,11 @@ export default class HomePageComponent extends Vue {
             paddingBottomRight: mapData.paddingBottomRight ? mapData.paddingBottomRight : [0, 0],
             paddingTopLeft: mapData.paddingTopLeft ? mapData.paddingTopLeft : [0, 0]
         });
+        await sleep(1000, this.clearTimeout);
         this.isDisplayFake = false;
         this.getMapTtile(mapData)
         this.isShowMapTitle = true;
-        duration = 6
-        await sleep(duration * 1000, this.clearTimeout);
+        await sleep(5 * 1000, this.clearTimeout);
 
         const provinces = JSON.parse(mapData.province);
         this.addProvinceLayer(provinces);

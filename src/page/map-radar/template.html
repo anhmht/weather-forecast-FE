@@ -1,5 +1,5 @@
 <div class="home-page-container">
-    <div id="test" style="width: 100%; height: 100vh;" viewBox="0 0 4000 2080">
+    <div  style="width: 100%; height: 100vh;" viewBox="0 0 4000 2080">
         <div :class="forecastData && isWebView ? 'resize' : ''" id="windy"></div>
     </div>
     <div v-if="isRecording" class="fake-transition" :class="!isDisplayFake ? 'hide' : ''">
@@ -17,7 +17,7 @@
         <video-forecast-province v-if="provinceData" :location="provinceData" :is-province="isProvinceData" :template-type="videoLayout"/>
     </div>
 
-    <text-box ref="textBox"/>
+    <text-box v-if="isRecording" ref="textBox"/>
 
     <div v-if="!isRecording && forecastData && isWebView" class="result">
         <tool-bar v-if="forecastData" :station-info="forecastData" @changeTime="updateDistrictPopUp" />
@@ -46,7 +46,7 @@
                 <map-type-picker :custom="customMapStatusControl" v-show="!isRecording" @change-map="handleChangeMap" />
                 <elevation-picker v-show="!isRecording" v-model="customLevelControl" @change="handleChangeLevel" />
             </div>
-            <div v-if="!isWebView" style="margin-left: 20px;">
+            <div v-if="!isWebView && !isRecording" style="margin-left: 20px;">
                 <tool-bar v-if="forecastData" :station-info="forecastData" @changeTime="updateDistrictPopUp" />
             </div>
         </div>
