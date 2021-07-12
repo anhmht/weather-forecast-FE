@@ -187,10 +187,44 @@
             <div class="info-page-container-wrapper">
                 <h1>Thời tiết chuyên đề</h1>
                 <div class="weather-type">
-                    <div class="weather-type-title" @click="viewAllWeatherTravel()">Thời tiết du lịch</div>
-                    <div class="weather-type-title" @click="viewAllWeatherAgriculture()">Thời tiết nông vụ</div>
-                    <div class="weather-type-title" @click="viewAllWeatherTraffic()">Thời tiết giao thông</div>
-                    <div class="weather-type-title" @click="viewAllWeatherDanger()">Thời tiết nguy hiểm</div>
+                    
+                    <v-row>
+                        <v-col cols="6" md="3">
+                            <div class="weather-type-box" @click="viewAllWeatherTravel()">
+                                <div class="img-news" style="background-image: url(https://weatherstoragevn.blob.core.windows.net/images/thumbnails/thoi-tiet-du-lich.jpg);">
+                                    <img src="https://weatherstoragevn.blob.core.windows.net/images/thumbnails/thoi-tiet-du-lich.jpg">
+                                </div>
+                                <h3>Thời tiết du lịch</h3>
+                            </div>
+                        </v-col>
+   
+                        <v-col cols="6" md="3">
+                            <div class="weather-type-box" @click="viewAllWeatherAgriculture()">
+                                <div class="img-news" style="background-image: url(https://weatherstoragevn.blob.core.windows.net/images/thumbnails/thoi-tiet-nong-vu.jpg);">
+                                    <img src="https://weatherstoragevn.blob.core.windows.net/images/thumbnails/thoi-tiet-nong-vu.jpg">
+                                </div>
+                                <h3>Thời tiết nông vụ</h3>
+                            </div>
+                        </v-col>
+               
+                        <v-col cols="6" md="3">
+                            <div class="weather-type-box" @click="viewAllWeatherTraffic()">
+                                <div class="img-news" style="background-image: url(https://weatherstoragevn.blob.core.windows.net/images/thumbnails/thoi-tiet-giao-thong.jpg);">
+                                    <img src="https://weatherstoragevn.blob.core.windows.net/images/thumbnails/thoi-tiet-giao-thong.jpg">
+                                </div>
+                                <h3>Thời tiết giao thông</h3>
+                            </div>
+                        </v-col>
+               
+                        <v-col cols="6" md="3">
+                            <div class="weather-type-box" @click="viewAllWeatherDanger()">
+                                <div class="img-news" style="background-image: url(https://weatherstoragevn.blob.core.windows.net/images/thumbnails/thoi-tiet-nguy-hiem.jpg);">
+                                    <img src="https://weatherstoragevn.blob.core.windows.net/images/thumbnails/thoi-tiet-nguy-hiem.jpg">
+                                </div>
+                                <h3>Thời tiết nguy hiểm</h3>
+                            </div>
+                        </v-col>
+                    </v-row>
                 </div>
             </div>
         </div>
