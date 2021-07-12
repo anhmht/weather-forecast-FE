@@ -94,6 +94,12 @@ export default class MenuCMSComponent extends Vue {
             name: ROUTE_NAME.LIST_ICON,
         },
         {
+            title: 'Các trạng thái thời tiết',
+            icon: 'mdi-weather-hail',
+            name: ROUTE_NAME.LIST_POST,
+            query: { categoryId: 'a54d6936-8789-42e4-6515-08d944a940ef' }
+        },
+        {
             title: 'Cộng đồng',
             icon: 'mdi-account-group',
             name: PATH.LIST_POST,

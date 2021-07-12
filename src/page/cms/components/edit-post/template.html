@@ -31,7 +31,7 @@
             </div>
 
             <div v-if="!isShownButton" class="base-cms-right--body_setting">
-                <div class="base-cms-right--body_setting--upload">
+                <div v-if="isShownUpload" class="base-cms-right--body_setting--upload">
                     <div style="position: relative;">
                         <div>Hình ảnh</div>
                         <img :src="uploadedDocs" />

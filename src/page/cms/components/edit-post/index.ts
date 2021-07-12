@@ -35,8 +35,10 @@ export default class EditPostComponent extends Vue {
     progress: number = 0;
     weatherNewsCategoryName: string = "Bản tin thời tiết";
     weatherMapCategoryName: string = "Bản đồ thời tiết";
+    weatherStatusCategoryName: string = "Các trạng thái thời tiết";
     isShownButton: boolean = false;
     isShownTextBox: boolean = false;
+    isShownUpload: boolean = true;
 
     postModel: IPost = new Post({});
     originalContent: string = '<div />';
@@ -188,6 +190,8 @@ export default class EditPostComponent extends Vue {
                     if (categoryName === this.weatherMapCategoryName) {
                         this.isShownTextBox = true;
                     }
+                } else if (categoryName === this.weatherStatusCategoryName) {
+                    this.isShownUpload = false;
                 }
             }).catch(err => {
                 console.log(err);
