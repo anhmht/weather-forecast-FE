@@ -22,14 +22,14 @@
                         <div class="info-current-forecast">
                             <div class="info-current-forecast-header">
                                 <v-select :items="allRegions" item-text="title" return-object
-                                    style="margin: 0px 20px;" hide-details dense v-model="region" dark 
+                                    style="margin: 0px 20px;" hide-details dense v-model="region" dark
                                     @change="handleChangeRegion">
                                 </v-select>
                                 <br/> {{timestamp}}
                             </div>
                             <div class="info-current-forecast-body">
-                                <div justify="center" class="info-current-forecast-body-icon">
-                                        <img :src="temparatureData.icon">
+                                <div v-if="temparatureData" justify="center" class="info-current-forecast-body-icon">
+                                        <img :src="temparatureData ? temparatureData.icon : null">
                                         <div class="info-current-forecast-body--info">{{temparatureData.desc}}</div>
                                 </div>
                             </div>
@@ -55,8 +55,8 @@
                             <div class="info-current-forecast-body">
                                 <div justify="center" class="info-current-forecast-body-youtube">
                                     <iframe width="310" height="180" :src="YouTubeVideoId"
-                                        title="YouTube video player" frameborder="0" 
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        title="YouTube video player" frameborder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                         allowfullscreen>
                                     </iframe>
                                     <div class="info-current-forecast-body-youtube-more">Xem thêm</div>

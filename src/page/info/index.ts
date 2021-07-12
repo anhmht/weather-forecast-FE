@@ -104,7 +104,7 @@ export default class InfoPageComponent extends Vue {
     }
 
     get YouTubeVideoId() {
-        if (this.firstWeatherMapPost) {
+        if (this.firstWeatherMapPost && this.firstWeatherMapPost.content) {
             let id = this.firstWeatherMapPost.content.split(/(?:=|&)+/)[1];
             return 'https://www.youtube.com/embed/' + id;
         }
@@ -425,11 +425,11 @@ export default class InfoPageComponent extends Vue {
         // Get weather map posts
         await this.postService.getPostWithContent(this.weatherMapCategoryId, this.publishStatusId).then((res: any) => {
             this.firstWeatherMapPost = res[0];
-            this.weatherMapPosts = res; 
+            this.weatherMapPosts = res;
         }).catch(error => {
             console.log(error);
         })
-        
+
         setInterval(this.getNow, 1000);
         this.currentPosition = await displayLocation() as any;
 
