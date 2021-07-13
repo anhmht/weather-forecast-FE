@@ -86,7 +86,6 @@ export default class InfoPageComponent extends Vue {
             const temparray = this.recommendPosts.slice(i, i + chunk);
             result.push(temparray);
         }
-        console.log(result);
 
         return result;
     }
@@ -98,7 +97,6 @@ export default class InfoPageComponent extends Vue {
             const temparray = this.otherPosts.slice(i, i + chunk);
             result.push(temparray);
         }
-        console.log(result);
 
         return result;
     }

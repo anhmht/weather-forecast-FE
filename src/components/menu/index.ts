@@ -60,7 +60,11 @@ export default class MenuComponent extends Vue {
     }
 
     handleUserProfile() {
-        this.$router.push(PATH.USER_PROFILE);
+        this.$router.push(PATH.USER_PROFILE).catch(err => {
+            if (err.name != "NavigationDuplicated") {
+                throw err;
+            }
+        });
     }
 
     handleClick(index) {
