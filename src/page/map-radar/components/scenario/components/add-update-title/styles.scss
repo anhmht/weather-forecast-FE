@@ -1,0 +1,12 @@
+.title-popup {
+    &-content {
+        display: flex;
+        &--field {
+            width: 50%;
+            margin-right: 10px;
+        }
+        &--suggest {
+            flex: 1;
+        }
+    }
+}

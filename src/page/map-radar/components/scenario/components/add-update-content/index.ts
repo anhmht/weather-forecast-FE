@@ -8,6 +8,7 @@ import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
     template: require("./template.html").default,
     components: {
         "add-update-textbox": () => import("../add-update-textbox/AddUpdateTextBox.vue"),
+        "add-update-title": () => import("../add-update-title/AddUpdateTitle.vue"),
         "confirm-dialog": () => import("../../../../../../components/confirm-action/ConfirmActionComponent.vue")
     }
 })
@@ -21,13 +22,39 @@ export default class AddUpdateContentComponent extends Vue {
     durations = [
         { text: '0 giây', value: 0 },
         { text: '1 giây', value: 1000 },
+        { text: '2 giây', value: 2000 },
         { text: '3 giây', value: 3000 },
+        { text: '4 giây', value: 4000 },
         { text: '5 giây', value: 5000 },
+        { text: '6 giây', value: 6000 },
+        { text: '7 giây', value: 7000 },
+        { text: '8 giây', value: 8000 },
+        { text: '9 giây', value: 9000 },
         { text: '10 giây', value: 10000 },
+        { text: '11 giây', value: 11000 },
+        { text: '12 giây', value: 12000 },
+        { text: '13 giây', value: 13000 },
+        { text: '14 giây', value: 14000 },
         { text: '15 giây', value: 15000 },
+        { text: '16 giây', value: 16000 },
+        { text: '17 giây', value: 17000 },
+        { text: '18 giây', value: 18000 },
+        { text: '19 giây', value: 19000 },
         { text: '20 giây', value: 20000 },
         { text: '25 giây', value: 25000 },
         { text: '30 giây', value: 30000 },
+    ]
+
+    positions = [
+        { text: 'top', value: 'top' },
+        { text: 'top-left', value: 'top-left' },
+        { text: 'top-right', value: 'top-right' },
+        { text: 'middle', value: 'middle' },
+        { text: 'middle-left', value: 'middle-left' },
+        { text: 'middle-right', value: 'middle-right' },
+        { text: 'bottom', value: 'bottom' },
+        { text: 'bottom-left', value: 'bottom-left' },
+        { text: 'bottom-right', value: 'bottom-right' },
     ]
 
     valid: boolean = true;
@@ -38,7 +65,8 @@ export default class AddUpdateContentComponent extends Vue {
         method: null,
         data: null,
         duration: 0,
-        textBox: []
+        textBox: [],
+        title: null
     }
 
     rules = {
@@ -58,6 +86,8 @@ export default class AddUpdateContentComponent extends Vue {
     confirmTitle: string = null;
     confirmAction: string = null;
     visibleConfirm: boolean = false;
+
+    visibleUpdateTitle:boolean = false;
 
     get regions() {
         const regions = DataHelper.deepClone(REGION) as any;
@@ -99,6 +129,54 @@ export default class AddUpdateContentComponent extends Vue {
             return this.data.textBox
         }
         return [];
+    }
+
+    coTitle() {
+        if (this.data.title) {
+            console.log(this.data.title, 2222);
+            return this.data.title
+        }
+        console.log(this.data.title, 1111);
+
+        this.data.title = {
+            isDisplayTitle: false,
+            content: null,
+            startTime: 0,
+            duration: 0,
+            position: 'top-right',
+            width: 400,
+            customPosition: false,
+            left: 0,
+            top: 0,
+        };
+        return this.data.title;
+    }
+
+    get coDisabledEditTitle() {
+        console.log(111);
+        return !this.coTitle().isDisplayTitle;
+    }
+
+    get isDisPlayTitle() {
+        if (this.data.title) {
+            return this.data.title.isDisplayTitle;
+        }
+        return null;
+    }
+    set isDisPlayTitle(val) {
+
+
+        if (this.data.title) {
+            this.coTitle().isDisplayTitle = val;
+        } else {
+            this.data.title = DataHelper.deepClone(this.coTitle());
+            this.coTitle().isDisplayTitle = val;
+        }
+    }
+
+    handleSaveTitle(data) {
+        Vue.set(this.data, 'title', DataHelper.deepClone(data))
+        this.$forceUpdate();
     }
 
     handleSaveTextBox(data) {
@@ -165,7 +243,8 @@ export default class AddUpdateContentComponent extends Vue {
             method: null,
             data: null,
             duration: 0,
-            textBox: []
+            textBox: [],
+            title: null
         }
 
         //@ts-ignore
@@ -180,7 +259,8 @@ export default class AddUpdateContentComponent extends Vue {
                 method: null,
                 data: null,
                 duration: 0,
-                textBox: []
+                textBox: [],
+                title: null
             }
         }
     }
