@@ -337,7 +337,7 @@ export default class HomePageComponent extends Vue {
         //     }
         // }
         console.log(duration);
-        
+
         map[method](destination, {
             maxZoom: mapData.zoom ? mapData.zoom : null,
             animate: true,
@@ -445,7 +445,7 @@ export default class HomePageComponent extends Vue {
         });
     }
 
-    async addPopUPLayer(ids, size = false, animation = 'animate__bounceInDown') {
+    async addPopUPLayer(ids, size = false, animation = 'animate__fadeInDown') {
         if (!ids) return;
         const vm = this as any;
         // @ts-ignore

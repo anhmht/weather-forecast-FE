@@ -567,7 +567,7 @@ export const REGION = [
             '27', '35', '30', '33', '36',
             '37', '34', '26', '1', '31'
         ],
-        paddingBottomRight: [0, 0],
+        paddingBottomRight: [800, 0],
         paddingTopLeft: [0, 0],
         animation: 'animate__fadeInDown',
         layout: 'default'
@@ -616,7 +616,7 @@ export const REGION = [
         },
         paddingBottomRight: [0, 0],
         paddingTopLeft: [500, 20],
-        animation: 'animate__zoomInRight',
+        animation: 'animate__fadeInRight',
         titlePosition: 'left animate__fadeInLeftBig',
         layout: '4-4'
     },
@@ -637,7 +637,7 @@ export const REGION = [
             opacity: 0.5,
             // fill: false
         },
-        paddingBottomRight: [0, 0],
+        paddingBottomRight: [700, 0],
         paddingTopLeft: [0, 0],
         animation: 'animate__rotateInDownLeft',
         layout: 'default'
@@ -674,7 +674,7 @@ export const REGION = [
             '49', '44', '45', '55', '50', 'CT',
             '41', '59', '52', '73', '51', '47', '46'
         ],
-        
+
         zipCodes: [
             '89', '95', '83', '96', '87', '93',
             '91', '80', '94', '82', '84', '86', '92'
@@ -686,7 +686,7 @@ export const REGION = [
             // fill: false
         },
         paddingBottomRight: [0, 0],
-        paddingTopLeft: [0, 0],
+        paddingTopLeft: [100, 0],
         titlePosition: 'right animate__fadeInRightBig',
         animation: 'animate__fadeInBottomLeft',
         layout: '4-4-5'
@@ -715,6 +715,7 @@ export const MAP_PROVINCE = [
         paddingBottomRight: [0, 0],
         paddingTopLeft: [1000, 0],
         titlePosition: 'left animate__fadeInLeftBig',
+        animation: 'animate__fadeInDown',
         layout: '4-4'
     },
     {
