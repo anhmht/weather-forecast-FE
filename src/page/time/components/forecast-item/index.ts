@@ -7,6 +7,7 @@ import moment from 'moment';
 import { REGION, STATION, WEATHER_TYPE, WIND_DIRECTION } from '@/constant/forcast-station-constant';
 import { DataHelper } from '@/utils/data-helper';
 import { ICON } from '@/constant/icon-constant';
+import { Watch } from 'vue-property-decorator';
 
 @Component({
     template: require("./template.html").default,
@@ -27,6 +28,9 @@ export default class ForecastItemComponent extends Vue {
 
     @Prop({type: String, default: null})
     currentPosition
+
+    weatherIcon: string = null;
+    weatherDesc: string = null;
 
     weatherService: WeatherServices = new WeatherServices();
     searchParam: IForecastSearchParam = new ForecastSearchParam();
@@ -160,7 +164,7 @@ export default class ForecastItemComponent extends Vue {
         })
     }
 
-    mounted() {
+    getData() {
         const currentHour = new Date().getHours();
         let iconDay = null;
         let iconNight = null;
@@ -193,16 +197,27 @@ export default class ForecastItemComponent extends Vue {
             windDir = WIND_DIRECTION[res.mostFreqWindDir].full;
 
             if (currentHour >= 6 && currentHour <= 18) {
-                this.icon = iconDayUrl;
+                this.weatherIcon = iconDayUrl;
             } else {
-                this.icon = iconNightUrl;
+                this.weatherIcon = iconNightUrl;
             }
-            this.desc = weatherDescDay + ". " + weatherDescNight
+            this.weatherDesc = weatherDescDay + ". " + weatherDescNight
                 + ". Hướng gió " + windDir + ", " + res.mostFreqWindRank + ".<br/>"
                 + "Nhiệt độ thấp nhất: " + res.tempRange.min + ".<br/>"
                 + "Nhiệt độ cao nhất: " + res.tempRange.max + ".<br/>";
         }).catch(err => {
             console.log(err);
         })
+    }
+
+    mounted() {
+        this.getData();
+    }
+
+    @Watch('icon')
+    handleChangeData(val, old) {
+        if(val !== old && val === null) {
+            this.getData();
+        }
     }
 }

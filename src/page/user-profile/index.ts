@@ -39,7 +39,11 @@ export default class UserProfileComponent extends Vue {
     handleClick(menu, index) {
         this.activeTab = index;
         if (menu.path) {
-            this.$router.push(menu.path);
+            this.$router.push(menu.path).catch(err => {
+                if (err.name != "NavigationDuplicated") {
+                    throw err;
+                }
+            });
         } else {
             removeLocalStorage('auth');
             EventBus.$emit(EVENT_BUS.LOGIN)
