@@ -3,13 +3,22 @@
         <div class="register-page-container-wrapper--title">Đăng kí</div>
         <v-form ref="registerForm" v-model="valid" lazy-validation>
             <div>
-                <v-text-field placeholder="Email" v-model="data.email" :rules="rules.email" />
+                <v-text-field placeholder="Tên tài khoản" v-model="userModel.userName" :rules="rules.userName" />
             </div>
             <div style="margin-top: 20px;">
-                <v-text-field type="password" placeholder="Mật khẩu" v-model="data.password" :rules="rules.password" />
+                <v-text-field placeholder="Họ" v-model="userModel.firstName" :rules="rules.firstName" />
             </div>
             <div style="margin-top: 20px;">
-                <v-text-field type="password" placeholder="Nhập lại mật khẩu" v-model="data.confirmPassword" :rules="rules.confirmPassword" />
+                <v-text-field placeholder="Tên" v-model="userModel.lastName" :rules="rules.lastName" />
+            </div>
+            <div style="margin-top: 20px;">
+                <v-text-field placeholder="Email" v-model="userModel.email" :rules="rules.email" />
+            </div>
+            <div style="margin-top: 20px;">
+                <v-text-field type="password" placeholder="Mật khẩu" v-model="userModel.password" :rules="rules.password" />
+            </div>
+            <div style="margin-top: 20px;">
+                <v-text-field type="password" placeholder="Nhập lại mật khẩu" v-model="confirmPassword" :rules="rules.confirmPassword" />
             </div>
         </v-form>
         <div class="register-page-container-wrapper--btn-register">
