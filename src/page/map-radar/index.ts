@@ -215,7 +215,7 @@ export default class HomePageComponent extends Vue {
             case 'NTB':
             case 'DNB':
             case 'TQ':
-                return htmlToImage.toPng(document.querySelector("#windy")).then(dataUrl => {
+                return htmlToImage.toJpeg(document.querySelector("#windy"), { quality: 0.5 }).then(dataUrl => {
                     this.fakeImage = dataUrl;
                 });
             default:
@@ -299,7 +299,7 @@ export default class HomePageComponent extends Vue {
         let destination = layer ? layer.getBounds() : null;
         if (mapData.placeId === 'TBB' || mapData.placeId === 'NTB' || mapData.placeId === 'DNB' || mapData.placeId === 'TQ') {
             this.isDisplayFake = true;
-            await sleep(1000, this.clearTimeout);
+            await sleep(500, this.clearTimeout);
             method = 'flyToBounds';
             duration = 0.5;
         };
@@ -346,7 +346,7 @@ export default class HomePageComponent extends Vue {
             paddingBottomRight: mapData.paddingBottomRight ? mapData.paddingBottomRight : [0, 0],
             paddingTopLeft: mapData.paddingTopLeft ? mapData.paddingTopLeft : [0, 0]
         });
-        await sleep(2000, this.clearTimeout);
+        await sleep(1000, this.clearTimeout);
         this.isDisplayFake = false;
         this.getMapTtile(mapData)
         this.isShowMapTitle = true;

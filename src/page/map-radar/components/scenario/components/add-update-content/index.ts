@@ -69,6 +69,18 @@ export default class AddUpdateContentComponent extends Vue {
         title: null
     }
 
+    title = {
+        isDisplayTitle: false,
+        content: null,
+        startTime: 0,
+        duration: 0,
+        position: 'top-right',
+        width: 400,
+        customPosition: false,
+        left: 0,
+        top: 0,
+    }
+
     rules = {
         actionRules: [v => !!v || 'Vui lòng chọn hàng động'],
         methodRules: [v => !!v || 'Vui lòng chọn khu vực hoặc tỉnh thành'],
@@ -131,52 +143,36 @@ export default class AddUpdateContentComponent extends Vue {
         return [];
     }
 
-    coTitle() {
-        if (this.data.title) {
-            console.log(this.data.title, 2222);
-            return this.data.title
+    get coTitle() {
+        if (!this.title) {
+            return {
+                isDisplayTitle: false,
+                content: null,
+                startTime: 0,
+                duration: 0,
+                position: 'top-right',
+                width: 400,
+                customPosition: false,
+                left: 0,
+                top: 0,
+            }
         }
-        console.log(this.data.title, 1111);
-
-        this.data.title = {
-            isDisplayTitle: false,
-            content: null,
-            startTime: 0,
-            duration: 0,
-            position: 'top-right',
-            width: 400,
-            customPosition: false,
-            left: 0,
-            top: 0,
-        };
-        return this.data.title;
+        return this.title
     }
 
     get coDisabledEditTitle() {
-        console.log(111);
-        return !this.coTitle().isDisplayTitle;
+        return !this.title.isDisplayTitle;
     }
 
     get isDisPlayTitle() {
-        if (this.data.title) {
-            return this.data.title.isDisplayTitle;
-        }
-        return null;
+        return this.title.isDisplayTitle;
     }
     set isDisPlayTitle(val) {
-
-
-        if (this.data.title) {
-            this.coTitle().isDisplayTitle = val;
-        } else {
-            this.data.title = DataHelper.deepClone(this.coTitle());
-            this.coTitle().isDisplayTitle = val;
-        }
+        this.title.isDisplayTitle = val;
     }
 
     handleSaveTitle(data) {
-        Vue.set(this.data, 'title', DataHelper.deepClone(data))
-        this.$forceUpdate();
+        this.title = DataHelper.deepClone(data);
     }
 
     handleSaveTextBox(data) {
@@ -232,6 +228,7 @@ export default class AddUpdateContentComponent extends Vue {
             if (this.data.action === 'customLevelControl') {
                 this.data.method = 'handleChangeLevel';
             }
+            Vue.set(this.data, 'title', DataHelper.deepClone(this.title))
             this.$emit('save', this.data);
             this.visibleAddItem = false
         }
@@ -244,7 +241,17 @@ export default class AddUpdateContentComponent extends Vue {
             data: null,
             duration: 0,
             textBox: [],
-            title: null
+            title: {
+                isDisplayTitle: false,
+                content: null,
+                startTime: 0,
+                duration: 0,
+                position: 'top-right',
+                width: 400,
+                customPosition: false,
+                left: 0,
+                top: 0,
+            }
         }
 
         //@ts-ignore
@@ -260,7 +267,22 @@ export default class AddUpdateContentComponent extends Vue {
                 data: null,
                 duration: 0,
                 textBox: [],
-                title: null
+                title: this.title
+            }
+            if(this.data.title) {
+                this.title = DataHelper.deepClone(this.data.title);
+            }
+        } else {
+            this.title = {
+                isDisplayTitle: false,
+                content: null,
+                startTime: 0,
+                duration: 0,
+                position: 'top-right',
+                width: 400,
+                customPosition: false,
+                left: 0,
+                top: 0,
             }
         }
     }

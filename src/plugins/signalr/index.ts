@@ -64,8 +64,7 @@ class SocketConnection implements ISocketConnection {
     }
 
     sendMessage(message) {
-        this.socket.invoke("SendMessage", 'b4c20c41-a974-46e0-bc99-29317685b28f', message);
-        // this.socket.invoke("SendMessage", this.remoteId, message);
+        this.socket.invoke("SendMessage", this.remoteId, message);
     }
 }
 
