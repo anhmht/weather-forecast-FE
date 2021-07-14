@@ -10,6 +10,9 @@ const IconPageComponent = () => import("../page/icon/IconPageComponent.vue");
 const SocialPageComponent = () => import("../page/social/SocialPageComponent.vue");
 const LoginPageComponent = () => import("../page/login/LoginPageComponent.vue");
 const PageNotFoundComponent = () => import("../page/not-found/PageNotFoundComponent.vue");
+const PageNotAuthorizedComponent = () => import("../page/not-authorized/PageNotAuthorizedComponent.vue");
+const ForgotPasswordPageComponent = () => import("../page/forgot-password/ForgotPasswordPageComponent.vue");
+const RegisterPageComponent = () => import("../page/register/RegisterPageComponent.vue");
 
 const UserProfileComponent = () => import("../page/user-profile/UserProfileComponent.vue");
 const UserInfoComponent = () => import("../page/user-profile/components/user-info/UserInfoComponent.vue");
@@ -84,6 +87,23 @@ const homeRoutes = [
         meta: {
             guest: true
         }
+    },
+    {
+        path: PATH.REGISTER,
+        name: ROUTE_NAME.REGISTER,
+        component: RegisterPageComponent,
+        props: {}
+    },
+    {
+        path: PATH.FORGOT_PASSWORD,
+        name: ROUTE_NAME.FORGOT_PASSWORD,
+        component: ForgotPasswordPageComponent,
+        props: {}
+    },
+    {
+        path: PATH.NOT_AUTHORIZED,
+        name: ROUTE_NAME.NOT_AUTHORIZED,
+        component: PageNotAuthorizedComponent
     },
 
     //#page not found

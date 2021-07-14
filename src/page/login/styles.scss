@@ -107,13 +107,22 @@
         transform: rotate(360deg);
     }
 }
-// .materialContainer {
-//     width: 100%;
-//     max-width: 460px;
-//     position: absolute;
-//     top: 50%;
-//     left: 50%;
-//     transform: translate(-50%, -50%);
-//     -webkit-transform: translate(-50%, -50%);
-//     -ms-transform: translate(-50%, -50%);
-// }
+
+.pass-forgot {
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    color: #2196f3;
+}
+
+.register {
+    display: flex;
+    justify-content: center;
+
+    &-link {
+        margin-left: 5px;
+        cursor: pointer;
+        color: #2196f3;
+    }
+    
+}

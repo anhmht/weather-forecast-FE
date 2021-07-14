@@ -1,0 +1,30 @@
+<div class="register-page-container">
+    <div class="register-page-container-wrapper">
+        <div class="register-page-container-wrapper--title">Đăng kí</div>
+        <v-form ref="registerForm" v-model="valid" lazy-validation>
+            <div>
+                <v-text-field placeholder="Email" v-model="data.email" :rules="rules.email" />
+            </div>
+            <div style="margin-top: 20px;">
+                <v-text-field type="password" placeholder="Mật khẩu" v-model="data.password" :rules="rules.password" />
+            </div>
+            <div style="margin-top: 20px;">
+                <v-text-field type="password" placeholder="Nhập lại mật khẩu" v-model="data.confirmPassword" :rules="rules.confirmPassword" />
+            </div>
+        </v-form>
+        <div class="register-page-container-wrapper--btn-register">
+            <v-btn @click="handleRegister()" :loading="isLoading" :disabled="isLoading">
+                Đăng kí
+                <template v-slot:loader>
+                    <span class="custom-loader">
+                        <v-icon light>mdi-cached</v-icon>
+                    </span>
+                </template>
+            </v-btn>
+        </div>
+        <div class="register-page-container-wrapper--link">
+            <div>Bạn đã có tài khoản?</div>
+            <div class="register-page-container-wrapper--link-action" @click="goToLogin()">Đăng nhập</div>
+        </div>
+    </div>
+</div>

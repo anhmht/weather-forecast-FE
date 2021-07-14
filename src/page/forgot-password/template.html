@@ -1,0 +1,21 @@
+<div class="forgot-password-page-container">
+    <div class="forgot-password-page-container-wrapper">
+        <div class="forgot-password-page-container-wrapper--title">Quên mật khẩu</div>
+        <v-form ref="forgotPasswordForm" v-model="valid" lazy-validation>
+            <div>Nhập email đăng kí trước đó chúng tôi sẽ gửi thông tin đổi mật khẩu</div>
+            <div style="margin-top: 20px;">
+                <v-text-field placeholder="Email" v-model="email" :rules="rules.email" />
+            </div>
+        </v-form>
+        <div class="forgot-password-page-container-wrapper--btn-email">
+            <v-btn @click="handleSendEmail()" :loading="isLoading" :disabled="isLoading">
+                Gửi
+                <template v-slot:loader>
+                    <span class="custom-loader">
+                        <v-icon light>mdi-cached</v-icon>
+                    </span>
+                </template>
+            </v-btn>
+        </div>
+    </div>
+</div>

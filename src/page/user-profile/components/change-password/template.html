@@ -1,3 +1,23 @@
-<div class="change-password">
-    Change Password
+<div class="change-password-page-container">
+    <div class="change-password-page-container-wrapper">
+        <div class="change-password-page-container-wrapper--title">Mật khẩu mới</div>
+        <v-form ref="changePasswordForm" v-model="valid" lazy-validation>
+            <div>
+                <v-text-field type="password" placeholder="Nhập mật khẩu" v-model="data.password" :rules="rules.password" />
+            </div>
+            <div style="margin-top: 20px;">
+                <v-text-field type="password" placeholder="Nhập lại mật khẩu" v-model="data.confirmPassword" :rules="rules.confirmPassword" />
+            </div>
+        </v-form>
+        <div class="change-password-page-container-wrapper--btn-change">
+            <v-btn @click="handleChangePassword()" :loading="isLoading" :disabled="isLoading">
+                Đổi mật khẩu
+                <template v-slot:loader>
+                    <span class="custom-loader">
+                        <v-icon light>mdi-cached</v-icon>
+                    </span>
+                </template>
+            </v-btn>
+        </div>
+    </div>
 </div>

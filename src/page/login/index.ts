@@ -5,6 +5,7 @@ import Component from "vue-class-component";
 import { PATH } from '@/constant/route-constant';
 import { setAxiosHeader, setLocalStorage } from '@/utils/appConfig';
 import EventBus from '@/utils/event-bus';
+import { ROUTE_NAME } from '@/constant/route-constant';
 
 @Component({
     template: require("./template.html").default,
@@ -51,4 +52,11 @@ export default class LoginPageComponent extends Vue {
         }
     }
 
+    goToForgotPassword() {
+        this.$router.push(ROUTE_NAME.FORGOT_PASSWORD);
+    }
+
+    goToRegister() {
+        this.$router.push(ROUTE_NAME.REGISTER);
+    }
 }

@@ -1,4 +1,4 @@
-.change-password-page-container {
+.register-page-container {
     background-image: url(/static/img/login-page/bg.png);
     background-position: center;
     background-size: cover;
@@ -13,7 +13,7 @@
         width: 90%;
         max-width: 460px;
         margin: auto;
-        &--btn-change {
+        &--btn-register {
             display: flex;
             justify-content: center;
             margin: 40px 0;
@@ -64,6 +64,15 @@
             background: rgba(255, 255, 255, 0.6);
             left: 5%;
             z-index: -1;
+        }
+        &--link {
+            display: flex;
+            justify-content: center;
+            &-action {
+                margin-left: 5px;
+                cursor: pointer;
+                color: #2196f3;
+            }
         }
     }
     .v-input {

@@ -19,6 +19,10 @@
                 </template>
             </v-btn>
         </div>
-        <a href="" class="pass-forgot">Quên mật khẩu?</a>
+        <div class="pass-forgot" @click="goToForgotPassword()">Quên mật khẩu?</div>
+        <div class="register">
+            <div>Bạn chưa có tài khoản?</div>
+            <div class="register-link" @click="goToRegister()">Đăng kí</div>
+        </div>
     </div>
 </div>
