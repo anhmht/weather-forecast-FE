@@ -1,0 +1,55 @@
+.video-map-title {
+    position: absolute;
+    color: #000;
+    font-size: 30px;
+    padding: 10px;
+    background: #fff;
+    border-radius: 10px;
+    font-weight: 600;
+    width: 475px;
+    text-align: center;
+
+    &.top {
+        top: 6vw;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    &.top-right {
+        top: 6vw;
+        right: 6vw;
+    }
+    &.top-left {
+        top: 6vw;
+        left: 6vw;
+    }
+
+    &.middle {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    &.middle-right {
+        top: 50%;
+        transform: translateY(-50%);
+        right: 9vw;
+    }
+    &.middle-left {
+        top: 50%;
+        transform: translateY(-50%);
+        left: 9vw;
+    }
+
+    &.bottom {
+        bottom: 4vw;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    &.bottom-right {
+        bottom: 4vw;
+        right: 9vw;
+    }
+    &.bottom-left {
+        bottom: 4vw;
+        left: 9vw;
+    }
+}

@@ -29,11 +29,15 @@ const COLOR = [
         "qr-code": () => import("./components/qr-code/QRCodeComponent.vue"),
         "video-forecast": () => import("./components/video-forecast/VideoForecastComponent.vue"),
         "video-forecast-province": () => import("./components/video-forecast-province/VideoForecastProvinceComponent.vue"),
-        "text-box": () => import("./components/text-box/TextBoxComponent.vue")
+        "text-box": () => import("./components/text-box/TextBoxComponent.vue"),
+        "video-map-title": () => import("./components/video-map-title/VideoMapTitleComponent.vue")
     },
     methods: {
         pushTextBox(element) {
             (this.$refs.textBox as any).handleRenderTextBox(element);
+        },
+        displayMapTitle(element) {
+            (this.$refs.mapTitle as any).renderMapTitle(element);
         }
     }
 })
@@ -215,8 +219,11 @@ export default class HomePageComponent extends Vue {
             case 'NTB':
             case 'DNB':
             case 'TQ':
-                return htmlToImage.toJpeg(document.querySelector("#windy"), { quality: 0.5 }).then(dataUrl => {
+                var t0 = performance.now()
+                return htmlToImage.toJpeg(document.querySelector("#windy"), { quality: 0.25 }).then(dataUrl => {
                     this.fakeImage = dataUrl;
+                    var t1 = performance.now()
+                    console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
                 });
             default:
                 break;
@@ -277,6 +284,12 @@ export default class HomePageComponent extends Vue {
             //@ts-ignore
             this.pushTextBox(element);
         });
+    }
+
+    handleMapTitle(title) {
+        if (!title) return;
+        //@ts-ignore
+        this.displayMapTitle(title);
     }
 
     async handleChangeRegion(mapData) {
@@ -562,6 +575,7 @@ export default class HomePageComponent extends Vue {
             }
             this[iterator.action] = iterator;
             this.handleTextBox(iterator.textBox);
+            this.handleMapTitle(iterator.title);
             if (this.isStop) {
                 this.isStop = false;
                 break;
