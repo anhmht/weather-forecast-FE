@@ -1,5 +1,28 @@
 .cms-menu {
     padding: 0 15px;
+    min-height: 450px;
+    max-height: 450px;
+    overflow: auto;
+
+    /* width */
+    &::-webkit-scrollbar {
+        width: 5px;
+        position: absolute;
+    }
+    /* Track */
+    &::-webkit-scrollbar-track {
+        display: none;
+    }
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+        background: #fff;
+        border-radius: 10px;
+    }
+    /* Handle on hover */
+    &::-webkit-scrollbar-thumb:hover {
+        background: #fff;
+    }
+
     &--item {
         padding: 10px;
         color: #fff;

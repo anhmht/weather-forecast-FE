@@ -3,6 +3,7 @@ import { UserServices } from "@/service/user-service/user.service";
 import Vue from "vue";
 import Component from "vue-class-component";
 import { ROUTE_NAME } from '@/constant/route-constant';
+import { Watch } from 'vue-property-decorator';
 
 @Component({
     template: require("./template.html").default,
@@ -17,6 +18,11 @@ export default class ListUserComponent extends Vue {
     numUsersInPage: number = 0;
     visibleConfirm: boolean = false;
     selectedId: string = null;
+    listAdminTitleConst: string = 'Danh sách quản trị viên';
+    listUserTitleConst: string = 'Danh sách người dùng';
+    createAdminTitleConst: string = 'Tạo quản trị viên';
+    superAdminRoleConst: string = 'SuperAdmin';
+    adminRoleConst: string = 'Admin';
 
     get TotalPageVisible() {
         if (this.totalPages < 7)
@@ -26,10 +32,13 @@ export default class ListUserComponent extends Vue {
     }
 
     get listUserTitle() {
-        return this.$route.params.role === 'admin' ? 'Danh sách quản trị viên' : 'Danh sách người dùng'
+        return this.$route.params.role === 'admin' ? this.listAdminTitleConst : this.listUserTitleConst
     }
     get createUserTitle() {
-        return this.$route.params.role === 'admin' ? 'Tạo quản trị viên' : 'Tạo người dùng'
+        return this.$route.params.role === 'admin' ? this.createAdminTitleConst : ''
+    }
+    get isDisplayButton() {
+        return this.$route.params.role === 'admin' ? true : false
     }
 
     toCreateUser() {
@@ -80,23 +89,50 @@ export default class ListUserComponent extends Vue {
         });
     }
 
-    async mounted() {
+    async getRoles(title) {
         await this.userService.getAllRole().then((res: any) => {
-            if (this.$route.params.role === 'admin') {
+            if (title === this.listAdminTitleConst) {
                 for (let i = 0; i < res.length; i++) {
-                    this.userSearchParams.roleIds.push(res[i].name);
+                    if (res[i].name === this.superAdminRoleConst || res[i].name === this.adminRoleConst) {
+                        this.userSearchParams.roleIds.push(res[i].name);
+                    }
+                }
+            } else if (title === this.listUserTitleConst) {
+                for (let i = 0; i < res.length; i++) {
+                    if (res[i].name !== this.superAdminRoleConst && res[i].name !== this.adminRoleConst) {
+                        this.userSearchParams.roleIds.push(res[i].name);
+                    }
                 }
             }
         }).catch(error => {
             console.log(error);
         });
+    }
 
+    async mounted() {
+        await this.getRoles(this.listUserTitle);
         await this.getUsers();
 
         if (this.userSearchParams.limit <= this.totalItems) {
             this.numUsersInPage = this.userSearchParams.limit;
         } else {
             this.numUsersInPage = this.totalItems;
+        }
+    }
+
+    @Watch('listUserTitle')
+    async handleChangeCategory(val, old) {
+        if(val && val !== old) {
+            this.userSearchParams = new UserSearchParam({});
+            
+            await this.getRoles(val);
+            await this.getUsers();
+
+            if (this.userSearchParams.limit <= this.totalItems) {
+                this.numUsersInPage = this.userSearchParams.limit;
+            } else {
+                this.numUsersInPage = this.totalItems;
+            }
         }
     }
 }

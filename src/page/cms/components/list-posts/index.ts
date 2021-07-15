@@ -96,12 +96,18 @@ export default class ListPostComponent extends Vue {
     }
 
     @Watch('$route.query.categoryId')
-    handleChangeCategory(val, old) {
+    async handleChangeCategory(val, old) {
         if(val && val !== old) {
             this.searchParams = new PostSearchParameter({
                 categoryId: val
             });
-            this.getPosts();
+            await this.getPosts();
+
+            if (this.searchParams.limit <= this.totalItems) {
+                this.numPostsInPage = this.searchParams.limit;
+            } else {
+                this.numPostsInPage = this.totalItems;
+            }
         }
     }
 }

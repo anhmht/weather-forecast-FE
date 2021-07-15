@@ -1,0 +1,13 @@
+.not-authorized-page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+
+    div {
+        margin-top: 10px;
+        font-size: 25px;
+        font-weight: bold;
+    }
+}
