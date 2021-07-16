@@ -1,0 +1,104 @@
+.list-document-container {
+    .base-cms-right--body {
+        &_wrapper {
+            height: calc(100vh - 200px)
+        }
+        &_top {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            // title
+            > p {
+                font-size: 23px;
+                flex: 1;
+                margin: 0;
+                white-space: normal
+            }
+
+            // search input
+            .v-input {
+                width: 450px;
+                flex: unset;
+                margin-left: auto;
+            }
+
+            // create new button
+            button {
+                margin-left: auto;
+            }
+        }
+
+        &_table {
+            background-color: #fff;
+     
+            &_header {
+                font-size: 14px;
+                color: #949494;
+                white-space: nowrap;
+                &_checkbox {
+                    align-items: center;
+                    > div {
+                        height: 100%;
+                        .v-input__control {
+                            width: 0px !important;
+                        }
+                    }
+                }
+            }
+            &_checkbox {
+                display: flex;
+                align-items: center;
+                height: 71px !important;
+                .v-input--selection-controls {
+                    margin-top: 0;
+                    padding-top: 0;
+                }
+                > div {
+                    height: 100%;
+                    display: flex;
+                    align-items: center;
+                    .v-input__control {
+                        width: 0px !important;
+                    }
+                    .v-input__slot {
+                        width: 0px !important;
+                    }
+                }
+            }
+            &_title {
+                display: flex;
+                align-items: center;
+                padding: 10px 0;
+                font-weight: 600;
+                img {
+                    margin-right: 20px;
+                    width: 50px;
+                    height: 50px;
+                    border-radius: 4px;
+                }
+            }
+
+            &_action {
+                white-space: nowrap;
+                font-size: 14px !important;
+                cursor: pointer;
+            }
+            .delete-action {
+                color: #D50000;
+            }
+            .edit-action {
+                color: #2196f3;
+            }
+            &_footer_page_num {
+                display: flex;
+                align-items: center;
+                padding: 0 20px;
+                &_limit {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                }
+            }
+        }
+    }
+}

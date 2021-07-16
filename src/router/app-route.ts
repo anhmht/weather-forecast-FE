@@ -29,6 +29,9 @@ const ListDataComponent = () => import("../page/cms/components/list-data/ListDat
 const ListUserComponent = () => import("../page/cms/components/list-user/ListUserComponent.vue")
 const CreateUserComponent = () => import("../page/cms/components/create-user/CreateUserComponent.vue")
 
+const ListDocumentComponent = () => import("../page/cms/components/list-document/ListDocumentComponent.vue")
+const CreateDocumentComponent = () => import("../page/cms/components/create-document/CreateDocumentComponent.vue")
+
 const homeRoutes = [
     { path: "/", redirect: { path: PATH.INFO } },
     {
@@ -229,7 +232,25 @@ const adminRoutes = [
                     requiresAuth: true
                 },
                 props: {}
-            }
+            },
+            {
+                path: PATH.LIST_DOCUMENT,
+                name: ROUTE_NAME.LIST_DOCUMENT,
+                component: ListDocumentComponent,
+                meta: {
+                    requiresAuth: true
+                },
+                props: {}
+            },
+            {
+                path: PATH.CREATE_DOCUMENT,
+                name: ROUTE_NAME.CREATE_DOCUMENT,
+                component: CreateDocumentComponent,
+                meta: {
+                    requiresAuth: true
+                },
+                props: {}
+            },
         ]
     },
 ]

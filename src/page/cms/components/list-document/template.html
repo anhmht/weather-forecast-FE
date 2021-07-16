@@ -1,0 +1,90 @@
+<div class="list-document-container">
+    <div class="base-cms-right--body_wrapper">
+        <div class="base-cms-right--body_top">
+            <div class="tabs">
+                <div class="item-tab" :class="activeTab === 1 ? 'active' : ''" @click="handleChangeTab(1)">
+                    Điều hành sản xuất</div>
+                <div class="item-tab" :class="activeTab === 2 ? 'active' : ''" @click="handleChangeTab(2)">
+                    Phòng chống thiên tai</div>
+            </div>
+            <v-text-field label="Tìm kiếm" append-icon="mdi-magnify" solo hide-details>
+            </v-text-field>
+            <v-btn depressed color="primary" height="50px" @click="toCreateDocument()">
+                + Tạo tin mới
+            </v-btn>
+        </div>
+        <div class="base-cms-right--body_table">
+            <template>
+                <v-simple-table fixed-header height="calc(100vh - 261px)">
+                    <template v-slot:default>
+                        <thead>
+                            <tr>
+                                <th class="base-cms-right--body_table_header_checkbox" style="width: 40px;">
+                                    <v-checkbox color="primary" hide-details>
+                                    </v-checkbox>
+                                </th>
+                                <th class="base-cms-right--body_table_header">
+                                    TÊN
+                                </th>
+                                <th class="base-cms-right--body_table_header">
+                                    NGƯỜI ĐĂNG
+                                </th>
+                                <th class="base-cms-right--body_table_header">
+                                    NGÀY ĐĂNG
+                                </th>
+                                <th class="base-cms-right--body_table_header">
+
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(item, index) in documents" :key="index">
+                                <td class="base-cms-right--body_table_checkbox">
+                                    <v-checkbox color="primary" hide-details></v-checkbox>
+                                </td>
+                                <td>
+                                    <div class="base-cms-right--body_table_title">
+                                        <img :src="item.imageUrl">
+                                        {{ item.title }}
+                                    </div>
+                                </td>
+                                <td>{{ item.userPosted }}</td>
+                                <td>{{ $formatDateTime(item.datePosted) }}</td>
+                                <td class="base-cms-right--body_table_action">
+                                    <v-icon @click.native="editDocument(item.eventId)" class="edit-action">mdi-square-edit-outline</v-icon>
+                                    <v-icon @click.native="handleDeleteDocument(item.eventId)" class="delete-action">mdi-delete</v-icon>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </template>
+                </v-simple-table>
+            </template>
+            <div class="base-cms-right--body_table_footer_page_num">
+                <div style="flex: 1;">{{numDocumentsInPage}}/{{totalItems}} tin</div>
+                <div class="base-cms-right--body_table_footer_page_num_limit">
+                    Số tin mỗi trang
+                    <v-select style="margin-left: 20px;" :items="limitPerPage" v-model="searchParams.limit"
+                        @change="getDocumentsByLimit"></v-select>
+                </div>
+                <v-pagination v-model="searchParams.page" :length="totalPages" :total-visible="TotalPageVisible"
+                    @input="getDocumentsByPaging"></v-pagination>
+            </div>
+        </div>
+    </div>
+    <v-dialog v-model="visibleConfirm" max-width="400">
+        <v-card>
+            <v-card-title class="text-h5">
+                Bạn có muốn xoá bài viết này?
+            </v-card-title>
+            <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn  text @click="visibleConfirm = false">
+                    Bỏ qua
+                </v-btn>
+                <v-btn color="primary" @click="deleteDocument()">
+                    Đồng ý
+                </v-btn>
+            </v-card-actions>
+        </v-card>
+    </v-dialog>
+</div>
