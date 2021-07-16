@@ -1,0 +1,24 @@
+<v-dialog v-model="visbileTextBox" max-width="500px">
+    <v-card class="temp-info">
+        <v-card-text>
+            <v-select :items="durations" v-model="data.startTime" label="Xuất hiện sau" item-value="value"></v-select>
+            <v-select :items="durations" v-model="data.duration" label="Thời lượng" item-value="value"></v-select>
+            <div class="temp-info-content">
+                <div class="temp-info-content--field">
+                    <v-select :disabled="data.customPosition" :items="positions" v-model="data.position" label="Vị trí xuất hiện" item-value="value"></v-select>
+                </div>
+                <div class="temp-info-content--suggest">
+                    <v-switch v-model="data.customPosition" label="Hiệu chỉnh nâng cao"></v-switch>
+                    <v-text-field :disabled="!data.customPosition" label="Left" v-model="data.left"></v-text-field>
+                    <v-text-field :disabled="!data.customPosition" label="Top" v-model="data.top"></v-text-field>
+                </div>
+            </div>
+        </v-card-text>
+        <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn text color="primary" @click="handleSaveTextBox">
+                Lưu Bảng Nhiệt Độ
+            </v-btn>
+        </v-card-actions>
+    </v-card>
+</v-dialog>

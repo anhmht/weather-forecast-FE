@@ -8,3 +8,13 @@
         height: 0 !important;
     }
 }
+
+.title-list {
+    margin-bottom: 20px;
+    .v-list-item__action {
+        display: flex;
+        flex-direction: unset;
+        align-items: center;
+        justify-content: flex-end;
+    }
+}

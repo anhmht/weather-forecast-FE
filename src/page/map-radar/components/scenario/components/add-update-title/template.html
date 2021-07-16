@@ -1,0 +1,34 @@
+<v-dialog v-model="visbileTextBox" max-width="500px">
+    <v-card class="title-popup">
+        <v-card-text>
+            <div class="title-popup-content">
+                <div class="title-popup-content--field">
+                    <v-textarea v-model="data.content" label="Nội dung tiêu đề"></v-textarea>
+                </div>
+                <div class="title-popup-content--suggest">
+                    Nội dung gợi ý:
+                    <p v-html="forecastData"></p>
+                </div>
+            </div>
+            <v-select :items="durations" v-model="data.startTime" label="Xuất hiện sau" item-value="value"></v-select>
+            <v-select :items="durations" v-model="data.duration" label="Thời lượng" item-value="value"></v-select>
+            <div class="title-popup-content">
+                <div class="title-popup-content--field">
+                    <v-select :disabled="data.customPosition" :items="positions" v-model="data.position" label="Vị trí xuất hiện" item-value="value"></v-select>
+                    <v-text-field  label="Độ dài" v-model="data.width"></v-text-field>
+                </div>
+                <div class="title-popup-content--suggest">
+                    <v-switch v-model="data.customPosition" label="Hiệu chỉnh nâng cao"></v-switch>
+                    <v-text-field :disabled="!data.customPosition" label="Left" v-model="data.left"></v-text-field>
+                    <v-text-field :disabled="!data.customPosition" label="Top" v-model="data.top"></v-text-field>
+                </div>
+            </div>
+        </v-card-text>
+        <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn text color="primary" @click="handleSaveTextBox">
+                Lưu Tiêu Đề
+            </v-btn>
+        </v-card-actions>
+    </v-card>
+</v-dialog>

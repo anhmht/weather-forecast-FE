@@ -29,11 +29,15 @@ const COLOR = [
         "qr-code": () => import("./components/qr-code/QRCodeComponent.vue"),
         "video-forecast": () => import("./components/video-forecast/VideoForecastComponent.vue"),
         "video-forecast-province": () => import("./components/video-forecast-province/VideoForecastProvinceComponent.vue"),
-        "text-box": () => import("./components/text-box/TextBoxComponent.vue")
+        "text-box": () => import("./components/text-box/TextBoxComponent.vue"),
+        "video-map-title": () => import("./components/video-map-title/VideoMapTitleComponent.vue")
     },
     methods: {
         pushTextBox(element) {
             (this.$refs.textBox as any).handleRenderTextBox(element);
+        },
+        displayMapTitle(element) {
+            (this.$refs.mapTitle as any).renderMapTitle(element);
         }
     }
 })
@@ -215,8 +219,11 @@ export default class HomePageComponent extends Vue {
             case 'NTB':
             case 'DNB':
             case 'TQ':
-                return htmlToImage.toPng(document.querySelector("#windy")).then(dataUrl => {
+                var t0 = performance.now()
+                return htmlToImage.toJpeg(document.querySelector("#windy"), { quality: 0.25 }).then(dataUrl => {
                     this.fakeImage = dataUrl;
+                    var t1 = performance.now()
+                    console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
                 });
             default:
                 break;
@@ -279,6 +286,12 @@ export default class HomePageComponent extends Vue {
         });
     }
 
+    handleMapTitle(title) {
+        if (!title) return;
+        //@ts-ignore
+        this.displayMapTitle(title);
+    }
+
     async handleChangeRegion(mapData) {
         // document.querySelector('.particles-layer').classList.add('hide-animation')
         this.isProvinceData = false;
@@ -299,7 +312,7 @@ export default class HomePageComponent extends Vue {
         let destination = layer ? layer.getBounds() : null;
         if (mapData.placeId === 'TBB' || mapData.placeId === 'NTB' || mapData.placeId === 'DNB' || mapData.placeId === 'TQ') {
             this.isDisplayFake = true;
-            await sleep(1000, this.clearTimeout);
+            await sleep(500, this.clearTimeout);
             method = 'flyToBounds';
             duration = 0.5;
         };
@@ -346,7 +359,7 @@ export default class HomePageComponent extends Vue {
             paddingBottomRight: mapData.paddingBottomRight ? mapData.paddingBottomRight : [0, 0],
             paddingTopLeft: mapData.paddingTopLeft ? mapData.paddingTopLeft : [0, 0]
         });
-        await sleep(2000, this.clearTimeout);
+        await sleep(1000, this.clearTimeout);
         this.isDisplayFake = false;
         this.getMapTtile(mapData)
         this.isShowMapTitle = true;
@@ -562,6 +575,7 @@ export default class HomePageComponent extends Vue {
             }
             this[iterator.action] = iterator;
             this.handleTextBox(iterator.textBox);
+            this.handleMapTitle(iterator.title);
             if (this.isStop) {
                 this.isStop = false;
                 break;
@@ -689,6 +703,8 @@ export default class HomePageComponent extends Vue {
 
     handleMove({ step, message }) {
         this[step.action] = step;
+        this.handleTextBox(step.textBox);
+        this.handleMapTitle(step.title);
         const send = {
             event: 'SUCCESS',
             requestID: message.requestID
