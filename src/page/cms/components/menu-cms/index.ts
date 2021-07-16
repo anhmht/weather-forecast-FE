@@ -104,6 +104,11 @@ export default class MenuCMSComponent extends Vue {
             icon: 'mdi-account-group',
             name: PATH.LIST_POST,
         },
+        {
+            title: 'Thông tin chỉ đạo',
+            icon: 'mdi-bullhorn',
+            name: ROUTE_NAME.LIST_DOCUMENT,
+        },
     ]
 
     handleClick(index) {
