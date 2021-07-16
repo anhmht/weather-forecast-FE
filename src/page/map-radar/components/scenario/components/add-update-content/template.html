@@ -1,4 +1,4 @@
-<v-dialog persistent v-model="visibleAddItem" max-width="800px">
+<v-dialog persistent v-model="visibleAddItem" max-width="1000px">
     <v-card>
         <v-toolbar dark color="primary">
             <v-btn icon dark @click="visibleAddItem = false">
@@ -40,7 +40,7 @@
                                 </v-list-item-avatar>
                                 <v-list-item-content>
                                     <v-list-item-title>{{coTitle.content}}</v-list-item-title>
-                                    <v-list-item-subtitle>Thời gian: xuất hiện sau {{coTitle.startTime}} - Vị trí xuất hiện: {{coTitle.position}}
+                                    <v-list-item-subtitle>Thời gian: xuất hiện sau {{coTitle.startTime}} - Vị trí xuất hiện: {{coTitle.position}} - Thời lượng: {{coTitle.duration}}
                                     </v-list-item-subtitle>
                                 </v-list-item-content>
                                 <v-list-item-action>
@@ -52,6 +52,38 @@
                             </v-list-item>
                         </v-list>
                         <add-update-title :edit-data="coTitle" :visible.sync="visibleUpdateTitle" :location="data.data" :is-province="data.method === 'handleClick'" @save="handleSaveTitle"/>
+                    </v-card>
+                    <v-card v-if="data.data" class="title-list">
+                        <v-toolbar color="blue">
+                            <v-toolbar-title class="white--text">
+                                Bảng nhiệt độ
+                            </v-toolbar-title>
+                        </v-toolbar>
+                        <v-list two-line subheader>
+                            <v-subheader inset>
+                                Bảng nhiệt độ
+                            </v-subheader>
+                            <v-list-item link>
+                                <v-list-item-avatar>
+                                    <v-icon>
+                                        mdi-clipboard-text
+                                    </v-icon>
+                                </v-list-item-avatar>
+                                <v-list-item-content>
+                                    <v-list-item-title>Thông tin nhiệt độ - thời tiết</v-list-item-title>
+                                    <v-list-item-subtitle>Thời gian: xuất hiện sau {{coTempInfo.startTime}} - Vị trí xuất hiện:
+                                        {{coTempInfo.position}} - Thời lượng: {{coTempInfo.duration}}
+                                    </v-list-item-subtitle>
+                                </v-list-item-content>
+                                <v-list-item-action>
+                                    <v-btn :disabled="coDisabledEditTempInfo" icon color="primary">
+                                        <v-icon @click="visibleUpdateTempInfo = !visibleUpdateTempInfo">mdi-pencil</v-icon>
+                                    </v-btn>
+                                    <v-switch v-model="isDisPlayTempInfo"></v-switch>
+                                </v-list-item-action>
+                            </v-list-item>
+                        </v-list>
+                        <add-update-temp-info :edit-data="coTempInfo" :visible.sync="visibleUpdateTempInfo" :location="data.data" :is-province="data.method === 'handleClick'" @save="handleSaveTempInfo"/>
                     </v-card>
                     <v-card v-if="data.data">
                         <v-toolbar color="blue">

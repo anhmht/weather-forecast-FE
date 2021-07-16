@@ -5,13 +5,11 @@
     <div v-if="isRecording" class="fake-transition" :class="!isDisplayFake ? 'hide' : ''">
         <img :src="fakeImage" />
     </div>
-    <!-- <div v-if="isShowMapTitle" class="map-title animate__animated" :class="mapTitle.position" >
+    <div v-if="isShowMapTitle && !isRecording" class="map-title animate__animated" :class="mapTitle.position" >
         Khu vực: {{mapTitle ? mapTitle.name : ''}}
-    </div> -->
-
-    <div>
-        <video-map-title v-if="isRecording" ref="mapTitle"/>
     </div>
+
+    <video-map-title v-if="isRecording" ref="mapTitle" />
 
     <!-- <div v-if="isShowVideoForecase" class="video-forecast animate__animated" :class="mapTitle.position">
         <video-forecast v-if="boxData" :location="boxData" :is-province="isProvinceData"/>

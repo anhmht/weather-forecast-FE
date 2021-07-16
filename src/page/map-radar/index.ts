@@ -703,6 +703,8 @@ export default class HomePageComponent extends Vue {
 
     handleMove({ step, message }) {
         this[step.action] = step;
+        this.handleTextBox(step.textBox);
+        this.handleMapTitle(step.title);
         const send = {
             event: 'SUCCESS',
             requestID: message.requestID

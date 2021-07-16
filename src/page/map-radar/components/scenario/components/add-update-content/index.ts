@@ -9,6 +9,7 @@ import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
     components: {
         "add-update-textbox": () => import("../add-update-textbox/AddUpdateTextBox.vue"),
         "add-update-title": () => import("../add-update-title/AddUpdateTitle.vue"),
+        "add-update-temp-info": () => import("../add-update-temp-info/AddUpdateTempInfoComponent.vue"),
         "confirm-dialog": () => import("../../../../../../components/confirm-action/ConfirmActionComponent.vue")
     }
 })
@@ -66,7 +67,8 @@ export default class AddUpdateContentComponent extends Vue {
         data: null,
         duration: 0,
         textBox: [],
-        title: null
+        title: null,
+        tempInfo: null
     }
 
     title = {
@@ -76,6 +78,16 @@ export default class AddUpdateContentComponent extends Vue {
         duration: 0,
         position: 'top-right',
         width: 400,
+        customPosition: false,
+        left: 0,
+        top: 0,
+    }
+
+    tempInfo = {
+        isDisplay: false,
+        startTime: 0,
+        duration: 0,
+        position: 'top-right',
         customPosition: false,
         left: 0,
         top: 0,
@@ -100,6 +112,7 @@ export default class AddUpdateContentComponent extends Vue {
     visibleConfirm: boolean = false;
 
     visibleUpdateTitle:boolean = false;
+    visibleUpdateTempInfo: boolean = false;
 
     get regions() {
         const regions = DataHelper.deepClone(REGION) as any;
@@ -160,6 +173,21 @@ export default class AddUpdateContentComponent extends Vue {
         return this.title
     }
 
+    get coTempInfo() {
+        if (!this.tempInfo) {
+            return {
+                isDisplay: false,
+                startTime: 0,
+                duration: 0,
+                position: 'top-right',
+                customPosition: false,
+                left: 0,
+                top: 0,
+            }
+        }
+        return this.tempInfo
+    }
+
     get coDisabledEditTitle() {
         return !this.title.isDisplayTitle;
     }
@@ -171,8 +199,23 @@ export default class AddUpdateContentComponent extends Vue {
         this.title.isDisplayTitle = val;
     }
 
+    get coDisabledEditTempInfo() {
+        return !this.tempInfo.isDisplay;
+    }
+
+    get isDisPlayTempInfo() {
+        return this.tempInfo.isDisplay;
+    }
+    set isDisPlayTempInfo(val) {
+        this.tempInfo.isDisplay = val;
+    }
+
     handleSaveTitle(data) {
         this.title = DataHelper.deepClone(data);
+    }
+
+    handleSaveTempInfo(data) {
+        this.tempInfo = DataHelper.deepClone(data);
     }
 
     handleSaveTextBox(data) {
@@ -228,7 +271,8 @@ export default class AddUpdateContentComponent extends Vue {
             if (this.data.action === 'customLevelControl') {
                 this.data.method = 'handleChangeLevel';
             }
-            Vue.set(this.data, 'title', DataHelper.deepClone(this.title))
+            Vue.set(this.data, 'title', DataHelper.deepClone(this.title));
+            Vue.set(this.data, 'tempInfo', DataHelper.deepClone(this.tempInfo));
             this.$emit('save', this.data);
             this.visibleAddItem = false
         }
@@ -251,6 +295,15 @@ export default class AddUpdateContentComponent extends Vue {
                 customPosition: false,
                 left: 0,
                 top: 0,
+            },
+            tempInfo: {
+                isDisplay: false,
+                startTime: 0,
+                duration: 0,
+                position: 'top-right',
+                customPosition: false,
+                left: 0,
+                top: 0,
             }
         }
 
@@ -267,10 +320,14 @@ export default class AddUpdateContentComponent extends Vue {
                 data: null,
                 duration: 0,
                 textBox: [],
-                title: this.title
+                title: this.title,
+                tempInfo: this.tempInfo
             }
             if(this.data.title) {
                 this.title = DataHelper.deepClone(this.data.title);
+            }
+            if (this.data.tempInfo) {
+                this.tempInfo = DataHelper.deepClone(this.data.tempInfo);
             }
         } else {
             this.title = {
@@ -280,6 +337,15 @@ export default class AddUpdateContentComponent extends Vue {
                 duration: 0,
                 position: 'top-right',
                 width: 400,
+                customPosition: false,
+                left: 0,
+                top: 0,
+            }
+            this.tempInfo = {
+                isDisplay: false,
+                startTime: 0,
+                duration: 0,
+                position: 'top-right',
                 customPosition: false,
                 left: 0,
                 top: 0,
