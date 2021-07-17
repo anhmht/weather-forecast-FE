@@ -109,6 +109,11 @@ export default class MenuCMSComponent extends Vue {
             icon: 'mdi-bullhorn',
             name: ROUTE_NAME.LIST_DOCUMENT,
         },
+        {
+            title: 'Các hiện tượng cực đoan',
+            icon: 'mdi-weather-partly-lightning',
+            name: ROUTE_NAME.LIST_LOCAL
+        },
     ]
 
     handleClick(index) {

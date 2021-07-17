@@ -28,6 +28,7 @@ export const ROUTE_NAME = {
     CREATE_USER: 'createUser',
     LIST_DOCUMENT: 'list-document',
     CREATE_DOCUMENT: 'create-document',
+    LIST_LOCAL: "list-local"
 }
 
 export const PATH = {
@@ -60,4 +61,5 @@ export const PATH = {
     CREATE_USER: 'create-user/:role',
     LIST_DOCUMENT: 'list-document',
     CREATE_DOCUMENT: 'create-document',
+    LIST_LOCAL: "list-local"
 }

@@ -1,0 +1,38 @@
+<div class="list-local-container">
+    <div class="base-cms-right--body_wrapper">
+        <div class="base-cms-right--body_top">
+            <p>Các hiện tượng cực đoan</p>
+        </div>
+        <div class="base-cms-right--body_table">
+            <template>
+                <v-simple-table fixed-header height="calc(100vh - 261px)">
+                    <template v-slot:default>
+                        <thead>
+                            <tr>
+                                <th class="base-cms-right--body_table_header_checkbox" style="width: 40px;">
+                                    <v-checkbox color="primary" hide-details>
+                                    </v-checkbox>
+                                </th>
+                                <th class="base-cms-right--body_table_header">
+                                    TỈNH
+                                </th>
+                                <th class="base-cms-right--body_table_header">
+                                    XÃ HUYỆN
+                                </th>
+                                <th class="base-cms-right--body_table_header">
+                                    THỜI GIAN
+                                </th>
+                                <th class="base-cms-right--body_table_header">
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(item, index) in []" :key="index">
+                            </tr>
+                        </tbody>
+                    </template>
+                </v-simple-table>
+            </template>
+        </div>
+    </div>
+</div>

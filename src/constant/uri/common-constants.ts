@@ -1,5 +1,6 @@
 export default {
     getAllStationKTTV: '/api/Monitoring/get-kttv',
     getAllStatuses: '/api/Common/Status/GetAllStatuses',
-    generateQRCode: '/api/Media/generate-qr-code'
+    generateQRCode: '/api/Media/generate-qr-code',
+    getGeneralLookup: '/api/Common/GetGeneralLookup'
 }
