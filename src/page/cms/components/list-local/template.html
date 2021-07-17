@@ -13,21 +13,24 @@
                                     <v-checkbox color="primary" hide-details>
                                     </v-checkbox>
                                 </th>
-                                <th class="base-cms-right--body_table_header">
-                                    TỈNH
-                                </th>
-                                <th class="base-cms-right--body_table_header">
-                                    XÃ HUYỆN
-                                </th>
-                                <th class="base-cms-right--body_table_header">
-                                    THỜI GIAN
-                                </th>
-                                <th class="base-cms-right--body_table_header">
-                                </th>
+                                <th class="base-cms-right--body_table_header">TỈNH</th>
+                                <th class="base-cms-right--body_table_header">XÃ/HUYỆN</th>
+                                <th class="base-cms-right--body_table_header">THỜI GIAN</th>
+                                <th class="base-cms-right--body_table_header"></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(item, index) in []" :key="index">
+                            <tr v-for="(item, index) in coList" :key="index">
+                                <td class="base-cms-right--body_table_checkbox">
+                                    <v-checkbox color="primary" hide-details></v-checkbox>
+                                </td>
+                                <td>{{ item.provinceName }}</td>
+                                <td>{{ item.districtName }}</td>
+                                <td>{{ $formatDate(item.date) }}</td>
+                                <td class="base-cms-right--body_table_action">
+                                    <v-icon @click.native="handleEdit(item.id)" class="edit-action">mdi-square-edit-outline</v-icon>
+                                    <v-icon @click.native="handleDelete(item.id)" class="delete-action">mdi-delete</v-icon>
+                                </td>
                             </tr>
                         </tbody>
                     </template>
