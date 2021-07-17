@@ -34,6 +34,24 @@ export default class ListLocalComponent extends Vue {
         return this.extremePhenomenons;
     }
 
+    get selectedDate () {
+        return this.searchParams.date;
+    }
+
+    set selectedDate (value) {
+    }
+
+    get selectedProvince () {
+        return this.searchParams.provinceId;
+    }
+
+    set selectedProvince (value) {
+    }
+
+    get formatSelectedDate () {
+        return this.formatDate(this.selectedDate)
+    }
+
     getAllExtremePhenomenon () {
         this.ePService.getAllExtremePhenomenons(this.searchParams).then(data => {
             const dummy = {
@@ -62,12 +80,28 @@ export default class ListLocalComponent extends Vue {
         })
     }
 
+    handleAdd () {
+
+    }
+
     handleEdit (id: string) {
 
     }
 
     handleDelete (id: string) {
 
+    }
+
+    handleFilterDate (value) {
+        this.searchParams.date = value;
+        this.getAllExtremePhenomenon();
+    }
+
+    formatDate (date) {
+        if (!date) return null
+
+        const [year, month, day] = date.split('-')
+        return `${day}/${month}/${year}`;
     }
 
     async mounted() {

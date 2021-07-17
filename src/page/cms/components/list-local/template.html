@@ -1,7 +1,22 @@
 <div class="list-local-container">
     <div class="base-cms-right--body_wrapper">
-        <div class="base-cms-right--body_top">
-            <p>Các hiện tượng cực đoan</p>
+        <div class="base-cms-right--body_top d-flex">
+            <p class="mr-auto">Các hiện tượng cực đoan</p>
+            <v-menu v-model="selectedDate" :close-on-content-click="false" :nudge-right="40"
+                transition="scale-transition" offset-y min-width="auto">
+                <template v-slot:activator="{ on, attrs }">
+                    <v-text-field v-model="formatSelectedDate" prepend-icon="mdi-calendar" label="Filter"
+                        readonly v-bind="attrs" v-on="on"></v-text-field>
+                </template>
+                <v-date-picker v-model="selectedDate" @input="selectedDate = false" locale="vi-vn"
+                    @change="handleFilterDate">
+                </v-date-picker>
+            </v-menu>
+            <v-select :items="lookupProvince" item-text="name" item-value="id" solo
+                v-model="selectedProvince"></v-select>
+            <v-btn depressed color="primary" height="50px" @click="handleAdd()">
+                + Tạo mới
+            </v-btn>
         </div>
         <div class="base-cms-right--body_table">
             <template>
