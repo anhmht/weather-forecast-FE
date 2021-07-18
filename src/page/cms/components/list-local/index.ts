@@ -21,9 +21,16 @@ export default class ListLocalComponent extends Vue {
     ePService: ExtremePhenomenonServices = new ExtremePhenomenonServices();
     searchParams: IExtremePhenomenonsSearchParams = new ExtremePhenomenonsSearchParams({});
     extremePhenomenons: IExtremePhenomenon[] = [];
+
+    totalItems: number = 0;
+    totalPages: number = 0;
+    listPostTitle: string = '';
+    limitPerPage: number[] = [5, 10, 15, 20];
+    numPostsInPage: number = 0;
     
     get lookupProvince () {
-        return this.dtoLookupData[GeneralLookupTypes.PROVINCE] || [];
+        let list = this.dtoLookupData[GeneralLookupTypes.PROVINCE] || []
+        return list.sort((a, b) => a.name.localeCompare(b.name));
     }
 
     get lookupDistrict () {
@@ -46,35 +53,50 @@ export default class ListLocalComponent extends Vue {
     }
 
     set selectedProvince (value) {
+        this.searchParams.provinceId = value;
+        this.fetchData();
     }
 
     get formatSelectedDate () {
         return this.formatDate(this.selectedDate)
     }
 
+    get totalPageVisible() {
+        if (this.totalPages < 7)
+            return this.totalPages
+        else
+            return 7
+    }
+
+    fetchData () {
+        this.getAllExtremePhenomenon();
+        this.$forceUpdate();
+    }
+
     getAllExtremePhenomenon () {
-        this.ePService.getAllExtremePhenomenons(this.searchParams).then(data => {
-            const dummy = {
-                "currentPage": 1,
-                "totalItems": 1,
-                "totalPages": 1,
-                "extremePhenomenons": [
-                    {
-                    "createBy": "2021-07-17T15:13:17.261Z",
-                    "createDate": "2021-07-17T15:13:17.261Z",
-                    "lastModifiedBy": "2021-07-17T15:13:17.261Z",
-                    "lastModifiedDate": "2021-07-17T15:13:17.261Z",
-                    "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "provinceId": 0,
-                    "districtId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "date": "2021-07-17T15:13:17.261Z",
-                    "provinceName": "Vĩnh Long",
-                    "districtName": "Tam Bình"
-                    }
-                ]
-            }
-            
-            this.extremePhenomenons = dummy && dummy["extremePhenomenons"] ? dummy["extremePhenomenons"] : [];
+        this.ePService.getAllExtremePhenomenons(this.searchParams).then((data: any) => {
+            // const dummy = {
+            //     "currentPage": 1,
+            //     "totalItems": 1,
+            //     "totalPages": 1,
+            //     "extremePhenomenons": [
+            //         {
+            //         "createBy": "2021-07-17T15:13:17.261Z",
+            //         "createDate": "2021-07-17T15:13:17.261Z",
+            //         "lastModifiedBy": "2021-07-17T15:13:17.261Z",
+            //         "lastModifiedDate": "2021-07-17T15:13:17.261Z",
+            //         "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+            //         "provinceId": 0,
+            //         "districtId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+            //         "date": "2021-07-17T15:13:17.261Z",
+            //         "provinceName": "Vĩnh Long",
+            //         "districtName": "Tam Bình"
+            //         }
+            //     ]
+            // }
+            this.extremePhenomenons = data && data["extremePhenomenons"] ? data["extremePhenomenons"] : [];
+            this.totalItems = data.totalItems;
+            this.totalPages = data.totalPages;
         }).catch(err => {
             console.log(err);
         })
@@ -94,7 +116,15 @@ export default class ListLocalComponent extends Vue {
 
     handleFilterDate (value) {
         this.searchParams.date = value;
-        this.getAllExtremePhenomenon();
+        this.fetchData();
+    }
+
+    searchByLimit () {
+
+    }
+
+    searchByPaging () {
+
     }
 
     formatDate (date) {

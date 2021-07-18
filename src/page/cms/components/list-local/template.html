@@ -1,22 +1,22 @@
 <div class="list-local-container">
     <div class="base-cms-right--body_wrapper">
-        <div class="base-cms-right--body_top d-flex">
+        <div class="base-cms-right--body_top d-lg-flex align-start">
             <p class="mr-auto">Các hiện tượng cực đoan</p>
-            <v-menu v-model="selectedDate" :close-on-content-click="false" :nudge-right="40"
-                transition="scale-transition" offset-y min-width="auto">
-                <template v-slot:activator="{ on, attrs }">
-                    <v-text-field v-model="formatSelectedDate" prepend-icon="mdi-calendar" label="Filter"
-                        readonly v-bind="attrs" v-on="on"></v-text-field>
-                </template>
-                <v-date-picker v-model="selectedDate" @input="selectedDate = false" locale="vi-vn"
-                    @change="handleFilterDate">
-                </v-date-picker>
-            </v-menu>
-            <v-select :items="lookupProvince" item-text="name" item-value="id" solo
-                v-model="selectedProvince"></v-select>
-            <v-btn depressed color="primary" height="50px" @click="handleAdd()">
-                + Tạo mới
-            </v-btn>
+            <div class="d-flex align-start">
+                <v-menu v-model="selectedDate" :close-on-content-click="false" :nudge-right="40"
+                    transition="scale-transition" offset-y min-width="auto">
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-text-field v-model="formatSelectedDate" prepend-icon="mdi-calendar" label="Filter" hide-details
+                            readonly v-bind="attrs" v-on="on" class="mr-6" outlined dense></v-text-field>
+                    </template>
+                    <v-date-picker v-model="selectedDate" @input="selectedDate = false" locale="vi-vn"
+                        @change="handleFilterDate">
+                    </v-date-picker>
+                </v-menu>
+                <v-select :items="lookupProvince" item-text="name" item-value="id" outlined dense hide-details
+                    v-model="selectedProvince" class="mr-6"></v-select>
+                <v-btn depressed color="primary" @click="handleAdd()">+ Tạo mới</v-btn>
+            </div>  
         </div>
         <div class="base-cms-right--body_table">
             <template>
@@ -35,7 +35,10 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(item, index) in coList" :key="index">
+                            <tr v-if="coList.length === 0">
+                                <td colspan="5" style="text-align: center;">Không có dữ liệu</td>
+                            </tr>
+                            <tr v-else v-for="(item, index) in coList" :key="index">
                                 <td class="base-cms-right--body_table_checkbox">
                                     <v-checkbox color="primary" hide-details></v-checkbox>
                                 </td>
@@ -51,6 +54,16 @@
                     </template>
                 </v-simple-table>
             </template>
+            <div v-if="coList.length > 0" class="d-flex align-center pa-4">
+                <div class="mr-auto">{{numPostsInPage}}/{{totalItems}} tin</div>
+                <div class="d-flex align-center" >
+                    <v-subheader>Số tin mỗi trang</v-subheader>
+                    <v-select class="ml-3" style="width: 80px;" :items="limitPerPage" v-model="searchParams.limit" outlined dense hide-details
+                        @change="searchByLimit"></v-select>
+                </div>
+                <v-pagination v-model="searchParams.page" :length="totalPages" :total-visible="totalPageVisible"
+                    @input="searchByPaging"></v-pagination>
+            </div>
         </div>
     </div>
 </div>

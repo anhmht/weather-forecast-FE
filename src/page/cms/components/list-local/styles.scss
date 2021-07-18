@@ -4,8 +4,6 @@
             height: calc(100vh - 200px)
         }
         &_top {
-            display: flex;
-            align-items: center;
             margin-bottom: 20px;
             // title
             > p {
@@ -17,13 +15,8 @@
 
             // search input
             .v-input {
-                width: 450px;
+                width: 250px;
                 flex: unset;
-            }
-
-            // create new button
-            button {
-                margin-left: 20px;
             }
         }
 
@@ -88,16 +81,6 @@
             }
             .edit-action {
                 color: #2196f3;
-            }
-            &_footer_page_num {
-                display: flex;
-                align-items: center;
-                padding: 0 20px;
-                &_limit {
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-between;
-                }
             }
         }
     }
