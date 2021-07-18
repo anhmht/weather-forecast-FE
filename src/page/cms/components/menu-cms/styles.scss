@@ -1,7 +1,7 @@
 .cms-menu {
     padding: 0 15px;
     min-height: 450px;
-    max-height: 450px;
+    max-height: calc(100vh - 170px);
     overflow: auto;
 
     /* width */

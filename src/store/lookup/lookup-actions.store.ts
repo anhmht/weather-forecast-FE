@@ -19,6 +19,33 @@ const actions = <ActionTree<ILookupState, any>>{
         })
     },
 
+    [lookupTypesStore.Get.GENERAL]: ({ getters, commit, dispatch, state }, payload: number[]) => {
+        let needToCall = [];
+        let existed = {};
+
+        payload.forEach(type => {
+            if (getters.getLookupData[type]) {
+                existed[type] = getters.getLookupData[type];
+            } else {
+                needToCall.push(type);
+            }
+        })
+
+        // all is ready
+        if (needToCall.length === 0) {
+            return existed;
+        }
+
+        return service[lookupTypesStore.Get.GENERAL](needToCall).then((response: ApiResponse) => {
+            if (response) {
+                Object.keys(response).forEach(type => {
+                    commit(lookupTypesStore.Set.STORED_LOOKUP_OBJECT, { key: type, data: response[type] });
+                })
+            }
+        }).catch(err => {
+            console.log(err);
+        })
+    },
 };
 
 export default actions;

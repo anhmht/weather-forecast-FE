@@ -8,5 +8,11 @@ export const DateFormatterPlugin = {
             if (!date.isValid()) return value;
             return date.format('DD/MM/YYYY HH:mm:ss');
         };
+
+        Vue.prototype.$formatDate = function (value: string) {
+            let date = moment(value);
+            if (!date.isValid()) return value;
+            return date.format('DD/MM/YYYY');
+        };
     }
 }

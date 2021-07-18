@@ -14,4 +14,10 @@ export class LookupServices extends GenericServices {
             return Promise.resolve(response)
         }).catch(error => Promise.reject(error))
     }
+
+    getGeneralLookup(payload: number[]): Promise<ApiResponse> {
+        return this.executeSelectingPost(payload, Uri.getGeneralLookup).then((response: ApiResponse) => {
+            return Promise.resolve(response)
+        }).catch(error => Promise.reject(error))
+    }
 }
