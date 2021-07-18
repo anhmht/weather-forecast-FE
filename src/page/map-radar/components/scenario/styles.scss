@@ -13,6 +13,8 @@
         }
         &--body {
             padding: 20px;
+            overflow-y: auto;
+            max-height: calc(100vh - 145px);
         }
     }
     &-right {

@@ -15,11 +15,13 @@
         <video-forecast v-if="boxData" :location="boxData" :is-province="isProvinceData"/>
     </div> -->
 
-    <div v-if="isShowVideoForecaseProvince" class="video-forecast-province animate__animated" :class="videoForecastAnimation">
+    <div v-if="isShowVideoForecaseProvince && !isRecording" class="video-forecast-province animate__animated" :class="videoForecastAnimation">
         <video-forecast-province v-if="provinceData" :location="provinceData" :is-province="isProvinceData" :template-type="videoLayout"/>
     </div>
 
     <text-box v-if="isRecording" ref="textBox"/>
+
+    <custom-temp-info v-if="isRecording" ref="tempInfo"/>
 
     <div v-if="!isRecording && forecastData && isWebView" class="result">
         <tool-bar v-if="forecastData" :station-info="forecastData" @changeTime="updateDistrictPopUp" />
@@ -102,11 +104,13 @@
             </div>
         </div>
     </v-dialog>
-
+    
     <scenario-modal @remote="handleRemote" @remote-move="handleMove" v-model="drawer" @preview="handlePreview"
         @capture="(e) => handlePreview(e,true)" />
 
     <qr-code v-model="visibleQR" />
+    <video id="player" controls autoplay style="display: none;"></video>
+    <canvas id="canvas" style="display: none;"></canvas>
     <div v-if="isRecording && !isReview" style="
         position: fixed;
         top: 0;

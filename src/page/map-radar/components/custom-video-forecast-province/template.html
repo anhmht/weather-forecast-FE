@@ -1,0 +1,4 @@
+<div v-if="provinceData && provinceData.isDisplay" class="custom-video-forecast animate__animated" :class="provinceData.class" :style="provinceData.style">
+    <video-forecast-province v-if="provinceData" :location="provinceData.placeId" :is-province="provinceData.isProvince"
+        :template-type="videoLayout" />
+</div>

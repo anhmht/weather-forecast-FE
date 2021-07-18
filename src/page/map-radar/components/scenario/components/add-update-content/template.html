@@ -1,4 +1,4 @@
-<v-dialog persistent v-model="visibleAddItem" max-width="1000px">
+<v-dialog persistent v-model="visibleAddItem" max-width="1000px" content-class="add-update-content">
     <v-card>
         <v-toolbar dark color="primary">
             <v-btn icon dark @click="visibleAddItem = false">
@@ -11,7 +11,7 @@
                 <v-select v-model="data.action" @change="handleChangeAction" :items="actionList" label="Chọn hàng động"
                     item-value="value" :rules="rules.actionRules"></v-select>
                 <div v-if="data.action === 'customLocationControl'">
-                    <v-radio-group v-model="data.method" row :rules="rules.methodRules">
+                    <v-radio-group v-model="data.method" row :rules="rules.methodRules" @change="handleChangeMethod">
                         <v-radio label="Khu Vực" value="handleClickRegion"></v-radio>
                         <v-radio label="Tỉnh Thành" value="handleClick"></v-radio>
                     </v-radio-group>

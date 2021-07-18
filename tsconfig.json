@@ -23,7 +23,10 @@
     "paths": {
       "@/*": [
         "src/*"
-      ]
+      ],
+      "crypto": [
+        "../../node_modules/crypto-js"
+        ]
     },
     "moduleResolution": "node",
   },

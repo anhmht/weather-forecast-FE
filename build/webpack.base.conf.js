@@ -41,7 +41,8 @@ module.exports = {
         alias: {
             vue$: "vue/dist/vue.esm.js",
             "@": resolve("src")
-        }
+        },
+        fallback: { crypto: false, fs: false, path: false }
     },
     module: {
         rules: [

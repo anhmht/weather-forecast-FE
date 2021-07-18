@@ -30,6 +30,8 @@ export default class AddUpdateTempInfoComponent extends Vue {
         customPosition: false,
         left: 0,
         top: 0,
+        placeId: null,
+        isProvince: false
     }
 
     get visbileTextBox() {
@@ -80,6 +82,8 @@ export default class AddUpdateTempInfoComponent extends Vue {
 
     handleSaveTextBox() {
         this.$emit('save', this.data);
+        console.log(this.data);
+        
         this.visbileTextBox = false
     }
 
@@ -94,6 +98,8 @@ export default class AddUpdateTempInfoComponent extends Vue {
                 customPosition: false,
                 left: 0,
                 top: 0,
+                placeId: this.location,
+                isProvince: this.isProvince
             }
         }
     }
