@@ -43,12 +43,9 @@
                                     <v-checkbox color="primary" hide-details></v-checkbox>
                                 </td>
                                 <td>
-                                    <div class="base-cms-right--body_table_title">
-                                        <img :src="item.imageUrl">
-                                        {{ item.title }}
-                                    </div>
+                                    <div class="base-cms-right--body_table_title">{{ item.title }}</div>
                                 </td>
-                                <td>{{ item.userPosted }}</td>
+                                <td>{{ item.createdFullName }}</td>
                                 <td>{{ $formatDateTime(item.datePosted) }}</td>
                                 <td class="base-cms-right--body_table_action">
                                     <v-icon @click.native="editDocument(item.eventId)" class="edit-action">mdi-square-edit-outline</v-icon>

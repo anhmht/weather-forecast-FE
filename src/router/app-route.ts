@@ -31,6 +31,7 @@ const CreateUserComponent = () => import("../page/cms/components/create-user/Cre
 
 const ListDocumentComponent = () => import("../page/cms/components/list-document/ListDocumentComponent.vue")
 const CreateDocumentComponent = () => import("../page/cms/components/create-document/CreateDocumentComponent.vue")
+const EditDocumentComponent = () => import("../page/cms/components/edit-document/EditDocumentComponent.vue")
 
 const homeRoutes = [
     { path: "/", redirect: { path: PATH.INFO } },
@@ -246,6 +247,15 @@ const adminRoutes = [
                 path: PATH.CREATE_DOCUMENT,
                 name: ROUTE_NAME.CREATE_DOCUMENT,
                 component: CreateDocumentComponent,
+                meta: {
+                    requiresAuth: true
+                },
+                props: {}
+            },
+            {
+                path: PATH.EDIT_DOCUMENT,
+                name: ROUTE_NAME.EDIT_DOCUMENT,
+                component: EditDocumentComponent,
                 meta: {
                     requiresAuth: true
                 },
