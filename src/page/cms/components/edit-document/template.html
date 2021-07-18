@@ -45,13 +45,14 @@
                                     <tr v-for="(item, index) in documents" :key="index">
                                         <td>
                                             <div class="base-cms-right--body_table_title">
-                                                <v-icon>{{ item.icon }}</v-icon>
-                                                {{ item.name }}
+                                                <img :src="item.icon">
+                                                <div @click="previewDocument(item.url)">{{ item.name }}</div>
                                             </div>
                                         </td>
                                         <td>{{ $formatDateTime(item.createDate) }}</td>
                                         <td>{{ item.contentLength }}</td>
                                         <td class="base-cms-right--body_table_action">
+                                            <v-icon @click.native="downloadDocument(item.url)" class="download-action">mdi-download</v-icon>
                                             <v-icon @click.native="deleteDocument(item.url)" class="delete-action">mdi-delete</v-icon>
                                         </td>
                                     </tr>
