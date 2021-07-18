@@ -1,5 +1,6 @@
 export default {
     uploadImage: 'api/Media/uploadImage/',
+    uploadFile: '/api/Media/uploadFile/',
     uploadAvatar: 'api/Media/uploadAvatar',
     uploadCSV: 'api/WeatherInformation/import-single-station'
 }

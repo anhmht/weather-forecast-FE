@@ -22,7 +22,7 @@ const LookupAction = namespace(storeModules.Lookup, Action);
         "custom-ckeditor": () => import("../../../../components/ckeditor"),
     }
 })
-export default class CreateDocumentComponent extends Vue {
+export default class EditDocumentComponent extends Vue {
     documents: any = [];
     uploadedFile: any = [];
     isUploading: boolean = false;
@@ -84,9 +84,9 @@ export default class CreateDocumentComponent extends Vue {
             });
             this.documents.push({
                 icon: this.getFileTypeIcon(this.uploadedFile[0].name.split('.')[1]),
-                fileName: this.uploadedFile[0].name,
-                dateUploaded: moment().format('DD/MM/YYYY HH:mm:ss'),
-                size: this.convertFileSize(this.uploadedFile[0].size),
+                name: this.uploadedFile[0].name,
+                createDate: moment().format('DD/MM/YYYY HH:mm:ss'),
+                contentLength: this.convertFileSize(this.uploadedFile[0].size),
                 url: response
             });
         }).catch(err => {
@@ -158,7 +158,7 @@ export default class CreateDocumentComponent extends Vue {
         }
     }
 
-    createDocument() {
+    editDocument() {
         //@ts-ignore
         this.valid = this.$refs.postForm.validate();
         if (this.valid) {
@@ -166,12 +166,12 @@ export default class CreateDocumentComponent extends Vue {
             this.isLoading = true;
             this.postModel.statusId = this.status.find(x => x.name === this.publishStatus).statusId;
 
-            this.postService.createPost(this.postModel).then(res => {
-                this.$toast.success('Tạo tin mới thành công');
+            this.postService.editPost(this.postModel).then(res => {
+                this.$toast.success('Chỉnh sửa tin thành công');
                 this.$router.go(-1);
                 this.isLoading = false;
             }).catch(err => {
-                this.$toast.error('Có lỗi khi tạo tin mới');
+                this.$toast.error('Có lỗi khi chỉnh sửa tin');
                 console.log(err);
                 this.isLoading = false;
             })
@@ -189,6 +189,29 @@ export default class CreateDocumentComponent extends Vue {
             console.log(error);
             this.isLoading = false;
         });
+        // Get event by id
+        this.postService.getPostById(this.$route.params.id).then((res: any) => {
+            this.postModel = res;
+            // this.documents = res.documents;
+            for (let i = 0; i < res.documents.length; i++) {
+                this.documents.push({
+                    icon: this.getFileTypeIcon(res.documents[i].name.split('.')[1]),
+                    name: res.documents[i].name,
+                    createDate: res.documents[i].createDate,
+                    contentLength: this.convertFileSize(res.documents[i].contentLength),
+                    url: res.documents[i].url
+                });
+            }
+            this.isLoading = false;
+        }).catch(error => {
+            console.log(error);
+            this.isLoading = false;
+        });
+
+        for (let i = 0; i < this.documents.length; i++) {
+            this.documents[i].icon = this.getFileTypeIcon(this.documents[i].name.split('.')[1]);
+            this.documents[i].contentLength = this.convertFileSize(this.documents[i].contentLength);
+        }
 
         this.getLookupData(lookupTypesStore.Set.STATUS);
     }

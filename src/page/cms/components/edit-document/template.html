@@ -5,7 +5,7 @@
                 mdi-arrow-left
             </v-icon>Back
         </v-btn>
-        <p>Tạo tin mới</p>
+        <p>Chỉnh sửa tin</p>
     </div>
     <v-form ref="postForm" v-model="valid" lazy-validation>
         <div class="base-cms-right--body_wrapper_inner">
@@ -46,11 +46,11 @@
                                         <td>
                                             <div class="base-cms-right--body_table_title">
                                                 <v-icon>{{ item.icon }}</v-icon>
-                                                {{ item.fileName }}
+                                                {{ item.name }}
                                             </div>
                                         </td>
-                                        <td>{{ $formatDateTime(item.dateUploaded) }}</td>
-                                        <td>{{ item.size }}</td>
+                                        <td>{{ $formatDateTime(item.createDate) }}</td>
+                                        <td>{{ item.contentLength }}</td>
                                         <td class="base-cms-right--body_table_action">
                                             <v-icon @click.native="deleteDocument(item.url)" class="delete-action">mdi-delete</v-icon>
                                         </td>
@@ -66,7 +66,7 @@
                 <div>Danh mục</div>
                 <v-select :items="category" item-text="name" item-value="categoryId" solo :rules="rules.categoryRules"
                     v-model="postModel.categoryId" readonly></v-select>
-                <v-btn depressed color="primary" @click="createDocument()">Lưu tin</v-btn>
+                <v-btn depressed color="primary" @click="editDocument()">Sửa tin</v-btn>
             </div>
         </div>
     </v-form>

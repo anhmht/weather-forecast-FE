@@ -9,6 +9,7 @@ export default interface IPost {
     imageNormalUrls?: string[];
     imageNormalDeletes?: string[];
     imageNormalAdds?: string[];
+    documents?: [ {name, url} ];
 }
 
 export class Post implements IPost {
@@ -22,6 +23,7 @@ export class Post implements IPost {
     imageNormalUrls?: string[];
     imageNormalDeletes?: string[];
     imageNormalAdds?: string[];
+    documents?: [ {name, url} ];
 
     constructor(option?: any) {
         this.eventId = option.eventId || null
@@ -34,5 +36,6 @@ export class Post implements IPost {
         this.imageNormalUrls = option.imageNormalUrls || []
         this.imageNormalDeletes = option.imageNormalDeletes || []
         this.imageNormalAdds = option.imageNormalAdds || []
+        this.documents = option.documents || []
     }
 }
