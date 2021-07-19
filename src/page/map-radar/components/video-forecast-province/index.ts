@@ -1,7 +1,7 @@
 import { sleep } from './../../../../utils/common-utils';
 import { ICON } from './../../../../constant/icon-constant';
 import { DataHelper } from './../../../../utils/data-helper';
-import { REGION, STATION, WEATHER_TYPE } from '@/constant/forcast-station-constant';
+import { MAP_PROVINCE, REGION, STATION, WEATHER_TYPE } from '@/constant/forcast-station-constant';
 import { ForecastSearchParam, IForecastSearchParam } from '@/model/forecast';
 import { WeatherServices } from '@/service/weather-service/weather.service';
 import Vue from 'vue';
@@ -70,15 +70,20 @@ export default class VideoForecastComponent extends Vue {
         return;
     }
 
-    getStationIdByProvince(ids) {
-        let stationId: any = [];
-        for (const element of ids) {
-            const station = STATION.find(x => x.place_id === element);
-            if (station) {
-                stationId.push(station.id);
+    getStationIdByProvince(placeId) {
+        const station = MAP_PROVINCE.find(x => x.placeId === placeId);
+        if (station) {
+            let stationId: any = [];
+            const ids = station.districtIds || [];
+            for (const element of ids) {
+                const station = STATION.find(x => x.place_id === element);
+                if (station) {
+                    stationId.push(station.id);
+                }
             }
+            return stationId;
         }
-        return stationId;
+        return [];
     }
 
     getHorizontal(stationId) {
@@ -154,7 +159,7 @@ export default class VideoForecastComponent extends Vue {
                         tempRange: this.getMinMaxData(contextTemp)
                     })
                     let clear = { timeout: null };
-                    await sleep(500, clear);
+                    await sleep(200, clear);
                 }
             }
         }).catch(err => {

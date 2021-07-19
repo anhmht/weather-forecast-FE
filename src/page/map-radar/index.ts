@@ -12,6 +12,7 @@ import { Watch } from 'vue-property-decorator';
 import { IForecastSearchParam, ForecastSearchParam } from '@/model/forecast';
 import { WEATHER_TYPE } from '@/constant/forcast-station-constant';
 import * as htmlToImage from 'html-to-image';
+// import * as HME from "h264-mp4-encoder";
 
 const COLOR = [
     'red', 'green', 'blue', 'yellow', 'DeepPink', 'DeepSkyBlue', 'GreenYellow', 'Lime', 'Thistle', 'NavajoWhite',
@@ -30,7 +31,8 @@ const COLOR = [
         "video-forecast": () => import("./components/video-forecast/VideoForecastComponent.vue"),
         "video-forecast-province": () => import("./components/video-forecast-province/VideoForecastProvinceComponent.vue"),
         "text-box": () => import("./components/text-box/TextBoxComponent.vue"),
-        "video-map-title": () => import("./components/video-map-title/VideoMapTitleComponent.vue")
+        "video-map-title": () => import("./components/video-map-title/VideoMapTitleComponent.vue"),
+        "custom-temp-info": () => import("./components/custom-video-forecast-province/CustomVideoForecastProvince.vue")
     },
     methods: {
         pushTextBox(element) {
@@ -38,12 +40,16 @@ const COLOR = [
         },
         displayMapTitle(element) {
             (this.$refs.mapTitle as any).renderMapTitle(element);
+        },
+        displayTempInfo(element) {
+            (this.$refs.tempInfo as any).renderProvinceData(element);
         }
     }
 })
 export default class HomePageComponent extends Vue {
     windy: any;
     media: any = null;
+    player: any = null
     videoStream: any = null;
     isRecording: boolean = false;
     isReview: boolean = false;
@@ -126,13 +132,15 @@ export default class HomePageComponent extends Vue {
         }
     }
 
-    handleDownload() {
+    async handleDownload() {
         const link = document.createElement("a");
-        link.href = this.media;
+        // const arrayBuffer = await new Response(this.media).arrayBuffer();
+        link.href = this.media
         link.setAttribute("download", "test-video"); //or any other extension
-        document.body.appendChild(link);
+        // document.body.appendChild(link);
         link.click();
-        document.body.removeChild(link);
+        // document.body.removeChild(link);
+
     }
 
     handleChangeMap(mapData) {
@@ -212,19 +220,28 @@ export default class HomePageComponent extends Vue {
         this.videoLayout = 'default'
     }
 
-    getFakeImage(placeId) {
+    async getFakeImage(placeId) {
         if (!this.isRecording) return;
         switch (placeId) {
             case 'TBB':
             case 'NTB':
             case 'DNB':
             case 'TQ':
-                var t0 = performance.now()
-                return htmlToImage.toJpeg(document.querySelector("#windy"), { quality: 0.25 }).then(dataUrl => {
-                    this.fakeImage = dataUrl;
-                    var t1 = performance.now()
-                    console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
-                });
+                await sleep(500, this.clearTimeout);
+                const canvas = document.getElementById('canvas') as any;
+                const context = canvas.getContext('2d');
+                context.canvas.width = window.innerWidth;
+                context.canvas.height = window.innerHeight;
+                context.drawImage(this.player, 0, 0, canvas.width, canvas.height);
+                this.fakeImage = canvas.toDataURL("image/png");
+                console.log(this.fakeImage);
+                // var t0 = performance.now()
+                // return htmlToImage.toJpeg(document.querySelector("#windy"), { quality: 0.25 }).then(dataUrl => {
+                //     this.fakeImage = dataUrl;
+                //     var t1 = performance.now()
+                //     console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
+                // });
+                break;
             default:
                 break;
         }
@@ -264,7 +281,7 @@ export default class HomePageComponent extends Vue {
     }
 
     async displayEachProvince(mapData, isProvince = false) {
-        await sleep(7000, this.clearTimeout);
+        await sleep(2000, this.clearTimeout);
         // this.mapTitle = {
         //     ...this.mapTitle,
         //     position: this.mapTitle.position === 'right animate__fadeInRightBig' ? 'right animate__fadeOutRightBig' : 'left animate__fadeOutLeftBig'
@@ -273,7 +290,7 @@ export default class HomePageComponent extends Vue {
         this.isShowVideoForecase = false;
         this.boxData = null;
         this.videoLayout = mapData.layout;
-        this.provinceData = isProvince ? mapData.districtIds : mapData.placeId;
+        this.provinceData = mapData.placeId;
         this.isShowVideoForecaseProvince = true;
 
     }
@@ -290,6 +307,12 @@ export default class HomePageComponent extends Vue {
         if (!title) return;
         //@ts-ignore
         this.displayMapTitle(title);
+    }
+
+    handleTempInfo(tempInfo) {
+        if (!tempInfo) return;
+        //@ts-ignore
+        this.displayTempInfo(tempInfo);
     }
 
     async handleChangeRegion(mapData) {
@@ -312,7 +335,7 @@ export default class HomePageComponent extends Vue {
         let destination = layer ? layer.getBounds() : null;
         if (mapData.placeId === 'TBB' || mapData.placeId === 'NTB' || mapData.placeId === 'DNB' || mapData.placeId === 'TQ') {
             this.isDisplayFake = true;
-            await sleep(500, this.clearTimeout);
+            await sleep(1000, this.clearTimeout);
             method = 'flyToBounds';
             duration = 0.5;
         };
@@ -504,52 +527,49 @@ export default class HomePageComponent extends Vue {
     async capture() {
         this.isRecording = true;
         const vm = this as any;
+        this.player = document.getElementById('player') as any;
         //@ts-ignore
         return await navigator.mediaDevices.getDisplayMedia({
-            video: {
-                width: { ideal: 1280 },
-                height: { ideal: 720 },
-                mediaSource: "screen", cursor: false
-            }
-        })
-            .then(function (stream) {
-                //@ts-ignore
-                vm.videoStream = new MediaRecorder(stream);
-                const chunks = [];
-                vm.videoStream.ondataavailable = e => chunks.push(e.data);
-                stream.getVideoTracks()[0].onended = () => {
-                    // Click on browser UI stop sharing button
-                    console.info("Recording has ended");
-                    setTimeout(() => {
-                        vm.handleClearTimeout(true);
-                        const completeBlob = new Blob(chunks, {
-                            type: chunks[0].type
-                        });
-                        vm.isDisplayDialog = true;
-                        vm.media = URL.createObjectURL(completeBlob);
-                        vm.isRecording = false;
-
-                    }, 500);
-                };
-                vm.videoStream.onstop = e => {
+            video: true, audio: true
+        }).then(function (stream) {
+            vm.player.srcObject = stream;
+            //@ts-ignore
+            vm.videoStream = new MediaRecorder(stream);
+            const chunks = [];
+            vm.videoStream.ondataavailable = e => chunks.push(e.data);
+            stream.getVideoTracks()[0].onended = () => {
+                // Click on browser UI stop sharing button
+                console.info("Recording has ended");
+                setTimeout(() => {
+                    vm.handleClearTimeout(true);
                     const completeBlob = new Blob(chunks, {
-                        type: chunks[0].type
+                        type: 'video/mp4'
                     });
                     vm.isDisplayDialog = true;
                     vm.media = URL.createObjectURL(completeBlob);
                     vm.isRecording = false;
 
-                    stream.getTracks().forEach(track => track.stop())
-                };
-                vm.videoStream.onerror = () => {
-                    vm.isRecording = false;
-                };
-                vm.videoStream.start();
-            })
-            .catch(err => {
-                this.handleClearTimeout()
+                }, 500);
+            };
+            vm.videoStream.onstop = e => {
+                const completeBlob = new Blob(chunks, {
+                    type: 'video/mp4'
+                });
+                vm.isDisplayDialog = true;
+                vm.media = URL.createObjectURL(completeBlob);
                 vm.isRecording = false;
-            });
+
+                stream.getTracks().forEach(track => track.stop())
+            };
+            vm.videoStream.onerror = () => {
+                vm.isRecording = false;
+            };
+            vm.videoStream.start();
+        })
+        .catch(err => {
+            this.handleClearTimeout()
+            vm.isRecording = false;
+        });
     }
 
     handleOpenScenario() {
@@ -576,6 +596,7 @@ export default class HomePageComponent extends Vue {
             this[iterator.action] = iterator;
             this.handleTextBox(iterator.textBox);
             this.handleMapTitle(iterator.title);
+            this.handleTempInfo(iterator.tempInfo)
             if (this.isStop) {
                 this.isStop = false;
                 break;
@@ -627,13 +648,15 @@ export default class HomePageComponent extends Vue {
         };
 
         localStorage.setItem('settings_particles', '{"multiplier":0.8,"velocity":1.8,"width":0.5,"blending":0.93,"opacity":0.6}')
-        localStorage.setItem('settings_lang', '"vi"')
+        // localStorage.setItem('settings_lang', '"vi"')
         // @ts-ignore
         windyInit(options, async windyAPI => {
             // windyAPI is ready, and contain 'map', 'store',
             // 'picker' and other usefull stuff
             this.windy = windyAPI;
             const { map, overlays, store } = this.windy;
+            //@ts-ignore
+            map.removeLayer(W.labelsLayer);
             const levels = store.getAllowed('availLevels');
             console.log(levels);
 
@@ -680,7 +703,7 @@ export default class HomePageComponent extends Vue {
                 }
             });
             map.fitBounds(vnBorder.getBounds(), { maxZoom: 12, duration: 1.5, easeLinearity: 0.2 });
-            map.invalidateSize()
+            // map.invalidateSize()
             this.layerGroup.addLayer(vnBorder);
             this.layerGroup.addTo(map);
             // setInterval(function () {

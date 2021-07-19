@@ -18,3 +18,16 @@
         justify-content: flex-end;
     }
 }
+
+.add-update-content {
+    &.v-dialog {
+        overflow-y: unset;
+        header {
+            position: sticky;
+        }
+        .v-card__text {
+            overflow-y: auto;
+            max-height: 600px;
+        }
+    }
+}

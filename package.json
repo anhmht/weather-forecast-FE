@@ -39,6 +39,7 @@
     "gh-pages": "^3.1.0",
     "gif.js": "^0.2.0",
     "gif.js.optimized": "^1.0.1",
+    "h264-mp4-encoder": "^1.0.12",
     "html-loader": "^2.1.2",
     "html-to-image": "^1.6.2",
     "html-webpack-plugin": "^5.3.1",
@@ -89,6 +90,10 @@
     "eslint-plugin-vue": "^6.2.2",
     "vue-template-compiler": "^2.6.11"
   },
+  "browser": {
+    "crypto": false,
+    "stream": false
+    },
   "eslintConfig": {
     "root": true,
     "env": {

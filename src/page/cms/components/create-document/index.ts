@@ -4,6 +4,14 @@ import { Post } from "@/model/post";
 import IPost from "@/model/post/post.model";
 import ICategory from '@/model/category/category.model';
 import IStatus from "@/model/status/status.model";
+import excel from "../../../../../static/img/file-type-icon/excel.png";
+import file from "../../../../../static/img/file-type-icon/file.png";
+import pdf from "../../../../../static/img/file-type-icon/pdf.png";
+import picture from "../../../../../static/img/file-type-icon/picture.png";
+import powerpoint from "../../../../../static/img/file-type-icon/powerpoint.png";
+import videoPlayer from "../../../../../static/img/file-type-icon/video-player.png";
+import word from "../../../../../static/img/file-type-icon/word.png";
+import zip from "../../../../../static/img/file-type-icon/zip.png";
 import { namespace, Getter, Action } from "vuex-class";
 import { storeModules } from '@/store';
 import lookupTypesStore from '@/store/lookup/lookup-types.store';
@@ -106,25 +114,38 @@ export default class CreateDocumentComponent extends Vue {
 
         switch(fileExtension) {
             case 'doc':
-                icon = 'mdi-file-word';
-                break;
             case 'docx':
-                icon = 'mdi-file-word';
+                icon = word;
                 break;
             case 'xls':
-                icon = 'mdi-file-excel';
-                break;
             case 'xlsx':
-                icon = 'mdi-file-excel';
+                icon = excel;
                 break;
             case 'ppt':
-                icon = 'mdi-file-powerpoint';
-                break;
             case 'pptx':
-                icon = 'mdi-file-powerpoint';
+                icon = powerpoint;
+                break;
+            case 'pdf':
+                icon = pdf;
+                break;
+            case 'jpg':
+            case 'tif':
+            case 'png':
+            case 'gif':
+                icon = picture;
+                break;
+            case 'zip':
+            case '7z':
+            case 'rar':
+                icon = zip;
+                break;
+            case 'mp4':
+            case 'mov':
+            case 'avi':
+                icon = videoPlayer;
                 break;
             default:
-                icon = 'mdi-file';
+                icon = file;
                 break;
         }
 
@@ -155,6 +176,13 @@ export default class CreateDocumentComponent extends Vue {
             if (this.postModel.documents[i].url === documentUrl) {
                 this.postModel.documents.splice(i, 1);
             }
+        }
+    }
+
+    previewDocument(documentUrl) {
+        let extraWindow = window.open(`https://docs.google.com/viewerng/viewer?url=${documentUrl}`);
+        if (extraWindow) {
+            extraWindow.location.reload();
         }
     }
 

@@ -91,6 +91,8 @@ export default class AddUpdateContentComponent extends Vue {
         customPosition: false,
         left: 0,
         top: 0,
+        placeId: null,
+        isProvince: false
     }
 
     rules = {
@@ -183,8 +185,12 @@ export default class AddUpdateContentComponent extends Vue {
                 customPosition: false,
                 left: 0,
                 top: 0,
+                placeId: this.data.data,
+                isProvince: this.data.method === 'handleClick'
             }
         }
+        this.tempInfo.placeId = this.data.data ? DataHelper.deepClone(this.data.data) : null,
+        this.tempInfo.isProvince = this.data.method === 'handleClick'
         return this.tempInfo
     }
 
@@ -304,11 +310,19 @@ export default class AddUpdateContentComponent extends Vue {
                 customPosition: false,
                 left: 0,
                 top: 0,
+                placeId: null,
+                isProvince: false
             }
         }
 
         //@ts-ignore
         this.$refs.contentForm.resetValidation();
+    }
+
+    handleChangeMethod(val) {
+        this.data.data = null;
+        this.data.title = null;
+        this.data.tempInfo = null;
     }
 
     @Watch('value')
@@ -349,6 +363,8 @@ export default class AddUpdateContentComponent extends Vue {
                 customPosition: false,
                 left: 0,
                 top: 0,
+                placeId: null,
+                isProvince: false
             }
         }
     }
