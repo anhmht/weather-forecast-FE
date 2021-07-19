@@ -1,7 +1,7 @@
 import { ApiResponse } from "@/model/app-config";
 import { GenericServices } from "../generic-service/generic.service";
 import Uri from "@/constant/uri/extremephenomenon-constant";
-import { IExtremePhenomenonsSearchParams } from "@/model/extreme-phenomenon";
+import { IExtremePhenomenon, IExtremePhenomenonsSearchParams } from "@/model/extreme-phenomenon";
 
 export class ExtremePhenomenonServices extends GenericServices {
     getAllExtremePhenomenons(payload: IExtremePhenomenonsSearchParams): Promise<ApiResponse> {
@@ -13,6 +13,25 @@ export class ExtremePhenomenonServices extends GenericServices {
     getExtremePhenomenonById(id: string): Promise<ApiResponse> {
         const uri = Uri.getExtremePhenomenonById.replace(":id", id)
         return this.executeSelecting({}, uri).then((response: ApiResponse) => {
+            return Promise.resolve(response)
+        }).catch(error => Promise.reject(error))
+    }
+
+    createExtremePhenomenon(payload: IExtremePhenomenon): Promise<ApiResponse> {
+        return this.executeSelectingPost(payload, Uri.updateExtremePhenomenon).then((response: ApiResponse) => {
+            return Promise.resolve(response)
+        }).catch(error => Promise.reject(error))
+    }
+
+    updateExtremePhenomenon(payload: IExtremePhenomenon): Promise<ApiResponse> {
+        return this.executeSelectingPut(payload, Uri.updateExtremePhenomenon).then((response: ApiResponse) => {
+            return Promise.resolve(response)
+        }).catch(error => Promise.reject(error))
+    }
+
+    deleteExtremePhenomenon(id: string): Promise<ApiResponse> {
+        const uri = Uri.getExtremePhenomenonById.replace(":id", id)
+        return this.executeDeletingWith(id, uri).then((response: ApiResponse) => {
             return Promise.resolve(response)
         }).catch(error => Promise.reject(error))
     }

@@ -1,0 +1,132 @@
+
+.edit-local-component {
+    .base-cms-right--body {
+        &_top {
+            margin-bottom: 20px;
+            // title
+            > p {
+                font-size: 23px;
+                flex: 1;
+                margin: 0;
+                white-space: normal
+            }
+        }
+
+        &_wrapper_inner {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+
+            .base-cms-right--body_phenomena {
+                &_right {
+                    background-color: #fff;
+                    order: 2;
+                    flex: 0 0 calc(70% - 30px);
+                    
+                    &--header {
+                        padding: 15px;
+                        border-bottom: 1px solid rgba(0,0,0,.12);
+                        > p {
+                            font-size: 20px;
+                            flex: 1;
+                            margin: 0;
+                            white-space: normal;
+                            font-weight: 500;
+                        }
+                    }
+
+                    &--content {
+                        padding: 0 0 20px 0;
+                    }
+                }
+
+                &_left {
+                    height: 100%;
+                    background-color: #fff;
+                    order: 1;
+                    flex: 0 0 30%;
+
+                    &--content {
+                        padding: 20px 20px 10px 20px;
+                    }
+
+                    &--footer {
+                        border-top: 1px solid rgba(0,0,0,.12);
+                        padding: 20px;
+                    }
+                }
+            }
+        }
+        
+        &_table {
+            background-color: #fff;
+            margin-top: 0;
+
+            &_header {
+                font-size: 14px;
+                color: #949494;
+                white-space: nowrap;
+                &_checkbox {
+                    align-items: center;
+                    > div {
+                        height: 100%;
+                        .v-input__control {
+                            width: 0px !important;
+                        }
+                    }
+                }
+            }
+            &_title {
+                display: flex;
+                align-items: center;
+                padding: 10px 0;
+                font-weight: 600;
+                img {
+                    margin-right: 20px;
+                    width: 50px;
+                    height: 50px;
+                    border-radius: 4px;
+                }
+            }
+
+            &_action {
+                white-space: nowrap;
+                font-size: 14px !important;
+                cursor: pointer;
+                text-align: right;
+            }
+            .delete-action {
+                color: #D50000;
+            }
+            .edit-action {
+                color: #2196f3;
+            }
+        }
+    }
+}
+
+.base-cms-dialog {
+    background-color: #fff;
+
+    &-header {
+        padding: 20px;
+        border-bottom: 1px solid rgba(0,0,0,.12);
+
+        > p {
+            font-size: 23px;
+            flex: 1;
+            margin: 0 !important;
+            white-space: normal;
+            font-weight: 500;
+        }
+    }
+
+    &-body {
+        padding: 20px;
+        .btn-cancel {
+            span {
+                color: rgba(0,0,0,.87);
+            }
+        }
+    }
+}

@@ -30,6 +30,7 @@ export const ROUTE_NAME = {
     CREATE_DOCUMENT: 'create-document',
     LIST_LOCAL: "list-local",
     EDIT_DOCUMENT: 'edit-document',
+    EDIT_LOCAL: 'edit-local',
 }
 
 export const PATH = {
@@ -64,4 +65,5 @@ export const PATH = {
     CREATE_DOCUMENT: 'create-document',
     LIST_LOCAL: "list-local",
     EDIT_DOCUMENT: 'edit-document/:id',
+    EDIT_LOCAL: 'edit-local/:id',
 }
