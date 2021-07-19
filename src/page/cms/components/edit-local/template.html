@@ -10,13 +10,13 @@
         </div>
         <v-form ref="postForm" lazy-validation>
             <div class="base-cms-right--body_wrapper_inner">
-                <div class="base-cms-right--body_phenomena_left">
-                    <div class="base-cms-right--body_phenomena_left--header d-flex align-center">
+                <div class="base-cms-right--body_phenomena_right">
+                    <div class="base-cms-right--body_phenomena_right--header d-flex align-center">
                         <p>Hiện tượng</p>
                         <v-spacer></v-spacer>
                         <v-btn depressed color="primary" @click="handleAddContent()">+ Tạo mới</v-btn>
                     </div>
-                    <div class="base-cms-right--body_table base-cms-right--body_phenomena_left--content">
+                    <div class="base-cms-right--body_table base-cms-right--body_phenomena_right--content">
                         <template>
                             <v-simple-table fixed-header height="calc(100vh - 500px)">
                                 <template v-slot:default>
@@ -35,8 +35,8 @@
                                             <td>{{ item.name }}</td>
                                             <td>{{ item.content }}</td>
                                             <td class="base-cms-right--body_table_action">
-                                                <v-icon @click.native="handleEditContent(item.id)" class="edit-action">mdi-square-edit-outline</v-icon>
-                                                <v-icon @click.native="handleDeleteContent(item.id)" class="delete-action">mdi-delete</v-icon>
+                                                <v-icon @click.native="handleEditContent(index)" class="edit-action">mdi-square-edit-outline</v-icon>
+                                                <v-icon @click.native="handleDeleteContent(index)" class="delete-action">mdi-delete</v-icon>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -46,8 +46,8 @@
                     </div>
                 </div>
 
-                <div class="base-cms-right--body_phenomena_right">
-                    <div class="base-cms-right--body_phenomena_right--content">
+                <div class="base-cms-right--body_phenomena_left">
+                    <div class="base-cms-right--body_phenomena_left--content">
                         <div class="mb-2">Tỉnh</div>
                         <v-select :items="lookupProvince" item-text="name" item-value="id"
                             outlined dense hide-details class="mb-4"
@@ -70,7 +70,7 @@
                             </v-date-picker>
                         </v-menu>
                     </div>
-                    <div class="base-cms-right--body_phenomena_right--footer d-flex justify-end">
+                    <div class="base-cms-right--body_phenomena_left--footer d-flex justify-end">
                         <v-btn depressed color="primary" @click="handleSave()">Lưu hiện tượng</v-btn>
                     </div>
                 </div>
@@ -78,5 +78,41 @@
         </v-form>
         <loading :is-loading="isLoading" absolute/>
     </div>
+    <v-dialog v-model="isDisplayDialog" persistent max-width="700">
+		<div class="base-cms-dialog">
+            <div class="base-cms-dialog-header d-flex align-center">
+                <p class="mr-auto">{{ currentRowIndex === -1 ? 'Tạo hiện tượng': 'Chỉnh sửa hiện tượng'}}</p>
+                <div class="base-cms-dialog-header--action">
+                    <v-btn @click="isDisplayDialog = false" icon color="#C5C5C5">
+                        <v-icon>mdi-close</v-icon>
+                    </v-btn>
+                </div>
+            </div>
+            <div class="base-cms-dialog-body">
+				<div class="mb-1">Tên</div>
+                <v-text-field :rules="rules.title" v-model="currentRow.name" outlined dense  hide-details class="mb-4"></v-text-field>
+				<div class="mb-1">Nội dung</div>
+                <v-textarea
+                    outlined
+                    rows="6"
+                    row-height="30"
+                    v-model="currentRow.content"
+                    class="mb-4"
+              ></v-textarea>
+				<div class="base-cms-dialog-body--action d-flex justify-end">
+					<v-btn
+                        color="#C5C5C5"
+                        depressed
+                        large
+                        outlined 
+                        @click="isDisplayDialog = false"
+                        class="mr-4 btn-cancel">Hủy</v-btn>
+					<v-btn depressed
+                        large
+                        @click="addContent()" color="primary">{{ currentRowIndex === -1 ? 'Tạo': 'Lưu'}}</v-btn>
+				</div>
+            </div>
+        </div>
+	</v-dialog>
 </div>
 

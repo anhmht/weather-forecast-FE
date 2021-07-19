@@ -18,10 +18,10 @@
             justify-content: space-between;
 
             .base-cms-right--body_phenomena {
-                &_left {
+                &_right {
                     background-color: #fff;
-                    order: 1;
-                    flex: 0 0 65%;
+                    order: 2;
+                    flex: 0 0 calc(70% - 30px);
                     
                     &--header {
                         padding: 15px;
@@ -40,10 +40,10 @@
                     }
                 }
 
-                &_right {
+                &_left {
                     height: 100%;
                     background-color: #fff;
-                    order: 2;
+                    order: 1;
                     flex: 0 0 30%;
 
                     &--content {
@@ -93,13 +93,39 @@
                 white-space: nowrap;
                 font-size: 14px !important;
                 cursor: pointer;
-                text-align: center;
+                text-align: right;
             }
             .delete-action {
                 color: #D50000;
             }
             .edit-action {
                 color: #2196f3;
+            }
+        }
+    }
+}
+
+.base-cms-dialog {
+    background-color: #fff;
+
+    &-header {
+        padding: 20px;
+        border-bottom: 1px solid rgba(0,0,0,.12);
+
+        > p {
+            font-size: 23px;
+            flex: 1;
+            margin: 0 !important;
+            white-space: normal;
+            font-weight: 500;
+        }
+    }
+
+    &-body {
+        padding: 20px;
+        .btn-cancel {
+            span {
+                color: rgba(0,0,0,.87);
             }
         }
     }

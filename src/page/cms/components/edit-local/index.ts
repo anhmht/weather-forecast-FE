@@ -4,7 +4,7 @@ import Component from "vue-class-component";
 import { storeModules } from '@/store';
 import lookupTypesStore, {GeneralLookupTypes} from '@/store/lookup/lookup-types.store';
 import { ExtremePhenomenonServices } from '../../../../service/extreme-phenomenon-service/extreme-phenomenon.service';
-import { ExtremePhenomenon, IExtremePhenomenon } from '@/model/extreme-phenomenon';
+import { ExtremePhenomenon, ExtremePhenomenonDetail, IExtremePhenomenon, IExtremePhenomenonDetail } from '@/model/extreme-phenomenon';
 import moment from 'moment';
 
 const LookupAction = namespace(storeModules.Lookup, Action);
@@ -12,7 +12,6 @@ const LookupGetter = namespace(storeModules.Lookup, Getter);
 @Component({
     template: require("./template.html").default,
     components: {
-        "base-container": () => import("../../components/base-container/BaseContainerComponent.vue"),
     }
 })
 export default class EditLocalComponent extends Vue {
@@ -24,6 +23,13 @@ export default class EditLocalComponent extends Vue {
     isLoading: boolean = false;
     id: string = '';
     data: IExtremePhenomenon = new ExtremePhenomenon({});
+    currentRow: IExtremePhenomenonDetail = new ExtremePhenomenonDetail({});
+    currentRowIndex: number = -1;
+    isDisplayDialog: boolean = false;
+    
+    rules = {
+        title: [v => !!v || 'Vui lòng nhập tiêu đề'],
+    }
     
     get lookupProvince () {
         let list = this.dtoLookupData[GeneralLookupTypes.PROVINCE] || []
@@ -38,7 +44,7 @@ export default class EditLocalComponent extends Vue {
     }
 
     get coList () {
-        return [];
+        return this.data.details || [];
     }
 
     get selectedDate () {
@@ -99,15 +105,36 @@ export default class EditLocalComponent extends Vue {
     }
 
     handleAddContent () {
-
+        this.currentRowIndex = -1;
+        this.currentRow = new ExtremePhenomenonDetail({});
+        this.isDisplayDialog = true;
     }
 
-    handleEditContent (id: string) {
-
+    addContent () {
+        this.isDisplayDialog = false;
+        if (this.currentRowIndex === -1) {
+            this.data.details.push(this.currentRow);
+        } else {
+            if (this.data.details[this.currentRowIndex]) {
+                this.data.details[this.currentRowIndex] = this.currentRow;
+            }
+        }
     }
 
-    handleDeleteContent (id: string) {
+    handleEditContent (index: number) {
+        let row = this.data.details[index];
+        if (row) {
+            this.currentRowIndex = index;
+            this.currentRow = {...row};
+            this.isDisplayDialog = true;
+        }
+    }
 
+    handleDeleteContent (index: number) {
+        let row = this.data.details[index];
+        if (row) {
+            this.data.details.splice(index, 1);
+        }
     }
 
     handleFilterDate (value) {
