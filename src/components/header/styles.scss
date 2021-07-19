@@ -171,3 +171,23 @@
         }
     }
 }
+.box-card {
+    background: #fff;
+    border-radius: 10px;
+    width: 100%;
+    color: #000;
+    margin: 0 0 20px 0;
+    &-header {
+        position: relative;
+        padding: 10px 15px;
+        border-bottom: 1px solid #ddd;
+        h1 {
+            font-weight: bold;
+            font-size: 22px;
+        }
+        
+    }
+    &-body {
+        padding: 15px;
+    }
+}
