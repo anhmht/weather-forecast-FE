@@ -186,6 +186,13 @@ export default class EditDocumentComponent extends Vue {
         }
     }
 
+    downloadDocument(item) {
+        const downloadLink = document.createElement('a');
+        downloadLink.setAttribute('href', item.url);
+        downloadLink.setAttribute('download', item.name);
+        downloadLink.click();
+    }
+
     editDocument() {
         //@ts-ignore
         this.valid = this.$refs.postForm.validate();

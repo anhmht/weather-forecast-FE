@@ -1,63 +1,65 @@
-<div class="base-cms-right--body_wrapper">
-    <div class="base-cms-right--body_top">
-        <v-btn class="ma-2" color="" dark @click="handleBack()">
-            <v-icon dark left>
-                mdi-arrow-left
-            </v-icon>Back
-        </v-btn>
-        <p>Tạo tài khoản</p>
-    </div>
-    <v-form ref="postForm" v-model="valid" lazy-validation>
-        <div class="base-cms-right--body_wrapper_inner">
-            <div class="base-cms-right--body_account">
-                <div class="base-cms-right--body_account_left">
-                    <div>Họ</div>
-                    <v-text-field solo :rules="rules.firstName" v-model="userModel.firstName"></v-text-field>
-                    <div>Tên tài khoản</div>
-                    <v-text-field solo :rules="rules.userName" v-model="userModel.userName"></v-text-field>
-                    <div>Mật khẩu</div>
-                    <v-text-field solo :rules="rules.password" v-model="userModel.password"
-                        type="password" :append-icon="isShowPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                        :type="isShowPassword ? 'text' : 'password'"
-                        @click:append="isShowPassword = !isShowPassword"></v-text-field>
-                </div>
-                <div class="base-cms-right--body_account_right">
-                    <div>Tên</div>
-                    <v-text-field solo :rules="rules.lastName" v-model="userModel.lastName"></v-text-field>
-                    <div>Email</div>
-                    <v-text-field solo :rules="rules.email" v-model="userModel.email"></v-text-field>
-                </div>
-            </div>
-
-            <div class="base-cms-right--body_type">
-                <div>Chọn loại tài khoản</div>
-                <v-radio-group v-model="userModel.roleNames" column multiple>
-                    <v-radio label="Admin" value="Admin"></v-radio>
-                    <p>Đăng các bài viết cảnh báo thiên tai, thông tin khuyến cáo, cộng đồng</p>
-                    <v-radio label="Đài truyền hình" value="DTH"></v-radio>
-                    <p>Xuất video, tạo kịch bản trên bản đồ, quản lí video</p>
-                </v-radio-group>
-            </div>
-
-            <div class="base-cms-right--body_setting">
-                <div class="base-cms-right--body_setting--upload">
-                    <div style="position: relative;">
-                        <div>Hình ảnh</div>
-                        <img :src="uploadedDocs" />
-                        <v-progress-circular v-if="progress > 0" class="progress-bar" :rotate="-90" :size="100"
-                            :width="15" :value="progress" color="primary">
-                            {{ progress }}
-                        </v-progress-circular>
-                    </div>
-                    <div class="base-cms-right--body_setting--upload_btn">
-                        <input ref="upload" type="file" @change="onChangeDocuments($event.target.files)" title="" hidden
-                            accept="image/*" />
-                        <v-btn elevation="2" @click="handleClickBrowse">Upload</v-btn>
-                    </div>
-                </div>
-                <v-btn depressed color="primary" @click="createUser()">Tạo tài khoản</v-btn>
-            </div>
+<div class="create-user-container">
+    <div class="base-cms-right--body_wrapper">
+        <div class="base-cms-right--body_top">
+            <v-btn class="ma-2" color="" dark @click="handleBack()">
+                <v-icon dark left>
+                    mdi-arrow-left
+                </v-icon>Quay lại
+            </v-btn>
+            <p>Tạo tài khoản</p>
         </div>
-    </v-form>
-    <loading :is-loading="isLoading" absolute/>
+        <v-form ref="postForm" v-model="valid" lazy-validation>
+            <div class="base-cms-right--body_wrapper_inner">
+                <div class="base-cms-right--body_account">
+                    <div class="base-cms-right--body_account_left">
+                        <div>Họ</div>
+                        <v-text-field solo :rules="rules.firstName" v-model="userModel.firstName"></v-text-field>
+                        <div>Tên tài khoản</div>
+                        <v-text-field solo :rules="rules.userName" v-model="userModel.userName"></v-text-field>
+                        <div>Mật khẩu</div>
+                        <v-text-field solo :rules="rules.password" v-model="userModel.password"
+                            type="password" :append-icon="isShowPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                            :type="isShowPassword ? 'text' : 'password'"
+                            @click:append="isShowPassword = !isShowPassword"></v-text-field>
+                    </div>
+                    <div class="base-cms-right--body_account_right">
+                        <div>Tên</div>
+                        <v-text-field solo :rules="rules.lastName" v-model="userModel.lastName"></v-text-field>
+                        <div>Email</div>
+                        <v-text-field solo :rules="rules.email" v-model="userModel.email"></v-text-field>
+                    </div>
+                </div>
+    
+                <div class="base-cms-right--body_type">
+                    <div>Chọn loại tài khoản</div>
+                    <v-radio-group v-model="userModel.roleNames" column multiple>
+                        <v-radio label="Admin" value="Admin"></v-radio>
+                        <p>Đăng các bài viết cảnh báo thiên tai, thông tin khuyến cáo, cộng đồng</p>
+                        <v-radio label="Đài truyền hình" value="DTH"></v-radio>
+                        <p>Xuất video, tạo kịch bản trên bản đồ, quản lí video</p>
+                    </v-radio-group>
+                </div>
+    
+                <div class="base-cms-right--body_setting">
+                    <div class="base-cms-right--body_setting--upload">
+                        <div style="position: relative;">
+                            <div>Hình ảnh</div>
+                            <img :src="uploadedDocs" />
+                            <v-progress-circular v-if="progress > 0" class="progress-bar" :rotate="-90" :size="100"
+                                :width="15" :value="progress" color="primary">
+                                {{ progress }}
+                            </v-progress-circular>
+                        </div>
+                        <div class="base-cms-right--body_setting--upload_btn">
+                            <input ref="upload" type="file" @change="onChangeDocuments($event.target.files)" title="" hidden
+                                accept="image/*" />
+                            <v-btn elevation="2" @click="handleClickBrowse">Upload</v-btn>
+                        </div>
+                    </div>
+                    <v-btn depressed color="primary" @click="createUser()">Tạo tài khoản</v-btn>
+                </div>
+            </div>
+        </v-form>
+        <loading :is-loading="isLoading" absolute/>
+    </div>
 </div>

@@ -1,81 +1,87 @@
-.base-cms-right--body {
-    &_wrapper_inner {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-    }
-
-    &_top {
-        p {
-            font-size: 30px;
-        }
-    }
-
-    &_account {
-        background-color: #fff;
-        padding: 20px;
-        order: 1;
-        flex: 0 0 65%;
-        display: flex;
-
-        &_left {
-            width: 50%;
-            padding-right: 10px;
-        }
-
-        &_right {
-            width: 50%;
-            padding-left: 10px;
-        }
-    }
-
-    &_type {
-        background-color: #fff;
-        padding: 20px;
-        order: 1;
-        flex: 0 0 65%;
-
-        .v-input--selection-controls.v-input {
-            border: 1px solid;
-            padding: 20px;
-        }
-
-        p {
-            padding-left: 30px;
-        }
-    }
-
-    &_setting {
-        background-color: #fff;
-        padding: 20px;
-        order: 2;
-        flex: 0 0 30%;
-        margin-left: 20px;
-        transform: translateY(-343px);
-        height: 280px;
-        
-        .progress-bar {
-            height: 100px;
-            width: 100px;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-        button {
-            margin-top: 20px;
-            float: right;
-        }
-        &--upload {
+.create-user-container {
+    .base-cms-right--body {
+        &_wrapper_inner {
             display: flex;
-            img {
-                width: 150px;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+    
+        &_top {
+            .ma-2 {
+                float: right;
             }
-            &_btn {
-                flex: 1;
+
+            p {
+                font-size: 30px;
+            }
+        }
+    
+        &_account {
+            background-color: #fff;
+            padding: 20px;
+            order: 1;
+            flex: 0 0 65%;
+            display: flex;
+    
+            &_left {
+                width: 50%;
+                padding-right: 10px;
+            }
+    
+            &_right {
+                width: 50%;
+                padding-left: 10px;
+            }
+        }
+    
+        &_type {
+            background-color: #fff;
+            padding: 20px;
+            order: 1;
+            flex: 0 0 65%;
+    
+            .v-input--selection-controls.v-input {
+                border: 1px solid;
+                padding: 20px;
+            }
+    
+            p {
+                padding-left: 30px;
+            }
+        }
+    
+        &_setting {
+            background-color: #fff;
+            padding: 20px;
+            order: 2;
+            flex: 0 0 30%;
+            margin-left: 20px;
+            transform: translateY(-343px);
+            height: 280px;
+            
+            .progress-bar {
+                height: 100px;
+                width: 100px;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+            button {
+                margin-top: 20px;
+                float: right;
+            }
+            &--upload {
                 display: flex;
-                align-items: center;
-                justify-content: center;
+                img {
+                    width: 150px;
+                }
+                &_btn {
+                    flex: 1;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
             }
         }
     }

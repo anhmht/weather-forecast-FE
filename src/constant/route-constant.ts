@@ -63,7 +63,7 @@ export const PATH = {
     CREATE_USER: 'create-user/:role',
     LIST_DOCUMENT: 'list-document',
     CREATE_DOCUMENT: 'create-document',
-    LIST_LOCAL: "list-local/:role",
-    EDIT_DOCUMENT: 'edit-document',
-    EDIT_LOCAL: 'edit-local/:role/:id',
+    LIST_LOCAL: "list-local",
+    EDIT_DOCUMENT: 'edit-document/:id',
+    EDIT_LOCAL: 'edit-local/:id',
 }

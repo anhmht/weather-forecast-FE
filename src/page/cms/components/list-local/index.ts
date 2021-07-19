@@ -91,14 +91,14 @@ export default class ListLocalComponent extends Vue {
     handleAdd () {
         this.$router.push({
             name: ROUTE_NAME.EDIT_LOCAL,
-            params: { role: this.$route.params.role, id: null }
+            params: { id: null }
         });
     }
 
     handleEdit (id: string) {
         this.$router.push({
             name: ROUTE_NAME.EDIT_LOCAL,
-            params: { role: this.$route.params.role, id: id }
+            params: { id: id }
         });
     }
 

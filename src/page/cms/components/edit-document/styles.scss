@@ -1,86 +1,93 @@
-.base-cms-right--body {
-    &_wrapper_inner {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-    }
-
-    &_top {
-        p {
-            font-size: 30px;
-        }
-    }
-
-    &_title {
-        background-color: #fff;
-        padding: 20px;
-        order: 1;
-        flex: 0 0 65%;
-    }
-
-    &_editor {
-        background-color: #fff;
-        order: 3;
-        flex: 0 0 65%;
-        .ck-content { height: calc(100vh - 450px); }
-    }
-
-    &_browse {
-        display: flex;
-        margin-top: 50px;
-
-        button {
-            margin-left: auto;
-        }
-    }
-
-    &_table {
-        background-color: #fff;
-        margin-top: 50px;
-     
-        &_header {
-            font-size: 14px;
-            color: #949494;
-            white-space: nowrap;
-        }
-        &_title {
+.edit-document-container {
+    .base-cms-right--body {
+        &_wrapper_inner {
             display: flex;
-            align-items: center;
-            padding: 10px 0;
-            font-weight: 600;
-            img {
-                margin-right: 20px;
-                width: 20px;
-                height: 20px;
-                border-radius: 4px;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+    
+        &_top {
+            .ma-2 {
+                float: right;
             }
-            div {
+
+            p {
+                font-size: 30px;
+            }
+        }
+    
+        &_title {
+            background-color: #fff;
+            padding: 20px;
+            order: 1;
+            flex: 0 0 65%;
+        }
+    
+        &_editor {
+            background-color: #fff;
+            order: 3;
+            flex: 0 0 65%;
+            .ck-content { height: calc(100vh - 550px); }
+        }
+    
+        &_browse {
+            display: flex;
+            margin-top: 20px;
+    
+            button {
+                margin-left: auto;
+            }
+        }
+    
+        &_table {
+            background-color: #fff;
+            margin-top: 20px;
+         
+            &_header {
+                font-size: 14px;
+                color: #949494;
+                white-space: nowrap;
+            }
+            &_title {
+                display: flex;
+                align-items: center;
+                padding: 10px 0;
+                font-weight: 600;
+                img {
+                    margin-right: 20px;
+                    width: 20px;
+                    height: 20px;
+                    border-radius: 4px;
+                }
+                div {
+                    cursor: pointer;
+                    color: #2196f3;
+                }
+            }
+    
+            &_action {
+                white-space: nowrap;
+                font-size: 14px !important;
                 cursor: pointer;
+            }
+            .delete-action {
+                color: #D50000;
+            }
+            .download-action {
                 color: #2196f3;
             }
         }
-
-        &_action {
-            white-space: nowrap;
-            font-size: 14px !important;
-            cursor: pointer;
-        }
-        .delete-action {
-            color: #D50000;
-        }
-        .download-action {
-            color: #2196f3;
-        }
-    }
-
-    &_setting {
-        background-color: #fff;
-        padding: 20px;
-        order: 2;
-        flex: 0 0 30%;
-        margin-left: 20px;
-        button {
-            float: right;
+    
+        &_setting {
+            background-color: #fff;
+            padding: 20px;
+            order: 2;
+            flex: 0 0 30%;
+            margin-left: 20px;
+            height: 200px;
+            button {
+                float: right;
+            }
         }
     }
 }

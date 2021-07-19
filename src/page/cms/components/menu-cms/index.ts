@@ -112,8 +112,7 @@ export default class MenuCMSComponent extends Vue {
         {
             title: 'Các hiện tượng cực đoan',
             icon: 'mdi-lightning-bolt',
-            name: ROUTE_NAME.LIST_LOCAL,
-            param: {role: 'admin'},
+            name: ROUTE_NAME.LIST_LOCAL
         },
     ]
 
