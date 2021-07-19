@@ -316,6 +316,8 @@ export default class HomePageComponent extends Vue {
     }
 
     async handleChangeRegion(mapData) {
+        console.log(this.customLocationControl);
+        
         // document.querySelector('.particles-layer').classList.add('hide-animation')
         this.isProvinceData = false;
         await this.getFakeImage(mapData.placeId);
