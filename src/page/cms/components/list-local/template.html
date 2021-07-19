@@ -6,7 +6,7 @@
                 <v-menu v-model="selectedDate" :close-on-content-click="false" :nudge-right="40"
                     transition="scale-transition" offset-y min-width="auto">
                     <template v-slot:activator="{ on, attrs }">
-                        <v-text-field v-model="formatSelectedDate" prepend-icon="mdi-calendar" label="Filter" hide-details
+                        <v-text-field v-model="formatSelectedDate" append-icon="mdi-calendar-month-outline" label="Filter" hide-details
                             readonly v-bind="attrs" v-on="on" class="mr-6" outlined dense></v-text-field>
                     </template>
                     <v-date-picker v-model="selectedDate" @input="selectedDate = false" locale="vi-vn"

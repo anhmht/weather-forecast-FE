@@ -32,6 +32,7 @@ const CreateUserComponent = () => import("../page/cms/components/create-user/Cre
 const ListDocumentComponent = () => import("../page/cms/components/list-document/ListDocumentComponent.vue")
 const CreateDocumentComponent = () => import("../page/cms/components/create-document/CreateDocumentComponent.vue")
 const ListLocalComponent = () => import("../page/cms/components/list-local/ListLocalComponent.vue")
+const EditLocalComponent = () => import("../page/cms/components/edit-local/EditLocalComponent.vue")
 const EditDocumentComponent = () => import("../page/cms/components/edit-document/EditDocumentComponent.vue")
 
 const homeRoutes = [
@@ -266,6 +267,15 @@ const adminRoutes = [
                 path: PATH.EDIT_DOCUMENT,
                 name: ROUTE_NAME.EDIT_DOCUMENT,
                 component: EditDocumentComponent,
+                meta: {
+                    requiresAuth: true
+                },
+                props: {}
+            },
+            {
+                path: PATH.EDIT_LOCAL,
+                name: ROUTE_NAME.EDIT_LOCAL,
+                component: EditLocalComponent,
                 meta: {
                     requiresAuth: true
                 },

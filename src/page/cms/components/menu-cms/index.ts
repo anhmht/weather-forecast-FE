@@ -112,7 +112,8 @@ export default class MenuCMSComponent extends Vue {
         {
             title: 'Các hiện tượng cực đoan',
             icon: 'mdi-weather-partly-lightning',
-            name: ROUTE_NAME.LIST_LOCAL
+            name: ROUTE_NAME.LIST_LOCAL,
+            param: {role: 'admin'},
         },
     ]
 

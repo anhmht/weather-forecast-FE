@@ -36,7 +36,7 @@ export class ExtremePhenomenon implements IExtremePhenomenon {
     districtName?: string;
     details?: IExtremePhenomenonDetail[]
 
-    constructor(option?: IExtremePhenomenon) {
+    constructor(option?: any) {
         this.createBy = option.createBy || "";
         this.createDate = option.createDate || "";
         this.lastModifiedBy = option.lastModifiedBy || "";
