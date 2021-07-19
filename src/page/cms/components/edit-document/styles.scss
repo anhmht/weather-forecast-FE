@@ -7,6 +7,10 @@
         }
     
         &_top {
+            .ma-2 {
+                float: right;
+            }
+
             p {
                 font-size: 30px;
             }
@@ -23,12 +27,12 @@
             background-color: #fff;
             order: 3;
             flex: 0 0 65%;
-            .ck-content { height: calc(100vh - 450px); }
+            .ck-content { height: calc(100vh - 550px); }
         }
     
         &_browse {
             display: flex;
-            margin-top: 50px;
+            margin-top: 20px;
     
             button {
                 margin-left: auto;
@@ -37,7 +41,7 @@
     
         &_table {
             background-color: #fff;
-            margin-top: 50px;
+            margin-top: 20px;
          
             &_header {
                 font-size: 14px;
@@ -80,6 +84,7 @@
             order: 2;
             flex: 0 0 30%;
             margin-left: 20px;
+            height: 200px;
             button {
                 float: right;
             }

@@ -63,5 +63,5 @@ export const PATH = {
     LIST_DOCUMENT: 'list-document',
     CREATE_DOCUMENT: 'create-document',
     LIST_LOCAL: "list-local",
-    EDIT_DOCUMENT: 'edit-document',
+    EDIT_DOCUMENT: 'edit-document/:id',
 }
