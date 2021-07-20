@@ -35,4 +35,10 @@ export class ExtremePhenomenonServices extends GenericServices {
             return Promise.resolve(response)
         }).catch(error => Promise.reject(error))
     }
+
+    searchExtremePhenomenonDetail (payload: {provinceId: number, districtId: string, date: string}): Promise<ApiResponse> {
+        return this.executeSelectingPost(payload, Uri.searchExtremePhenomenonDetail).then((response: ApiResponse) => {
+            return Promise.resolve(response)
+        }).catch(error => Promise.reject(error))
+    }
 }

@@ -20,12 +20,10 @@ export class ExtremePhenomenonDetail implements IExtremePhenomenonDetail {
     content?: string;
 
     constructor(option?: any) {
-        this.createBy = option.createBy || null;
-        this.createDate = option.createDate || null;
-        this.lastModifiedBy = option.lastModifiedBy || null;
-        this.lastModifiedDate = option.lastModifiedDate || null;
-        this.id = option.id || null;
-        this.extremePhenomenonId = option.extremePhenomenonId || null;
+        option = option || {};
+        Object.keys(option).forEach(key => {
+            this[key] = option[key];
+        });
         this.name = option.name || null;
         this.content = option.content || null;
     }

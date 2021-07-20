@@ -6,12 +6,14 @@ import lookupTypesStore, {GeneralLookupTypes} from '@/store/lookup/lookup-types.
 import { ExtremePhenomenonServices } from '../../../../service/extreme-phenomenon-service/extreme-phenomenon.service';
 import { ExtremePhenomenon, ExtremePhenomenonDetail, IExtremePhenomenon, IExtremePhenomenonDetail } from '@/model/extreme-phenomenon';
 import moment from 'moment';
+import { DataHelper } from '@/utils/data-helper';
 
 const LookupAction = namespace(storeModules.Lookup, Action);
 const LookupGetter = namespace(storeModules.Lookup, Getter);
 @Component({
     template: require("./template.html").default,
     components: {
+        "confirm-dialog": () => import("../../../../components/confirm-action/ConfirmActionComponent.vue")
     }
 })
 export default class EditLocalComponent extends Vue {
@@ -21,14 +23,19 @@ export default class EditLocalComponent extends Vue {
     ePService: ExtremePhenomenonServices = new ExtremePhenomenonServices();
 
     isLoading: boolean = false;
-    id: string = '';
+    id: string = null;
     data: IExtremePhenomenon = new ExtremePhenomenon({});
+    originalData: IExtremePhenomenon = new ExtremePhenomenon({});
+    confirmingData: IExtremePhenomenon = null;
+
     currentRow: IExtremePhenomenonDetail = new ExtremePhenomenonDetail({});
     currentRowIndex: number = -1;
     isDisplayDialog: boolean = false;
+
+    visibleConfirm: boolean = false;
     
     rules = {
-        title: [v => !!v || 'Vui lòng nhập tiêu đề'],
+        title: [v => !!v || 'Vui lòng nhập nội dung'],
     }
     
     get lookupProvince () {
@@ -44,7 +51,7 @@ export default class EditLocalComponent extends Vue {
     }
 
     get coList () {
-        return this.data.details || [];
+        return this.data.details;
     }
 
     get selectedDate () {
@@ -63,6 +70,7 @@ export default class EditLocalComponent extends Vue {
 
     set selectedProvince (value) {
         this.data.provinceId = value;
+        this.checkExisted();
     }
 
     get selectedDistrict () {
@@ -71,6 +79,7 @@ export default class EditLocalComponent extends Vue {
 
     set selectedDistrict (value) {
         this.data.districtId = value;
+        this.checkExisted();
     }
 
     get formatSelectedDate () {
@@ -78,6 +87,14 @@ export default class EditLocalComponent extends Vue {
             return moment(this.selectedDate).format('DD/MM/YYYY');
         }
         return null;
+    }
+
+    get isListVisible () {
+        return this.selectedProvince != null && this.selectedDistrict != null && this.selectedDate != null;
+    }
+
+    get isDetailsChanged () {
+        return JSON.stringify(this.originalData.details) !== JSON.stringify(this.data.details);
     }
 
     fetchData () {
@@ -90,7 +107,8 @@ export default class EditLocalComponent extends Vue {
             this.isLoading = true;
             this.ePService.getExtremePhenomenonById(this.id).then((data: any) => {
                 if (data) {
-                    this.data = {...data};
+                    this.data = DataHelper.deepClone(data);
+                    this.originalData = DataHelper.deepClone(data);
                 }
                 this.isLoading = false;
             }).catch(err => {
@@ -115,8 +133,10 @@ export default class EditLocalComponent extends Vue {
         if (this.currentRowIndex === -1) {
             this.data.details.push(this.currentRow);
         } else {
-            if (this.data.details[this.currentRowIndex]) {
-                this.data.details[this.currentRowIndex] = this.currentRow;
+            let row = this.data.details[this.currentRowIndex];
+            if (row) {
+                row.name = this.currentRow.name;
+                row.content = this.currentRow.content;
             }
         }
     }
@@ -125,7 +145,7 @@ export default class EditLocalComponent extends Vue {
         let row = this.data.details[index];
         if (row) {
             this.currentRowIndex = index;
-            this.currentRow = {...row};
+            this.currentRow = DataHelper.deepClone(row);
             this.isDisplayDialog = true;
         }
     }
@@ -139,9 +159,10 @@ export default class EditLocalComponent extends Vue {
 
     handleFilterDate (value) {
         this.data.date = value;
+        this.checkExisted();
     }
 
-    handleSave () {
+    async handleSave () {
         this.isLoading = true;
         if (this.id == null) {
             // Add new
@@ -165,6 +186,63 @@ export default class EditLocalComponent extends Vue {
                 this.isLoading = false;
             })
         }
+    }
+
+    checkExisted () {
+        if (!this.isListVisible) return;
+        this.searchExtremePhenomenonDetail();
+    }
+
+    async switchData (save?:boolean) {
+        if (this.confirmingData) {
+            if (save) {
+                await this.handleSave();
+            }
+
+            this.id = this.confirmingData.id;
+            this.data = DataHelper.deepClone(this.confirmingData);
+            this.originalData = DataHelper.deepClone(this.confirmingData);
+            this.confirmingData = null;
+            this.$forceUpdate();
+        }
+        this.visibleConfirm = false;
+    }
+
+    searchExtremePhenomenonDetail () {
+        this.isLoading = true;
+
+        let payload = {
+            provinceId: this.data.provinceId,
+            districtId: this.data.districtId,
+            date: this.data.date
+        }
+        this.ePService.searchExtremePhenomenonDetail(payload).then((item: any) => {
+            this.isLoading = false;
+            if(item) { // already exist
+                this.confirmingData = DataHelper.deepClone(item);
+
+                if (this.id!= null && this.isDetailsChanged) { // changing without save
+                    this.visibleConfirm = true;
+                } else {
+                    this.switchData();
+                }
+            } else {
+                if (this.id != null) {
+                    // Reset data
+                    this.id = null;
+                    let option = {
+                        provinceId: this.selectedProvince,
+                        districtId: this.selectedDistrict,
+                        date: this.selectedDate
+                    }
+                    this.data = new ExtremePhenomenon(option);
+                    this.originalData = new ExtremePhenomenon(option);
+                }
+            }
+        }).catch(err => {
+            console.log(err);
+            this.isLoading = false;
+        })
     }
 
     async mounted() {

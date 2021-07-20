@@ -4,48 +4,12 @@
             <p class="mr-auto">Tạo hiện tượng cực đoan</p>
             <v-btn color="" dark @click="handleBack()">
                 <v-icon dark left>
-                    mdi-arrow-left
+                    mdi-chevron-left
                 </v-icon>Trở về
             </v-btn>
         </div>
         <v-form ref="postForm" lazy-validation>
             <div class="base-cms-right--body_wrapper_inner">
-                <div class="base-cms-right--body_phenomena_right">
-                    <div class="base-cms-right--body_phenomena_right--header d-flex align-center">
-                        <p>Hiện tượng</p>
-                        <v-spacer></v-spacer>
-                        <v-btn depressed color="primary" @click="handleAddContent()">+ Tạo mới</v-btn>
-                    </div>
-                    <div class="base-cms-right--body_table base-cms-right--body_phenomena_right--content">
-                        <template>
-                            <v-simple-table fixed-header height="calc(100vh - 500px)">
-                                <template v-slot:default>
-                                    <thead>
-                                        <tr>
-                                            <th class="base-cms-right--body_table_header">TÊN</th>
-                                            <th class="base-cms-right--body_table_header">NỘI DUNG</th>
-                                            <th class="base-cms-right--body_table_header"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr v-if="coList.length === 0">
-                                            <td colspan="5" style="text-align: center;">Không có dữ liệu</td>
-                                        </tr>
-                                        <tr v-else v-for="(item, index) in coList" :key="index">
-                                            <td>{{ item.name }}</td>
-                                            <td>{{ item.content }}</td>
-                                            <td class="base-cms-right--body_table_action">
-                                                <v-icon @click.native="handleEditContent(index)" class="edit-action">mdi-square-edit-outline</v-icon>
-                                                <v-icon @click.native="handleDeleteContent(index)" class="delete-action">mdi-delete</v-icon>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </template>
-                            </v-simple-table>
-                        </template>
-                    </div>
-                </div>
-
                 <div class="base-cms-right--body_phenomena_left">
                     <div class="base-cms-right--body_phenomena_left--content">
                         <div class="mb-2">Tỉnh</div>
@@ -71,7 +35,47 @@
                         </v-menu>
                     </div>
                     <div class="base-cms-right--body_phenomena_left--footer d-flex justify-end">
-                        <v-btn depressed color="primary" @click="handleSave()">Lưu hiện tượng</v-btn>
+                        <v-btn :disabled="!isDetailsChanged" depressed color="primary" @click="handleSave()">Lưu hiện tượng</v-btn>
+                    </div>
+                </div>
+
+                <div v-if="isListVisible" class="base-cms-right--body_phenomena_right">
+                    <div class="base-cms-right--body_phenomena_right--header d-flex align-center">
+                        <p>Hiện tượng</p>
+                        <v-spacer></v-spacer>
+                        <v-btn depressed color="primary" @click="handleAddContent()">+ Tạo mới</v-btn>
+                    </div>
+                    <div class="base-cms-right--body_table base-cms-right--body_phenomena_right--content">
+                        <template>
+                            <v-simple-table fixed-header dense>
+                                <template v-slot:default>
+                                    <thead>
+                                        <tr>
+                                            <th class="base-cms-right--body_table_header" width="250px">TÊN</th>
+                                            <th class="base-cms-right--body_table_header">NỘI DUNG</th>
+                                            <th class="base-cms-right--body_table_header"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-if="coList.length === 0">
+                                            <td colspan="5" style="text-align: center; height: 70px;">Chưa có dữ liệu</td>
+                                        </tr>
+                                        <tr v-else v-for="(item, index) in coList" :key="index">
+                                            <td style="vertical-align: top;">
+                                                <div class="base-cms-right--body_table_title">{{ item.name }}</div>
+                                            </td>
+                                            <td>
+                                                <div class="base-cms-right--body_table_title">{{ item.content }}</div>
+                                            </td>
+                                            <td class="base-cms-right--body_table_action">
+                                                <v-icon @click.native="handleEditContent(index)" class="edit-action">mdi-square-edit-outline</v-icon>
+                                                <v-icon @click.native="handleDeleteContent(index)" class="delete-action">mdi-delete</v-icon>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </template>
+                            </v-simple-table>
+                        </template>
                     </div>
                 </div>
             </div>
@@ -114,5 +118,22 @@
             </div>
         </div>
 	</v-dialog>
+
+    <v-dialog v-model="visibleConfirm" persistent max-width="290">
+        <v-card>
+            <v-card-title class="text-h5">Lưu thay đổi?</v-card-title>
+            <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="green darken-1" text  @click="switchData()"
+                >
+                    Bỏ qua
+                </v-btn>
+                <v-btn color="green darken-1" text @click="switchData(true)"
+                >
+                    Lưu
+                </v-btn>
+            </v-card-actions>
+        </v-card>
+    </v-dialog>
 </div>
 
