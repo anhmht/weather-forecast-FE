@@ -22,7 +22,8 @@
                     background-color: #fff;
                     order: 2;
                     flex: 0 0 calc(70% - 30px);
-                    
+                    height: 100%;
+
                     &--header {
                         padding: 15px;
                         border-bottom: 1px solid rgba(0,0,0,.12);
@@ -61,32 +62,19 @@
         &_table {
             background-color: #fff;
             margin-top: 0;
+            min-height: 120px;
+            max-height: calc(100vh - 245px);
 
             &_header {
                 font-size: 14px;
                 color: #949494;
                 white-space: nowrap;
-                &_checkbox {
-                    align-items: center;
-                    > div {
-                        height: 100%;
-                        .v-input__control {
-                            width: 0px !important;
-                        }
-                    }
-                }
             }
             &_title {
                 display: flex;
                 align-items: center;
                 padding: 10px 0;
                 font-weight: 600;
-                img {
-                    margin-right: 20px;
-                    width: 50px;
-                    height: 50px;
-                    border-radius: 4px;
-                }
             }
 
             &_action {
@@ -94,6 +82,7 @@
                 font-size: 14px !important;
                 cursor: pointer;
                 text-align: right;
+                vertical-align: top;
             }
             .delete-action {
                 color: #D50000;

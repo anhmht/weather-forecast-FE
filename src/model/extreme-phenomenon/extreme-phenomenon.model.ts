@@ -20,12 +20,10 @@ export class ExtremePhenomenonDetail implements IExtremePhenomenonDetail {
     content?: string;
 
     constructor(option?: any) {
-        this.createBy = option.createBy || null;
-        this.createDate = option.createDate || null;
-        this.lastModifiedBy = option.lastModifiedBy || null;
-        this.lastModifiedDate = option.lastModifiedDate || null;
-        this.id = option.id || null;
-        this.extremePhenomenonId = option.extremePhenomenonId || null;
+        option = option || {};
+        Object.keys(option).forEach(key => {
+            this[key] = option[key];
+        });
         this.name = option.name || null;
         this.content = option.content || null;
     }
@@ -59,14 +57,13 @@ export class ExtremePhenomenon implements IExtremePhenomenon {
     details?: IExtremePhenomenonDetail[]
 
     constructor(option?: any) {
-        this.createBy = option.createBy || "";
-        this.createDate = option.createDate || "";
-        this.lastModifiedBy = option.lastModifiedBy || "";
-        this.lastModifiedDate = option.lastModifiedDate || "";
-        this.id = option.id || "";
+        option = option || {};
+        Object.keys(option).forEach(key => {
+            this[key] = option[key];
+        });
         this.provinceId = option.provinceId || null;
-        this.districtId = option.districtId || "";
-        this.date = option.date || "";
+        this.districtId = option.districtId || null;
+        this.date = option.date || null;
         this.provinceName = option.provinceName || "";
         this.districtName = option.districtName || "";
         this.details = option.details || [];
