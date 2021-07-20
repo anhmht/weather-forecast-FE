@@ -77,17 +77,12 @@
                 font-weight: 600;
             }
 
-            tbody {
-                td {
-                    padding: 0;
-                }
-            }
-
             &_action {
                 white-space: nowrap;
                 font-size: 14px !important;
                 cursor: pointer;
                 text-align: right;
+                vertical-align: top;
             }
             .delete-action {
                 color: #D50000;

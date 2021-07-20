@@ -29,6 +29,8 @@ export default class ListLocalComponent extends Vue {
     listPostTitle: string = '';
     limitPerPage: number[] = [5, 10, 15, 20];
     numPostsInPage: number = 0;
+
+    datePickerMenu: boolean = false;
     
     get lookupProvince () {
         let list = this.dtoLookupData[GeneralLookupTypes.PROVINCE] || []
@@ -44,7 +46,10 @@ export default class ListLocalComponent extends Vue {
     }
 
     get selectedDate () {
-        return this.searchParams.date;
+        if (this.searchParams.date) {
+            return moment(this.searchParams.date).format('YYYY-MM-DD');
+        }
+        return null;
     }
 
     set selectedDate (value) {

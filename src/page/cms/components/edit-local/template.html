@@ -23,13 +23,13 @@
                             v-model="selectedDistrict"></v-select>
 
                         <div class="mb-2">Thời gian</div>
-                        <v-menu v-model="selectedDate" :close-on-content-click="false" :nudge-right="40"
+                        <v-menu v-model="datePickerMenu" :close-on-content-click="false" :nudge-right="40"
                             transition="scale-transition" offset-y min-width="auto">
                             <template v-slot:activator="{ on, attrs }">
                                 <v-text-field v-model="formatSelectedDate" append-icon="mdi-calendar-month-outline" hide-details
                                     readonly v-bind="attrs" v-on="on" outlined dense class="mb-4"></v-text-field>
                             </template>
-                            <v-date-picker v-model="selectedDate" @input="selectedDate = false" locale="vi-vn"
+                            <v-date-picker v-model="selectedDate" @input="datePickerMenu = false" locale="vi-vn"
                                 @change="handleFilterDate">
                             </v-date-picker>
                         </v-menu>
@@ -68,8 +68,10 @@
                                                 <div class="base-cms-right--body_table_title">{{ item.content }}</div>
                                             </td>
                                             <td class="base-cms-right--body_table_action">
-                                                <v-icon @click.native="handleEditContent(index)" class="edit-action">mdi-square-edit-outline</v-icon>
-                                                <v-icon @click.native="handleDeleteContent(index)" class="delete-action">mdi-delete</v-icon>
+                                                <div class="base-cms-right--body_table_title">
+                                                    <v-icon @click.native="handleEditContent(index)" class="edit-action">mdi-square-edit-outline</v-icon>
+                                                    <v-icon @click.native="handleDeleteContent(index)" class="delete-action">mdi-delete</v-icon>
+                                                </div>
                                             </td>
                                         </tr>
                                     </tbody>

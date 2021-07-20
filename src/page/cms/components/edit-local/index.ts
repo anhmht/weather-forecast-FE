@@ -33,6 +33,7 @@ export default class EditLocalComponent extends Vue {
     isDisplayDialog: boolean = false;
 
     visibleConfirm: boolean = false;
+    datePickerMenu: boolean = false;
     
     rules = {
         title: [v => !!v || 'Vui lòng nhập nội dung'],
@@ -218,26 +219,21 @@ export default class EditLocalComponent extends Vue {
         }
         this.ePService.searchExtremePhenomenonDetail(payload).then((item: any) => {
             this.isLoading = false;
-            if(item) { // already exist
+            if (item) {
                 this.confirmingData = DataHelper.deepClone(item);
-
-                if (this.id!= null && this.isDetailsChanged) { // changing without save
-                    this.visibleConfirm = true;
-                } else {
-                    this.switchData();
-                }
             } else {
-                if (this.id != null) {
-                    // Reset data
-                    this.id = null;
-                    let option = {
-                        provinceId: this.selectedProvince,
-                        districtId: this.selectedDistrict,
-                        date: this.selectedDate
-                    }
-                    this.data = new ExtremePhenomenon(option);
-                    this.originalData = new ExtremePhenomenon(option);
+                let option = {
+                    provinceId: this.selectedProvince,
+                    districtId: this.selectedDistrict,
+                    date: this.selectedDate
                 }
+                this.confirmingData = new ExtremePhenomenon(option);
+            }
+
+            if (this.id != null && this.isDetailsChanged) {
+                this.visibleConfirm = true;
+            } else {
+                this.switchData();
             }
         }).catch(err => {
             console.log(err);
