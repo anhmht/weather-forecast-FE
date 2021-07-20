@@ -163,7 +163,7 @@ export default class EditLocalComponent extends Vue {
         this.checkExisted();
     }
 
-    async handleSave () {
+    async handleSave (back:boolean = true) {
         this.isLoading = true;
         if (this.id == null) {
             // Add new
@@ -171,7 +171,8 @@ export default class EditLocalComponent extends Vue {
                 this.$toast.success('Tạo hiện tượng mới thành công');
                 this.isLoading = false;
                 this.id = id;
-                this.fetchData();
+
+                back ? this.handleBack() : this.fetchData;
             }).catch(err => {
                 this.$toast.error('Có lỗi khi tạo mới');
                 console.log(err);
@@ -181,6 +182,10 @@ export default class EditLocalComponent extends Vue {
             this.ePService.updateExtremePhenomenon(this.data).then(res => {
                 this.$toast.success('Lưu hiện tượng thành công');
                 this.isLoading = false;
+
+                if (back) {
+                    this.handleBack();
+                }
             }).catch(err => {
                 this.$toast.error('Có lỗi khi tạo mới');
                 console.log(err);
@@ -197,7 +202,7 @@ export default class EditLocalComponent extends Vue {
     async switchData (save?:boolean) {
         if (this.confirmingData) {
             if (save) {
-                await this.handleSave();
+                await this.handleSave(false);
             }
 
             this.id = this.confirmingData.id;
