@@ -31,6 +31,8 @@ export default class ListLocalComponent extends Vue {
     numPostsInPage: number = 0;
 
     datePickerMenu: boolean = false;
+    visibleConfirm: boolean = false;
+    selectedId: string = null;
     
     get lookupProvince () {
         let list = this.dtoLookupData[GeneralLookupTypes.PROVINCE] || []
@@ -78,13 +80,13 @@ export default class ListLocalComponent extends Vue {
             return 7
     }
 
-    fetchData () {
-        this.getAllExtremePhenomenon();
+    async fetchData () {
+        await this.getAllExtremePhenomenon();
         this.$forceUpdate();
     }
 
-    getAllExtremePhenomenon () {
-        this.ePService.getAllExtremePhenomenons(this.searchParams).then((data: any) => {
+    async getAllExtremePhenomenon () {
+        await this.ePService.getAllExtremePhenomenons(this.searchParams).then((data: any) => {
             this.extremePhenomenons = data && data["extremePhenomenons"] ?  data["extremePhenomenons"] : [];
             this.totalItems = data.totalItems;
             this.totalPages = data.totalPages;
@@ -107,8 +109,19 @@ export default class ListLocalComponent extends Vue {
         });
     }
 
-    handleDelete (id: string) {
+    beforeHandleDelete (id: string) {
+        this.selectedId = id;
+        this.visibleConfirm = true;
+    }
 
+    async handleDelete (id: string) {
+        await this.ePService.deleteExtremePhenomenon(this.selectedId);
+        if (this.coList.length === 1) {
+            this.searchParams.page -= 1;
+        }
+        this.searchByPaging();
+        this.visibleConfirm = false;
+        this.$toast.success('Xóa hiện tượng thành công');
     }
 
     handleFilterDate (value) {
@@ -116,12 +129,23 @@ export default class ListLocalComponent extends Vue {
         this.fetchData();
     }
 
-    searchByLimit () {
-
+    async searchByLimit () {
+        this.searchParams.page = 1;
+        await this.fetchData();
+        if (this.searchParams.limit <= this.totalItems) {
+            this.numPostsInPage = this.searchParams.limit;
+        } else {
+            this.numPostsInPage = this.totalItems;
+        }
     }
 
-    searchByPaging () {
-
+    async searchByPaging () {
+        await this.fetchData();
+        if (this.searchParams.limit * this.searchParams.page <= this.totalItems) {
+            this.numPostsInPage = this.searchParams.limit * this.searchParams.page;
+        } else {
+            this.numPostsInPage = this.totalItems;
+        }
     }
 
     async mounted() {
@@ -130,6 +154,12 @@ export default class ListLocalComponent extends Vue {
             GeneralLookupTypes.DISTRICT
         ];
         await this.getGeneralLookup(payload);
-        this.getAllExtremePhenomenon();
+        await this.getAllExtremePhenomenon();
+        
+        if (this.searchParams.limit <= this.totalItems) {
+            this.numPostsInPage = this.searchParams.limit;
+        } else {
+            this.numPostsInPage = this.totalItems;
+        }
     }
 }
