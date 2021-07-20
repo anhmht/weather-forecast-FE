@@ -1,0 +1,22 @@
+.data-page-container-wrapper {
+    &-extreme-phenomenon {
+        width: 100%;
+        background-color:  #fff;
+
+        &--header {
+            background-color: $primary-color;
+            color: #fff !important;
+            padding: 5px 10px;
+            height: 48px;
+            text-align: center;
+        }
+
+        .v-data-table {
+            &__wrapper {
+                height: auto;
+                max-height: 300px;
+                border-bottom: 1px solid rgba(0,0,0,.12);
+            }
+        }
+    }
+}

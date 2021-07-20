@@ -218,9 +218,9 @@ export default class EditLocalComponent extends Vue {
         this.isLoading = true;
 
         let payload = {
-            provinceId: this.data.provinceId,
-            districtId: this.data.districtId,
-            date: this.data.date
+            provinceId: this.selectedProvince,
+            districtId: this.selectedDistrict,
+            date: this.selectedDate
         }
         this.ePService.searchExtremePhenomenonDetail(payload).then((item: any) => {
             this.isLoading = false;
