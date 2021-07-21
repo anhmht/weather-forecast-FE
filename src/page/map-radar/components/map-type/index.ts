@@ -13,8 +13,17 @@ export default class MapTypeComponent extends Vue {
     custom
 
     isActive: Number = 0;
+
+    searchType: string = null;
+
     get mapTypes() {
-        return MAP_TYPE;
+        let list = MAP_TYPE;
+        if (this.searchType != null && this.searchType !== "") {
+            list = list.filter(p => {
+                return p.name.toLowerCase().includes(this.searchType.toLowerCase());
+            });
+        }
+        return list;
     }
 
     handleClick(index) {

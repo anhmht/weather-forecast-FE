@@ -19,11 +19,19 @@ export default class LocationComponent extends Vue {
 
     activeTab: number = 0;
 
+    searchProvince: string = null;
+
     get regions() {
         return REGION;
     }
     get locations() {
-        return MAP_PROVINCE;
+        let list = MAP_PROVINCE;
+        if (this.searchProvince != null && this.searchProvince !== "") {
+            list = list.filter(p => {
+                return p.name.toLowerCase().includes(this.searchProvince.toLowerCase());
+            });
+        }
+        return list;
     }
 
     handleChangeTab(index) {
