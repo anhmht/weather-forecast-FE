@@ -275,8 +275,8 @@ export default class InfoPageComponent extends Vue {
             }
             this.temparatureData = {
                 ... this.temparatureData,
-                desc: weatherDescDay + ". " + weatherDescNight
-                    + ". Hướng gió " + windDir + ", " + res.mostFreqWindRank + ". "
+                desc: weatherDescDay + ". "
+                    + "Hướng gió " + windDir + ", " + res.mostFreqWindRank + ". "
                     + "Nhiệt độ thấp nhất: " + res.tempRange.min + "°C. "
                     + "Nhiệt độ cao nhất: " + res.tempRange.max + "°C."
             }
