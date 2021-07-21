@@ -24,11 +24,14 @@ export default class LocationComponent extends Vue {
     get regions() {
         return REGION;
     }
+    
     get locations() {
         let list = MAP_PROVINCE;
         if (this.searchProvince != null && this.searchProvince !== "") {
             list = list.filter(p => {
-                return p.name.toLowerCase().includes(this.searchProvince.toLowerCase());
+                const name = DataHelper.convertToNonAccent(p.name.toLowerCase());
+                const search = DataHelper.convertToNonAccent(this.searchProvince.toLowerCase());
+                return name.includes(search);
             });
         }
         return list;
