@@ -198,4 +198,11 @@ export class DataHelper {
         return uuid;
     }
 
+    static convertToNonAccent(str: string) {
+        let text = '';
+        if (str != null && str !== '') {
+            text = str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        }
+        return text;
+    }
 }
