@@ -4,6 +4,7 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import { ROUTE_NAME } from '@/constant/route-constant';
 import { Watch } from 'vue-property-decorator';
+import NO_IMAGE from '../../../../../static/img/no-image/no-image.png';
 
 @Component({
     template: require("./template.html").default,
@@ -39,6 +40,10 @@ export default class ListUserComponent extends Vue {
     }
     get isDisplayButton() {
         return this.$route.params.role === 'admin' ? true : false
+    }
+
+    get defaultImage () {
+        return NO_IMAGE;
     }
 
     toCreateUser() {

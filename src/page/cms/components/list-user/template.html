@@ -42,7 +42,13 @@
                                 </td>
                                 <td>
                                     <div class="base-cms-right--body_table_title">
-                                        <img :src="item.avatarUrl">
+                                        <v-img
+                                            :lazy-src="defaultImage"
+                                            max-width="50"
+                                            aspect-ratio="1"
+                                            :src="item.avatarUrl"
+                                            class="mr-2"
+                                        ></v-img>
                                         {{ item.userName }}
                                     </div>
                                 </td>
