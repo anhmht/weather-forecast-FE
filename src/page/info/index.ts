@@ -71,6 +71,8 @@ export default class InfoPageComponent extends Vue {
     searchParam: IForecastSearchParam = new ForecastSearchParam();
     firstWeatherNewsPostId: string = null;
     firstWeatherMapPostId: string = null;
+    fab:boolean = false;
+    currentSection: number = 1;
 
     @LookupGetter(lookupTypesStore.Get.STATUS) status: IStatus[]
     @LookupAction getLookupData: (type: string) => Promise<void>;
@@ -353,6 +355,41 @@ export default class InfoPageComponent extends Vue {
         window.open(linkId);
     }
 
+    onScroll (e) {
+        if (typeof window === 'undefined') return
+        const top = window.pageYOffset ||   e.target.scrollTop || 0
+        this.fab = top > 20;
+    }
+
+    toTop () {
+        this.$vuetify.goTo(0);
+    }
+
+    onIntersect(entries, observer) {
+        if (entries[0] && entries[0].intersectionRatio >= 0.5) {
+            let cls = entries[0].target.className;
+            let index = cls.indexOf('section_');
+            console.log("handleIntersect", cls, entries[0].intersectionRatio);
+            if (index > -1 && !isNaN(cls.substr(index + 8, 1))) {
+                let i = parseInt(cls.substr(index + 8, 1));
+                switch (i) {
+                    case 2:
+                    case 4:
+                    case 5:
+                        if (entries[0].intersectionRatio === 1) {
+                            this.currentSection = i;
+                        }
+                        break;
+                    
+                    default:
+                        this.currentSection = i;
+                        break;
+                }
+            }
+            
+        }
+    }
+
     async mounted() {
         await this.getLookupData(lookupTypesStore.Set.STATUS);
         this.publishStatusId = this.status.find(x => x.name === this.publishStatusName).statusId;
@@ -496,6 +533,9 @@ export default class InfoPageComponent extends Vue {
                 currentPosition: null
             }
         ];
+
+        this.currentSection = 1;
+        this.toTop();
 
         this.region = this.allRegions[0];
         this.handleChangeRegion(this.region);
