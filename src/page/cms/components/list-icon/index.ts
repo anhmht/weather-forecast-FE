@@ -18,6 +18,10 @@ export default class ListIconComponent extends Vue {
     dialogTitle: string = "";
     dialogButton: string = "";
 
+    get defaultImage () {
+        return NO_IMAGE;
+    }
+
     get TotalPageVisible() {
         if (this.totalPages < 7)
             return this.totalPages
@@ -83,5 +87,9 @@ export default class ListIconComponent extends Vue {
         this.isDisplayDialog = true;
         this.dialogTitle = "Sửa biểu tượng";
         this.dialogButton = "Sửa";
+    }
+
+    onImgError (event) {
+        event.target.src = NO_IMAGE;
     }
 }

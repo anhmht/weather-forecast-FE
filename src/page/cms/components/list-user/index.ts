@@ -114,6 +114,10 @@ export default class ListUserComponent extends Vue {
         });
     }
 
+    onImgError (event) {
+        event.target.src = NO_IMAGE;
+    }
+
     async mounted() {
         await this.getRoles(this.listUserTitle);
         await this.getUsers();

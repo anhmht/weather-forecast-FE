@@ -46,7 +46,7 @@
                                         <tr v-for="(item, index) in documents" :key="index">
                                             <td>
                                                 <div class="base-cms-right--body_table_title">
-                                                    <img :src="item.icon">
+                                                    <img :src="item.icon || defaultImage" @error="onImgError" />
                                                     <div @click="previewDocument(item.url)">{{ item.fileName }}</div>
                                                 </div>
                                             </td>

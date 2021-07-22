@@ -20,6 +20,7 @@ import 'moment/locale/vi';
 import { CategoryServices } from "@/service/category-service/category.service";
 import { UploadServices } from "@/service/upload-service/upload.service";
 import { PostServices } from "@/service/post-service/post.service";
+import NO_IMAGE from '../../../../../static/img/no-image/no-image.png';
 
 const LookupGetter = namespace(storeModules.Lookup, Getter);
 const LookupAction = namespace(storeModules.Lookup, Action);
@@ -49,6 +50,14 @@ export default class CreateDocumentComponent extends Vue {
         title: [v => !!v || 'Vui lòng nhập tiêu đề']
     }
 
+    get defaultImage () {
+        return NO_IMAGE;
+    }
+
+    onImgError (event) {
+        event.target.src = NO_IMAGE;
+    }
+    
     @LookupGetter(lookupTypesStore.Get.STATUS) status: IStatus[]
     @LookupAction getLookupData: (type: string) => void;
 

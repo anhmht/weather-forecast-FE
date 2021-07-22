@@ -28,7 +28,7 @@
 							<tr v-for="(item, index) in icons" :key="index">
 								<td>
 									<div class="base-cms-right--body_table_image">
-										<img :src="item.imageUrl">
+										<img :src="item.imageUrl || defaultImage" @error="onImgError" />
 									</div>
 								</td>
 								<td>{{ item.name }}</td>

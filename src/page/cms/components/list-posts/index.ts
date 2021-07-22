@@ -4,6 +4,7 @@ import Component from "vue-class-component";
 import { ROUTE_NAME } from "../../../../constant/route-constant";
 import { PostServices } from '../../../../service/post-service/post.service';
 import { Watch } from 'vue-property-decorator';
+import NO_IMAGE from '../../../../../static/img/no-image/no-image.png';
 
 @Component({
     template: require("./template.html").default,
@@ -25,6 +26,10 @@ export default class ListPostComponent extends Vue {
             return this.totalPages
         else
             return 7
+    }
+
+    get defaultImage () {
+        return NO_IMAGE;
     }
 
     handleDeletePost(id) {
@@ -81,6 +86,10 @@ export default class ListPostComponent extends Vue {
         }).catch(error => {
             console.log(error);
         })
+    }
+
+    onImgError (event) {
+        event.target.src = NO_IMAGE;
     }
 
     async mounted() {
