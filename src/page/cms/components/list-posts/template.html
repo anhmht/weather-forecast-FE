@@ -2,9 +2,9 @@
     <div class="base-cms-right--body_wrapper">
         <div class="base-cms-right--body_top">
             <p>{{listPostTitle}}</p>
-            <v-text-field label="Tìm kiếm" append-icon="mdi-magnify" solo hide-details>
+            <v-text-field label="Tìm kiếm" append-icon="mdi-magnify" outlined dense hide-details class="mr-4" >
             </v-text-field>
-            <v-btn depressed color="primary" height="50px" @click="toCreatePost()">
+            <v-btn depressed color="primary" @click="toCreatePost()" height="40px">
                 + Tạo tin mới
             </v-btn>
         </div>

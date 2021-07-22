@@ -1,12 +1,14 @@
 <div class="list-user-container">
     <div class="base-cms-right--body_wrapper">
-        <div class="base-cms-right--body_top">
+        <div class="base-cms-right--body_top align-start" :class="`${isDisplayButton ? 'd-lg-flex' : 'd-flex'}`">
             <p>{{listUserTitle}}</p>
-            <v-text-field label="Tìm kiếm" append-icon="mdi-magnify" solo hide-details>
-            </v-text-field>
-            <v-btn v-if="isDisplayButton" depressed color="primary" height="50px" @click="toCreateUser()">
-                + {{createUserTitle}}
-            </v-btn>
+            <div class="d-flex align-start">
+                <v-text-field label="Tìm kiếm" append-icon="mdi-magnify" outlined dense hide-details>
+                </v-text-field>
+                <v-btn v-if="isDisplayButton" class="ml-4" depressed color="primary" @click="toCreateUser()" height="40px">
+                    + {{createUserTitle}}
+                </v-btn>
+            </div>
         </div>
         <div class="base-cms-right--body_table">
             <template>
