@@ -3,18 +3,25 @@
         <div class="nav-sticky-wrapper">
             <div class="nav-sticky">
                 <ul>
-                    <li @click="scrollTo('info-page-container_section_3 padding-main')">Tổng quan</li>
-                    <li @click="scrollTo('info-page-container_section_4 padding-main')">Chuyên mục KT-VH-XH</li>
-                    <li @click="scrollTo('info-page-container_section_1')">Thời tiết 24h - Bản tin thời tiết - Bản đồ thời tiết</li>
-                    <li @click="scrollTo('info-page-container_section_2 padding-main')">Thông tin khuyến cáo</li>
-                    <li @click="scrollTo('info-page-container_section_5 padding-main')">Thời tiết chuyên đề</li>
-                    <li @click="scrollTo('info-page-container_section_6 padding-main')">Cảnh báo thiên tai</li>
+                    <li :class="{'active' : currentSection === 3}" @click="scrollTo('info-page-container_section_3 padding-main')">Tổng quan</li>
+                    <li :class="{'active' : currentSection === 4}" @click="scrollTo('info-page-container_section_4 padding-main')">Chuyên mục KT-VH-XH</li>
+                    <li :class="{'active' : currentSection === 1}" @click="scrollTo('info-page-container_section_1')">Thời tiết 24h - Bản tin thời tiết - Bản đồ thời tiết</li>
+                    <li :class="{'active' : currentSection === 2}" @click="scrollTo('info-page-container_section_2 padding-main')">Thông tin khuyến cáo</li>
+                    <li :class="{'active' : currentSection === 5}" @click="scrollTo('info-page-container_section_5 padding-main')">Thời tiết chuyên đề</li>
+                    <li :class="{'active' : currentSection === 6}" @click="scrollTo('info-page-container_section_6 padding-main')">Cảnh báo thiên tai</li>
                 </ul>
 
             </div>
         </div>
 
-        <div class="info-page-container_section_1">
+        <div class="info-page-container_section_1" 
+            v-intersect ="{
+                handler: onIntersect,
+                options: {
+                    threshold: [0.5, 1.0]
+                }
+            }"
+        >
             <div class="info-page-container-wrapper">
                 <v-row justify="center">
                     <v-col cols="12" md="4">
@@ -72,7 +79,14 @@
             </div>
         </div>
 
-        <div class="info-page-container_section_6 padding-main">
+        <div class="info-page-container_section_6 padding-main" 
+            v-intersect ="{
+                handler: onIntersect,
+                options: {
+                    threshold: [0.5, 1.0]
+                }
+            }"
+        >
             <div class="info-page-container-wrapper">
                 <h1>Cảnh báo thiên tai
                     <div class="warning-info-readmore" @click="viewAllWarning()">
@@ -94,7 +108,14 @@
             </div>
         </div>
 
-        <div class="info-page-container_section_2 padding-main">
+        <div class="info-page-container_section_2 padding-main" 
+            v-intersect ="{
+                handler: onIntersect,
+                options: {
+                    threshold: [1]
+                }
+            }"
+        >
             <div class="info-page-container-wrapper">
                 <v-row justify="center">
                     <v-col auto>
@@ -120,7 +141,14 @@
             </div>
         </div>
 
-        <div class="info-page-container_section_3 padding-main">
+        <div class="info-page-container_section_3 padding-main" 
+            v-intersect ="{
+                handler: onIntersect,
+                options: {
+                    threshold: [0.5, 1.0]
+                }
+            }"
+        >
             <div class="info-page-container-wrapper">
                 <h1>TỔNG QUAN</h1>
                 <div class="box-overview">
@@ -158,7 +186,14 @@
             </div>
         </div>
 
-        <div class="info-page-container_section_4 padding-main">
+        <div class="info-page-container_section_4 padding-main" 
+            v-intersect ="{
+                handler: onIntersect,
+                options: {
+                    threshold: [1]
+                }
+            }"
+        >
             <div class="info-page-container-wrapper">
 
                         <h1>Chuyên mục KT-VH-XH</h1>
@@ -182,7 +217,14 @@
             </div>
         </div>
 
-        <div class="info-page-container_section_5 padding-main">
+        <div class="info-page-container_section_5 padding-main" 
+            v-intersect ="{
+                handler: onIntersect,
+                options: {
+                        threshold: [1]
+                }
+            }"
+        >
             <div class="info-page-container-wrapper">
                 <h1>Thời tiết chuyên đề</h1>
                 <div class="weather-type">
@@ -227,5 +269,11 @@
                 </div>
             </div>
         </div>
+        <v-btn
+            v-scroll="onScroll" v-show="fab" fab dark
+            fixed bottom right color="primary" @click="toTop"
+          >
+            <v-icon>mdi-chevron-up</v-icon>
+        </v-btn>
     </base-container>
 </div>
