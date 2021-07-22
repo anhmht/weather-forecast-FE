@@ -26,6 +26,23 @@
             button {
                 margin-left: auto;
             }
+
+            &-tabs {
+                margin-bottom: 20px;
+            }
+
+            &-item-tab {
+                display: inline-block;
+                border-bottom: 2px solid #ddd;
+                opacity: 0.5;
+                transition: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+                margin-right: 20px;
+                cursor: pointer;
+                &.active, &:hover {
+                    border-color: $primary-color;
+                    opacity: 1;
+                }
+            }
         }
 
         &_table {
