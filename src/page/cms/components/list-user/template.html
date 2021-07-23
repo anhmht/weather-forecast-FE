@@ -1,7 +1,7 @@
 <div class="list-user-container">
     <div class="base-cms-right--body_wrapper">
         <div class="base-cms-right--body_top align-start" :class="`${isDisplayButton ? 'd-lg-flex' : 'd-flex'}`">
-            <p>{{listUserTitle}}</p>
+            <p class="mr-auto">{{listUserTitle}}</p>
             <div class="d-flex align-start">
                 <v-text-field label="Tìm kiếm" append-icon="mdi-magnify" outlined dense hide-details>
                 </v-text-field>
@@ -38,6 +38,9 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <tr v-if="users.length === 0">
+                                <td colspan="6" style="text-align: center;">Không có dữ liệu</td>
+                            </tr>
                             <tr v-for="(item, index) in users" :key="index">
                                 <td class="base-cms-right--body_table_checkbox">
                                     <v-checkbox color="primary" hide-details></v-checkbox>
@@ -60,11 +63,11 @@
                     </template>
                 </v-simple-table>
             </template>
-            <div class="base-cms-right--body_table_footer_page_num">
-                <div style="flex: 1;">{{numUsersInPage}}/{{totalItems}} người</div>
-                <div class="base-cms-right--body_table_footer_page_num_limit">
-                    Số người mỗi trang
-                    <v-select style="margin-left: 20px;" :items="limitPerPage" v-model="userSearchParams.limit"
+            <div class="d-flex align-center pa-4">
+                <div class="mr-auto">{{numUsersInPage}}/{{totalItems}} người</div>
+                <div class="d-flex align-center">
+                    <v-subheader>Số người mỗi trang</v-subheader>
+                    <v-select class="ml-3" style="width: 80px;" outlined dense hide-details :items="limitPerPage" v-model="userSearchParams.limit"
                         @change="getUsersByLimit"></v-select>
                 </div>
                 <v-pagination v-model="userSearchParams.page" :length="totalPages" :total-visible="TotalPageVisible"
