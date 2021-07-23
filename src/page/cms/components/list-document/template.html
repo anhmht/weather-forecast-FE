@@ -1,16 +1,16 @@
 <div class="list-document-container">
     <div class="base-cms-right--body_wrapper">
-        <div class="base-cms-right--body_top">
-            <div class="tabs">
-                <div class="item-tab" :class="activeTab === 1 ? 'active' : ''" @click="handleChangeTab(1)">
+        <div class="base-cms-right--body_top d-lg-flex align-start">
+            <div class="base-cms-right--body_top-tabs d-flex align-start">
+                <div class="base-cms-right--body_top-item-tab" :class="activeTab === 1 ? 'active' : ''" @click="handleChangeTab(1)">
                     Điều hành sản xuất</div>
-                <div class="item-tab" :class="activeTab === 2 ? 'active' : ''" @click="handleChangeTab(2)">
+                <div class="base-cms-right--body_top-item-tab" :class="activeTab === 2 ? 'active' : ''" @click="handleChangeTab(2)">
                     Phòng chống thiên tai</div>
             </div>
-            <v-text-field label="Tìm kiếm" append-icon="mdi-magnify" solo hide-details>
+            <v-text-field class="mr-6" label="Tìm kiếm" append-icon="mdi-magnify" solo hide-details outlined dense>
             </v-text-field>
-            <v-btn depressed color="primary" height="50px" @click="toCreateDocument()">
-                + Tạo tin mới
+            <v-btn depressed color="primary" @click="toCreateDocument()">
+                + Tạo mới
             </v-btn>
         </div>
         <div class="base-cms-right--body_table">
@@ -60,8 +60,8 @@
                 <div style="flex: 1;">{{numDocumentsInPage}}/{{totalItems}} tin</div>
                 <div class="base-cms-right--body_table_footer_page_num_limit">
                     Số tin mỗi trang
-                    <v-select style="margin-left: 20px;" :items="limitPerPage" v-model="searchParams.limit"
-                        @change="getDocumentsByLimit"></v-select>
+                    <v-select class="ml-3" style="width: 80px;" :items="limitPerPage" v-model="searchParams.limit"
+                        outlined dense hide-details @change="getDocumentsByLimit"></v-select>
                 </div>
                 <v-pagination v-model="searchParams.page" :length="totalPages" :total-visible="TotalPageVisible"
                     @input="getDocumentsByPaging"></v-pagination>
