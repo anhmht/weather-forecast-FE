@@ -55,8 +55,16 @@
                                 <td>{{ item.roleName }}</td>
                                 <td>{{ item.status }}</td>
                                 <td class="base-cms-right--body_table_action">
-                                    <v-icon @click.native="editUser(item.userId)" class="edit-action">mdi-square-edit-outline</v-icon>
-                                    <v-icon @click.native="handleDeleteUser(item.userId)" class="delete-action">mdi-delete</v-icon>
+                                    <!-- <v-icon v-if="isDisplayButton" @click.native="editUser(item.userId)" class="edit-action">mdi-square-edit-outline</v-icon> -->
+                                    <v-tooltip top>
+                                        <template v-slot:activator="{ on, attrs }">
+                                            <v-icon v-bind="attrs"
+                                                v-on="on"
+                                                @click.native="handleDeleteUser(item.userId)" 
+                                                color="primary">mdi-account-off-outline</v-icon>
+                                        </template>
+                                        <span>Khóa tài khoản</span>
+                                    </v-tooltip>
                                 </td>
                             </tr>
                         </tbody>

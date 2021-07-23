@@ -8,6 +8,7 @@ export interface IUser {
     avatarUrl?: string;
     phoneNumber?: string;
     roleNames?: string[];
+    roleName?: string;
 }
 
 export class User implements IUser {
@@ -20,6 +21,7 @@ export class User implements IUser {
     avatarUrl?: string;
     phoneNumber?: string;
     roleNames?: string[];
+    roleName?: string;
 
     constructor(option?: any) {
         this.id = option.id || null;
@@ -31,5 +33,6 @@ export class User implements IUser {
         this.avatarUrl = option.avatarUrl || null
         this.phoneNumber = option.phoneNumber || null
         this.roleNames = option.roleNames || []
+        this.roleName = option.roleName || null
     }
 }
