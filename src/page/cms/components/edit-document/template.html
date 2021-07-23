@@ -15,7 +15,9 @@
                     <v-text-field solo :rules="rules.title" v-model="postModel.title"></v-text-field>
                     <div class="base-cms-right--body_editor">
                         <div>Nội dung</div>
-                        <custom-ckeditor ref="ckEditor" :rules="rules.title" v-model="postModel.content"/>
+                        <div style="width: calc(100% - 4px);">
+                            <custom-ckeditor ref="ckEditor" :rules="rules.title" v-model="postModel.content"/>
+                        </div>
                     </div>
                     <div class="base-cms-right--body_browse">
                         <div>Tập tin đính kèm</div>
