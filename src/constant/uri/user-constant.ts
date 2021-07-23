@@ -4,5 +4,6 @@ export default {
     updateUserInfo: '/api/Account/updateProfile',
     getAllUser: '/api/Account/GetAllUsers',
     createUser: '/api/Account/createUser',
-    getAllRole: '/api/Account/GetAllRoles'
+    getAllRole: '/api/Account/GetAllRoles',
+    getUserInfo: '/api/Account/GetUserInfo',
 }

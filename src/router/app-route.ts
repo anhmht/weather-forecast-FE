@@ -187,7 +187,7 @@ const adminRoutes = [
                 name: ROUTE_NAME.CREATE_POST,
                 component: CreatePostComponent,
                 meta: {
-                    requiresAuth: true
+                    requiresAuth: true,
                 },
                 props: {}
             },
@@ -223,7 +223,8 @@ const adminRoutes = [
                 name: ROUTE_NAME.LIST_USER,
                 component: ListUserComponent,
                 meta: {
-                    requiresAuth: true
+                    requiresAuth: true,
+                    level: 1
                 },
                 props: {}
             },
@@ -232,7 +233,8 @@ const adminRoutes = [
                 name: ROUTE_NAME.CREATE_USER,
                 component: CreateUserComponent,
                 meta: {
-                    requiresAuth: true
+                    requiresAuth: true,
+                    level: 1
                 },
                 props: {}
             },
