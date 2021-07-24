@@ -1,8 +1,15 @@
 import { DataHelper } from '@/utils/data-helper';
-import { SCENARIO_ACTION, ELEVATION } from './../../scenario-default';
+import { ELEVATION, SCENARIO_ACTION_METHOD_ENUM, SCENARIO_ACTION_ENUM, SCENARIO_ACTION_DETAIL_ENUM, POSITION } from './../../scenario-default';
 
 import { MAP_PROVINCE, MAP_TYPE, REGION } from '@/constant/forcast-station-constant';
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
+import { IScenarioAction, IScenarioActionDetail, ScenarioAction, ScenarioActionDetail } from '@/model/scenario';
+import { Getter, namespace } from 'vuex-class';
+import { storeModules } from '@/store';
+import lookupTypesStore, { GeneralLookupTypes } from '@/store/lookup/lookup-types.store';
+import { ScenarioServices } from '@/service/scenario-service/scenario.service';
+
+const LookupGetter = namespace(storeModules.Lookup, Getter);
 
 @Component({
     template: require("./template.html").default,
@@ -19,6 +26,14 @@ export default class AddUpdateContentComponent extends Vue {
 
     @Prop({type: Object, default: null})
     content
+
+    @Prop({ required: true })
+    id
+
+    @Prop({ type: Number, default: 0 })
+    order
+
+    @LookupGetter(lookupTypesStore.Get.LOOKUP_DATA) dtoLookupData: Object;
 
     durations = [
         { text: '0 giây', value: 0 },
@@ -46,54 +61,13 @@ export default class AddUpdateContentComponent extends Vue {
         { text: '30 giây', value: 30000 },
     ]
 
-    positions = [
-        { text: 'top', value: 'top' },
-        { text: 'top-left', value: 'top-left' },
-        { text: 'top-right', value: 'top-right' },
-        { text: 'middle', value: 'middle' },
-        { text: 'middle-left', value: 'middle-left' },
-        { text: 'middle-right', value: 'middle-right' },
-        { text: 'bottom', value: 'bottom' },
-        { text: 'bottom-left', value: 'bottom-left' },
-        { text: 'bottom-right', value: 'bottom-right' },
-    ]
+    positions = POSITION
 
     valid: boolean = true;
-    actionList = SCENARIO_ACTION
 
-    data = {
-        action: null,
-        method: null,
-        data: null,
-        duration: 0,
-        textBox: [],
-        title: null,
-        tempInfo: null
-    }
-
-    title = {
-        isDisplayTitle: false,
-        content: null,
-        startTime: 0,
-        duration: 0,
-        position: 'top-right',
-        width: 400,
-        customPosition: false,
-        left: 0,
-        top: 0,
-    }
-
-    tempInfo = {
-        isDisplay: false,
-        startTime: 0,
-        duration: 0,
-        position: 'top-right',
-        customPosition: false,
-        left: 0,
-        top: 0,
-        placeId: null,
-        isProvince: false
-    }
+    data: IScenarioAction = new ScenarioAction({});
+    scenarioService = new ScenarioServices();
+    isLoading: boolean = false;
 
     rules = {
         actionRules: [v => !!v || 'Vui lòng chọn hàng động'],
@@ -106,7 +80,7 @@ export default class AddUpdateContentComponent extends Vue {
     }
 
     visibleAddTexbox: boolean = false;
-    textbox: any = null;
+    textbox: IScenarioActionDetail = null;
     selectTextBoxIndex: number = 0;
 
     confirmTitle: string = null;
@@ -115,6 +89,14 @@ export default class AddUpdateContentComponent extends Vue {
 
     visibleUpdateTitle:boolean = false;
     visibleUpdateTempInfo: boolean = false;
+
+    actionListConstant = SCENARIO_ACTION_ENUM;
+    methodConstant = SCENARIO_ACTION_METHOD_ENUM;
+    actionDetailConstant = SCENARIO_ACTION_DETAIL_ENUM;
+
+    get actionList() {
+        return this.dtoLookupData[GeneralLookupTypes.ACTION_TYPE]
+    }
 
     get regions() {
         const regions = DataHelper.deepClone(REGION) as any;
@@ -151,102 +133,120 @@ export default class AddUpdateContentComponent extends Vue {
         return ELEVATION;
     }
 
-    coTextBox() {
-        if (this.data.textBox) {
-            return this.data.textBox
-        }
-        return [];
-    }
-
     get coTitle() {
-        if (!this.title) {
-            return {
-                isDisplayTitle: false,
-                content: null,
-                startTime: 0,
-                duration: 0,
-                position: 'top-right',
-                width: 400,
-                customPosition: false,
-                left: 0,
-                top: 0,
-            }
-        }
-        return this.title
+        return this.data.scenarioActionDetails.find(x => x.scenarioActionTypeId === this.actionDetailConstant.TITLE) || {}
     }
 
-    get coTempInfo() {
-        if (!this.tempInfo) {
-            return {
-                isDisplay: false,
-                startTime: 0,
-                duration: 0,
-                position: 'top-right',
-                customPosition: false,
-                left: 0,
-                top: 0,
-                placeId: this.data.data,
-                isProvince: this.data.method === 'handleClick'
-            }
+    set coTitle(val: IScenarioActionDetail) {
+        const index = this.data.scenarioActionDetails.findIndex(x => x.scenarioActionTypeId === this.actionDetailConstant.TITLE);
+        if (index > -1) {
+            Vue.set(this.data.scenarioActionDetails, index, val);
+        } else {
+            this.data.scenarioActionDetails.push({
+                ...val,
+                scenarioActionTypeId: this.actionDetailConstant.TITLE
+            })
         }
-        this.tempInfo.placeId = this.data.data ? DataHelper.deepClone(this.data.data) : null,
-        this.tempInfo.isProvince = this.data.method === 'handleClick'
-        return this.tempInfo
     }
 
     get coDisabledEditTitle() {
-        return !this.title.isDisplayTitle;
+        return !this.coTitle.isDisplay;
     }
 
     get isDisPlayTitle() {
-        return this.title.isDisplayTitle;
+        return this.coTitle.isDisplay;
     }
+
     set isDisPlayTitle(val) {
-        this.title.isDisplayTitle = val;
-    }
-
-    get coDisabledEditTempInfo() {
-        return !this.tempInfo.isDisplay;
-    }
-
-    get isDisPlayTempInfo() {
-        return this.tempInfo.isDisplay;
-    }
-    set isDisPlayTempInfo(val) {
-        this.tempInfo.isDisplay = val;
-    }
-
-    handleSaveTitle(data) {
-        this.title = DataHelper.deepClone(data);
-    }
-
-    handleSaveTempInfo(data) {
-        this.tempInfo = DataHelper.deepClone(data);
-    }
-
-    handleSaveTextBox(data) {
-        if (this.textbox) {
-            this.data.textBox[this.selectTextBoxIndex] = DataHelper.deepClone(data);
+        const index = this.data.scenarioActionDetails.findIndex(x => x.scenarioActionTypeId === this.actionDetailConstant.TITLE);
+        if (index > -1) {
+            Vue.set(this.data.scenarioActionDetails, index, { ...this.data.scenarioActionDetails[index], isDisplay: val});
         } else {
-            if (this.data.textBox) {
-                this.data.textBox.push(DataHelper.deepClone(data));
-            } else {
-                this.data.textBox = [];
-                Vue.set(this.data, 'textBox', [DataHelper.deepClone(data)])
-            }
+            this.data.scenarioActionDetails.push(new ScenarioActionDetail({
+                isDisplay: val,
+                scenarioActionTypeId: this.actionDetailConstant.TITLE,
+            }))
         }
     }
 
-    generateKey(index) {
+    get coTempInfo() {
+        return this.data.scenarioActionDetails.find(x => x.scenarioActionTypeId === this.actionDetailConstant.TEMP_INFO) || {}
+    }
+
+    set coTempInfo(val: IScenarioActionDetail) {
+        const index = this.data.scenarioActionDetails.findIndex(x => x.scenarioActionTypeId === this.actionDetailConstant.TEMP_INFO);
+        if (index > -1) {
+            Vue.set(this.data.scenarioActionDetails, index, val);
+        } else {
+            this.data.scenarioActionDetails.push({
+                ...val,
+                scenarioActionTypeId: this.actionDetailConstant.TEMP_INFO
+            })
+        }
+    }
+
+    get coDisabledEditTempInfo() {
+        return !this.coTempInfo.isDisplay;
+    }
+
+    get isDisPlayTempInfo() {
+        return this.coTempInfo.isDisplay;
+    }
+
+    set isDisPlayTempInfo(val) {
+        const index = this.data.scenarioActionDetails.findIndex(x => x.scenarioActionTypeId === this.actionDetailConstant.TEMP_INFO);
+        if (index > -1) {
+            Vue.set(this.data.scenarioActionDetails, index, { ...this.data.scenarioActionDetails[index], isDisplay: val });
+        } else {
+            this.data.scenarioActionDetails.push(new ScenarioActionDetail({
+                isDisplay: val,
+                scenarioActionTypeId: this.actionDetailConstant.TEMP_INFO
+            }))
+        }
+    }
+
+    get coTextBox() {
+        return this.data.scenarioActionDetails.filter(x => x.scenarioActionTypeId === this.actionDetailConstant.TEXT_BOX) || []
+    }
+
+    set coTextBox(val: IScenarioActionDetail[]) {
+        this.data.scenarioActionDetails = this.data.scenarioActionDetails.filter(x => x.scenarioActionTypeId !== this.actionDetailConstant.TEXT_BOX)
+        this.data.scenarioActionDetails = this.data.scenarioActionDetails.concat(val);
+    }
+
+    handleSaveTitle(data: IScenarioActionDetail) {
+        this.coTitle = data;
+    }
+
+    handleSaveTempInfo(data: IScenarioActionDetail) {
+        this.coTempInfo = data
+    }
+
+    handleSaveTextBox(data: IScenarioActionDetail) {
+        if (this.textbox) {
+            const index = this.data.scenarioActionDetails.findIndex(x => x.id === data.id);
+            if (index > -1) {
+                Vue.set(this.data.scenarioActionDetails, index, data);
+            }
+        } else {
+            this.data.scenarioActionDetails.push(new ScenarioActionDetail({
+                ...data,
+                scenarioActionTypeId: this.actionDetailConstant.TEXT_BOX,
+                actionId: this.data.id
+            }))
+        }
+    }
+
+    generateKey(index: number) {
         return `${new Date().getTime()}-${index}`
     }
 
-    handleEditTextBox(content, index) {
+    handleEditTextBox(content: IScenarioActionDetail, index: number) {
         this.selectTextBoxIndex = index;
-        this.textbox = content;
+        this.textbox = new ScenarioActionDetail(content);
         this.visibleAddTexbox = true;
     }
-    handleDeleteTextBox(index) {
+    handleDeleteTextBox(index: number) {
         this.selectTextBoxIndex = index;
         this.confirmTitle = 'Bạn có muốn xoá text box này ?'
         this.confirmAction = 'deleteContent';
@@ -254,7 +254,9 @@ export default class AddUpdateContentComponent extends Vue {
     }
 
     handleConfirm() {
-        this.data.textBox.splice(this.selectTextBoxIndex, 1);
+        const textBoxArr = DataHelper.deepClone(this.coTextBox) as IScenarioActionDetail[];
+        textBoxArr.splice(this.selectTextBoxIndex, 1);
+        this.coTextBox = textBoxArr;
         this.visibleConfirm = false;
     }
 
@@ -267,105 +269,47 @@ export default class AddUpdateContentComponent extends Vue {
         //@ts-ignore
         this.valid = this.$refs.contentForm.validate();
 
-        if(this.valid) {
-            if (this.data.action === 'customMapStatusControl') {
-                this.data.method = 'handleClick';
+        if (this.valid) {
+            let requestHolder: Promise<any>;
+            let successMessage: string = null;
+            let errorMessage: string = null;
+            this.isLoading = true;
+            if (this.content) {
+                requestHolder = this.scenarioService.updateScenarioAction(this.data);
+                successMessage = 'Chỉnh sửa nội dung kịch bản thành công';
+                errorMessage = 'Có lỗi khi chỉnh sửa nội dung kịch bản';
+            } else {
+                requestHolder = this.scenarioService.createScenarioAction(this.data);
+                successMessage = 'Tạo mới nội dung kịch bản thành công';
+                errorMessage = 'Có lỗi khi tạo mới nội dung kịch bản';
             }
-            if (this.data.action === 'customZoomControl') {
-                this.data.duration = 1000;
-            }
-            if (this.data.action === 'customLevelControl') {
-                this.data.method = 'handleChangeLevel';
-            }
-            Vue.set(this.data, 'title', DataHelper.deepClone(this.title));
-            Vue.set(this.data, 'tempInfo', DataHelper.deepClone(this.tempInfo));
-            this.$emit('save', this.data);
-            this.visibleAddItem = false
+            requestHolder.then((res: any) => {
+                this.$toast.success(successMessage);
+                this.isLoading = false;
+                this.$emit('save-success');
+                this.visibleAddItem = false
+            }).catch(err => {
+                this.$toast.error(errorMessage);
+                console.log(err);
+                this.isLoading = false;
+            });
+            
         }
     }
 
     handleChangeAction(value) {
-        this.data = {
-            action: value,
-            method: null,
-            data: null,
-            duration: 0,
-            textBox: [],
-            title: {
-                isDisplayTitle: false,
-                content: null,
-                startTime: 0,
-                duration: 0,
-                position: 'top-right',
-                width: 400,
-                customPosition: false,
-                left: 0,
-                top: 0,
-            },
-            tempInfo: {
-                isDisplay: false,
-                startTime: 0,
-                duration: 0,
-                position: 'top-right',
-                customPosition: false,
-                left: 0,
-                top: 0,
-                placeId: null,
-                isProvince: false
-            }
-        }
-
         //@ts-ignore
         this.$refs.contentForm.resetValidation();
     }
 
     handleChangeMethod(val) {
-        this.data.data = null;
-        this.data.title = null;
-        this.data.tempInfo = null;
+
     }
 
     @Watch('value')
     dialogVisible(visible) {
         if (visible) {
-            this.data = this.content ? DataHelper.deepClone(this.content) : {
-                action: null,
-                method: null,
-                data: null,
-                duration: 0,
-                textBox: [],
-                title: this.title,
-                tempInfo: this.tempInfo
-            }
-            if(this.data.title) {
-                this.title = DataHelper.deepClone(this.data.title);
-            }
-            if (this.data.tempInfo) {
-                this.tempInfo = DataHelper.deepClone(this.data.tempInfo);
-            }
-        } else {
-            this.title = {
-                isDisplayTitle: false,
-                content: null,
-                startTime: 0,
-                duration: 0,
-                position: 'top-right',
-                width: 400,
-                customPosition: false,
-                left: 0,
-                top: 0,
-            }
-            this.tempInfo = {
-                isDisplay: false,
-                startTime: 0,
-                duration: 0,
-                position: 'top-right',
-                customPosition: false,
-                left: 0,
-                top: 0,
-                placeId: null,
-                isProvince: false
-            }
+            this.data = this.content ? new ScenarioAction(this.content) : new ScenarioAction({scenarioId : this.id, order: this.order});
         }
     }
 }

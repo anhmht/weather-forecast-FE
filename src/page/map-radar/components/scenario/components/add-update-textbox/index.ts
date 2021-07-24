@@ -7,6 +7,8 @@ import { Prop, Watch } from 'vue-property-decorator';
 import moment from 'moment';
 import { DataHelper } from '@/utils/data-helper';
 import { ICON } from '@/constant/icon-constant';
+import { IScenarioActionDetail, ScenarioActionDetail } from '@/model/scenario';
+import { POSITION } from '../../scenario-default';
 
 @Component({
     template: require("./template.html").default,
@@ -29,16 +31,7 @@ export default class AddUpdateTextBoxComponent extends Vue {
     searchParam: IForecastSearchParam = new ForecastSearchParam();
     forecastData: any = {}
 
-    data = {
-        content: null,
-        time: 0,
-        position: 'top-right',
-        duration: 3000,
-        id: null,
-        customPosition: false,
-        left: 0,
-        top: 0,
-    }
+    data: IScenarioActionDetail = new ScenarioActionDetail({});
 
     get visbileTextBox() {
         return this.visible;
@@ -74,17 +67,7 @@ export default class AddUpdateTextBoxComponent extends Vue {
         { text: '30 giây', value: 30000 },
     ]
 
-    positions = [
-        { text: 'top', value: 'top' },
-        { text: 'top-left', value: 'top-left' },
-        { text: 'top-right', value: 'top-right' },
-        { text: 'middle', value: 'middle' },
-        { text: 'middle-left', value: 'middle-left' },
-        { text: 'middle-right', value: 'middle-right' },
-        { text: 'bottom', value: 'bottom' },
-        { text: 'bottom-left', value: 'bottom-left' },
-        { text: 'bottom-right', value: 'bottom-right' },
-    ]
+    positions = POSITION
 
     handleSaveTextBox() {
         this.$emit('save', this.data);
@@ -258,16 +241,7 @@ export default class AddUpdateTextBoxComponent extends Vue {
     dialogVisible(visible) {
         if (visible) {
             this.fetchData();
-            this.data = this.editData ? DataHelper.deepClone(this.editData) : {
-                content: null,
-                time: 0,
-                position: 'top-right',
-                duration: 3000,
-                id: DataHelper.create_UUID(),
-                customPosition: false,
-                left: 0,
-                top: 0,
-            }
+            this.data = this.editData ? new ScenarioActionDetail(this.editData) : new ScenarioActionDetail({});
         }
     }
 }

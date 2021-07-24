@@ -10,11 +10,11 @@
                     <p v-html="forecastData.desc"></p>
                 </div>
             </div>
-            <v-select :items="durations" v-model="data.time" label="Xuất hiện sau" item-value="value"></v-select>
+            <v-select :items="durations" v-model="data.startTime" label="Xuất hiện sau" item-value="value"></v-select>
             <v-select :items="durations" v-model="data.duration" label="Thời lượng" item-value="value"></v-select>
             <div class="textbox-popup-content">
                 <div class="textbox-popup-content--field">
-                    <v-select :disabled="data.customPosition" :items="positions" v-model="data.position" label="Vị trí xuất hiện" item-value="value"></v-select>
+                    <v-select :disabled="data.customPosition" :items="positions" v-model="data.positionId" label="Vị trí xuất hiện" item-value="value"></v-select>
                 </div>
                 <div class="textbox-popup-content--suggest">
                     <v-switch v-model="data.customPosition" label="Hiệu chỉnh nâng cao"></v-switch>

@@ -14,7 +14,7 @@
             <v-select :items="durations" v-model="data.duration" label="Thời lượng" item-value="value"></v-select>
             <div class="title-popup-content">
                 <div class="title-popup-content--field">
-                    <v-select :disabled="data.customPosition" :items="positions" v-model="data.position" label="Vị trí xuất hiện" item-value="value"></v-select>
+                    <v-select :disabled="data.customPosition" :items="positions" v-model="data.positionId" label="Vị trí xuất hiện" item-value="value"></v-select>
                     <v-text-field  label="Độ dài" v-model="data.width"></v-text-field>
                 </div>
                 <div class="title-popup-content--suggest">

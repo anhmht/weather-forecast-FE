@@ -104,3 +104,36 @@ export const ELEVATION = [
     { label: "9000m", value: 11, data: "300h" },
     { label: "10km", value: 12, data: "250h" },
 ]
+
+export const SCENARIO_ACTION_ENUM = {
+    MOVE_MAP: 1,
+    CHANGE_MAP_STATUS: 2,
+    CHANGE_ELEVATION: 3,
+    CHANGE_ZOOM_LEVEL: 4,
+    WAIT: 5
+}
+
+export const SCENARIO_ACTION_METHOD_ENUM = {
+    REGION: 1,
+    PROVINCE: 2,
+    LEVEL: 3
+}
+
+export const SCENARIO_ACTION_DETAIL_ENUM = {
+    TITLE: 1,
+    TEMP_INFO: 2,
+    TEXT_BOX: 3
+}
+
+
+export const POSITION = [
+    { text: 'top', value: 1 },
+    { text: 'top-left', value: 2 },
+    { text: 'top-right', value: 3 },
+    { text: 'middle', value: 4 },
+    { text: 'middle-left', value: 5 },
+    { text: 'middle-right', value: 6 },
+    { text: 'bottom', value: 7 },
+    { text: 'bottom-left', value: 8 },
+    { text: 'bottom-right', value: 9 },
+]
