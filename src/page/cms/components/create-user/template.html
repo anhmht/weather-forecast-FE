@@ -39,11 +39,12 @@
         
                     <div class="base-cms-right--body_type pa-5">
                         <div>Chọn loại tài khoản</div>
-                        <v-radio-group v-model="userModel.roleName">
+                        <v-radio-group v-model="roles" multiple>
                             <v-radio
                                 v-for="r in coRoleList"
                                 :key="r.id"
                                 :value="r.name"
+                                @click="handleClickOnRole(r.name)"
                             >
                                 <template v-slot:label>
                                     <div class="d-flex flex-column radio-title">
@@ -52,7 +53,7 @@
                                     </div>
                                 </template>
                             </v-radio>
-                          </v-radio-group>
+                        </v-radio-group>
                     </div>
                 </div>
                 
