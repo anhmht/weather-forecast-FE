@@ -1,4 +1,4 @@
-import { IScenario } from './../../model/scenario/scenario.model';
+import { IScenario, IScenarioAction, IScenarioActionOrder } from './../../model/scenario/scenario.model';
 import { ApiResponse } from "@/model/app-config";
 import { GenericServices } from "../generic-service/generic.service";
 import Uri from "@/constant/uri/scenario-constants";
@@ -25,6 +25,38 @@ export class ScenarioServices extends GenericServices {
     deleteScenario(id: string): Promise<ApiResponse> {
         const url = Uri.deleteScenario.replace('{id}', id);
         return this.executeDeleting(url).then((response: ApiResponse) => {
+            return Promise.resolve(response)
+        }).catch(error => Promise.reject(error))
+    }
+
+    getScenarioById(id): Promise<ApiResponse> {
+        const url = Uri.getScenarioById.replace('{id}', id);
+        return this.executeSelecting(null, url).then((response: ApiResponse) => {
+            return Promise.resolve(response)
+        }).catch(error => Promise.reject(error))
+    }
+
+    createScenarioAction(payload: IScenarioAction): Promise<ApiResponse> {
+        return this.executeSelectingPost(payload, Uri.addUpdateScenarioAction).then((response: ApiResponse) => {
+            return Promise.resolve(response)
+        }).catch(error => Promise.reject(error))
+    }
+
+    updateScenarioAction(payload: IScenarioAction): Promise<ApiResponse> {
+        return this.executeSelectingPut(payload, Uri.addUpdateScenarioAction).then((response: ApiResponse) => {
+            return Promise.resolve(response)
+        }).catch(error => Promise.reject(error))
+    }
+
+    deleteScenarioAction(id: string): Promise<ApiResponse> {
+        const url = Uri.deleteScenarioAction.replace('{id}', id);
+        return this.executeDeleting(url).then((response: ApiResponse) => {
+            return Promise.resolve(response)
+        }).catch(error => Promise.reject(error))
+    }
+
+    updateScenarioActionOrder(payload: IScenarioActionOrder[]): Promise<ApiResponse> {
+        return this.executeSelectingPost({ actionOrders: payload }, Uri.updateScenarioActionOrder).then((response: ApiResponse) => {
             return Promise.resolve(response)
         }).catch(error => Promise.reject(error))
     }

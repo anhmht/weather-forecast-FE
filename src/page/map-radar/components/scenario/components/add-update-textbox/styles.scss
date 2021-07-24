@@ -8,5 +8,37 @@
         &--suggest {
             flex: 1;
         }
+        &_icon {
+            &--upload {
+                display: flex;
+                align-items: center;
+                padding: 10px;
+                border-radius: 3px;
+                border: 1px dashed #cecece;
+                img {
+                    width: 50px;
+                    height: 50px;
+                    object-fit: contain;
+                    object-position: center;
+                }
+                &_image {
+                    position: relative;
+                    display: flex;
+                    .progress-bar {
+                        height: 50px;
+                        width: 50px;
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                    }
+                }
+                &_button {
+                    display: flex;
+                    flex: 1;
+                    justify-content: center;
+                }
+            }
+        }
     }
 }

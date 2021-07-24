@@ -30,4 +30,22 @@
             max-height: 600px;
         }
     }
+    &__row {
+        > div {
+            margin-left: 30px;
+        }
+        > div:first-child {
+            margin-left: 0;
+        }
+        display: flex;
+        align-items: center;
+    }
+    &__col {
+        &.span-2 {
+            width: 50%;
+        }
+        &.span-4 {
+            width: 25%;
+        }
+    }
 }

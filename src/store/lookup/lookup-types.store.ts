@@ -17,4 +17,9 @@ export default {
 export const GeneralLookupTypes = {
     "PROVINCE": 1,
     "DISTRICT": 2,
+    "ACTION_TYPE": 3,
+    "ACTION_METHOD": 4,
+    "ACTION_AREA_TYPE": 5,
+    "SCENARIO_ACTION_TYPE": 6,
+    "POSITION": 7,
 }
