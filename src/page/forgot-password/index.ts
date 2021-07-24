@@ -1,3 +1,4 @@
+import { UserServices } from "@/service/user-service/user.service";
 import Vue from "vue";
 import Component from "vue-class-component";
 
@@ -11,6 +12,8 @@ export default class ForgotPasswordPageComponent extends Vue {
     valid: boolean = true;
     isLoading: boolean = false;
     email: string = null;
+    visibleConfirm: boolean = false;
+    userService: UserServices = new UserServices();
 
     rules = {
         email: [
@@ -23,7 +26,31 @@ export default class ForgotPasswordPageComponent extends Vue {
         //@ts-ignore
         this.valid = this.$refs.forgotPasswordForm.validate();
         if(this.valid) {
-            
+            this.isLoading = true;
+            this.userService.forgotPassword({
+                email: this.email
+            }).then(res => {
+                this.isLoading = false;
+                this.visibleConfirm = true;
+            }).catch(err => {
+                console.log(err);
+                this.isLoading = false;
+            });
+        }
+    }
+
+    handleResendEmail() {
+        //@ts-ignore
+        this.valid = this.$refs.forgotPasswordForm.validate();
+        if(this.valid) {
+            this.isLoading = true;
+            this.userService.resendEmail(this.email).then(res => {
+                this.isLoading = false;
+                this.visibleConfirm = true;
+            }).catch(err => {
+                console.log(err);
+                this.isLoading = false;
+            });
         }
     }
 
