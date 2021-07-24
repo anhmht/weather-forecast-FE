@@ -12,7 +12,14 @@ import { Watch } from 'vue-property-decorator';
 import { IForecastSearchParam, ForecastSearchParam } from '@/model/forecast';
 import { WEATHER_TYPE } from '@/constant/forcast-station-constant';
 import * as htmlToImage from 'html-to-image';
+import { Getter, namespace } from 'vuex-class';
+import { storeModules } from '@/store';
+import userTypesStore from '@/store/user/user-types.store';
+import { USER_ROLE } from '@/constant/common-constant';
 // import * as HME from "h264-mp4-encoder";
+
+
+const UserGetter = namespace(storeModules.User, Getter);
 
 const COLOR = [
     'red', 'green', 'blue', 'yellow', 'DeepPink', 'DeepSkyBlue', 'GreenYellow', 'Lime', 'Thistle', 'NavajoWhite',
@@ -108,6 +115,15 @@ export default class HomePageComponent extends Vue {
 
 
     isShowTextBox: boolean = false;
+
+    @UserGetter(userTypesStore.Get.Auth) userConfig: Object;
+
+    get hasPermission () {
+        if (this.userConfig && this.userConfig['roles']) {
+            return !!this.userConfig['roles'].find(r => r === USER_ROLE.SUPER || r === USER_ROLE.DTH);
+        }
+        return false;
+    }
 
     handleBack() {
         this.$router.push(PATH.INFO);
