@@ -15,14 +15,16 @@
         margin: auto;
         &--item {
             display: flex;
-            align-items: center;
+            align-items: start;
             padding: 10px 0;
             &_label {
                 width: 170px;
-                padding: 20px;
+                // padding: 20px;
+                padding-top: 10px;
                 padding-right: 40px;
                 display: flex;
                 justify-content: flex-end;
+                color: #888888;
             }
             &_content {
                 flex: 1;

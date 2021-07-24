@@ -1,11 +1,15 @@
 import { IUser, User } from './../../../../model/user/user-authenticate.model';
-import { getLocalStorage } from './../../../../utils/appConfig';
+// import { getLocalStorage } from './../../../../utils/appConfig';
 import { UploadServices } from '@/service/upload-service/upload.service';
 import Vue from 'vue';
 import Component from 'vue-class-component';
 import NO_IMAGE from '../../../../../static/img/no-image/no-image.png';
 import { UserServices } from '@/service/user-service/user.service';
+import { Getter, namespace } from 'vuex-class';
+import { storeModules } from '@/store';
+import userTypesStore from '@/store/user/user-types.store';
 
+const UserGetter = namespace(storeModules.User, Getter);
 @Component({
     template: require("./template.html").default,
 
@@ -28,6 +32,8 @@ export default class UserInfoComponent extends Vue {
 
     data: IUser = new User({});
     isValid: boolean = false;
+
+    @UserGetter(userTypesStore.Get.Auth) userConfig: any;
 
     handleClickBrowse() {
         const upload = this.$refs.upload as any;
@@ -103,7 +109,8 @@ export default class UserInfoComponent extends Vue {
 
     buildUploadDocumentParams(document) {
         const formData = new FormData();
-        const cached = getLocalStorage('auth');
+        // const cached = getLocalStorage('auth');
+        const cached = this.userConfig;
         formData.append('Image', document.Data, document.FileName);
         formData.append('UserId', cached.id);
         return formData;
@@ -118,11 +125,16 @@ export default class UserInfoComponent extends Vue {
         })
     }
 
+    onImgError (event) {
+        event.target.src = NO_IMAGE;
+    }
+
     mounted() {
-        const userInfo = getLocalStorage('auth');
+        // const userInfo = getLocalStorage('auth');
+        const userInfo = this.userConfig;
         if(userInfo) {
             this.data = new User(userInfo);
-            this.uploadedDocs = userInfo.avartarUrl;
+            this.uploadedDocs = userInfo.avatarUrl;
         }
     }
 }
