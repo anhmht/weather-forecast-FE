@@ -62,6 +62,25 @@ export default class CreateUserComponent extends Vue {
         });
     }
 
+    get roles () {
+        return this.userModel.roleNames;
+    }
+
+    set roles (val) {
+        // this.userModel.roleNames = val;
+    }
+
+    handleClickOnRole (val) {
+        let index = this.roles.indexOf(val);
+        if (index === -1) {
+            this.userModel.roleNames.push(val);
+        } else {
+            if (this.roles.length > 1) {
+                this.userModel.roleNames.splice(index, 1);
+            }
+        }
+    }
+
     handleBack() {
         this.$router.go(-1);
     }
@@ -165,6 +184,6 @@ export default class CreateUserComponent extends Vue {
         await this.userService.getAllRole().then((res: any) => {
             this.roleList = res;
         });
-        this.userModel.roleName = 'Admin';
+        this.userModel.roleNames = ['Admin'];
     }
 }

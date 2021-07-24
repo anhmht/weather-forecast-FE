@@ -1,15 +1,22 @@
 import { EVENT_BUS } from './../../constant/event-bus-constant';
-import { getLocalStorage } from '@/utils/appConfig';
+// import { getLocalStorage } from '@/utils/appConfig';
 import { Watch } from 'vue-property-decorator';
-import { PATH } from "@/constant/route-constant";
+import { KTTV_CATEGORY, PATH, ROUTE_NAME } from "@/constant/route-constant";
 import Vue from "vue";
 import Component from "vue-class-component";
 import EventBus from '@/utils/event-bus';
+import { Getter, namespace } from 'vuex-class';
+import { storeModules } from '@/store';
+import userTypesStore from '@/store/user/user-types.store';
+import { USER_ROLE } from '@/constant/common-constant';
 
+const UserGetter = namespace(storeModules.User, Getter);
 @Component({
     template: require("./template.html").default
 })
 export default class MenuComponent extends Vue {
+    @UserGetter(userTypesStore.Get.Auth) userConfig: Object;
+
     isActive: Number = 0;
     loginInfo: any = null;
     get menuItems() {
@@ -84,15 +91,28 @@ export default class MenuComponent extends Vue {
     }
 
     handleCheckLogin() {
-        this.loginInfo = getLocalStorage('auth');
+        // this.loginInfo = getLocalStorage('auth');
+        this.loginInfo = this.userConfig;
     }
 
     handleMoveToAdmin() {
-        this.$router.push(PATH.ADMIN);
+        if (this.loginInfo && this.loginInfo["roles"]) {
+            if (!!this.loginInfo["roles"].find(r => r === USER_ROLE.SUPER)) {
+                this.$router.push(PATH.ADMIN);
+                return;
+            }
+            if (!!this.loginInfo["roles"].find(r => r === USER_ROLE.KTTV)) {
+                this.$router.push({ name: ROUTE_NAME.LIST_POST, query: { categoryId: KTTV_CATEGORY[0]} });
+                return;
+            }
+            this.$router.push({ name: ROUTE_NAME.LIST_DOCUMENT });
+        }
+        
     }
 
     mounted() {
-        this.loginInfo = getLocalStorage('auth');
+        // this.loginInfo = getLocalStorage('auth');
+        this.loginInfo = this.userConfig;
         this.setActiveMenu();
         EventBus.$on(EVENT_BUS.LOGIN, this.handleCheckLogin)
     }

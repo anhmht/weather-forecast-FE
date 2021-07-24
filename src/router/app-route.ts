@@ -1,3 +1,4 @@
+import { USER_ROLE } from "@/constant/common-constant";
 import { ROUTE_NAME, PATH } from "../constant/route-constant";
 
 const MapRadarComponent = () => import("../page/map-radar/MapRadarComponent.vue");
@@ -187,7 +188,7 @@ const adminRoutes = [
                 name: ROUTE_NAME.CREATE_POST,
                 component: CreatePostComponent,
                 meta: {
-                    requiresAuth: true
+                    requiresAuth: true,
                 },
                 props: {}
             },
@@ -214,7 +215,8 @@ const adminRoutes = [
                 name: ROUTE_NAME.LIST_DATA,
                 component: ListDataComponent,
                 meta: {
-                    requiresAuth: true
+                    requiresAuth: true,
+                    accept: USER_ROLE.KTTV
                 },
                 props: {}
             },
@@ -223,7 +225,8 @@ const adminRoutes = [
                 name: ROUTE_NAME.LIST_USER,
                 component: ListUserComponent,
                 meta: {
-                    requiresAuth: true
+                    requiresAuth: true,
+                    accept: USER_ROLE.SUPER
                 },
                 props: {}
             },
@@ -232,7 +235,8 @@ const adminRoutes = [
                 name: ROUTE_NAME.CREATE_USER,
                 component: CreateUserComponent,
                 meta: {
-                    requiresAuth: true
+                    requiresAuth: true,
+                    accept: USER_ROLE.SUPER
                 },
                 props: {}
             },

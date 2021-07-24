@@ -10,7 +10,7 @@
             <div class="d-flex justify-start">
                 <v-text-field label="Tìm kiếm" append-icon="mdi-magnify" hide-details outlined dense>
                 </v-text-field>
-                <v-btn depressed color="primary" class="ml-4" height="40px" @click="toCreateDocument()">
+                <v-btn v-if="isAdmin" depressed color="primary" class="ml-4" height="40px" @click="toCreateDocument()">
                     + Tạo mới
                 </v-btn>
             </div>
@@ -51,7 +51,7 @@
                                 <td>{{ $formatDateTime(item.datePosted) }}</td>
                                 <td class="base-cms-right--body_table_action">
                                     <v-icon @click.native="editDocument(item.eventId)" class="edit-action">mdi-square-edit-outline</v-icon>
-                                    <v-icon @click.native="handleDeleteDocument(item.eventId)" class="delete-action">mdi-delete</v-icon>
+                                    <v-icon v-if="isAdmin" @click.native="handleDeleteDocument(item.eventId)" class="delete-action">mdi-delete</v-icon>
                                 </td>
                             </tr>
                         </tbody>

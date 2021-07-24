@@ -42,6 +42,12 @@ export class UserServices extends GenericServices {
         }).catch(error => Promise.reject(error))
     }
 
+    getUserInfo(): Promise<ApiResponse> {
+        return this.executeSelecting(null, Uri.getUserInfo).then((response: ApiResponse) => {
+            return Promise.resolve(response)
+        }).catch(error => Promise.reject(error))
+    }
+    
     forgotPassword(userInfo): Promise<ApiResponse> {
         return this.executeSelectingPost(userInfo, Uri.forgotPassword).then((response: ApiResponse) => {
             return Promise.resolve(response)

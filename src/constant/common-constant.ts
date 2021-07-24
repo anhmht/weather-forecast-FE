@@ -12,3 +12,10 @@ export const STATION_TYPE = {
     METEOROLOGICAL_STATION: 'khituong',
     HYDROLOGICAL_STATION: 'thuyvan',
 };
+
+export const USER_ROLE = {
+    SUPER: 'SuperAdmin',
+    KTTV: 'Admin',
+    DTH: 'DTH',
+    NORMAL: 'NormalUser',
+}
