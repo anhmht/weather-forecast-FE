@@ -15,13 +15,16 @@ import zip from "../../../../../static/img/file-type-icon/zip.png";
 import { namespace, Getter, Action } from "vuex-class";
 import { storeModules } from '@/store';
 import lookupTypesStore from '@/store/lookup/lookup-types.store';
+import userTypesStore from "@/store/user/user-types.store";
 import moment from "moment";
 import 'moment/locale/vi';
 import { CategoryServices } from "@/service/category-service/category.service";
 import { UploadServices } from "@/service/upload-service/upload.service";
 import { PostServices } from "@/service/post-service/post.service";
 import NO_IMAGE from '../../../../../static/img/no-image/no-image.png';
+import { USER_ROLE } from "@/constant/common-constant";
 
+const UserGetter = namespace(storeModules.User, Getter);
 const LookupGetter = namespace(storeModules.Lookup, Getter);
 const LookupAction = namespace(storeModules.Lookup, Action);
 
@@ -60,6 +63,14 @@ export default class CreateDocumentComponent extends Vue {
     
     @LookupGetter(lookupTypesStore.Get.STATUS) status: IStatus[]
     @LookupAction getLookupData: (type: string) => void;
+    @UserGetter(userTypesStore.Get.Auth) userConfig: Object;
+
+    get isAdmin () {
+        if (this.userConfig && this.userConfig['roles']) {
+            return !!this.userConfig['roles'].find(r => r === USER_ROLE.SUPER || r === USER_ROLE.KTTV);
+        }
+        return false;
+    }
 
     handleBack() {
         this.$router.go(-1);

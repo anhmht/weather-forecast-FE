@@ -1,76 +1,85 @@
 <div class="create-document-container">
     <div class="base-cms-right--body_wrapper">
-        <div class="base-cms-right--body_top">
+        <div class="base-cms-right--body_top d-flex align-center">
+            <p class="mr-auto">Tạo tin mới</p>
             <v-btn class="ma-2" color="" dark @click="handleBack()">
                 <v-icon dark left>
                     mdi-chevron-left
                 </v-icon>Trở về
             </v-btn>
-            <p>Tạo tin mới</p>
         </div>
         <v-form ref="postForm" v-model="valid" lazy-validation>
             <div class="base-cms-right--body_wrapper_inner">
-                <div class="base-cms-right--body_title">
-                    <div>Tiêu đề</div>
-                    <v-text-field solo :rules="rules.title" v-model="postModel.title"></v-text-field>
-                    <div class="base-cms-right--body_editor">
-                        <div>Nội dung</div>
-                        <div style="width: calc(100% - 4px);">
+                <div class="base-cms-right--body_left">
+                    <div class="base-cms-right--body_left_title pa-5">
+                        <div class="mb-2">Tiêu đề</div>
+                        <v-text-field :readonly="!isAdmin" outlined dense :rules="rules.title" v-model="postModel.title"></v-text-field>
+                    </div>
+                    
+                    <div class="base-cms-right--body_left_editor pa-5">
+                        <div class="mb-2">Nội dung</div>
+                        <div style="width: 100%">
                             <custom-ckeditor ref="ckEditor" :rules="rules.title" v-model="postModel.content"/>
                         </div>
                     </div>
+
                     <div class="base-cms-right--body_browse">
-                        <div>Tập tin đính kèm</div>
-                        <input ref="upload" type="file" @change="onChangeDocuments($event.target.files)" title="" hidden />
-                        <v-btn depressed color="primary" @click="handleClickBrowse">+ Thêm tập tin</v-btn>
-                    </div>
-                    <div class="base-cms-right--body_table">
-                        <template>
-                            <v-simple-table fixed-header height="calc(100vh - 575px)">
-                                <template v-slot:default>
-                                    <thead>
-                                        <tr>
-                                            <th class="base-cms-right--body_table_header">
-                                                TÊN
-                                            </th>
-                                            <th class="base-cms-right--body_table_header">
-                                                NGÀY TẢI
-                                            </th>
-                                            <th class="base-cms-right--body_table_header">
-                                                DUNG LƯỢNG
-                                            </th>
-                                            <th class="base-cms-right--body_table_header">
-            
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr v-for="(item, index) in documents" :key="index">
-                                            <td>
-                                                <div class="base-cms-right--body_table_title">
-                                                    <img :src="item.icon || defaultImage" @error="onImgError" />
-                                                    <div @click="previewDocument(item.url)">{{ item.fileName }}</div>
-                                                </div>
-                                            </td>
-                                            <td>{{ $formatDateTime(item.dateUploaded) }}</td>
-                                            <td>{{ item.size }}</td>
-                                            <td class="base-cms-right--body_table_action">
-                                                <v-icon @click.native="downloadDocument(item)" class="download-action">mdi-download</v-icon>
-                                                <v-icon @click.native="deleteDocument(item.url)" class="delete-action">mdi-delete</v-icon>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </template>
-                            </v-simple-table>
-                        </template>
+                        <div class="d-flex align-center pa-5">
+                            <span>Tập tin đính kèm</span>
+                            <v-spacer></v-spacer>
+                            <div>
+                                <input ref="upload" type="file" @change="onChangeDocuments($event.target.files)" title="" hidden />
+                                <v-btn :disabled="!isAdmin" depressed color="primary" @click="handleClickBrowse">+ Thêm tập tin</v-btn>
+                            </div>
+                        </div>
+                        <div class="base-cms-right--body_table">
+                            <template>
+                                <v-simple-table fixed-header height="max-height: calc(100vh - 630px)">
+                                    <template v-slot:default>
+                                        <thead>
+                                            <tr>
+                                                <th class="base-cms-right--body_table_header">
+                                                    TÊN
+                                                </th>
+                                                <th class="base-cms-right--body_table_header">
+                                                    NGÀY TẢI
+                                                </th>
+                                                <th class="base-cms-right--body_table_header">
+                                                    DUNG LƯỢNG
+                                                </th>
+                                                <th class="base-cms-right--body_table_header">
+                
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr v-for="(item, index) in documents" :key="index">
+                                                <td>
+                                                    <div class="base-cms-right--body_table_title">
+                                                        <img :src="item.icon || defaultImage" @error="onImgError" />
+                                                        <div @click="previewDocument(item.url)">{{ item.fileName }}</div>
+                                                    </div>
+                                                </td>
+                                                <td>{{ $formatDateTime(item.dateUploaded) }}</td>
+                                                <td>{{ item.size }}</td>
+                                                <td class="base-cms-right--body_table_action">
+                                                    <v-icon @click.native="downloadDocument(item)" class="download-action">mdi-download</v-icon>
+                                                    <v-icon v-if="isAdmin" @click.native="deleteDocument(item.url)" class="delete-action">mdi-delete</v-icon>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </template>
+                                </v-simple-table>
+                            </template>
+                        </div>
                     </div>
                 </div>
     
-                <div class="base-cms-right--body_setting">
-                    <div>Danh mục</div>
-                    <v-select :items="category" item-text="name" item-value="categoryId" solo :rules="rules.categoryRules"
+                <div class="base-cms-right--body_setting pa-5">
+                    <div class="mb-2">Danh mục</div>
+                    <v-select :items="category" item-text="name" item-value="categoryId" outlined dense :rules="rules.categoryRules"
                         v-model="postModel.categoryId" readonly></v-select>
-                    <v-btn depressed color="primary" @click="createDocument()">Lưu tin</v-btn>
+                    <v-btn :disabled="!isAdmin" depressed color="primary" @click="createDocument()">Lưu tin</v-btn>
                 </div>
             </div>
         </v-form>
