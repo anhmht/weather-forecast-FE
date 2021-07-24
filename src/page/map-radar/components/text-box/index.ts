@@ -11,15 +11,20 @@ export default class TextBoxComponent extends Vue {
 
     async handleRenderTextBox(textbox) {
         let clear = { timeout: null };
-        await sleep(textbox.time, clear);
+        await sleep(textbox.startTime, clear);
         this.renderData.push({
             ...textbox,
             class: `animate__zoomIn ${textbox.position}`,
-            style: textbox.customPosition ? `left: ${textbox.left}px; top: ${textbox.top}px; transform: none; right: unset; bottom: unset`: ``
+            style: textbox.customPosition ? `left: ${textbox.left}px; top: ${textbox.top}px; width:${textbox.width}px; transform: none; right: unset; bottom: unset`: ``
         });
+        let index = this.renderData.findIndex(x => x.id === textbox.id);
+        if (index > -1) {
+            setTimeout(() => {
+                this.renderData[index].class = `${textbox.position}`
+            }, 500);
+        }
         await sleep(textbox.duration, clear);
-
-        const index = this.renderData.findIndex(x => x.id === textbox.id);
+        index = this.renderData.findIndex(x => x.id === textbox.id);
         if (index > -1) {
             this.renderData[index].class = `animate__zoomOut ${textbox.position}`
 

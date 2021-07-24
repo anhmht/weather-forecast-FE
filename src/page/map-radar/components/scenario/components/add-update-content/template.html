@@ -22,6 +22,32 @@
                     </v-select>
                     <v-select v-model="data.duration" :items="durations" label="Chọn thời lượng" item-value="value">
                     </v-select>
+
+                    <div class="add-update-content__row">
+                        <div class="add-update-content__col span-2">
+                            <v-switch v-model="data.isEnableIcon" label="Hiển thị icon, trạng thái thời tiết"></v-switch>
+                        </div>
+                        <div class="add-update-content__col span-2">
+                            <v-switch v-model="data.isEnableLayer" label="Hiển thị layer màu từng tỉnh/huyện"></v-switch>
+                        </div>
+                    </div>
+                    <v-label>
+                        Tùy chỉnh vị trí camera
+                    </v-label>
+                    <div class="add-update-content__row"  style="margin: 10px 0;">
+                        <div class="add-update-content__col span-4">
+                            <v-text-field  v-model.number="data.top" label="Top"/>
+                        </div>
+                        <div class="add-update-content__col span-4">
+                            <v-text-field  v-model.number="data.bottom" label="Bottom" />
+                        </div>
+                        <div class="add-update-content__col span-4">
+                            <v-text-field  v-model.number="data.left" label="Left" />
+                        </div>
+                        <div class="add-update-content__col span-4">
+                            <v-text-field  v-model.number="data.right" label="Right" />
+                        </div>
+                    </div>
                     <v-card v-if="data.data" class="title-list">
                         <v-toolbar color="blue">
                             <v-toolbar-title class="white--text">

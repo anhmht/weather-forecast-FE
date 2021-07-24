@@ -28,6 +28,12 @@ export interface IScenarioAction {
     data?: string;
     duration?: number;
     order?: number;
+    isEnableIcon?: boolean;
+    isEnableLayer?: boolean;
+    top?: number;
+    left?: number;
+    right?: number;
+    bottom?: number;
     scenarioActionDetails?: IScenarioActionDetail[];
 }
 
@@ -40,6 +46,12 @@ export class ScenarioAction implements IScenarioAction {
     data?: string;
     duration?: number;
     order?: number;
+    isEnableIcon?: boolean;
+    isEnableLayer?: boolean;
+    top?: number;
+    left?: number;
+    right?: number;
+    bottom?: number;
     scenarioActionDetails?: IScenarioActionDetail[];
 
     constructor(option?: IScenarioAction) {
@@ -51,6 +63,12 @@ export class ScenarioAction implements IScenarioAction {
         this.data = option.data || null;
         this.duration = option.duration || 0;
         this.order = option.order || 0;
+        this.isEnableIcon = option.isEnableIcon || false;
+        this.isEnableLayer = option.isEnableLayer || false;
+        this.top = option.top || null
+        this.left = option.left || null
+        this.right = option.right || null
+        this.bottom = option.bottom || null
         this.scenarioActionDetails = option.scenarioActionDetails || [];
     }
 }
@@ -74,6 +92,8 @@ export interface IScenarioActionDetail {
     isProvince?: boolean;
     iconsList?: string[];
     time?: number;
+    isEnableIcon?: boolean;
+    iconUrls?: string;
 }
 
 export class ScenarioActionDetail implements IScenarioActionDetail {
@@ -95,6 +115,8 @@ export class ScenarioActionDetail implements IScenarioActionDetail {
     isProvince?: boolean;
     iconsList?: string[];
     time?: number;
+    isEnableIcon?: boolean;
+    iconUrls?: string;
 
     constructor(option?: IScenarioActionDetail) {
         this.id = option.id || null
@@ -115,6 +137,8 @@ export class ScenarioActionDetail implements IScenarioActionDetail {
         this.isProvince = option.isProvince || false
         this.iconsList = option.iconsList || []
         this.time = option.time || 0;
+        this.isEnableIcon = option.isEnableIcon || false;
+        this.iconUrls = option.iconUrls || null;
     }
 }
 

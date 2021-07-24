@@ -85,7 +85,7 @@ export default class AddUpdateTitleComponent extends Vue {
     dialogVisible(visible) {
         if (visible) {
             this.fetchData();
-            this.data = this.editData ? new ScenarioActionDetail(this.editData) : new ScenarioActionDetail({})
+            this.data = this.editData ? new ScenarioActionDetail({ ...this.editData, placeId: this.location }) : new ScenarioActionDetail({placeId: this.location})
         }
     }
 }

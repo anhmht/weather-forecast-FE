@@ -11,7 +11,8 @@ import { sleep } from '@/utils/common-utils';
 import { Watch } from 'vue-property-decorator';
 import { IForecastSearchParam, ForecastSearchParam } from '@/model/forecast';
 import { WEATHER_TYPE } from '@/constant/forcast-station-constant';
-import * as htmlToImage from 'html-to-image';
+// import * as htmlToImage from 'html-to-image';
+import { SCENARIO_ACTION_DETAIL_ENUM } from './components/scenario/scenario-default';
 // import * as HME from "h264-mp4-encoder";
 
 const COLOR = [
@@ -234,13 +235,6 @@ export default class HomePageComponent extends Vue {
                 context.canvas.height = window.innerHeight;
                 context.drawImage(this.player, 0, 0, canvas.width, canvas.height);
                 this.fakeImage = canvas.toDataURL("image/png");
-                console.log(this.fakeImage);
-                // var t0 = performance.now()
-                // return htmlToImage.toJpeg(document.querySelector("#windy"), { quality: 0.25 }).then(dataUrl => {
-                //     this.fakeImage = dataUrl;
-                //     var t1 = performance.now()
-                //     console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
-                // });
                 break;
             default:
                 break;
@@ -282,11 +276,6 @@ export default class HomePageComponent extends Vue {
 
     async displayEachProvince(mapData, isProvince = false) {
         await sleep(2000, this.clearTimeout);
-        // this.mapTitle = {
-        //     ...this.mapTitle,
-        //     position: this.mapTitle.position === 'right animate__fadeInRightBig' ? 'right animate__fadeOutRightBig' : 'left animate__fadeOutLeftBig'
-        // };
-        // this.isShowMapTitle = false;
         this.isShowVideoForecase = false;
         this.boxData = null;
         this.videoLayout = mapData.layout;
@@ -297,10 +286,8 @@ export default class HomePageComponent extends Vue {
 
     handleTextBox(textBox) {
         if (!textBox) return;
-        textBox.forEach(element => {
-            //@ts-ignore
-            this.pushTextBox(element);
-        });
+        //@ts-ignore
+        this.pushTextBox(textBox);
     }
 
     handleMapTitle(title) {
@@ -578,6 +565,29 @@ export default class HomePageComponent extends Vue {
         this.drawer = true;
     }
 
+    handleActionDetail(step) {
+        
+        
+        step.scenarioActionDetails.forEach(element => {
+            switch (element.scenarioActionTypeId) {
+                case SCENARIO_ACTION_DETAIL_ENUM.TEMP_INFO:
+                    console.log(element);
+                    this.handleTempInfo(element)
+                    break;
+                case SCENARIO_ACTION_DETAIL_ENUM.TEXT_BOX:
+                    this.handleTextBox(element);
+                    break;
+                case SCENARIO_ACTION_DETAIL_ENUM.TITLE:
+                    console.log(element);
+                    this.handleMapTitle(element);
+                    break;
+                default:
+                    break;
+            }
+        });
+        
+    }
+
     async handlePreview(previewData, isRecord = false) {
         clearTimeout(this.clearTimeout.timeout);
         this.isStop = false;
@@ -596,9 +606,7 @@ export default class HomePageComponent extends Vue {
                 break;
             }
             this[iterator.action] = iterator;
-            this.handleTextBox(iterator.textBox);
-            this.handleMapTitle(iterator.title);
-            this.handleTempInfo(iterator.tempInfo)
+            this.handleActionDetail(iterator);
             if (this.isStop) {
                 this.isStop = false;
                 break;
@@ -728,8 +736,7 @@ export default class HomePageComponent extends Vue {
 
     handleMove({ step, message }) {
         this[step.action] = step;
-        this.handleTextBox(step.textBox);
-        this.handleMapTitle(step.title);
+        this.handleActionDetail(step);
         const send = {
             event: 'SUCCESS',
             requestID: message.requestID
