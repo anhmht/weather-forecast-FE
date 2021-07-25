@@ -1,60 +1,62 @@
-<div class="base-cms-right--body_wrapper">
-    <div class="base-cms-right--body_top">
-        <v-btn class="ma-2" color="" dark @click="handleBack()">
-            <v-icon dark left>
-                mdi-arrow-left
-            </v-icon>Back
-        </v-btn>
-        <p>Tạo tin mới</p>
-    </div>
-    <v-form ref="postForm" v-model="valid" lazy-validation>
-        <div class="base-cms-right--body_wrapper_inner">
-            <div class="base-cms-right--body_title">
-                <div>Tiêu đề</div>
-                <v-text-field solo :rules="rules.title" v-model="postModel.title"></v-text-field>
-                <div v-if="!isShownTextBox" class="base-cms-right--body_editor">
-                    <div>Nội dung</div>
-                    <custom-ckeditor ref="ckEditor" :rules="rules.title" v-model="postModel.content"/>
+<div class="create-post-container">
+    <div class="base-cms-right--body_wrapper">
+        <div class="base-cms-right--body_top">
+            <v-btn class="ma-2" color="" dark @click="handleBack()">
+                <v-icon dark left>
+                    mdi-chevron-left
+                </v-icon>Trở về
+            </v-btn>
+            <p>Tạo tin mới</p>
+        </div>
+        <v-form ref="postForm" v-model="valid" lazy-validation>
+            <div class="base-cms-right--body_wrapper_inner">
+                <div class="base-cms-right--body_title">
+                    <div>Tiêu đề</div>
+                    <v-text-field solo :rules="rules.title" v-model="postModel.title"></v-text-field>
+                    <div v-if="!isShownTextBox" class="base-cms-right--body_editor">
+                        <div>Nội dung</div>
+                        <custom-ckeditor ref="ckEditor" :rules="rules.title" v-model="postModel.content"/>
+                    </div>
+                    <div v-if="isShownTextBox" class="base-cms-right--body_editor">
+                        <div>Link YouTube</div>
+                        <v-text-field solo :rules="rules.title" v-model="postModel.content"></v-text-field>
+                        <iframe v-if="YouTubeVideoId" width="560" height="315" :src="YouTubeVideoId"
+                            title="YouTube video player" frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <div v-if="isShownButton" class="base-cms-right--body_action">
+                        <v-btn depressed color="primary" @click="createPost()">Lưu tin</v-btn>
+                    </div>
                 </div>
-                <div v-if="isShownTextBox" class="base-cms-right--body_editor">
-                    <div>Link YouTube</div>
-                    <v-text-field solo :rules="rules.title" v-model="postModel.content"></v-text-field>
-                    <iframe v-if="YouTubeVideoId" width="560" height="315" :src="YouTubeVideoId"
-                        title="YouTube video player" frameborder="0" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                        allowfullscreen>
-                    </iframe>
-                </div>
-                <div v-if="isShownButton" class="base-cms-right--body_action">
+    
+                <div v-if="!isShownButton" class="base-cms-right--body_setting">
+                    <div v-if="isShownUpload" class="base-cms-right--body_setting--upload">
+                        <div style="position: relative;">
+                            <div>Hình ảnh</div>
+                            <img :src="uploadedDocs" />
+                            <v-progress-circular v-if="progress > 0" class="progress-bar" :rotate="-90" :size="100"
+                                :width="15" :value="progress" color="primary">
+                                {{ progress }}
+                            </v-progress-circular>
+                        </div>
+                        <div class="base-cms-right--body_setting--upload_btn">
+                            <input ref="upload" type="file" @change="onChangeDocuments($event.target.files)" title="" hidden
+                                accept="image/*" />
+                            <v-btn elevation="2" @click="handleClickBrowse">Upload</v-btn>
+                        </div>
+                    </div>
+                    <div>Trạng thái</div>
+                    <v-select :items="status" item-text="name" item-value="statusId" solo :rules="rules.statusRules"
+                        v-model="postModel.statusId"></v-select>
+                    <div>Danh mục</div>
+                    <v-select :items="category" item-text="name" item-value="categoryId" solo :rules="rules.categoryRules"
+                        v-model="postModel.categoryId" readonly></v-select>
                     <v-btn depressed color="primary" @click="createPost()">Lưu tin</v-btn>
                 </div>
             </div>
-
-            <div v-if="!isShownButton" class="base-cms-right--body_setting">
-                <div v-if="isShownUpload" class="base-cms-right--body_setting--upload">
-                    <div style="position: relative;">
-                        <div>Hình ảnh</div>
-                        <img :src="uploadedDocs" />
-                        <v-progress-circular v-if="progress > 0" class="progress-bar" :rotate="-90" :size="100"
-                            :width="15" :value="progress" color="primary">
-                            {{ progress }}
-                        </v-progress-circular>
-                    </div>
-                    <div class="base-cms-right--body_setting--upload_btn">
-                        <input ref="upload" type="file" @change="onChangeDocuments($event.target.files)" title="" hidden
-                            accept="image/*" />
-                        <v-btn elevation="2" @click="handleClickBrowse">Upload</v-btn>
-                    </div>
-                </div>
-                <div>Trạng thái</div>
-                <v-select :items="status" item-text="name" item-value="statusId" solo :rules="rules.statusRules"
-                    v-model="postModel.statusId"></v-select>
-                <div>Danh mục</div>
-                <v-select :items="category" item-text="name" item-value="categoryId" solo :rules="rules.categoryRules"
-                    v-model="postModel.categoryId" readonly></v-select>
-                <v-btn depressed color="primary" @click="createPost()">Lưu tin</v-btn>
-            </div>
-        </div>
-    </v-form>
-    <loading :is-loading="isLoading" absolute/>
+        </v-form>
+        <loading :is-loading="isLoading" absolute/>
+    </div>
 </div>

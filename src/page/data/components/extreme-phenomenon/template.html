@@ -1,0 +1,41 @@
+<div class="data-page-container-wrapper-extreme-phenomenon">
+    <div class="data-page-container-wrapper-extreme-phenomenon--header" >
+        Thông tin chi tiết các hiện tượng cực đoan
+    </div>
+    <div class="d-flex align-end justify-start" style="padding: 20px 15px;">
+        <div class="mr-3">Tỉnh</div>
+        <div style="width: 150px;" class="mr-6">
+            <v-select :items="lookupProvince" item-text="name" item-value="id"
+                dense hide-details
+                v-model="selectedProvince"></v-select>
+        </div>
+        
+        <div class="mr-3">Xã/Huyện</div>
+        <div style="width: 200px;">
+            <v-select :items="lookupDistrict" item-text="name" item-value="id"
+                dense hide-details
+                v-model="selectedDistrict"></v-select>
+        </div>
+    </div>
+    <template>
+        <v-simple-table fixed-header>
+            <template v-slot:default>
+                <thead>
+                    <tr>
+                        <th width="200px">Hiện tượng</th>
+                        <th>Chi tiết</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-if="coList.length === 0">
+                        <td colspan="5" style="text-align: center; height: 50px;">Không có dữ liệu</td>
+                    </tr>
+                    <tr v-else v-for="(item, index) in coList" :key="index">
+                        <td class="pa-2" style="border-right: thin solid rgba(0,0,0,.12);">{{ item.name }}</td>
+                        <td class="pa-2">{{ item.content }}</td>
+                    </tr>
+                </tbody>
+            </template>
+        </v-simple-table>
+    </template>
+</div>

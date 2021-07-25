@@ -1,81 +1,102 @@
-.base-cms-right--body {
-    &_wrapper_inner {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-    }
-
-    &_top {
-        p {
-            font-size: 30px;
-        }
-    }
-
-    &_account {
-        background-color: #fff;
-        padding: 20px;
-        order: 1;
-        flex: 0 0 65%;
-        display: flex;
-
-        &_left {
-            width: 50%;
-            padding-right: 10px;
-        }
-
-        &_right {
-            width: 50%;
-            padding-left: 10px;
-        }
-    }
-
-    &_type {
-        background-color: #fff;
-        padding: 20px;
-        order: 1;
-        flex: 0 0 65%;
-
-        .v-input--selection-controls.v-input {
-            border: 1px solid;
-            padding: 20px;
-        }
-
-        p {
-            padding-left: 30px;
-        }
-    }
-
-    &_setting {
-        background-color: #fff;
-        padding: 20px;
-        order: 2;
-        flex: 0 0 30%;
-        margin-left: 20px;
-        transform: translateY(-343px);
-        height: 280px;
-        
-        .progress-bar {
-            height: 100px;
-            width: 100px;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-        button {
-            margin-top: 20px;
-            float: right;
-        }
-        &--upload {
+.create-user-container {
+    .base-cms-right--body {
+        &_wrapper_inner {
             display: flex;
-            img {
-                width: 150px;
+            justify-content: space-between;
+
+            &-left {
+                order: 1;
+                flex: 0 0 calc(70% - 30px);
             }
-            &_btn {
-                flex: 1;
-                display: flex;
-                align-items: center;
-                justify-content: center;
+
+            &-right {
+                order: 2;
+                flex: 0 0 30%;
+            }
+        }
+    
+        &_top {
+            margin-bottom: 20px;
+            p {
+                font-size: 30px;
+                margin: 0;
+                white-space: normal
+            }
+        }
+    
+        &_account {
+            background-color: #fff;
+            width: 100%;
+            padding: 6px;
+            
+            &-item {
+                padding: 10px;
+                padding-bottom:  0px;
+                width: 50%;
+            }
+        }
+    
+        &_type {
+            margin-top: 30px;
+            background-color: #fff;
+            
+            .v-input--radio-group__input {
+                border: 1px solid;
+                border-color: #CECECE;
+                border-radius: 4px;
+
+                .v-radio {
+                    align-items: flex-start !important;
+                    margin-bottom: 0px !important;
+                    border-bottom: 1px solid;
+                    border-color: #CECECE;
+                    padding: 15px !important;
+
+                    &:last-child {
+                        border-bottom: none;
+                    }
+                    .v-input--selection-controls__input {
+                        margin-right: 15px !important;
+                    }
+                }
+            }
+            
+            
+            .radio-title {
+                &-main {
+                    font-weight: 500;
+                    color: #000;
+                    margin-bottom: 5px;
+                }
+
+                &-sub {
+                    font-weight: 400;
+                }
+            }
+            p {
+                padding-left: 30px;
+            }
+        }
+    
+        &_setting {
+            background-color: #fff;
+            height: auto;
+            
+            .progress-bar {
+                height: 100px;
+                width: 100px;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+
+            &--upload {
+                img {
+                    width: 150px;
+                    height: 150px;
+                    border-radius: 4px;
+                }
             }
         }
     }

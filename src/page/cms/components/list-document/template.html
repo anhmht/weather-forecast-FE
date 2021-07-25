@@ -1,17 +1,19 @@
 <div class="list-document-container">
     <div class="base-cms-right--body_wrapper">
-        <div class="base-cms-right--body_top">
-            <div class="tabs">
-                <div class="item-tab" :class="activeTab === 1 ? 'active' : ''" @click="handleChangeTab(1)">
+        <div class="base-cms-right--body_top d-lg-flex align-center">
+            <div class="base-cms-right--body_top-tabs d-flex align-center mr-auto pt-4 pb-4">
+                <div class="base-cms-right--body_top-item-tab mr-4" :class="activeTab === 1 ? 'active' : ''" @click="handleChangeTab(1)">
                     Điều hành sản xuất</div>
-                <div class="item-tab" :class="activeTab === 2 ? 'active' : ''" @click="handleChangeTab(2)">
+                <div class="base-cms-right--body_top-item-tab" :class="activeTab === 2 ? 'active' : ''" @click="handleChangeTab(2)">
                     Phòng chống thiên tai</div>
             </div>
-            <v-text-field label="Tìm kiếm" append-icon="mdi-magnify" solo hide-details>
-            </v-text-field>
-            <v-btn depressed color="primary" height="50px" @click="toCreateDocument()">
-                + Tạo tin mới
-            </v-btn>
+            <div class="d-flex justify-start">
+                <v-text-field label="Tìm kiếm" append-icon="mdi-magnify" hide-details outlined dense>
+                </v-text-field>
+                <v-btn v-if="isAdmin" depressed color="primary" class="ml-4" height="40px" @click="toCreateDocument()">
+                    + Tạo mới
+                </v-btn>
+            </div>
         </div>
         <div class="base-cms-right--body_table">
             <template>
@@ -49,19 +51,19 @@
                                 <td>{{ $formatDateTime(item.datePosted) }}</td>
                                 <td class="base-cms-right--body_table_action">
                                     <v-icon @click.native="editDocument(item.eventId)" class="edit-action">mdi-square-edit-outline</v-icon>
-                                    <v-icon @click.native="handleDeleteDocument(item.eventId)" class="delete-action">mdi-delete</v-icon>
+                                    <v-icon v-if="isAdmin" @click.native="handleDeleteDocument(item.eventId)" class="delete-action">mdi-delete</v-icon>
                                 </td>
                             </tr>
                         </tbody>
                     </template>
                 </v-simple-table>
             </template>
-            <div class="base-cms-right--body_table_footer_page_num">
-                <div style="flex: 1;">{{numDocumentsInPage}}/{{totalItems}} tin</div>
-                <div class="base-cms-right--body_table_footer_page_num_limit">
-                    Số tin mỗi trang
-                    <v-select style="margin-left: 20px;" :items="limitPerPage" v-model="searchParams.limit"
-                        @change="getDocumentsByLimit"></v-select>
+            <div class="d-flex align-center pa-4">
+                <div class="mr-auto">{{numDocumentsInPage}}/{{totalItems}} tin</div>
+                <div class="d-flex align-center">
+                    <v-subheader>Số tin mỗi trang</v-subheader>
+                    <v-select class="ml-3" style="width: 80px;" :items="limitPerPage" v-model="searchParams.limit"
+                        outlined dense hide-details @change="getDocumentsByLimit"></v-select>
                 </div>
                 <v-pagination v-model="searchParams.page" :length="totalPages" :total-visible="TotalPageVisible"
                     @input="getDocumentsByPaging"></v-pagination>

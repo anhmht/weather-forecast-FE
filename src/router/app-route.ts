@@ -1,3 +1,4 @@
+import { USER_ROLE } from "@/constant/common-constant";
 import { ROUTE_NAME, PATH } from "../constant/route-constant";
 
 const MapRadarComponent = () => import("../page/map-radar/MapRadarComponent.vue");
@@ -32,6 +33,7 @@ const CreateUserComponent = () => import("../page/cms/components/create-user/Cre
 const ListDocumentComponent = () => import("../page/cms/components/list-document/ListDocumentComponent.vue")
 const CreateDocumentComponent = () => import("../page/cms/components/create-document/CreateDocumentComponent.vue")
 const ListLocalComponent = () => import("../page/cms/components/list-local/ListLocalComponent.vue")
+const EditLocalComponent = () => import("../page/cms/components/edit-local/EditLocalComponent.vue")
 const EditDocumentComponent = () => import("../page/cms/components/edit-document/EditDocumentComponent.vue")
 
 const homeRoutes = [
@@ -186,7 +188,7 @@ const adminRoutes = [
                 name: ROUTE_NAME.CREATE_POST,
                 component: CreatePostComponent,
                 meta: {
-                    requiresAuth: true
+                    requiresAuth: true,
                 },
                 props: {}
             },
@@ -213,7 +215,8 @@ const adminRoutes = [
                 name: ROUTE_NAME.LIST_DATA,
                 component: ListDataComponent,
                 meta: {
-                    requiresAuth: true
+                    requiresAuth: true,
+                    accept: USER_ROLE.KTTV
                 },
                 props: {}
             },
@@ -222,7 +225,8 @@ const adminRoutes = [
                 name: ROUTE_NAME.LIST_USER,
                 component: ListUserComponent,
                 meta: {
-                    requiresAuth: true
+                    requiresAuth: true,
+                    accept: USER_ROLE.SUPER
                 },
                 props: {}
             },
@@ -231,7 +235,8 @@ const adminRoutes = [
                 name: ROUTE_NAME.CREATE_USER,
                 component: CreateUserComponent,
                 meta: {
-                    requiresAuth: true
+                    requiresAuth: true,
+                    accept: USER_ROLE.SUPER
                 },
                 props: {}
             },
@@ -266,6 +271,15 @@ const adminRoutes = [
                 path: PATH.EDIT_DOCUMENT,
                 name: ROUTE_NAME.EDIT_DOCUMENT,
                 component: EditDocumentComponent,
+                meta: {
+                    requiresAuth: true
+                },
+                props: {}
+            },
+            {
+                path: PATH.EDIT_LOCAL,
+                name: ROUTE_NAME.EDIT_LOCAL,
+                component: EditLocalComponent,
                 meta: {
                     requiresAuth: true
                 },

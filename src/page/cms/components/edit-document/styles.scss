@@ -1,86 +1,97 @@
-.base-cms-right--body {
-    &_wrapper_inner {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-    }
-
-    &_top {
-        p {
-            font-size: 30px;
-        }
-    }
-
-    &_title {
-        background-color: #fff;
-        padding: 20px;
-        order: 1;
-        flex: 0 0 65%;
-    }
-
-    &_editor {
-        background-color: #fff;
-        order: 3;
-        flex: 0 0 65%;
-        .ck-content { height: calc(100vh - 450px); }
-    }
-
-    &_browse {
-        display: flex;
-        margin-top: 50px;
-
-        button {
-            margin-left: auto;
-        }
-    }
-
-    &_table {
-        background-color: #fff;
-        margin-top: 50px;
-     
-        &_header {
-            font-size: 14px;
-            color: #949494;
-            white-space: nowrap;
-        }
-        &_title {
+.edit-document-container {
+    .base-cms-right--body {
+        &_wrapper_inner {
             display: flex;
-            align-items: center;
-            padding: 10px 0;
-            font-weight: 600;
-            img {
-                margin-right: 20px;
-                width: 20px;
-                height: 20px;
-                border-radius: 4px;
+            justify-content: space-between;
+        }
+    
+        &_top {
+            margin-bottom: 20px;
+
+            > p {
+                font-size: 23px;
+                margin: 0;
+                white-space: normal
             }
-            div {
+        }
+        
+        &_left {
+            order: 1;
+            flex: 0 0 calc(70% - 30px);
+
+            &_title {
+                background-color: #fff;
+            }
+        
+            &_editor {
+                margin-top: 20px;
+                background-color: #fff;
+
+                .ck.ck-toolbar.ck-toolbar_grouping>.ck-toolbar__items {
+                    overflow-x: auto;
+                    overflow-y: hidden;
+                }
+                .ck-content {
+                    min-height: 150px;
+                    max-height: calc(100vh - 700px);
+                    overflow-y: auto;
+                }
+            }
+        
+            &_browse {
+                margin-top: 20px;
+                background-color: #fff;
+            }
+        }
+    
+        &_table {
+            &_header {
+                font-size: 14px !important;
+                color: #949494 !important;
+                white-space: nowrap;
+                background-color: #F3F3F3 !important;
+                height: 40px !important;
+            }
+            &_title {
+                display: flex;
+                align-items: center;
+                padding: 10px 0;
+                font-weight: 600;
+                img {
+                    margin-right: 20px;
+                    width: 20px;
+                    height: 20px;
+                    border-radius: 4px;
+                }
+                div {
+                    cursor: pointer;
+                    color: #2196f3;
+                }
+            }
+    
+            &_action {
+                white-space: nowrap;
+                font-size: 14px !important;
                 cursor: pointer;
+                text-align: center;
+            }
+            .delete-action {
+                color: #D50000;
+            }
+            .download-action {
                 color: #2196f3;
             }
         }
+    
+        &_setting {
+            background-color: #fff;
+            order: 2;
+            flex: 0 0 30%;
+            height: 180px;
 
-        &_action {
-            white-space: nowrap;
-            font-size: 14px !important;
-            cursor: pointer;
-        }
-        .delete-action {
-            color: #D50000;
-        }
-        .download-action {
-            color: #2196f3;
-        }
-    }
-
-    &_setting {
-        background-color: #fff;
-        padding: 20px;
-        order: 2;
-        flex: 0 0 30%;
-        margin-left: 20px;
-        button {
-            float: right;
+            button {
+                float: right;
+            }
         }
     }
 }

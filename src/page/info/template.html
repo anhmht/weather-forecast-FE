@@ -3,18 +3,25 @@
         <div class="nav-sticky-wrapper">
             <div class="nav-sticky">
                 <ul>
-                    <li @click="scrollTo('info-page-container_section_3 padding-main')">Tổng quan</li>
-                    <li @click="scrollTo('info-page-container_section_4 padding-main')">Chuyên mục KT-VH-XH</li>
-                    <li @click="scrollTo('info-page-container_section_1')">Thời tiết 24h - Bản tin thời tiết - Bản đồ thời tiết</li>
-                    <li @click="scrollTo('info-page-container_section_2 padding-main')">Thông tin khuyến cáo</li>
-                    <li @click="scrollTo('info-page-container_section_5 padding-main')">Thời tiết chuyên đề</li>
-                    <li @click="scrollTo('info-page-container_section_6 padding-main')">Cảnh báo thiên tai</li>
+                    <li :class="{'active' : currentSection === 3}" @click="scrollTo('info-page-container_section_3 padding-main')">Tổng quan</li>
+                    <li :class="{'active' : currentSection === 4}" @click="scrollTo('info-page-container_section_4 padding-main')">Chuyên mục KT-VH-XH</li>
+                    <li :class="{'active' : currentSection === 1}" @click="scrollTo('info-page-container_section_1')">Thời tiết 24h - Bản tin thời tiết - Bản đồ thời tiết</li>
+                    <li :class="{'active' : currentSection === 2}" @click="scrollTo('info-page-container_section_2 padding-main')">Thông tin khuyến cáo</li>
+                    <li :class="{'active' : currentSection === 5}" @click="scrollTo('info-page-container_section_5 padding-main')">Thời tiết chuyên đề</li>
+                    <li :class="{'active' : currentSection === 6}" @click="scrollTo('info-page-container_section_6 padding-main')">Cảnh báo thiên tai</li>
                 </ul>
 
             </div>
         </div>
 
-        <div class="info-page-container_section_1">
+        <div class="info-page-container_section_1" 
+            v-intersect ="{
+                handler: onIntersect,
+                options: {
+                    threshold: [0.5, 1.0]
+                }
+            }"
+        >
             <div class="info-page-container-wrapper">
                 <v-row justify="center">
                     <v-col cols="12" md="4">
@@ -72,7 +79,14 @@
             </div>
         </div>
 
-        <div class="info-page-container_section_6 padding-main">
+        <div class="info-page-container_section_6 padding-main" 
+            v-intersect ="{
+                handler: onIntersect,
+                options: {
+                    threshold: [0.5, 1.0]
+                }
+            }"
+        >
             <div class="info-page-container-wrapper">
                 <h1>Cảnh báo thiên tai
                     <div class="warning-info-readmore" @click="viewAllWarning()">
@@ -94,7 +108,14 @@
             </div>
         </div>
 
-        <div class="info-page-container_section_2 padding-main">
+        <div class="info-page-container_section_2 padding-main" 
+            v-intersect ="{
+                handler: onIntersect,
+                options: {
+                    threshold: [1]
+                }
+            }"
+        >
             <div class="info-page-container-wrapper">
                 <v-row justify="center">
                     <v-col auto>
@@ -120,46 +141,59 @@
             </div>
         </div>
 
-        <div class="info-page-container_section_3 padding-main">
+        <div class="info-page-container_section_3 padding-main" 
+            v-intersect ="{
+                handler: onIntersect,
+                options: {
+                    threshold: [0.5, 1.0]
+                }
+            }"
+        >
             <div class="info-page-container-wrapper">
                 <h1>TỔNG QUAN</h1>
                 <div class="box-overview">
                     <div class="content-overview">
-                    <p>
-                    APP EMT WEATHER- ỨNG DỤNG CÔNG NGHỆ QUẢN LÝ THÔNG TIN THỜI TIẾT KHÍ HẬU TỰ ĐỘNG VÀ CÁC GIẢI PHÁP TỔNG HỢP ỨNG PHÓ VỚI BIẾN ĐỔI KHÍ HẬU VÀ GIẢM NHẸ THIÊN TAI.
-                    </p>
-                    <p>
-                    EMT Weather là một ứng dụng dự báo thời tiết, tin tức liên quan đến thời tiết và các phân tích, cùng với các phim tài liệu, ký sự và các chương trình giải trí liên quan đến thời tiết và biến đổi khí hậu. Ngoài ra ứng dụng còn cung cấp những thông tin dự báo cho các đài phát thanh-truyền hình, báo chí, và duy trì cập nhật trực tuyến tại EMT Weather thông qua ứng dụng trên điện thoại di động thông minh và máy tính . Hệ thống dự báo thời tiết EMT Weather ra đời, là giải pháp tối ưu giải quyết bài toán dự báo theo hướng hoàn toàn mới, hoàn toàn tự động, cập nhật kịp thời chính xác và đảm bảo tính trực quan sinh động đến người dùng.
-                    </p>
-                    <img width="100%" src="/static/img/info-page/img-a1.jpg" />
-                    <h4>+ Ưu điểm:</h4>
-                <p>
-                    EMT Weather là đơn vị chuyên về thời tiết thuộc Đài khí tượng thủy văn Khu vực Phía Nam-đơn vị cung cấp các dịch vụ thông tin thời tiết sáng tạo. Ứng dụng EMT Weather cung cấp giải pháp dự báo thời tiết hoàn hảo không chỉ cho các Đài Truyền Hình mà bất kì đơn vị, lĩnh vực nào hoạt động phụ thuộc vào yếu tố thời tiết. Sự tự động, trực quan làm nên điều khác biệt lớn nhất so với các phương pháp dự báo thông thường. Những dữ liệu, video dự báo được kết xuất ngay, với số liệu được cập nhật từng phút thay cho phương pháp truyền thống, tổng hợp, nhập số liệu trước hàng giờ để đưa ra thông tin dự báo.
-                </p>
-                <p>
-                    + Kết xuất đồ họa trong thời gian thực, hình ảnh 3D trực quan, chân thực với các hiệu ứng thời tiết từ sức gió, lượng mưa, độ ẩm thậm chí mức độ phủ độ dày của tuyết...
-                </p>
-                <p>
-                    Hệ thống dự báo thời tiết của EMTWeather là giải pháp tối ưu cho các lĩnh vực:
-                </p>
-                <ul>
-                    <li>Truyền thông: Đài truyền hình, địa phương, các trang báo điện tử, báo giấy, đài phát thanh.</li>
-                    <li>Lĩnh vực khai thác, chế biến khoáng sản…</li>
-                    <li>Hàng không: dự báo thời tiết kịp thời để các hãng hàng không có kế hoạch cho các đường bay phù hợp.</li>
-                    <li>Giao thông: Giảm thiểu sự khắc nghiệt của thời tiết, cải thiện an toàn đường bộ, đường sông, đường biển.</li>
-                    <li>Biển đảo: có ý nghĩa lớn về du lịch, cảnh báo kịp thời cho lĩnh vực vận tải biển.</li>
-                    <li>Nông nghiệp, ngư nghiệp, nghiên cứu khoa học…</li>
-                </ul>
-                <p></p>
-                <p>
-                    Ứng dụng đến từ Đài Khí tượng thuỷ văn luôn luôn có độ chính xác cao, dễ dàng sử dụng và được cập nhật thay đổi dữ liệu một cách nhanh chóng. Nếu quan tâm đến thời tiết Việt Nam thì ứng dụng EMT Weather sẽ là một trong những lựa chọn hàng đầu.
-                </p>
-                </div>
+                        <p>
+                            E-WEATHER - ỨNG DỤNG CÔNG NGHỆ QUẢN LÝ THÔNG TIN THỜI TIẾT KHÍ HẬU TỰ ĐỘNG VÀ CÁC GIẢI PHÁP TỔNG HỢP ỨNG PHÓ VỚI BIẾN ĐỔI KHÍ HẬU VÀ GIẢM NHẸ THIÊN TAI.</p>
+                        <p>
+                            E-Weather là một ứng dụng dự báo thời tiết, tin tức liên quan đến thời tiết và các phân tích, cùng với các phim tài liệu, ký sự và các chương trình giải trí liên quan đến thời tiết và biến đổi khí hậu. Ngoài ra ứng dụng còn cung cấp những thông tin dự báo cho các đài phát thanh - truyền hình, báo chí, và duy trì cập nhật trực tuyến tại E-Weather thông qua ứng dụng trên điện thoại di động thông minh và máy tính . Hệ thống dự báo thời tiết E- Weather ra đời, là giải pháp tối ưu giải quyết bài toán dự báo theo hướng hoàn toàn mới, hoàn toàn tự động, cập nhật kịp thời chính xác và đảm bảo tính trực quan sinh động đến người dùng.
+                        </p>
+                        <img width="100%" src="/static/img/info-page/img-a1.jpg" />
+                        <h4>+ Ưu điểm:</h4>
+                        <p>
+                            E-Weather là đơn vị chuyên về thời tiết thuộcTrung tâm Dịch vụ tư vấn & Chuyển giao công nghệ KTTV & Môi trường - đơn vị cung cấp các dịch vụ thông tin thời tiết sáng tạo. Ứng dụng E-Weather cung cấp giải pháp dự báo thời tiết hoàn hảo không chỉ cho các Đài Truyền Hình mà bất kì đơn vị, lĩnh vực nào hoạt động phụ thuộc vào yếu tố thời tiết. Sự tự động, trực quan làm nên điều khác biệt lớn nhất so với các phương pháp dự báo thông thường. Những dữ liệu, video dự báo được kết xuất ngay, với số liệu được cập nhật từng phút thay cho phương pháp truyền thống, tổng hợp, nhập số liệu trước hàng giờ để đưa ra thông tin dự báo.
+                        </p>
+                        <p>
+                            + Kết xuất đồ họa trong thời gian thực, hình ảnh 3D trực quan, chân thực với các hiệu ứng thời tiết từ sức gió, lượng mưa, độ ẩm thậm chí mức độ phủ độ dày của tuyết...
+                        </p>
+                        <p>
+                            Hệ thống dự báo thời tiết của E-Weather là giải pháp tối ưu cho các lĩnh vực:
+                        </p>
+                        <ul>
+                            <li>Truyền thông: Đài truyền hình, địa phương, các trang báo điện tử, báo giấy, đài phát thanh.</li>
+                            <li>Lĩnh vực khai thác, chế biến khoáng sản…</li>
+                            <li>Hàng không: dự báo thời tiết kịp thời để các hãng hàng không có kế hoạch cho các đường bay phù hợp.</li>
+                            <li>Giao thông: Giảm thiểu sự khắc nghiệt của thời tiết, cải thiện an toàn đường bộ, đường sông, đường biển.</li>
+                            <li>Biển đảo: có ý nghĩa lớn về du lịch, cảnh báo kịp thời cho lĩnh vực vận tải biển.</li>
+                            <li>Nông nghiệp, ngư nghiệp, nghiên cứu khoa học…</li>
+                        </ul>
+                        <p></p>
+                        <p>
+                            Ứng dụng đến Trung tâm Dịch vụ tư vấn & Chuyển giao công nghệ KTTV & Môi trường luôn luôn có độ chính xác cao, dễ dàng sử dụng và được cập nhật thay đổi dữ liệu một cách nhanh chóng. Nếu quan tâm đến thời tiết Việt Nam thì ứng dụng E-Weather sẽ là một trong những lựa chọn hàng đầu.
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="info-page-container_section_4 padding-main">
+        <div class="info-page-container_section_4 padding-main" 
+            v-intersect ="{
+                handler: onIntersect,
+                options: {
+                    threshold: [1]
+                }
+            }"
+        >
             <div class="info-page-container-wrapper">
 
                         <h1>Chuyên mục KT-VH-XH</h1>
@@ -183,7 +217,14 @@
             </div>
         </div>
 
-        <div class="info-page-container_section_5 padding-main">
+        <div class="info-page-container_section_5 padding-main" 
+            v-intersect ="{
+                handler: onIntersect,
+                options: {
+                        threshold: [1]
+                }
+            }"
+        >
             <div class="info-page-container-wrapper">
                 <h1>Thời tiết chuyên đề</h1>
                 <div class="weather-type">
@@ -228,5 +269,11 @@
                 </div>
             </div>
         </div>
+        <v-btn
+            v-scroll="onScroll" v-show="fab" fab dark
+            fixed bottom right color="primary" @click="toTop"
+          >
+            <v-icon>mdi-chevron-up</v-icon>
+        </v-btn>
     </base-container>
 </div>

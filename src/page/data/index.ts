@@ -12,7 +12,8 @@ const LookupGetter = namespace(storeModules.Lookup, Getter);
     components: {
         "base-container": () => import("../../components/base-container/BaseContainerComponent.vue"),
         "weather-forecast": () => import("./components/weahter-forecast/WeatherForecastComponent.vue"),
-        "hydrological": () => import("./components/hydrological/HydrologicalComponent.vue")
+        "hydrological": () => import("./components/hydrological/HydrologicalComponent.vue"),
+        "extreme-phenomenon": () => import("./components/extreme-phenomenon/ExtremePhenomenonComponent.vue")
     }
 })
 export default class DataPageComponent extends Vue {

@@ -1,7 +1,7 @@
 <div class="import-data">
     <v-form ref="importForm" v-model="valid" lazy-validation>
-        Chọn Tỉnh Thành:
-        <v-select :items="province" item-text="name" item-value="id" solo :rules="rules.provinceRules"
+        <div class="mb-2"> Chọn Tỉnh Thành:</div>
+        <v-select :items="province" item-text="name" item-value="id" outlined dense :rules="rules.provinceRules"
             v-model="model.provinceId"></v-select>
         <v-btn depressed color="primary" @click="upload()">Upload CSV</v-btn>
         <input ref="upload" type="file" hidden @change="onChangeDocuments($event.target.files)"

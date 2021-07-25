@@ -107,3 +107,15 @@
         transform: rotate(360deg);
     }
 }
+
+.resend-email {
+    display: flex;
+    justify-content: center;
+
+    &-link {
+        margin-left: 5px;
+        cursor: pointer;
+        color: #2196f3;
+    }
+    
+}

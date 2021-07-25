@@ -20,7 +20,11 @@ import 'moment/locale/vi';
 import { CategoryServices } from "@/service/category-service/category.service";
 import { UploadServices } from "@/service/upload-service/upload.service";
 import { PostServices } from "@/service/post-service/post.service";
+import userTypesStore from "@/store/user/user-types.store";
+import { USER_ROLE } from "@/constant/common-constant";
 
+
+const UserGetter = namespace(storeModules.User, Getter);
 const LookupGetter = namespace(storeModules.Lookup, Getter);
 const LookupAction = namespace(storeModules.Lookup, Action);
 
@@ -51,7 +55,15 @@ export default class EditDocumentComponent extends Vue {
 
     @LookupGetter(lookupTypesStore.Get.STATUS) status: IStatus[]
     @LookupAction getLookupData: (type: string) => void;
+    @UserGetter(userTypesStore.Get.Auth) userConfig: Object;
 
+    get isAdmin () {
+        if (this.userConfig && this.userConfig['roles']) {
+            return !!this.userConfig['roles'].find(r => r === USER_ROLE.SUPER || r === USER_ROLE.KTTV);
+        }
+        return false;
+    }
+    
     handleBack() {
         this.$router.go(-1);
     }
@@ -184,6 +196,13 @@ export default class EditDocumentComponent extends Vue {
         if (extraWindow) {
             extraWindow.location.reload();
         }
+    }
+
+    downloadDocument(item) {
+        const downloadLink = document.createElement('a');
+        downloadLink.setAttribute('href', item.url);
+        downloadLink.setAttribute('download', item.name);
+        downloadLink.click();
     }
 
     editDocument() {

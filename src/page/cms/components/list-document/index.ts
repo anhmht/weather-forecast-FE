@@ -1,10 +1,16 @@
 import Vue from "vue";
 import Component from "vue-class-component";
+import { Getter, namespace } from "vuex-class";
+import { storeModules } from "@/store";
 import { IPostSearchParameter, PostSearchParameter } from "@/model/post/post-filter.model";
 import { ROUTE_NAME } from "@/constant/route-constant";
 import { PostServices } from "@/service/post-service/post.service";
 import { CategoryServices } from "@/service/category-service/category.service";
+import userTypesStore from "@/store/user/user-types.store";
+import { USER_ROLE } from "@/constant/common-constant";
 
+
+const UserGetter = namespace(storeModules.User, Getter);
 @Component({
     template: require("./template.html").default,
 })
@@ -24,6 +30,15 @@ export default class ListDocumentComponent extends Vue {
     disasterCategoryName: string = 'Phòng chống thiên tai';
     categoryName: string = null;
     categoryId: string = null;
+
+    @UserGetter(userTypesStore.Get.Auth) userConfig: Object;
+
+    get isAdmin () {
+        if (this.userConfig && this.userConfig['roles']) {
+            return !!this.userConfig['roles'].find(r => r === USER_ROLE.SUPER || r === USER_ROLE.KTTV);
+        }
+        return false;
+    }
 
     get TotalPageVisible() {
         if (this.totalPages < 7)

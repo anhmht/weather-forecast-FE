@@ -1,12 +1,14 @@
 <div class="list-user-container">
     <div class="base-cms-right--body_wrapper">
-        <div class="base-cms-right--body_top">
-            <p>{{listUserTitle}}</p>
-            <v-text-field label="Tìm kiếm" append-icon="mdi-magnify" solo hide-details>
-            </v-text-field>
-            <v-btn v-if="isDisplayButton" depressed color="primary" height="50px" @click="toCreateUser()">
-                + {{createUserTitle}}
-            </v-btn>
+        <div class="base-cms-right--body_top align-start" :class="`${isDisplayButton ? 'd-lg-flex' : 'd-flex'}`">
+            <p class="mr-auto">{{listUserTitle}}</p>
+            <div class="d-flex align-start">
+                <v-text-field label="Tìm kiếm" append-icon="mdi-magnify" outlined dense hide-details>
+                </v-text-field>
+                <v-btn v-if="isDisplayButton" class="ml-4" depressed color="primary" @click="toCreateUser()" height="40px">
+                    + {{createUserTitle}}
+                </v-btn>
+            </div>
         </div>
         <div class="base-cms-right--body_table">
             <template>
@@ -36,13 +38,16 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <tr v-if="users.length === 0">
+                                <td colspan="6" style="text-align: center;">Không có dữ liệu</td>
+                            </tr>
                             <tr v-for="(item, index) in users" :key="index">
                                 <td class="base-cms-right--body_table_checkbox">
                                     <v-checkbox color="primary" hide-details></v-checkbox>
                                 </td>
                                 <td>
                                     <div class="base-cms-right--body_table_title">
-                                        <img :src="item.avatarUrl">
+                                        <img :src="item.avatarUrl || defaultImage" @error="onImgError" />
                                         {{ item.userName }}
                                     </div>
                                 </td>
@@ -50,19 +55,27 @@
                                 <td>{{ item.roleName }}</td>
                                 <td>{{ item.status }}</td>
                                 <td class="base-cms-right--body_table_action">
-                                    <v-icon @click.native="editUser(item.userId)" class="edit-action">mdi-square-edit-outline</v-icon>
-                                    <v-icon @click.native="handleDeleteUser(item.userId)" class="delete-action">mdi-delete</v-icon>
+                                    <!-- <v-icon v-if="isDisplayButton" @click.native="editUser(item.userId)" class="edit-action">mdi-square-edit-outline</v-icon> -->
+                                    <v-tooltip top>
+                                        <template v-slot:activator="{ on, attrs }">
+                                            <v-icon v-bind="attrs"
+                                                v-on="on"
+                                                @click.native="handleDeleteUser(item.userId)" 
+                                                color="primary">mdi-account-off-outline</v-icon>
+                                        </template>
+                                        <span>Khóa tài khoản</span>
+                                    </v-tooltip>
                                 </td>
                             </tr>
                         </tbody>
                     </template>
                 </v-simple-table>
             </template>
-            <div class="base-cms-right--body_table_footer_page_num">
-                <div style="flex: 1;">{{numUsersInPage}}/{{totalItems}} người</div>
-                <div class="base-cms-right--body_table_footer_page_num_limit">
-                    Số người mỗi trang
-                    <v-select style="margin-left: 20px;" :items="limitPerPage" v-model="userSearchParams.limit"
+            <div class="d-flex align-center pa-4">
+                <div class="mr-auto">{{numUsersInPage}}/{{totalItems}} người</div>
+                <div class="d-flex align-center">
+                    <v-subheader>Số người mỗi trang</v-subheader>
+                    <v-select class="ml-3" style="width: 80px;" outlined dense hide-details :items="limitPerPage" v-model="userSearchParams.limit"
                         @change="getUsersByLimit"></v-select>
                 </div>
                 <v-pagination v-model="userSearchParams.page" :length="totalPages" :total-visible="TotalPageVisible"

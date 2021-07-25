@@ -27,7 +27,7 @@
         <tool-bar v-if="forecastData" :station-info="forecastData" @changeTime="updateDistrictPopUp" />
     </div>
 
-    <div v-if="!isWebView" class="record-btn">
+    <div v-if="!isWebView && hasPermission" class="record-btn">
         <v-btn v-show="isShowButtonStop" @click="handleClearTimeout" color="primary" depressed elevation="7" rounded
             x-large>
             Dừng
@@ -73,7 +73,7 @@
             mdi-keyboard-backspace
         </v-icon>
     </v-btn>
-    <v-btn class="qr-code-scan" icon color="white" v-show="!isRecording && !isWebView" @click="visibleQR = !visibleQR">
+    <v-btn class="qr-code-scan" icon color="white" v-show="!isRecording && !isWebView && hasPermission" @click="visibleQR = !visibleQR">
         <v-icon>mdi-qrcode-scan</v-icon>
     </v-btn>
 

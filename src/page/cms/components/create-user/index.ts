@@ -19,6 +19,8 @@ export default class CreateUserComponent extends Vue {
     progress: number = 0;
     userModel: IUser = new User({});
 
+    roleList: any = [];
+
     rules = {
         firstName: [v => !!v || 'Vui lòng nhập họ'],
         lastName: [v => !!v || 'Vui lòng nhập tên'],
@@ -38,6 +40,45 @@ export default class CreateUserComponent extends Vue {
             v => !!v && /(?=.*[A-Z])/.test(v) || 'Mật khẩu phải chứa ít nhất 1 chữ in hoa (A-Z)',
             v => !!v && /(?=.*[0-9])/.test(v) || 'Mật khẩu phải chứa ít nhất 1 chữ số (0-9)',
         ]
+    }
+
+    get coRoleList () {
+        let list = this.roleList.filter(e => e.name === 'Admin' || e.name === 'DTH')
+        return list.map(r => {
+            switch (r.name) {
+                case 'Admin':
+                    r.role = 'Đài khí tượng thủy văn';
+                    r.title = 'Xem và chỉnh sửa dữ liệu KTTV';
+                    break;
+                case 'DTH':
+                    r.role = 'Đài truyền hình';
+                    r.title = 'Xuất video, tạo kịch bản trên bản đồ, quản lí video';
+                    break;
+            
+                default:
+                    break;
+            }
+            return r;
+        });
+    }
+
+    get roles () {
+        return this.userModel.roleNames;
+    }
+
+    set roles (val) {
+        // this.userModel.roleNames = val;
+    }
+
+    handleClickOnRole (val) {
+        let index = this.roles.indexOf(val);
+        if (index === -1) {
+            this.userModel.roleNames.push(val);
+        } else {
+            if (this.roles.length > 1) {
+                this.userModel.roleNames.splice(index, 1);
+            }
+        }
     }
 
     handleBack() {
@@ -137,5 +178,12 @@ export default class CreateUserComponent extends Vue {
         const formData = new FormData();
         formData.append('Image', document.Data, document.FileName);
         return formData;
+    }
+
+    async mounted() {
+        await this.userService.getAllRole().then((res: any) => {
+            this.roleList = res;
+        });
+        this.userModel.roleNames = ['Admin'];
     }
 }

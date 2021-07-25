@@ -5,7 +5,7 @@ import Component from "vue-class-component";
 import router from "./router";
 import vuetify from "./plugins/Vuetify";
 import axios from 'axios';
-import { getLocalStorage, setAxiosHeader } from "./utils/appConfig";
+// import { getLocalStorage, setAxiosHeader } from "./utils/appConfig";
 import Loading from './components/loading';
 import { DateFormatterPlugin } from './plugins/date-format';
 import store from "./store";
@@ -43,10 +43,10 @@ Vue.use(SignalRPlugin, {
 })
 class RootApp extends Vue {
     created() {
-        const authConfig = getLocalStorage('auth');
-        if (authConfig) {
-            setAxiosHeader(authConfig.token);
-        }
+        // const authConfig = getLocalStorage('auth');
+        // if (authConfig) {
+        //     setAxiosHeader(authConfig.token);
+        // }
     }
 }
 

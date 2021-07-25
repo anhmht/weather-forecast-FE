@@ -1,6 +1,18 @@
 <div class="map-type">
     <div class="map-type-title">TRẠNG THÁI THỜI TIẾT</div>
-    <div class="map-type-content" >
+    <v-text-field
+        v-model="searchType"
+        label="Tra cứu nhanh..."
+        dark
+        flat
+        solo-inverted
+        hide-details
+        clearable
+        dense
+        clear-icon="mdi-close-circle-outline"
+        class="mb-2"
+    ></v-text-field>
+    <div class="map-type-content d-flex flex-column" >
         <div @click="handleClick(index)"
             :class="isActive === index ? 'active' : null"
             class="map-type-content--item"
@@ -8,7 +20,7 @@
             :key="index">
             {{item.name}}
         </div>
-        <div>
+        <div class="mt-auto">
             (Sẽ bổ sung 50 trạng thái trường thời tiết)
         </div>
     </div>

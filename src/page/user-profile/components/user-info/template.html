@@ -12,7 +12,7 @@
                     <div class="user-info-form--item_content">
                         <div class="user-info-form--avatar">
                             <div class="user-info-form--avatar_image">
-                                <img :src="uploadedDocs" />
+                                <img :src="uploadedDocs" @error="onImgError" />
                                 <v-progress-circular v-if="progress > 0" class="progress-bar" :rotate="-90" :size="100" :width="15"
                                     :value="progress" color="primary">
                                     {{ progress }}
@@ -32,7 +32,7 @@
                     </div>
                     <div class="user-info-form--item_content">
                         <div>
-                            <v-text-field v-model="data.lastName" label="Họ" outlined></v-text-field>
+                            <v-text-field v-model="data.lastName" outlined dense></v-text-field>
                         </div>
                     </div>
                 </div>
@@ -42,7 +42,7 @@
                     </div>
                     <div class="user-info-form--item_content">
                         <div>
-                            <v-text-field v-model="data.firstName" label="Tên" outlined></v-text-field>
+                            <v-text-field v-model="data.firstName" outlined dense></v-text-field>
                         </div>
                     </div>
                 </div>
@@ -52,7 +52,7 @@
                     </div>
                     <div class="user-info-form--item_content">
                         <div>
-                            <v-text-field :rules="rules.userName" v-model="data.userName" label="Tên tài khoản" outlined></v-text-field>
+                            <v-text-field :rules="rules.userName" v-model="data.userName" outlined dense></v-text-field>
                         </div>
                     </div>
                 </div>
@@ -62,7 +62,7 @@
                     </div>
                     <div class="user-info-form--item_content">
                         <div>
-                            <v-text-field :rules="rules.email"  v-model="data.email"  label="E-mail" outlined></v-text-field>
+                            <v-text-field :rules="rules.email"  v-model="data.email" outlined dense></v-text-field>
                         </div>
                     </div>
                 </div>
@@ -72,7 +72,7 @@
                     </div>
                     <div class="user-info-form--item_content">
                         <div>
-                            <v-text-field label="Số điện thoại" v-model="data.phoneNumber" outlined></v-text-field>
+                            <v-text-field v-model="data.phoneNumber" outlined dense></v-text-field>
                         </div>
                     </div>
                 </div>

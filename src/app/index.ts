@@ -29,6 +29,8 @@ export default class App extends Vue {
             case ROUTE_NAME.LIST_DOCUMENT:
             case ROUTE_NAME.CREATE_DOCUMENT:
             case ROUTE_NAME.EDIT_DOCUMENT:
+            case ROUTE_NAME.EDIT_LOCAL:
+            case ROUTE_NAME.LIST_LOCAL:
                 return false;
             default:
                 return true;

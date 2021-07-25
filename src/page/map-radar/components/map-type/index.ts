@@ -1,4 +1,5 @@
 import { MAP_TYPE } from "@/constant/forcast-station-constant";
+import { DataHelper } from "@/utils/data-helper";
 import Vue from "vue";
 import Component from "vue-class-component";
 import { Watch, Prop } from "vue-property-decorator";
@@ -13,8 +14,19 @@ export default class MapTypeComponent extends Vue {
     custom
 
     isActive: Number = 0;
+
+    searchType: string = null;
+
     get mapTypes() {
-        return MAP_TYPE;
+        let list = MAP_TYPE;
+        if (this.searchType != null && this.searchType !== "") {
+            list = list.filter(t => {
+                const name = DataHelper.convertToNonAccent(t.name.toLowerCase());
+                const search = DataHelper.convertToNonAccent(this.searchType.toLowerCase());
+                return name.includes(search);
+            });
+        }
+        return list;
     }
 
     handleClick(index) {

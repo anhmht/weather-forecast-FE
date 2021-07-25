@@ -4,8 +4,6 @@
             height: calc(100vh - 200px)
         }
         &_top {
-            display: flex;
-            align-items: center;
             margin-bottom: 20px;
             // title
             > p {
@@ -17,13 +15,8 @@
 
             // search input
             .v-input {
-                width: 450px;
+                width: 300px;
                 flex: unset;
-            }
-
-            // create new button
-            button {
-                margin-left: 20px;
             }
         }
 
@@ -81,6 +74,7 @@
                 white-space: nowrap;
                 font-size: 14px !important;
                 cursor: pointer;
+                text-align: center;
             }
             .delete-action {
                 color: #D50000;

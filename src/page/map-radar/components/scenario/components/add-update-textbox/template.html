@@ -10,11 +10,30 @@
                     <p v-html="forecastData.desc"></p>
                 </div>
             </div>
-            <v-select :items="durations" v-model="data.time" label="Xuất hiện sau" item-value="value"></v-select>
+            <v-select :items="durations" v-model="data.startTime" label="Xuất hiện sau" item-value="value"></v-select>
             <v-select :items="durations" v-model="data.duration" label="Thời lượng" item-value="value"></v-select>
+            
             <div class="textbox-popup-content">
                 <div class="textbox-popup-content--field">
-                    <v-select :disabled="data.customPosition" :items="positions" v-model="data.position" label="Vị trí xuất hiện" item-value="value"></v-select>
+                    <v-select :disabled="data.customPosition" :items="positions" v-model="data.positionId" label="Vị trí xuất hiện" item-value="value"></v-select>
+                    <v-text-field label="Độ dài" v-model="data.width"></v-text-field>
+                    <v-switch v-model="data.isEnableIcon" label="Hiển thị icon"></v-switch>
+                    <div v-if="data.isEnableIcon" class="textbox-popup-content_icon">
+                        <div class="textbox-popup-content_icon--upload">
+                            <div class="textbox-popup-content_icon--upload_image">
+                                <img :src="uploadedDocs" />
+                                <v-progress-circular v-if="progress > 0" class="progress-bar" :rotate="-90" :size="50" :width="15"
+                                    :value="progress" color="primary">
+                                    {{ progress }}
+                                </v-progress-circular>
+                            </div>
+                            <div class="textbox-popup-content_icon--upload_button">
+                                <input ref="upload" type="file" @change="onChangeDocuments($event.target.files)" title="" hidden
+                                    accept="image/*" />
+                                <v-btn color="#707070" outlined raised @click="handleClickBrowse">Upload Icon</v-btn>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="textbox-popup-content--suggest">
                     <v-switch v-model="data.customPosition" label="Hiệu chỉnh nâng cao"></v-switch>

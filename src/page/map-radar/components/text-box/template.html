@@ -1,6 +1,16 @@
 <div class="video-text-box">
     <div class="video-text-box--containter">
-        <div v-for="(item,index) in renderData" :key="index" :style="item.style" class="video-text-box--containter_item  animate__animated" :class="item.class" v-html="getContent(item.content)">
+        <div v-for="(item,index) in renderData" :key="index" :style="item.style" class="video-text-box--containter_item  animate__animated" :class="item.class">
+            <div v-if="!item.isEnableIcon" v-html="getContent(item.content)">
+            </div>
+            <div v-else class="video-text-box--containter_item--layout">
+                <div class="video-text-box--containter_item--layout__icon">
+                    <img :src="item.iconUrls" />
+                </div>
+                <div v-html="getContent(item.content)">
+
+                </div>
+            </div>
         </div>
     </div>
 

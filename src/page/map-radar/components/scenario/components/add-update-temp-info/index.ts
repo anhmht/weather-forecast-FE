@@ -1,7 +1,8 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
 import { Prop, Watch } from 'vue-property-decorator';
-import { DataHelper } from '@/utils/data-helper';
+import { IScenarioActionDetail, ScenarioActionDetail } from '@/model/scenario';
+import { POSITION } from '../../scenario-default';
 
 @Component({
     template: require("./template.html").default,
@@ -22,17 +23,7 @@ export default class AddUpdateTempInfoComponent extends Vue {
 
     forecastData: any = null
 
-    data = {
-        isDisplay: false,
-        startTime: 0,
-        duration: 0,
-        position: 'top-right',
-        customPosition: false,
-        left: 0,
-        top: 0,
-        placeId: null,
-        isProvince: false
-    }
+    data: IScenarioActionDetail = new ScenarioActionDetail({});
 
     get visbileTextBox() {
         return this.visible;
@@ -68,39 +59,17 @@ export default class AddUpdateTempInfoComponent extends Vue {
         { text: '30 giây', value: 30000 },
     ]
 
-    positions = [
-        { text: 'top', value: 'top' },
-        { text: 'top-left', value: 'top-left' },
-        { text: 'top-right', value: 'top-right' },
-        { text: 'middle', value: 'middle' },
-        { text: 'middle-left', value: 'middle-left' },
-        { text: 'middle-right', value: 'middle-right' },
-        { text: 'bottom', value: 'bottom' },
-        { text: 'bottom-left', value: 'bottom-left' },
-        { text: 'bottom-right', value: 'bottom-right' },
-    ]
+    positions = POSITION
 
     handleSaveTextBox() {
         this.$emit('save', this.data);
-        console.log(this.data);
-        
         this.visbileTextBox = false
     }
 
     @Watch('visible')
     dialogVisible(visible) {
         if (visible) {
-            this.data = this.editData ? DataHelper.deepClone(this.editData) : {
-                isDisplay: false,
-                startTime: 0,
-                duration: 0,
-                position: 'top-right',
-                customPosition: false,
-                left: 0,
-                top: 0,
-                placeId: this.location,
-                isProvince: this.isProvince
-            }
+            this.data = this.editData ? new ScenarioActionDetail({ ...this.editData, placeId: this.location }) : new ScenarioActionDetail({placeId: this.location})
         }
     }
 }

@@ -17,5 +17,17 @@
                 </template>
             </v-btn>
         </div>
+        <div class="resend-email">
+            <div>Bạn chưa nhận được email?</div>
+            <div class="resend-email-link" @click="handleResendEmail()">Gửi lại</div>
+        </div>
     </div>
+    <v-dialog v-model="visibleConfirm" max-width="600">
+        <v-card>
+            <v-card-title class="text-h5">
+                Email đã được gửi tới hộp thư của bạn.<br>
+                Nếu bạn không nhận được email, hãy nhấn gửi lại.
+            </v-card-title>
+        </v-card>
+    </v-dialog>
 </div>

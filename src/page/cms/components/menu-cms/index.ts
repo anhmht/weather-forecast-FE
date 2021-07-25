@@ -1,120 +1,173 @@
-import { PATH, ROUTE_NAME } from "@/constant/route-constant";
+import { USER_ROLE } from "@/constant/common-constant";
+import { CATEGORY, ROUTE_NAME } from "@/constant/route-constant";
+import { storeModules } from "@/store";
+import userTypesStore from "@/store/user/user-types.store";
 import Vue from "vue";
 import Component from "vue-class-component";
+import { Getter, namespace } from "vuex-class";
 
-
+const UserGetter = namespace(storeModules.User, Getter);
 @Component({
     template: require("./template.html").default,
     components: {
     }
 })
 export default class MenuCMSComponent extends Vue {
+
+    @UserGetter(userTypesStore.Get.Auth) userConfig: Object;
+
     activeMenu: number = 0;
-    menuList= [
-        {
-            title: 'Danh sách quản trị viên',
-            icon: 'mdi-account-cog',
-            name: ROUTE_NAME.LIST_USER,
-            param: {role: 'admin'},
-        },
-        {
-            title: 'Danh sách người dùng',
-            icon: 'mdi-account-group',
-            name: ROUTE_NAME.LIST_USER,
-            param: { role: 'user' }
-        },
-        {
-            title: 'Bản tin thời tiết',
-            icon: 'mdi-home',
-            name: ROUTE_NAME.LIST_POST,
-            query: { categoryId: '8a7ca394-930a-4381-2ed0-08d94344e5e0' }
-        },
-        {
-            title: 'Bản đồ thời tiết',
-            icon: 'mdi-home',
-            name: ROUTE_NAME.LIST_POST,
-            query: { categoryId: '944dc7ef-f9a6-4f5c-2ed1-08d94344e5e0' }
-        },
-        {
-            title: 'Cảnh báo thiên tai',
-            icon: 'mdi-home',
-            name: ROUTE_NAME.LIST_POST,
-            query: { categoryId: 'e78c78b7-80d1-4f3b-3014-08d91e5e4dfa' }
-        },
-        {
-            title: 'Thông tin khuyến cáo',
-            icon: 'mdi-book-open-page-variant',
-            name: ROUTE_NAME.LIST_POST,
-            query: { categoryId: '580ffb36-2c72-4642-cb46-08d91fa2c701' }
-        },
-        {
-            title: 'Chuyên mục KT-VH-XH',
-            icon: 'mdi-newspaper-variant-outline',
-            name: ROUTE_NAME.LIST_POST,
-            query: { categoryId: 'eededf06-2e83-458d-9e0e-08d92ce117ec' }
-        },
-        {
-            title: 'Thời tiết du lịch',
-            icon: 'mdi-weather-hail',
-            name: ROUTE_NAME.LIST_POST,
-            query: { categoryId: 'd34d4116-51f8-4539-5d1d-08d942e67599' }
-        },
-        {
-            title: 'Thời tiết nông vụ',
-            icon: 'mdi-weather-hail',
-            name: ROUTE_NAME.LIST_POST,
-            query: { categoryId: '2815e0a9-d15f-4d16-5d1e-08d942e67599' }
-        },
-        {
-            title: 'Thời tiết giao thông',
-            icon: 'mdi-weather-hail',
-            name: ROUTE_NAME.LIST_POST,
-            query: { categoryId: 'fdb895d3-a2e3-49f3-5d1f-08d942e67599' }
-        },
-        {
-            title: 'Thời tiết nguy hiểm',
-            icon: 'mdi-weather-hail',
-            name: ROUTE_NAME.LIST_POST,
-            query: { categoryId: '031d1a69-900e-4b63-5d20-08d942e67599' }
-        },
-        {
-            title: 'Thủy văn',
-            icon: 'mdi-weather-hail',
-            name: ROUTE_NAME.LIST_POST,
-            query: { categoryId: '92fb2fa2-12e1-4871-2ecf-08d94344e5e0' }
-        },
-        {
-            title: 'Dữ liệu KTTV',
-            icon: 'mdi-home-account',
-            name: ROUTE_NAME.LIST_DATA,
-        },
-        {
-            title: 'Thời tiết - Khí hậu',
-            icon: 'mdi-weather-hail',
-            name: ROUTE_NAME.LIST_ICON,
-        },
-        {
-            title: 'Các trạng thái thời tiết',
-            icon: 'mdi-weather-hail',
-            name: ROUTE_NAME.LIST_POST,
-            query: { categoryId: 'a54d6936-8789-42e4-6515-08d944a940ef' }
-        },
-        {
-            title: 'Cộng đồng',
-            icon: 'mdi-account-group',
-            name: PATH.LIST_POST,
-        },
-        {
-            title: 'Thông tin chỉ đạo',
-            icon: 'mdi-bullhorn',
-            name: ROUTE_NAME.LIST_DOCUMENT,
-        },
-        {
-            title: 'Các hiện tượng cực đoan',
-            icon: 'mdi-weather-partly-lightning',
-            name: ROUTE_NAME.LIST_LOCAL
-        },
-    ]
+
+    get menuList () {
+        let list = [
+            {
+                title: 'Danh sách quản trị viên',
+                icon: 'mdi-account-cog',
+                name: ROUTE_NAME.LIST_USER,
+                param: {role: 'admin'},
+                accept: USER_ROLE.SUPER
+            },
+            {
+                title: 'Danh sách người dùng',
+                icon: 'mdi-account-group',
+                name: ROUTE_NAME.LIST_USER,
+                param: { role: 'user' },
+                accept: USER_ROLE.SUPER
+            },
+            {
+                title: 'Bản tin thời tiết',
+                icon: 'mdi-home',
+                name: ROUTE_NAME.LIST_POST,
+                query: { categoryId: CATEGORY.LIST_POST_WEATHER_NEWS },
+                accept: USER_ROLE.SUPER
+            },
+            {
+                title: 'Bản đồ thời tiết',
+                icon: 'mdi-home',
+                name: ROUTE_NAME.LIST_POST,
+                query: { categoryId: CATEGORY.LIST_POST_WEATHER_MAP },
+                accept: USER_ROLE.SUPER
+            },
+            {
+                title: 'Cảnh báo thiên tai',
+                icon: 'mdi-home',
+                name: ROUTE_NAME.LIST_POST,
+                query: { categoryId: CATEGORY.LIST_POST_CANH_BAO_THIEN_TAI },
+                accept: USER_ROLE.KTTV
+            },
+            {
+                title: 'Thông tin khuyến cáo',
+                icon: 'mdi-book-open-page-variant',
+                name: ROUTE_NAME.LIST_POST,
+                query: { categoryId: CATEGORY.LIST_POST_THONG_TIN_KHUYEN_CAO },
+                accept: USER_ROLE.KTTV
+            },
+            {
+                title: 'Chuyên mục KT-VH-XH',
+                icon: 'mdi-newspaper-variant-outline',
+                name: ROUTE_NAME.LIST_POST,
+                query: { categoryId: CATEGORY.LIST_POST_KT_VH_XH },
+                accept: USER_ROLE.KTTV
+            },
+            {
+                title: 'Thời tiết du lịch',
+                icon: 'mdi-weather-hail',
+                name: ROUTE_NAME.LIST_POST,
+                query: { categoryId: CATEGORY.LIST_POST_THOI_TIET_DU_LICH },
+                accept: USER_ROLE.KTTV
+            },
+            {
+                title: 'Thời tiết nông vụ',
+                icon: 'mdi-weather-hail',
+                name: ROUTE_NAME.LIST_POST,
+                query: { categoryId: CATEGORY.LIST_POST_THOI_TIET_NONG_VU },
+                accept: USER_ROLE.KTTV
+            },
+            {
+                title: 'Thời tiết giao thông',
+                icon: 'mdi-weather-hail',
+                name: ROUTE_NAME.LIST_POST,
+                query: { categoryId: CATEGORY.LIST_POST_THOI_TIET_GIAO_THONG },
+                accept: USER_ROLE.KTTV
+            },
+            {
+                title: 'Thời tiết nguy hiểm',
+                icon: 'mdi-weather-hail',
+                name: ROUTE_NAME.LIST_POST,
+                query: { categoryId: CATEGORY.LIST_POST_THOI_TIET_NGUY_HIEM },
+                accept: USER_ROLE.KTTV
+            },
+            {
+                title: 'Thủy văn',
+                icon: 'mdi-weather-hail',
+                name: ROUTE_NAME.LIST_POST,
+                query: { categoryId: CATEGORY.LIST_POST_THUY_VAN },
+                accept: USER_ROLE.KTTV
+            },
+            {
+                title: 'Dữ liệu KTTV',
+                icon: 'mdi-home-account',
+                name: ROUTE_NAME.LIST_DATA,
+                accept: USER_ROLE.KTTV
+            },
+            // {
+            //     title: 'Thời tiết - Khí hậu',
+            //     icon: 'mdi-weather-hail',
+            //     name: ROUTE_NAME.LIST_ICON,
+            //     accept: USER_ROLE.KTTV
+            // },
+            {
+                title: 'Các trạng thái thời tiết',
+                icon: 'mdi-weather-hail',
+                name: ROUTE_NAME.LIST_POST,
+                query: { categoryId: CATEGORY.LIST_POST_TRANG_THAI_THOI_TIET },
+                accept: USER_ROLE.KTTV
+            },
+            // {
+            //     title: 'Cộng đồng',
+            //     icon: 'mdi-account-group',
+            //     name: PATH.LIST_POST,
+            //     accept: USER_ROLE.KTTV
+            // },
+            {
+                title: 'Thông tin chỉ đạo',
+                icon: 'mdi-bullhorn',
+                name: ROUTE_NAME.LIST_DOCUMENT,
+            },
+            {
+                title: 'Các hiện tượng cực đoan',
+                icon: 'mdi-lightning-bolt',
+                name: ROUTE_NAME.LIST_LOCAL,
+                accept: USER_ROLE.KTTV
+            },
+        ]
+
+        let isSuperAmin = false;
+        let isDTH = false;
+        let isKTTV = false;
+
+        if (this.userConfig && this.userConfig["roles"]) {
+            isSuperAmin = !!this.userConfig["roles"].find(r => r === USER_ROLE.SUPER);
+            isDTH = !!this.userConfig["roles"].find(r => r === USER_ROLE.DTH);
+            isKTTV = !!this.userConfig["roles"].find(r => r === USER_ROLE.KTTV);
+        }
+
+        if (isSuperAmin) {
+            return list;
+        } else {
+            list = list.filter(p => !(p.accept === USER_ROLE.SUPER ));
+
+            if (!isKTTV) {
+                list = list.filter(p => !(p.accept === USER_ROLE.KTTV ));
+            }
+
+            if (!isDTH) {
+                list = list.filter(p => !(p.accept === USER_ROLE.DTH ));
+            }
+
+            return list; 
+        }
+    }
 
     handleClick(index) {
         this.activeMenu = index;
@@ -132,7 +185,7 @@ export default class MenuCMSComponent extends Vue {
 
     mounted() {
         const index = this.menuList.findIndex(x => x.name === this.$route.name);
-        if (this.menuList[index].query) {
+        if (this.menuList[index] && this.menuList[index].query) {
             this.activeMenu = this.menuList.findIndex(x => x.query.categoryId === this.$route.query.categoryId);
         } else {
             this.activeMenu = index

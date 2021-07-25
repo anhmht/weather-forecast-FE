@@ -6,6 +6,10 @@ import { PATH } from '@/constant/route-constant';
 import { setAxiosHeader, setLocalStorage } from '@/utils/appConfig';
 import EventBus from '@/utils/event-bus';
 import { ROUTE_NAME } from '@/constant/route-constant';
+import { Action, namespace } from 'vuex-class';
+import { storeModules } from '@/store';
+
+const UserAction = namespace(storeModules.User, Action);
 
 @Component({
     template: require("./template.html").default,
@@ -14,6 +18,9 @@ import { ROUTE_NAME } from '@/constant/route-constant';
     }
 })
 export default class LoginPageComponent extends Vue {
+
+    @UserAction setAuth: (auth: Object) => Promise<void>;
+
     valid: boolean = true;
     isLoading: boolean = false;
     userService: UserServices = new UserServices();
@@ -29,6 +36,7 @@ export default class LoginPageComponent extends Vue {
     setAuthenticate(authConfig) {
         setLocalStorage('auth', authConfig);
         setAxiosHeader(authConfig.token);
+        this.setAuth(authConfig);
     }
 
     handleLogin() {
