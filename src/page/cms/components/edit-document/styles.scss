@@ -28,8 +28,9 @@
                 background-color: #fff;
 
                 .ck.ck-toolbar.ck-toolbar_grouping>.ck-toolbar__items {
-                    overflow-x: auto;
+                    overflow-x: hidden;
                     overflow-y: hidden;
+                    flex-wrap: wrap;
                 }
                 .ck-content {
                     min-height: 150px;
