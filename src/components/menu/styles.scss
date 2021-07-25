@@ -4,7 +4,7 @@
     align-items: center;
     flex: 1;
     justify-content: flex-end;
-    margin-top: 25px;
+    margin-top: 10px;
     &-item {
         cursor: pointer;
         transition: $primary-transition;
@@ -13,10 +13,21 @@
         text-transform: uppercase;
         font-weight: 600;
         font-size: 15px;
+        padding: 14px 0;
+        position: relative;
+        &:before {
+            content: ' ';
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color:transparent;
+        }
         &.active {
-            font-weight: $medium-font-weight;
-            border-bottom: 1px solid $primary-color;
-            color: $primary-color;
+            &:before {
+                background-color: $primary-color;
+            }
         }
         &:hover {
             color: $primary-color;
@@ -127,6 +138,9 @@
         -webkit-backface-visibility: hidden;
         backface-visibility: hidden;
         border-left: 1px solid #ddd;
+        float:none;
+        display: block;
+        padding: 50px 0 0 0;
         &.show {
             -webkit-transform: translate3d(0, 0, 0);
             transform: translate3d(0, 0, 0);
@@ -136,7 +150,13 @@
             padding: 13px;
             margin: 0;
             border-bottom: 1px solid #ddd;
-        }
+            &.login {
+                border-radius: 0;
+            }
+            &:before {
+                bottom: 0;
+            }
+        }   
     }
 }
 
