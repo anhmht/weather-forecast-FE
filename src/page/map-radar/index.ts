@@ -39,7 +39,8 @@ const COLOR = [
         "video-forecast-province": () => import("./components/video-forecast-province/VideoForecastProvinceComponent.vue"),
         "text-box": () => import("./components/text-box/TextBoxComponent.vue"),
         "video-map-title": () => import("./components/video-map-title/VideoMapTitleComponent.vue"),
-        "custom-temp-info": () => import("./components/custom-video-forecast-province/CustomVideoForecastProvince.vue")
+        "custom-temp-info": () => import("./components/custom-video-forecast-province/CustomVideoForecastProvince.vue"),
+        "windy-setting": () => import("./components/windy-setting/WindySettingComponent.vue"),
     },
     methods: {
         pushTextBox(element) {
@@ -123,6 +124,15 @@ export default class HomePageComponent extends Vue {
             return !!this.userConfig['roles'].find(r => r === USER_ROLE.SUPER || r === USER_ROLE.DTH);
         }
         return false;
+    }
+
+    get windySetting () {
+        let setting = localStorage.getItem('settings_particles');
+        if (setting) {
+            console.log("this.windy", setting);
+            return JSON.parse(setting);
+        }
+        return {};
     }
 
     handleBack() {
@@ -642,6 +652,14 @@ export default class HomePageComponent extends Vue {
         this.isShowButtonStop = false;
         if (!isRecord) {
             this.drawer = true;
+        }
+    }
+
+    changeWindySetting (setting) {
+        if (setting) {
+            console.log('change-particles', setting);
+            let { store } = this.windy;
+            store.set("particles", setting );
         }
     }
 
