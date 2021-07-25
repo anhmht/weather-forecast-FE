@@ -6,8 +6,8 @@
     height: 90px;
     z-index: 99;
     border-bottom: 1px solid #ddd;
-    @media all and (min-width: 320px) and (max-width: 700px) {
-        height: 80px;
+    @media all and (min-width: 320px) and (max-width: 1200px) {
+        height: 76px;
     }
     &-logo {
         align-items: center;
@@ -16,8 +16,8 @@
         cursor: pointer;
         img {
             max-width: 290px;
-            @media all and (min-width: 320px) and (max-width: 700px) {
-                max-width: 300px;
+            @media all and (min-width: 320px) and (max-width: 1200px) {
+                max-width: 230px;
             }
         }
     }
@@ -34,7 +34,7 @@
     margin: auto;
     padding:  0 20px;
     width: $container-width-xl;
-    max-width: 100%;
+    max-width: 95%;
 }
 .padding-main {
     padding-top: 40px;
@@ -100,24 +100,30 @@
     left: 0;
     width: 100%;
     z-index: 99;
+    @media all and (min-width: 320px) and (max-width: 1200px) {
+        top: 76px;
+    }
 }
 
 .nav-sticky {
     text-transform: uppercase;
     background: $primary-color;
     text-align: center;
-    overflow: hidden;
+    overflow: auto;
     height: 40px;
+    white-space: nowrap;
     ul {
         display: inline-block;
         border-right: 1px solid  rgba(255,255,255, 0.2);
         li {
             cursor: pointer;
-            padding: 8px 10px;
+            padding: 10px;
             border-left: 1px solid rgba(255,255,255, 0.2);
-            float: left;
             list-style: none;
             transition: background-color 0.2s;
+            font-size: 14px;
+            display: inline-block;
+            margin-right: -5px;
             &:hover, &.active {
                 background-color: rgba(0, 0, 0, 0.1)
             }

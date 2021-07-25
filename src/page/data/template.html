@@ -34,42 +34,42 @@
                 </ul>
             </div>
         </div>
-        <v-row v-if="activeTab === 0" class="data-page-container-wrapper">
+        <div v-if="activeTab === 0" class="data-page-container-wrapper">
             <div class="data-page-container-wrapper-col">
                 <weather-forecast region="ALL" key="ALL" all dummy />
             </div>
-        </v-row>
-        <v-row v-if="activeTab === 1" class="data-page-container-wrapper">
+        </div>
+        <div v-if="activeTab === 1" class="data-page-container-wrapper">
             <div class="data-page-container-wrapper-col">
                 <weather-forecast region="DBB" key="DBB" dummy />
                 <weather-forecast region="TBB" key="TBB" dummy style="margin-top: 20px" />
                 <weather-forecast region="DBSH" key="DBSH" dummy style="margin-top: 20px"/>
             </div>
-        </v-row>
-        <v-row v-if="activeTab === 2" class="data-page-container-wrapper">
+        </div>
+        <div v-if="activeTab === 2" class="data-page-container-wrapper">
             <div class="data-page-container-wrapper-col">
                 <weather-forecast region="BTB" key="BTB" dummy />
                 <weather-forecast region="NTB" key="NTB" dummy style="margin-top: 20px" />
                 <weather-forecast region="TN" key="TN" dummy style="margin-top: 20px" />
             </div>
-        </v-row>
-        <v-row v-if="activeTab === 3" class="data-page-container-wrapper">
+        </div>
+        <div v-if="activeTab === 3" class="data-page-container-wrapper">
             <div class="data-page-container-wrapper-col">
                 <weather-forecast region="DNB" :height="350" key="DNB"/>
                 <weather-forecast region="TNB" style="margin-top: 20px" key="TNB"/>
             </div>
-        </v-row>
-        <v-row v-if="activeTab === 4" class="data-page-container-wrapper">
+        </div>
+        <div v-if="activeTab === 4" class="data-page-container-wrapper">
             <div class="data-page-container-wrapper-col">
                 <weather-forecast region="TNB" province="49" key="49"/>
             </div>
-        </v-row>
-        <v-row v-if="activeTab === 5" class="data-page-container-wrapper">
+        </div>
+        <div v-if="activeTab === 5" class="data-page-container-wrapper">
             <div class="data-page-container-hydrological">
                 <hydrological />
             </div>
-        </v-row>
-        <v-row v-if="activeTab === 6" class="data-page-container-wrapper">
+        </div>
+        <div v-if="activeTab === 6" class="data-page-container-wrapper">
             <div class="data-page-container-wrapper-col-harsh">
                 <div class="simple-table">
                     <template>
@@ -160,6 +160,6 @@
             <div class="data-page-container-wrapper-sub-table">
                 <extreme-phenomenon></extreme-phenomenon>
             </div>
-        </v-row>
+        </div>
     </div>
 </base-container>

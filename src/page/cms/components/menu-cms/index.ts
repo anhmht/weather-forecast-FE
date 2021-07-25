@@ -36,21 +36,21 @@ export default class MenuCMSComponent extends Vue {
             },
             {
                 title: 'Bản tin thời tiết',
-                icon: 'mdi-home',
+                icon: 'mdi-weather-sunny',
                 name: ROUTE_NAME.LIST_POST,
                 query: { categoryId: CATEGORY.LIST_POST_WEATHER_NEWS },
                 accept: USER_ROLE.SUPER
             },
             {
                 title: 'Bản đồ thời tiết',
-                icon: 'mdi-home',
+                icon: 'mdi-map-marker-radius',
                 name: ROUTE_NAME.LIST_POST,
                 query: { categoryId: CATEGORY.LIST_POST_WEATHER_MAP },
                 accept: USER_ROLE.SUPER
             },
             {
                 title: 'Cảnh báo thiên tai',
-                icon: 'mdi-home',
+                icon: 'mdi-alert-outline',
                 name: ROUTE_NAME.LIST_POST,
                 query: { categoryId: CATEGORY.LIST_POST_CANH_BAO_THIEN_TAI },
                 accept: USER_ROLE.KTTV
@@ -71,42 +71,42 @@ export default class MenuCMSComponent extends Vue {
             },
             {
                 title: 'Thời tiết du lịch',
-                icon: 'mdi-weather-hail',
+                icon: 'mdi-wallet-travel',
                 name: ROUTE_NAME.LIST_POST,
                 query: { categoryId: CATEGORY.LIST_POST_THOI_TIET_DU_LICH },
                 accept: USER_ROLE.KTTV
             },
             {
                 title: 'Thời tiết nông vụ',
-                icon: 'mdi-weather-hail',
+                icon: 'mdi-pine-tree',
                 name: ROUTE_NAME.LIST_POST,
                 query: { categoryId: CATEGORY.LIST_POST_THOI_TIET_NONG_VU },
                 accept: USER_ROLE.KTTV
             },
             {
                 title: 'Thời tiết giao thông',
-                icon: 'mdi-weather-hail',
+                icon: 'mdi-traffic-cone',
                 name: ROUTE_NAME.LIST_POST,
                 query: { categoryId: CATEGORY.LIST_POST_THOI_TIET_GIAO_THONG },
                 accept: USER_ROLE.KTTV
             },
             {
                 title: 'Thời tiết nguy hiểm',
-                icon: 'mdi-weather-hail',
+                icon: 'mdi-weather-windy',
                 name: ROUTE_NAME.LIST_POST,
                 query: { categoryId: CATEGORY.LIST_POST_THOI_TIET_NGUY_HIEM },
                 accept: USER_ROLE.KTTV
             },
             {
                 title: 'Thủy văn',
-                icon: 'mdi-weather-hail',
+                icon: 'mdi-space-station',
                 name: ROUTE_NAME.LIST_POST,
                 query: { categoryId: CATEGORY.LIST_POST_THUY_VAN },
                 accept: USER_ROLE.KTTV
             },
             {
                 title: 'Dữ liệu KTTV',
-                icon: 'mdi-home-account',
+                icon: 'mdi-database-import',
                 name: ROUTE_NAME.LIST_DATA,
                 accept: USER_ROLE.KTTV
             },
@@ -118,7 +118,7 @@ export default class MenuCMSComponent extends Vue {
             // },
             {
                 title: 'Các trạng thái thời tiết',
-                icon: 'mdi-weather-hail',
+                icon: 'mdi-weather-lightning-rainy',
                 name: ROUTE_NAME.LIST_POST,
                 query: { categoryId: CATEGORY.LIST_POST_TRANG_THAI_THOI_TIET },
                 accept: USER_ROLE.KTTV
