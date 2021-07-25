@@ -22,7 +22,7 @@
                                     <v-list-item-content>
                                         <v-list-item-title v-text="item.scenarioName"></v-list-item-title>
                                     </v-list-item-content>
-                                    <v-list-item-action v-if="i !== 0">
+                                    <v-list-item-action>
                                         <v-btn icon color="primary" @click="handleEditScenario(i)">
                                             <v-icon>mdi-pencil</v-icon>
                                         </v-btn>
@@ -33,6 +33,10 @@
                                 </v-list-item>
                             </v-list-item-group>
                         </v-list>
+                    </div>
+                    <div class="scenario-modal-left--footer">
+                        <v-pagination v-model="searchParams.page" :length="searchParams.total" :total-visible="5"
+                            @input="getDataBypaging"></v-pagination>
                     </div>
                 </div>
                 <div class="scenario-modal-right">
@@ -81,9 +85,6 @@
                             <v-btn :loading="buttonLoading" :disabled="buttonLoading" color="primary" @click="handlePreview(true)">
                                 Xem Kịch Bản
                             </v-btn>
-                            <v-btn v-if="selectedItem !== 0" :loading="buttonLoading" :disabled="buttonLoading" color="primary" @click="handleSave">
-                                Lưu Kịch Bản
-                            </v-btn>
                         </v-card-actions>
                     </v-card>
                 </div>
@@ -91,7 +92,7 @@
             <loading :is-loading="isLoading" absolute />
         </v-card>
     </v-dialog>
-    <add-update-content v-model="visibleAddItem" :content="content" @save="updateContent" />
+    <add-update-content v-if="ScenarioId" v-model="visibleAddItem" :content="content" @save-success="updateContent" :id="ScenarioId" :order="Contents.length"/>
     <add-update-scenario v-model="visibleAddUpdateScenario" :content="scenario" @save="updateScenario"/>
     <confirm-dialog v-model="visibleConfirm" :title="confirmTitle" :action="confirmAction" @confirm="handleConfirm"/>
 

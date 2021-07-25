@@ -1,8 +1,8 @@
 import { EVENT_BUS } from './../../../../constant/event-bus-constant';
 import { DataHelper } from './../../../../utils/data-helper';
 import { ScenarioServices } from './../../../../service/scenario-service/scenario.service';
-import { IScenario, ISearchScenarioParameters, SearchScenarioParameters } from './../../../../model/scenario/scenario.model';
-import { DEFAULT_SCENARIOS, SCENARIO_ACTION, SCENARIO_DURATION, SCENARIO_LOCATION_METHOD, ELEVATION } from './scenario-default';
+import { IScenario, IScenarioAction, IScenarioActionOrder, ISearchScenarioParameters, ScenarioActionOrder, SearchScenarioParameters } from './../../../../model/scenario/scenario.model';
+import { SCENARIO_ACTION, SCENARIO_DURATION, SCENARIO_LOCATION_METHOD, ELEVATION } from './scenario-default';
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import Sortable from "sortablejs";
 import { sleep } from '@/utils/common-utils';
@@ -10,6 +10,12 @@ import { MAP_PROVINCE, REGION, MAP_TYPE } from '@/constant/forcast-station-const
 import { ForecastSearchParam, IForecastSearchParam } from '@/model/forecast';
 import { WeatherServices } from '@/service/weather-service/weather.service';
 import EventBus from '@/utils/event-bus';
+import { Action, Getter, namespace } from 'vuex-class';
+import { storeModules } from '@/store';
+import lookupTypesStore, { GeneralLookupTypes } from '@/store/lookup/lookup-types.store';
+
+const LookupAction = namespace(storeModules.Lookup, Action);
+const LookupGetter = namespace(storeModules.Lookup, Getter);
 @Component({
     template: require("./template.html").default,
     components: {
@@ -43,6 +49,13 @@ export default class ScenarioComponent extends Vue {
     confirmTitle: string = null;
     confirmAction: string = null;
 
+    scenarioActions: IScenarioAction[] = null;
+
+    remoteScenario: IScenario = null;
+
+    @LookupAction getGeneralLookup: (payload: number[]) => Promise<void>;
+    @LookupGetter(lookupTypesStore.Get.LOOKUP_DATA) dtoLookupData: Object;
+
     get drawer() {
         return this.value;
     }
@@ -56,32 +69,33 @@ export default class ScenarioComponent extends Vue {
     }
 
     get Contents() {
-        return this.scenarios[this.selectedItem] ? this.scenarios[this.selectedItem].scenarioContent : [];
+        return this.scenarioActions || [];
+    }
+
+    get ScenarioId() {
+        return this.scenarios[this.selectedItem] ? this.scenarios[this.selectedItem].scenarioId : null;
     }
 
     getColor(action) {
         return SCENARIO_ACTION.find(x => x.value === action).color;
     }
 
-    updateScenario(data) {
-        if (this.scenario) {
-            const index = this.scenarios.findIndex(x => x.scenarioId === this.scenario.scenarioId);
-            Vue.set(this.scenarios[index], 'scenarioName', data.scenarioName);
-
-            this.$forceUpdate();
-        } else {
-            const scenario = DataHelper.deepClone(data) as any;
-            scenario.scenarioContent = JSON.parse(scenario.scenarioContent);
-            this.scenarios.push(DataHelper.deepClone(scenario))
+    async updateScenario(data) {
+        await this.fetchNewData();
+        if (!this.scenario) {
+            this.selectedItem = 0;
+            const scenario = this.scenarios[this.selectedItem];
+            this.getScenarioDetail(scenario.scenarioId);
         }
+        
     }
 
-    updateContent(data) {
-        if(this.content) {
-            this.Contents[this.selectContentIndex] = DataHelper.deepClone(data);
-        } else {
-            this.Contents.push(DataHelper.deepClone(data));
-        }
+    async updateContent() {
+        let clear = { timeout: null };
+        this.isLoading = true;
+        await this.getScenarioDetail(this.ScenarioId);
+        await sleep(500, clear);
+        this.makeSortAbleList();
     }
 
     generateKey(index) {
@@ -123,73 +137,6 @@ export default class ScenarioComponent extends Vue {
         return item.data
     }
 
-    // prepareStation() {
-    //     let stations = [];
-    //     let result = []
-    //     stations = this.Contents.filter(x => x.action === 'customLocationControl');
-    //     stations.forEach(item => {
-    //         if (item.method === SCENARIO_LOCATION_METHOD[0].value) {
-    //             const region = REGION.find(x => x.placeId === item.data)
-    //             if(region) {
-    //                 region.provinceIds.forEach(element => {
-    //                     const station = STATION.find(x => x.place_id === element);
-    //                     result.push(station);
-    //                 });
-    //             }
-    //         } else {
-    //             const province = MAP_PROVINCE.find(x => x.placeId === item.data)
-    //             const provinceStation = STATION.find(x => x.id === province.id);
-    //             result.push(provinceStation);
-    //             if(province.districtIds) {
-    //                 province.districtIds.forEach(element => {
-    //                     const station = STATION.find(x => x.place_id === element);
-    //                     result.push(station);
-    //                 });
-    //             }
-    //         }
-    //     });
-    //     result = _.uniq(result);
-
-    //     return result;
-    // }
-
-    // getDataFromServer(ids) {
-    //     let stationId: any = ids;
-    //     this.forcastSearchParam = new ForecastSearchParam();
-    //     this.forcastSearchParam.stationIds = stationId;
-    //     this.forcastSearchParam.fromDate = moment().format("YYYY-MM-DD");
-    //     this.forcastSearchParam.toDate = moment().format("YYYY-MM-DD");
-    //     this.forcastSearchParam.weatherTypes = [
-    //         WEATHER_TYPE.Temperature,
-    //         WEATHER_TYPE.Weather
-    //     ];
-
-    //     return new Promise((resolve, reject) => {
-    //         this.weatherService.getHorizontal(this.forcastSearchParam).then((res: any) => {
-    //             let tempArray = res.getWeatherInformationHorizontals.filter(x => x.weatherType === WEATHER_TYPE.Temperature);
-    //             let iconArray = res.getWeatherInformationHorizontals.filter(x => x.weatherType === WEATHER_TYPE.Weather);
-
-    //             resolve({tempArray, iconArray});
-    //         }).catch(err => {
-    //             console.log(err);
-    //         })
-    //     })
-    // }
-
-    // async prepareData() {
-    //     const result = [];
-    //     const stations = this.prepareStation();
-    //     const data = await this.getDataFromServer(stations.map(x => x.id)) as any;
-    //     stations.forEach(element => {
-    //         result.push({
-    //             ...element,
-    //             tempArray: data.tempArray,
-    //             iconArray: data.iconArray
-    //         })
-    //     });
-    //     console.log(result);
-    // }
-
     handlePreview(isRecord) {
         this.drawer = false;
         if (isRecord) {
@@ -214,8 +161,17 @@ export default class ScenarioComponent extends Vue {
     }
 
     deleteContent() {
-        this.Contents.splice(this.selectContentIndex, 1);
-        this.visibleConfirm = false;
+        this.isLoading = true;
+        const scenarioActionId = this.Contents[this.selectContentIndex].id;
+        this.scenarioService.deleteScenarioAction(scenarioActionId).then(async res => {
+            this.$toast.success('Xóa nội dung thành công');
+            await this.getScenarioDetail(this.ScenarioId);
+            this.isLoading = false;
+            this.visibleConfirm = false;
+        }).catch(err => {
+            console.log(err);
+            this.isLoading = false;
+        })
     }
 
     handleAddContent() {
@@ -230,7 +186,6 @@ export default class ScenarioComponent extends Vue {
 
     handleEditScenario(index) {
         this.scenario = DataHelper.deepClone(this.scenarios[index]);
-        this.scenario.scenarioContent = JSON.stringify(this.scenario.scenarioContent);
         this.visibleAddUpdateScenario = true;
     }
 
@@ -243,10 +198,11 @@ export default class ScenarioComponent extends Vue {
 
     deleteScenario() {
         const id = this.scenarios[this.scenarioIndex].scenarioId;
-        this.scenarioService.deleteScenario(id).then(res => {
+        this.scenarioService.deleteScenario(id).then(async res => {
+            await this.fetchNewData();
+            this.selectedItem = 0;
             this.$toast.success('Xóa kịch bản thành công');
             this.visibleConfirm = false;
-            this.fetchNewData();
         }).catch(err => {
             this.$toast.error('Có lỗi khi xóa kịch bản');
             console.log(err);
@@ -257,27 +213,19 @@ export default class ScenarioComponent extends Vue {
         this[value]();
     }
 
-    handleSave() {
-        this.buttonLoading = true;
-        const saveData = DataHelper.deepClone(this.scenarios[this.selectedItem]) as any;
-        saveData.scenarioContent = JSON.stringify(saveData.scenarioContent);
-        this.scenarioService.updateScenario(saveData).then(res => {
-            this.$toast.success('Lưu kịch bản thành công');
-            this.buttonLoading = false;
-        }).catch(err => {
-            this.$toast.error('Có lỗi khi lưu kịch bản');
-            this.buttonLoading = false;
-        })
-    }
-
     handleRemoteStart(message) {
-        const scenario = this.scenarios.find(x => x.scenarioId === message.scenarioId);
-        this.$emit('remote', { message, scenario});
+        // const scenario = this.scenarios.find(x => x.scenarioId === message.scenarioId);
+        this.scenarioService.getScenarioById(message.scenarioId).then(async (res: any) => {
+            this.remoteScenario = res;
+            this.$emit('remote', { message, scenario: this.remoteScenario });
+        }).catch(err => {
+            console.log(err);
+        })
+        
     }
 
     handleRemoteMove(message) {
-        const scenario = this.scenarios.find(x => x.scenarioId === message.scenarioId);
-        const step = scenario.scenarioContent[message.step];
+        const step = this.remoteScenario.scenarioActions.find(x => x.order === message.step);
         this.$emit('remote-move', { message, step });
     }
 
@@ -285,6 +233,9 @@ export default class ScenarioComponent extends Vue {
         this.selectedItem = index;
         let clear = {timeout: null};
         this.isLoading = true;
+        const id = this.scenarios[index].scenarioId;
+        await this.getScenarioDetail(id);
+
         await sleep(500, clear);
         this.makeSortAbleList();
     }
@@ -295,11 +246,21 @@ export default class ScenarioComponent extends Vue {
             Sortable.create(list, {
                 animation: 150,
                 ghostClass: 'blue-background-class',
-                onEnd: ({ newIndex, oldIndex }) => {
+                onEnd: async ({ newIndex, oldIndex }) => {
                     // sort, shift item
-                    const contents = DataHelper.deepClone(this.Contents);
+                    const contents = DataHelper.deepClone(this.Contents) as any;
                     DataHelper.insertAndShift(contents, oldIndex, newIndex);
-                    Vue.set(this.scenarios[this.selectedItem], 'scenarioContent', contents)
+                    const newOrders = []
+                    contents.forEach((element, index) => {
+                        newOrders.push(new ScenarioActionOrder({
+                            actionId: element.id,
+                            order: index
+                        }))
+                    });
+                    // this.isLoading = true;
+                    await this.updateScenarioActionOrder(newOrders);
+                    // this.isLoading = false;
+                    // Vue.set(this.scenarios[this.selectedItem], 'scenarioContent', contents)
                 }
             });
             this.isLoading = false;
@@ -308,27 +269,55 @@ export default class ScenarioComponent extends Vue {
         }
     }
 
-    initData() {
+    async initData() {
+        const payload = [
+            GeneralLookupTypes.ACTION_AREA_TYPE,
+            GeneralLookupTypes.ACTION_METHOD,
+            GeneralLookupTypes.ACTION_TYPE,
+            GeneralLookupTypes.POSITION,
+            GeneralLookupTypes.SCENARIO_ACTION_TYPE,
+        ];
+        await this.getGeneralLookup(payload);
         if (this.scenarios.length > 0) return;
-        this.fetchNewData();
+        await this.fetchNewData();
+        const scenario = this.scenarios[this.selectedItem];
+        this.getScenarioDetail(scenario.scenarioId);
     }
 
-    fetchNewData() {
+    async getDataBypaging() {
+        await this.fetchNewData();
+        this.selectedItem = 0;
+        const scenario = this.scenarios[this.selectedItem];
+        await this.getScenarioDetail(scenario.scenarioId);
+        let clear = { timeout: null };
+        this.isLoading = true;
+        await sleep(500, clear);
+        this.makeSortAbleList();
+    }
+
+    async updateScenarioActionOrder(payload: IScenarioActionOrder[]) {
+        return await this.scenarioService.updateScenarioActionOrder(payload).then(async (res: any) => {
+            this.isLoading = true;
+            await this.getScenarioDetail(this.ScenarioId);
+            this.isLoading = false;
+        }).catch(err => {
+            console.log(err);
+        })
+    }
+
+    async getScenarioDetail(scenarioId) {
+        return await this.scenarioService.getScenarioById(scenarioId).then(async (res: any) => {
+            this.scenarioActions = res.scenarioActions;
+        }).catch(err => {
+            console.log(err);
+        })
+    }
+
+    async fetchNewData() {
         this.isLoading = true;
         this.scenarios = [];
-        this.scenarios.push({
-            scenarioName: 'Kịch bản mặc định',
-            scenarioId: '0',
-            scenarioContent: DEFAULT_SCENARIOS
-        });
-        this.scenarioService.getAllScenarios(this.searchParams).then(async (res: any) => {
-            const sceneArray = res.scenarios.map(x => {
-                return {
-                    ...x,
-                    scenarioContent: JSON.parse(x.scenarioContent)
-                }
-            })
-            this.scenarios = this.scenarios.concat(sceneArray);
+        return await this.scenarioService.getAllScenarios(this.searchParams).then(async (res: any) => {
+            this.scenarios = res.scenarios;
             this.searchParams.total = res.totalPages
             this.isLoading = false
         }).catch(err => {

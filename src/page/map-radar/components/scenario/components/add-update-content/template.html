@@ -1,4 +1,4 @@
-<v-dialog persistent v-model="visibleAddItem" max-width="1000px" content-class="add-update-content">
+<v-dialog style="position: relative;" persistent v-model="visibleAddItem" max-width="1000px" content-class="add-update-content">
     <v-card>
         <v-toolbar dark color="primary">
             <v-btn icon dark @click="visibleAddItem = false">
@@ -8,20 +8,46 @@
         </v-toolbar>
         <v-card-text>
             <v-form ref="contentForm" v-model="valid" lazy-validation>
-                <v-select v-model="data.action" @change="handleChangeAction" :items="actionList" label="Chọn hàng động"
-                    item-value="value" :rules="rules.actionRules"></v-select>
-                <div v-if="data.action === 'customLocationControl'">
-                    <v-radio-group v-model="data.method" row :rules="rules.methodRules" @change="handleChangeMethod">
-                        <v-radio label="Khu Vực" value="handleClickRegion"></v-radio>
-                        <v-radio label="Tỉnh Thành" value="handleClick"></v-radio>
+                <v-select v-model="data.actionTypeId" @change="handleChangeAction" :items="actionList" label="Chọn hàng động"
+                    item-value="valueId" item-text="description" :rules="rules.actionRules"></v-select>
+                <div v-if="data.actionTypeId === actionListConstant.MOVE_MAP">
+                    <v-radio-group v-model="data.methodId" row :rules="rules.methodRules" @change="handleChangeMethod">
+                        <v-radio label="Khu Vực" :value="methodConstant.REGION"></v-radio>
+                        <v-radio label="Tỉnh Thành" :value="methodConstant.PROVINCE"></v-radio>
                     </v-radio-group>
-                    <v-select v-if="data.method === 'handleClickRegion'" v-model="data.data" :items="regions"
+                    <v-select v-if="data.methodId === methodConstant.REGION" v-model="data.data" :items="regions"
                         label="Khu Vực" item-text="name" item-value="placeId" :rules="rules.regionRules"></v-select>
-                    <v-select v-if="data.method === 'handleClick'" v-model="data.data" :items="locations"
+                    <v-select v-if="data.methodId === methodConstant.PROVINCE" v-model="data.data" :items="locations"
                         label="Tỉnh Thành" item-text="name" item-value="placeId" :rules="rules.provinceRules">
                     </v-select>
                     <v-select v-model="data.duration" :items="durations" label="Chọn thời lượng" item-value="value">
                     </v-select>
+
+                    <div class="add-update-content__row">
+                        <div class="add-update-content__col span-2">
+                            <v-switch v-model="data.isEnableIcon" label="Hiển thị icon, trạng thái thời tiết"></v-switch>
+                        </div>
+                        <div class="add-update-content__col span-2">
+                            <v-switch v-model="data.isEnableLayer" label="Hiển thị layer màu từng tỉnh/huyện"></v-switch>
+                        </div>
+                    </div>
+                    <v-label>
+                        Tùy chỉnh vị trí camera
+                    </v-label>
+                    <div class="add-update-content__row"  style="margin: 10px 0;">
+                        <div class="add-update-content__col span-4">
+                            <v-text-field  v-model.number="data.top" label="Top"/>
+                        </div>
+                        <div class="add-update-content__col span-4">
+                            <v-text-field  v-model.number="data.bottom" label="Bottom" />
+                        </div>
+                        <div class="add-update-content__col span-4">
+                            <v-text-field  v-model.number="data.left" label="Left" />
+                        </div>
+                        <div class="add-update-content__col span-4">
+                            <v-text-field  v-model.number="data.right" label="Right" />
+                        </div>
+                    </div>
                     <v-card v-if="data.data" class="title-list">
                         <v-toolbar color="blue">
                             <v-toolbar-title class="white--text">
@@ -51,7 +77,7 @@
                                 </v-list-item-action>
                             </v-list-item>
                         </v-list>
-                        <add-update-title :edit-data="coTitle" :visible.sync="visibleUpdateTitle" :location="data.data" :is-province="data.method === 'handleClick'" @save="handleSaveTitle"/>
+                        <add-update-title :edit-data="coTitle" :visible.sync="visibleUpdateTitle" :location="data.data" :is-province="data.methodId === methodConstant.PROVINCE" @save="handleSaveTitle"/>
                     </v-card>
                     <v-card v-if="data.data" class="title-list">
                         <v-toolbar color="blue">
@@ -83,7 +109,7 @@
                                 </v-list-item-action>
                             </v-list-item>
                         </v-list>
-                        <add-update-temp-info :edit-data="coTempInfo" :visible.sync="visibleUpdateTempInfo" :location="data.data" :is-province="data.method === 'handleClick'" @save="handleSaveTempInfo"/>
+                        <add-update-temp-info :edit-data="coTempInfo" :visible.sync="visibleUpdateTempInfo" :location="data.data" :is-province="data.methodId === methodConstant.PROVINCE" @save="handleSaveTempInfo"/>
                     </v-card>
                     <v-card v-if="data.data">
                         <v-toolbar color="blue">
@@ -102,7 +128,7 @@
                             <v-subheader inset>
                                 Nội dung Text Box
                             </v-subheader>
-                            <v-list-item link v-for="(item,index) in coTextBox()" :key="generateKey(index)">
+                            <v-list-item link v-for="(item,index) in coTextBox" :key="generateKey(index)">
                                 <v-list-item-avatar>
                                     <v-icon>
                                         mdi-clipboard-text
@@ -110,7 +136,7 @@
                                 </v-list-item-avatar>
                                 <v-list-item-content>
                                     <v-list-item-title>{{item.content}}</v-list-item-title>
-                                    <v-list-item-subtitle>Thời gian: xuất hiện sau {{item.time}} - Vị trí xuất hiện: {{item.position}}
+                                    <v-list-item-subtitle>Thời gian: xuất hiện sau {{item.startTime}} - Vị trí xuất hiện: {{item.position}}
                                     </v-list-item-subtitle>
                                 </v-list-item-content>
                                 <v-list-item-action>
@@ -123,22 +149,22 @@
                                 </v-list-item-action>
                             </v-list-item>
                         </v-list>
-                        <add-update-textbox :edit-data="textbox" :visible.sync="visibleAddTexbox" :location="data.data" :is-province="data.method === 'handleClick'" @save="handleSaveTextBox"/>
+                        <add-update-textbox :edit-data="textbox" :visible.sync="visibleAddTexbox" :location="data.data" :is-province="data.methodId === methodConstant.PROVINCE" @save="handleSaveTextBox"/>
                     </v-card>
                 </div>
-                <div v-if="data.action === 'customMapStatusControl'">
+                <div v-if="data.actionTypeId === actionListConstant.CHANGE_MAP_STATUS">
                     <v-select v-model="data.data" :items="mapTypes" label="Loại bản đồ" item-text="name"
                         item-value="type" :rules="rules.mapTypeRules"></v-select>
                 </div>
-                <div v-if="data.action === 'customZoomControl'">
+                <div v-if="data.actionTypeId === actionListConstant.CHANGE_ZOOM_LEVEL">
                     <v-select v-model="data.data" :items="zooms" label="Độ thu phóng bản đồ" item-text="name"
                         item-value="type" :rules="rules.zoomRules"></v-select>
                 </div>
-                <div v-if="data.action === 'customWaitControl'">
+                <div v-if="data.actionTypeId === actionListConstant.WAIT">
                     <v-select v-model="data.duration" :items="durations" label="Chọn thời lượng" item-value="value">
                     </v-select>
                 </div>
-                <div v-if="data.action === 'customLevelControl'">
+                <div v-if="data.actionTypeId === actionListConstant.CHANGE_ELEVATION">
                     <v-select v-model="data.data" :items="elevations" label="Độ cao bản đồ" item-text="label" item-value="data"
                         :rules="rules.elevationRules"></v-select>
                 </div>
@@ -152,4 +178,5 @@
         </v-card-actions>
     </v-card>
     <confirm-dialog v-model="visibleConfirm" :title="confirmTitle" :action="confirmAction" @confirm="handleConfirm" />
+    <loading :is-loading="isLoading" absolute />
 </v-dialog>

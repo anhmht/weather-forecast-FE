@@ -7,6 +7,10 @@ import { Prop, Watch } from 'vue-property-decorator';
 import moment from 'moment';
 import { DataHelper } from '@/utils/data-helper';
 import { ICON } from '@/constant/icon-constant';
+import { IScenarioActionDetail, ScenarioActionDetail } from '@/model/scenario';
+import { POSITION } from '../../scenario-default';
+import NO_IMAGE from '../../../../../../../static/img/no-image/no-image.png';
+import { UploadServices } from '@/service/upload-service/upload.service';
 
 @Component({
     template: require("./template.html").default,
@@ -28,17 +32,12 @@ export default class AddUpdateTextBoxComponent extends Vue {
     weatherService: WeatherServices = new WeatherServices();
     searchParam: IForecastSearchParam = new ForecastSearchParam();
     forecastData: any = {}
+    uploadedDocs: any = NO_IMAGE;
+    progress: number = 0;
+    isUploading: boolean = false;
+    uploadservice: UploadServices = new UploadServices();
 
-    data = {
-        content: null,
-        time: 0,
-        position: 'top-right',
-        duration: 3000,
-        id: null,
-        customPosition: false,
-        left: 0,
-        top: 0,
-    }
+    data: IScenarioActionDetail = new ScenarioActionDetail({});
 
     get visbileTextBox() {
         return this.visible;
@@ -74,17 +73,7 @@ export default class AddUpdateTextBoxComponent extends Vue {
         { text: '30 giây', value: 30000 },
     ]
 
-    positions = [
-        { text: 'top', value: 'top' },
-        { text: 'top-left', value: 'top-left' },
-        { text: 'top-right', value: 'top-right' },
-        { text: 'middle', value: 'middle' },
-        { text: 'middle-left', value: 'middle-left' },
-        { text: 'middle-right', value: 'middle-right' },
-        { text: 'bottom', value: 'bottom' },
-        { text: 'bottom-left', value: 'bottom-left' },
-        { text: 'bottom-right', value: 'bottom-right' },
-    ]
+    positions = POSITION
 
     handleSaveTextBox() {
         this.$emit('save', this.data);
@@ -250,24 +239,95 @@ export default class AddUpdateTextBoxComponent extends Vue {
         })
     }
 
-    mounted() {
+    handleClickBrowse() {
+        const upload = this.$refs.upload as any;
+        upload.click();
+    }
 
+    reset() {
+        this.uploadedDocs = NO_IMAGE;
+        this.progress = 0;
+    }
+
+    onChangeDocuments(pics) {
+        if (pics.length > 0) {
+            this.processUploadDocuments(pics[0]);
+        }
+    }
+
+    processUploadDocuments(file) {
+        if (this.validateFileExtention(file.name)) {
+            this.isUploading = true;
+            this.reset();
+            this.uploadIcon({
+                Data: file,
+                FileName: `${new Date().getTime()}_${file.name}`,
+            });
+        } else {
+            console.log('xxx file name');
+        }
+    }
+
+    uploadIcon(document) {
+        const formData = this.buildUploadDocumentParams(document);
+        document.isUploading = true;
+        const config = {
+            headers: {
+                "content-type": "multipart/form-data"
+            },
+            onUploadProgress: function (progressEvent) {
+                var value = (progressEvent.loaded * 100) / progressEvent.total;
+                var percent = Math.round(value);
+                this.progress = percent;
+            }.bind(this)
+        };
+        this.uploadservice.uploadFile(formData, config).then(response => {
+            this.isUploading = false;
+            this.toBase64(document.Data);
+            this.progress = 0;
+            this.data.iconUrls = response;
+            if (this.data.iconsList.length > 0) {
+                this.data.iconsList[0] = response;
+            } else {
+                this.data.iconsList.push(response);
+            }
+            
+        }).catch(err => {
+            this.isUploading = false;
+            console.error(err);
+        });
+    }
+
+    private toBase64(file) {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+            this.uploadedDocs = reader.result
+        };
+    }
+
+    buildUploadDocumentParams(document) {
+        const formData = new FormData();
+        formData.append('file', document.Data, document.FileName);
+        return formData;
+    }
+
+    validateFileExtention(fileName) {
+        let acceptableExtension = "image/*";
+        if (acceptableExtension.toLowerCase().includes("image/*"))
+            acceptableExtension = "image/png,image/jpg,image/jpeg,image/gif";
+        let ext = fileName.match(/\.([^\.]+)$/)[1];
+        let accepttypes = acceptableExtension.split(",");
+        let isValid = accepttypes.filter(c => c.trim().toLowerCase().includes(ext.toString().trim().toLowerCase())).length > 0;
+        return isValid;
     }
 
     @Watch('visible')
     dialogVisible(visible) {
         if (visible) {
             this.fetchData();
-            this.data = this.editData ? DataHelper.deepClone(this.editData) : {
-                content: null,
-                time: 0,
-                position: 'top-right',
-                duration: 3000,
-                id: DataHelper.create_UUID(),
-                customPosition: false,
-                left: 0,
-                top: 0,
-            }
+            this.data = this.editData ? new ScenarioActionDetail({ ...this.editData, placeId: this.location }) : new ScenarioActionDetail({ placeId: this.location });
+            this.uploadedDocs = this.data.iconUrls ? this.data.iconUrls : NO_IMAGE;
         }
     }
 }

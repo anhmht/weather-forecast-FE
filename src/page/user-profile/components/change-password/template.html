@@ -3,10 +3,13 @@
         <div class="change-password-page-container-wrapper--title">Mật khẩu mới</div>
         <v-form ref="changePasswordForm" v-model="valid" lazy-validation>
             <div>
-                <v-text-field type="password" placeholder="Nhập mật khẩu" v-model="data.password" :rules="rules.password" />
+                <v-text-field type="password" placeholder="Nhập mật khẩu hiện tại" v-model="userMisc.currentPassword" :rules="rules.currentPassword" />
             </div>
             <div style="margin-top: 20px;">
-                <v-text-field type="password" placeholder="Nhập lại mật khẩu" v-model="data.confirmPassword" :rules="rules.confirmPassword" />
+                <v-text-field type="password" placeholder="Nhập mật khẩu mới" v-model="userMisc.newPassword" :rules="rules.newPassword" />
+            </div>
+            <div style="margin-top: 20px;">
+                <v-text-field type="password" placeholder="Nhập lại mật khẩu mới" v-model="userMisc.confirmPassword" :rules="rules.confirmPassword" />
             </div>
         </v-form>
         <div class="change-password-page-container-wrapper--btn-change">

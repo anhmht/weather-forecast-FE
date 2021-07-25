@@ -72,4 +72,10 @@ export class UserServices extends GenericServices {
             return Promise.resolve(response)
         }).catch(error => Promise.reject(error))
     }
+
+    changePassword(userMisc: IUserMisc): Promise<ApiResponse> {
+        return this.executeSelectingPost(userMisc, Uri.changePassword).then((response: ApiResponse) => {
+            return Promise.resolve(response)
+        }).catch(error => Promise.reject(error))
+    }
 }
