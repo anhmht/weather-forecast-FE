@@ -51,6 +51,8 @@ export default class ScenarioComponent extends Vue {
 
     scenarioActions: IScenarioAction[] = null;
 
+    remoteScenario: IScenario = null;
+
     @LookupAction getGeneralLookup: (payload: number[]) => Promise<void>;
     @LookupGetter(lookupTypesStore.Get.LOOKUP_DATA) dtoLookupData: Object;
 
@@ -212,13 +214,18 @@ export default class ScenarioComponent extends Vue {
     }
 
     handleRemoteStart(message) {
-        const scenario = this.scenarios.find(x => x.scenarioId === message.scenarioId);
-        this.$emit('remote', { message, scenario});
+        // const scenario = this.scenarios.find(x => x.scenarioId === message.scenarioId);
+        this.scenarioService.getScenarioById(message.scenarioId).then(async (res: any) => {
+            this.remoteScenario = res;
+            this.$emit('remote', { message, scenario: this.remoteScenario });
+        }).catch(err => {
+            console.log(err);
+        })
+        
     }
 
     handleRemoteMove(message) {
-        const scenario = this.scenarios.find(x => x.scenarioId === message.scenarioId);
-        const step = scenario.scenarioContent[message.step];
+        const step = this.remoteScenario.scenarioActions.find(x => x.order === message.step);
         this.$emit('remote-move', { message, step });
     }
 
