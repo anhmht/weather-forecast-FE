@@ -77,6 +77,8 @@
         <v-icon>mdi-qrcode-scan</v-icon>
     </v-btn>
 
+    <windy-setting :setting.sync="windySetting" @change-windy-setting="changeWindySetting" />
+
     <v-dialog v-model="isDisplayDialog" persistent max-width="1400">
         <div class="preview-dialog">
             <div class="preview-dialog-header">

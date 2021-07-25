@@ -1,0 +1,36 @@
+<div v-if="dtSetting" class="windy-setting-on-map" :class="{'windy-setting-on-map--active' : !mini}" transition="slide-y-transition">
+    <!-- @click.stop="mini = !mini" -->
+    <v-expansion-panels popout flat accordion tile v-model="panel">
+        <v-expansion-panel color="transparent">
+            <v-expansion-panel-header color="transparent" expand-icon="mdi-weather-windy">
+                <div class="d-flex justify-center align-center">
+                    <div v-if="!mini" class="mr-4 pa-1">HÌNH ĐỘNG VỀ GIÓ</div>
+                    <!-- <v-icon color="orange darken-2">mdi-weather-windy</v-icon> -->
+                </div>
+            </v-expansion-panel-header>
+            <v-expansion-panel-content color="transparent" transition="slide-y-transition">
+                <div>
+                    <v-slider dense hide-details v-model="multiplier" @change="handleChange"
+                        min="0.5" max="1.5" :step="0.1" color="orange darken-3" label="Mật độ">
+                    </v-slider>
+
+                    <v-slider dense hide-details v-model="velocity" @change="handleChange"
+                        min="0.2" max="1.8" step="0.1" color="orange darken-3" label="Tốc độ">
+                    </v-slider>
+
+                    <v-slider dense hide-details v-model="width" @change="handleChange"
+                        min="0.25" max="1.75" step="0.25" color="orange darken-3" label="Kích cỡ">
+                    </v-slider>
+
+                    <v-slider dense hide-details v-model="opacity" @change="handleChange"
+                        min="0.2" max="1.8" step="0.2" color="orange darken-3" label="Độ tương phản">
+                    </v-slider>
+
+                    <v-slider dense hide-details v-model="blending" @change="handleChange"
+                        min="0.92" max="1.08" step="0.01" color="orange darken-3" label="Độ dài">
+                    </v-slider>
+                </div>
+            </v-expansion-panel-content>
+        </v-expansion-panel>
+    </v-expansion-panels>
+</div>

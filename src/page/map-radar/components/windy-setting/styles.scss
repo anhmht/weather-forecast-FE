@@ -1,0 +1,70 @@
+.windy-setting-on-map {
+    
+    background: #000;
+    background: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5)), rgba(121, 120, 120, 0.5);
+    color: #fff;
+
+    border-radius: 50%;
+    padding: 24px;
+
+    .v-expansion-panels {
+        display: block;
+    }
+
+    .v-icon.mdi-weather-windy {
+        transform: rotate(-180deg) !important;
+        color: #f57c00 !important;
+    }
+
+    &--active {
+        width: 300px;
+        padding: 15px;
+        border-radius: 0;
+
+        .v-expansion-panels {
+            display: flex;
+        }
+
+        .v-icon.mdi-weather-windy {
+            transform: rotate(0deg) !important;
+        }
+    }
+
+    .v-expansion-panel {
+        background-color: transparent !important;
+        padding: 0;
+
+        &-header {
+            background-color: transparent;
+            font-size: 16px;
+            font-weight: 500;
+            
+            padding: 0;
+            font-weight: 800;
+            color: #2196F3;
+            min-height: auto !important;
+        }
+        
+        &-content {
+            margin-top: 10px;
+            background-color: transparent;
+            
+            &__wrap {
+                padding: 0;
+            }
+            .v-input {
+                &__slot {
+                    display: flex;
+                    justify-content: space-between;
+
+                    label {
+                        color: #fff;
+                        font-size: 14px;
+                        width: 95px;
+                        text-align: end;
+                    }
+                }
+            }
+        }
+    }
+}
