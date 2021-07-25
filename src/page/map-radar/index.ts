@@ -116,7 +116,6 @@ export default class HomePageComponent extends Vue {
     isProvinceData: boolean = false;
     videoLayout: string = 'default';
 
-
     isShowTextBox: boolean = false;
 
     @UserGetter(userTypesStore.Get.Auth) userConfig: Object;
@@ -695,11 +694,15 @@ export default class HomePageComponent extends Vue {
         }
     }
 
-    changeWindySetting (setting) {
+    async changeWindySetting (setting) {
         if (setting) {
             console.log('change-particles', setting);
-            let { store } = this.windy;
-            store.set("particles", setting );
+            let { store, } = this.windy;
+            console.log(store.get('particles'));
+            //@ts-ignore
+            store.set("particles", setting, { forceChange: true });
+            // map.remove();
+            this.initWindyMap()
         }
     }
 
@@ -710,7 +713,7 @@ export default class HomePageComponent extends Vue {
 
     }
 
-    async mounted() {
+    initWindyMap() {
         // this.currentPosition = await displayLocation() as any;
         const options = {
             // Required: API key
@@ -723,8 +726,18 @@ export default class HomePageComponent extends Vue {
             zoom: 7,
         };
 
-        localStorage.setItem('settings_particles', '{"multiplier":0.8,"velocity":1.8,"width":0.5,"blending":0.93,"opacity":0.6}')
+        // localStorage.setItem('settings_particles', '{"multiplier":0.8,"velocity":1.8,"width":0.5,"blending":0.93,"opacity":0.6}')
         // localStorage.setItem('settings_lang', '"vi"')
+        // @ts-ignore
+        if (!window.copy_of_W) {
+            // @ts-ignore
+            window.copy_of_W = Object.assign({}, window.W);
+        }
+        // @ts-ignore
+        if (window.W.windyBoot) {
+            // @ts-ignore
+            window.W = Object.assign({}, window.copy_of_W);
+        }
         // @ts-ignore
         windyInit(options, async windyAPI => {
             // windyAPI is ready, and contain 'map', 'store',
@@ -734,6 +747,7 @@ export default class HomePageComponent extends Vue {
             //@ts-ignore
             map.removeLayer(W.labelsLayer);
             const levels = store.getAllowed('availLevels');
+            store.set('particlesAnim', 'intense');
             console.log(levels);
 
             //@ts-ignore
@@ -811,6 +825,9 @@ export default class HomePageComponent extends Vue {
         this.$socket.sendMessage(JSON.stringify(send));
     }
 
+    async mounted() {
+        this.initWindyMap();
+    }
 
     @Watch('customZoomControl')
     handleZoomMap(val) {
