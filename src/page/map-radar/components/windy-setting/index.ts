@@ -25,11 +25,11 @@ export default class WindySettingComponent extends Vue {
     }
 
     get multiplier () {
-        return this.dtSetting.multiplier;
+        return 0 - this.dtSetting.multiplier;
     }
     
     set multiplier (val) {
-        this.dtSetting.multiplier = val;
+        this.dtSetting.multiplier = 0 - val;
     }
 
 
