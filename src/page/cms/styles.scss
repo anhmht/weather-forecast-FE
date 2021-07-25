@@ -2,6 +2,11 @@ body,html {
     overflow: hidden;
     
 }
+
+html {
+    overflow-y: auto !important;
+}
+
 .base-cms {
     display: flex;
     &-left {
@@ -46,6 +51,10 @@ body,html {
     &-right {
         flex: 1;
         background-color: #F3F6F9;
+        max-height: 100vh;
+        overflow-x: hidden;
+        overflow-y: auto;
+
         &--header {
             display: flex;
             justify-content: space-between;

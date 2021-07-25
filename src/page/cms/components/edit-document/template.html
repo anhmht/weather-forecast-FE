@@ -34,7 +34,7 @@
                         </div>
                         <div class="base-cms-right--body_table">
                             <template>
-                                <v-simple-table fixed-header style="max-height: calc(100vh - 630px)">
+                                <v-simple-table fixed-header>
                                     <template v-slot:default>
                                         <thead>
                                             <tr>
@@ -53,6 +53,9 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            <tr v-if="documents.length === 0">
+                                                <td colspan="4" style="text-align: center; height: 70px;">Chưa có dữ liệu</td>
+                                            </tr>
                                             <tr v-for="(item, index) in documents" :key="index">
                                                 <td>
                                                     <div class="base-cms-right--body_table_title">
