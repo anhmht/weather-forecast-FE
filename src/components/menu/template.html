@@ -3,7 +3,7 @@
         v-for="(item,index) in menuItems" @click="handleClick(index)">
         {{item.name}}
     </div>
-    <v-menu v-if="checkIsLogin()" open-on-hover bottom offset-y>
+    <v-menu v-if="loginInfo" open-on-hover bottom offset-y>
         <template v-slot:activator="{ on, attrs }">
             <div v-bind="attrs" v-on="on" class="base-header-menu-item login" @click="handleUserProfile">
                 <v-avatar color="teal" size="30">

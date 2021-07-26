@@ -118,7 +118,7 @@ export default class HomePageComponent extends Vue {
 
     isShowTextBox: boolean = false;
 
-    @UserGetter(userTypesStore.Get.Auth) userConfig: Object;
+    @UserGetter(userTypesStore.Get.Auth) userConfig: any;
 
     get hasPermission () {
         if (this.userConfig && this.userConfig['roles']) {

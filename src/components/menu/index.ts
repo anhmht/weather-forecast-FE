@@ -1,10 +1,8 @@
-import { EVENT_BUS } from './../../constant/event-bus-constant';
 // import { getLocalStorage } from '@/utils/appConfig';
 import { Watch } from 'vue-property-decorator';
 import { KTTV_CATEGORY, PATH, ROUTE_NAME } from "@/constant/route-constant";
 import Vue from "vue";
 import Component from "vue-class-component";
-import EventBus from '@/utils/event-bus';
 import { Getter, namespace } from 'vuex-class';
 import { storeModules } from '@/store';
 import userTypesStore from '@/store/user/user-types.store';
@@ -15,10 +13,9 @@ const UserGetter = namespace(storeModules.User, Getter);
     template: require("./template.html").default
 })
 export default class MenuComponent extends Vue {
-    @UserGetter(userTypesStore.Get.Auth) userConfig: Object;
+    @UserGetter(userTypesStore.Get.Auth) userConfig: any;
 
     isActive: Number = 0;
-    loginInfo: any = null;
     get menuItems() {
         return [
             {
@@ -52,18 +49,16 @@ export default class MenuComponent extends Vue {
         ];
     }
 
+    get loginInfo() {
+        if (!this.userConfig) return null;
+        return this.userConfig
+    }
+
     isShowLoginButton(path) {
-        if (path === PATH.LOGIN && this.checkIsLogin()) {
+        if (path === PATH.LOGIN && this.loginInfo) {
             return false;
         }
         return true;
-    }
-
-    checkIsLogin() {
-        if (this.loginInfo) {
-            return true;
-        }
-        return false;
     }
 
     handleUserProfile() {
@@ -90,11 +85,6 @@ export default class MenuComponent extends Vue {
         this.isActive = index;
     }
 
-    handleCheckLogin() {
-        // this.loginInfo = getLocalStorage('auth');
-        this.loginInfo = this.userConfig;
-    }
-
     handleMoveToAdmin() {
         if (this.loginInfo && this.loginInfo["roles"]) {
             if (!!this.loginInfo["roles"].find(r => r === USER_ROLE.SUPER)) {
@@ -112,14 +102,9 @@ export default class MenuComponent extends Vue {
 
     mounted() {
         // this.loginInfo = getLocalStorage('auth');
-        this.loginInfo = this.userConfig;
         this.setActiveMenu();
-        EventBus.$on(EVENT_BUS.LOGIN, this.handleCheckLogin)
     }
 
-    beforeDestroy() {
-        EventBus.$off(EVENT_BUS.LOGIN, this.handleCheckLogin)
-    }
 
     @Watch('$route.path')
     handleRouteChange(val) {

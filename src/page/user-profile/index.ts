@@ -1,13 +1,11 @@
-import { EVENT_BUS } from './../../constant/event-bus-constant';
-import { removeLocalStorage } from './../../utils/appConfig';
+import { removeLocalStorage, setAxiosHeader } from './../../utils/appConfig';
 import { PATH } from '@/constant/route-constant';
 import  Vue from 'vue';
 import Component from 'vue-class-component';
-import EventBus from '@/utils/event-bus';
-import { Action, namespace } from 'vuex-class';
+import { Mutation, namespace } from 'vuex-class';
 import { storeModules } from '@/store';
 
-const UserAction = namespace(storeModules.User, Action);
+const UserMutation = namespace(storeModules.User, Mutation);
 @Component({
     template: require("./template.html").default,
     components: {
@@ -16,7 +14,7 @@ const UserAction = namespace(storeModules.User, Action);
 })
 export default class UserProfileComponent extends Vue {
 
-    @UserAction setAuth: (auth: any) => Promise<void>;
+    @UserMutation setAuth: (auth: any) => Promise<void>;
 
 
     activeTab: number = 0;
@@ -54,8 +52,7 @@ export default class UserProfileComponent extends Vue {
         } else {
             removeLocalStorage('auth');
             this.setAuth(null);
-            
-            EventBus.$emit(EVENT_BUS.LOGIN)
+            setAxiosHeader(null);
             this.$router.push(PATH.INFO);
         }
     }

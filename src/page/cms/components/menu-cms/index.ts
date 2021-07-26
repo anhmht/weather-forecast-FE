@@ -14,7 +14,7 @@ const UserGetter = namespace(storeModules.User, Getter);
 })
 export default class MenuCMSComponent extends Vue {
 
-    @UserGetter(userTypesStore.Get.Auth) userConfig: Object;
+    @UserGetter(userTypesStore.Get.Auth) userConfig: any;
 
     activeMenu: number = 0;
 

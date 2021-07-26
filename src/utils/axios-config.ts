@@ -63,8 +63,6 @@ export class AxiosConfigurationHelper implements IAxiosConfigurationHelper {
         return response;
     }
     axiosNotFoundResponseHandler(response) {
-        console.log(response);
-        
         return new ApiResponse({
             isSuccess: false,
             data: null,

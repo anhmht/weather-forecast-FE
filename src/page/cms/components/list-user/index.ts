@@ -6,6 +6,7 @@ import { ROUTE_NAME } from '@/constant/route-constant';
 import { Watch } from 'vue-property-decorator';
 import NO_IMAGE from '../../../../../static/img/no-image/no-image.png';
 
+const USER = 'NormalUser';
 @Component({
     template: require("./template.html").default,
 })
@@ -22,8 +23,6 @@ export default class ListUserComponent extends Vue {
     listAdminTitleConst: string = 'Danh sách quản trị viên';
     listUserTitleConst: string = 'Danh sách người dùng';
     createAdminTitleConst: string = 'Tạo quản trị viên';
-    superAdminRoleConst: string = 'SuperAdmin';
-    adminRoleConst: string = 'Admin';
 
     get TotalPageVisible() {
         if (this.totalPages < 7)
@@ -95,23 +94,15 @@ export default class ListUserComponent extends Vue {
     }
 
     async getRoles(title) {
-        await this.userService.getAllRole().then((res: any) => {
-            if (title === this.listAdminTitleConst) {
-                for (let i = 0; i < res.length; i++) {
-                    if (res[i].name === this.superAdminRoleConst || res[i].name === this.adminRoleConst) {
-                        this.userSearchParams.roleIds.push(res[i].name);
-                    }
-                }
-            } else if (title === this.listUserTitleConst) {
-                for (let i = 0; i < res.length; i++) {
-                    if (res[i].name !== this.superAdminRoleConst && res[i].name !== this.adminRoleConst) {
-                        this.userSearchParams.roleIds.push(res[i].name);
-                    }
-                }
-            }
-        }).catch(error => {
-            console.log(error);
-        });
+        if (title === this.listAdminTitleConst) {
+            await this.userService.getAllRole().then((res: any) => {
+                this.userSearchParams.roleIds = res.filter(x => x.name !== USER).map(x => x.name);
+            }).catch(error => {
+                console.log(error);
+            });
+        } else if (title === this.listUserTitleConst) {
+            this.userSearchParams.roleIds.push(USER);
+        }
     }
 
     onImgError (event) {
