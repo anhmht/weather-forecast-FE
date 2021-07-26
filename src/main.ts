@@ -15,14 +15,9 @@ import VueToast from 'vue-toast-notification';
 import 'animate.css/animate.min.css';
 import 'vue-toast-notification/dist/theme-sugar.css';
 import '../static/js/leaflet.edgebuffer.js';
+import { AxiosConfigurationHelper } from './utils/axios-config';
 
 Vue.config.productionTip = false;
-
-axios.defaults.baseURL = BASE_URL;
-axios.defaults.headers.post['Content-Type'] = 'application/json';
-axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-axios.defaults.headers.post['Access-Control-Allow-Methods'] = 'GET, POST, PATCH, PUT, DELETE, OPTIONS';
-axios.defaults.headers.post['Access-Control-Allow-Headers'] = 'Content-Type, Authorization';
 
 Vue.component('loading', Loading);
 Vue.use(DateFormatterPlugin);
@@ -39,15 +34,26 @@ Vue.use(SignalRPlugin, {
     components: {
         App
     },
-    created: function() {}
+    created: function () {
+        axios.defaults.baseURL = BASE_URL;
+        axios.defaults.headers.post['Content-Type'] = 'application/json';
+        axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+        axios.defaults.headers.post['Access-Control-Allow-Methods'] = 'GET, POST, PATCH, PUT, DELETE, OPTIONS';
+        axios.defaults.headers.post['Access-Control-Allow-Headers'] = 'Content-Type, Authorization';
+
+        const axiosConfig = new AxiosConfigurationHelper();
+        axios.interceptors.response.use(
+            response => {
+                return axiosConfig.axiosResponseHandler(response);
+            },
+            error => {
+                return Promise.reject(axiosConfig.axiosNotFoundResponseHandler(error));
+            }
+        );
+    }
 })
 class RootApp extends Vue {
-    created() {
-        // const authConfig = getLocalStorage('auth');
-        // if (authConfig) {
-        //     setAxiosHeader(authConfig.token);
-        // }
-    }
+
 }
 
 new RootApp({

@@ -48,13 +48,15 @@ export default class LoginPageComponent extends Vue {
             this.userService.checkLogin({
                 email: this.data.userName,
                 password: this.data.password
-            }).then(res => {
+            }).then((res: any) => {
                 this.isLoading = false;
+                this.$toast.success(`Chào mừng, ${res.userName}`);
                 this.setAuthenticate(res);
                 EventBus.$emit(EVENT_BUS.LOGIN);
                 vm.$router.push(PATH.USER_PROFILE);
             }).catch(err => {
                 console.log(err);
+                this.$toast.error(err.response.data.error);
                 this.isLoading = false;
             })
         }

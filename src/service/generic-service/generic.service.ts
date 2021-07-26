@@ -20,9 +20,7 @@ export class GenericServices {
         return axios
             .post(path, value, config)
             .then(response => response.data)
-            .catch(error => {
-                console.log(error);
-            });
+            .catch(error => error);
     }
 
     protected executeSelectingPut<TValue, TResult>(
@@ -33,9 +31,7 @@ export class GenericServices {
         return axios
             .put(path, value, config)
             .then(response => response.data)
-            .catch(error => {
-                console.log(error);
-            });
+            .catch(error => error);
     }
 
     protected executeDeleting<TResult>(path?: string): AxiosPromise<TResult> {

@@ -28,6 +28,8 @@ router.beforeEach(async (to, from, next) => {
         const url = userConstant.getUserInfo;
         await axios.get(url, config).then((response) => {
             let auth = response.status === 200 ? response.data : null;
+            console.log(auth);
+            
             if (auth) {
                 auth.token = authConfig.token;
                 setLocalStorage('auth', auth);
@@ -35,7 +37,7 @@ router.beforeEach(async (to, from, next) => {
             } else {
                 removeLocalStorage('auth');
             }
-            store.commit('user/'+ userTypesStore.Set.Auth, auth);
+            store.commit('user/'+ userTypesStore.Set.Auth, auth.data);
         }).catch(err => {
             console.log(err);
             removeLocalStorage('auth');
@@ -60,7 +62,8 @@ router.beforeEach(async (to, from, next) => {
             const isDTH = !!user.roles.find(r => r === USER_ROLE.DTH);
             const isKTTV = !!user.roles.find(r => r === USER_ROLE.KTTV);
             const categoryId: string = to.query.categoryId ? to.query.categoryId.toString() : null;
-
+            console.log(isSuperAmin, isDTH, isKTTV, categoryId);
+            
             if (isSuperAmin) {
                 next();
             } else if (to.matched.some(record => record.meta.accept === USER_ROLE.SUPER)
@@ -85,8 +88,8 @@ router.beforeEach(async (to, from, next) => {
     } else if (to.matched.some(record => record.meta.guest)) { // Each route required Guest
         let user = store.getters['user/'+ userTypesStore.Get.Auth];
         if (user) {
-            const isSuperAmin = !!user.roles.find(r => r === USER_ROLE.SUPER);
-            const isKTTV = !!user.roles.find(r => r === USER_ROLE.KTTV);
+            const isSuperAmin = !!user.data.roles.find(r => r === USER_ROLE.SUPER);
+            const isKTTV = !!user.data.roles.find(r => r === USER_ROLE.KTTV);
 
             if (isSuperAmin) {
                 next({ path: PATH.LIST_USER, params: { role: 'admin' } });

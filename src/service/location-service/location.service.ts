@@ -5,7 +5,7 @@ import Uri from "@/constant/uri/post-consants";
 export class LocationServices extends GenericServices {
     getCurrentLocation(ipAddress: string): Promise<ApiResponse> {
         return this.executeSelecting({ ipAddress }, Uri.getCurrentLocation).then((response: ApiResponse) => {
-            return Promise.resolve(response)
+            return response.isSuccess ? Promise.resolve(response.data) : Promise.reject(response.message);
         }).catch(error => Promise.reject(error))
     }
 }

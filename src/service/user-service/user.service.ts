@@ -7,75 +7,75 @@ import { IUserMisc } from '@/model/user/user-misc.model';
 
 export class UserServices extends GenericServices {
     checkLogin(loginInfo): Promise<ApiResponse> {
-        return this.executeSelectingPost(loginInfo, Uri.login).then((response: ApiResponse) => {
-            return Promise.resolve(response)
-            }).catch(error => Promise.reject(error))
+        return super.executeSelectingPost(loginInfo, Uri.login).then((response: ApiResponse) => {
+            return response.isSuccess ? Promise.resolve(response.data) : Promise.reject(response.message);
+        }).catch(error => Promise.reject(error))
     }
 
     register(userInfo: IUser): Promise<ApiResponse> {
-        return this.executeSelectingPost(userInfo, Uri.register).then((response: ApiResponse) => {
-            return Promise.resolve(response)
+        return super.executeSelectingPost(userInfo, Uri.register).then((response: ApiResponse) => {
+            return response.isSuccess ? Promise.resolve(response.data) : Promise.reject(response.message);
         }).catch(error => Promise.reject(error))
     }
 
     updateInfo(userInfo: IUser): Promise<ApiResponse> {
-        return this.executeSelectingPut(userInfo, Uri.updateUserInfo).then((response: ApiResponse) => {
-            return Promise.resolve(response)
+        return super.executeSelectingPut(userInfo, Uri.updateUserInfo).then((response: ApiResponse) => {
+            return response.isSuccess ? Promise.resolve(response.data) : Promise.reject(response.message);
         }).catch(error => Promise.reject(error))
     }
 
     getAllUser(userSearchParam: IUserSearchParam): Promise<ApiResponse> {
-        return this.executeSelectingPost(userSearchParam, Uri.getAllUser).then((response: ApiResponse) => {
-            return Promise.resolve(response)
+        return super.executeSelectingPost(userSearchParam, Uri.getAllUser).then((response: ApiResponse) => {
+            return response.isSuccess ? Promise.resolve(response.data) : Promise.reject(response.message);
         }).catch(error => Promise.reject(error))
     }
 
     createUser(userInfo: IUser): Promise<ApiResponse> {
-        return this.executeSelectingPost(userInfo, Uri.createUser).then((response: ApiResponse) => {
-            return Promise.resolve(response)
+        return super.executeSelectingPost(userInfo, Uri.createUser).then((response: ApiResponse) => {
+            return response.isSuccess ? Promise.resolve(response.data) : Promise.reject(response.message);
         }).catch(error => Promise.reject(error))
     }
 
     getAllRole(): Promise<ApiResponse> {
-        return this.executeSelecting(null, Uri.getAllRole).then((response: ApiResponse) => {
-            return Promise.resolve(response)
+        return super.executeSelecting(null, Uri.getAllRole).then((response: ApiResponse) => {
+            return response.isSuccess ? Promise.resolve(response.data) : Promise.reject(response.message);
         }).catch(error => Promise.reject(error))
     }
 
     getUserInfo(): Promise<ApiResponse> {
-        return this.executeSelecting(null, Uri.getUserInfo).then((response: ApiResponse) => {
-            return Promise.resolve(response)
+        return super.executeSelecting(null, Uri.getUserInfo).then((response: ApiResponse) => {
+            return response.isSuccess ? Promise.resolve(response.data) : Promise.reject(response.message);
         }).catch(error => Promise.reject(error))
     }
     
     forgotPassword(userInfo): Promise<ApiResponse> {
-        return this.executeSelectingPost(userInfo, Uri.forgotPassword).then((response: ApiResponse) => {
-            return Promise.resolve(response)
+        return super.executeSelectingPost(userInfo, Uri.forgotPassword).then((response: ApiResponse) => {
+            return response.isSuccess ? Promise.resolve(response.data) : Promise.reject(response.message);
         }).catch(error => Promise.reject(error))
     }
 
     resetPassword(userMisc: IUserMisc): Promise<ApiResponse> {
-        return this.executeSelectingPost(userMisc, Uri.resetPassword).then((response: ApiResponse) => {
-            return Promise.resolve(response)
+        return super.executeSelectingPost(userMisc, Uri.resetPassword).then((response: ApiResponse) => {
+            return response.isSuccess ? Promise.resolve(response.data) : Promise.reject(response.message);
         }).catch(error => Promise.reject(error))
     }
 
     resendEmail(email: string): Promise<ApiResponse> {
         const uri = Uri.resendEmail + '?email=' + email;
-        return this.executeSelectingPost({}, uri).then((response: ApiResponse) => {
-            return Promise.resolve(response)
+        return super.executeSelectingPost({}, uri).then((response: ApiResponse) => {
+            return response.isSuccess ? Promise.resolve(response.data) : Promise.reject(response.message);
         }).catch(error => Promise.reject(error))
     }
 
     confirmEmail(userMisc: IUserMisc): Promise<ApiResponse> {
-        return this.executeSelectingPost(userMisc, Uri.confirmEmail).then((response: ApiResponse) => {
-            return Promise.resolve(response)
+        return super.executeSelectingPost(userMisc, Uri.confirmEmail).then((response: ApiResponse) => {
+            return response.isSuccess ? Promise.resolve(response.data) : Promise.reject(response.message);
         }).catch(error => Promise.reject(error))
     }
 
     changePassword(userMisc: IUserMisc): Promise<ApiResponse> {
-        return this.executeSelectingPost(userMisc, Uri.changePassword).then((response: ApiResponse) => {
-            return Promise.resolve(response)
+        return super.executeSelectingPost(userMisc, Uri.changePassword).then((response: ApiResponse) => {
+            return response.isSuccess ? Promise.resolve(response.data) : Promise.reject(response.message);
         }).catch(error => Promise.reject(error))
     }
 }
