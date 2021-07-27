@@ -345,7 +345,7 @@ export default class HomePageComponent extends Vue {
 
     async handleChangeRegion(mapData) {
         console.log(this.customLocationControl);
-        
+
         // document.querySelector('.particles-layer').classList.add('hide-animation')
         this.isProvinceData = false;
         await this.getFakeImage(mapData.placeId);
@@ -476,10 +476,10 @@ export default class HomePageComponent extends Vue {
         this.getMapTtile(mapData);
         if (this.customLocationControl) {
             if (this.customLocationControl.isEnableLayer) {
-                this.addProvinceLayer(districts);
+                this.addDistrictLayer(districts);
             }
         } else {
-            this.addProvinceLayer(districts);
+            this.addDistrictLayer(districts);
         }
         this.addPopUPLayer(mapData.districtIds);
         this.layerGroup.addLayer(this.layerProvice);
@@ -639,7 +639,7 @@ export default class HomePageComponent extends Vue {
                     break;
             }
         });
-        
+
     }
 
     async handlePreview(previewData, isRecord = false) {
