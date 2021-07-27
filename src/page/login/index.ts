@@ -1,15 +1,13 @@
-import { EVENT_BUS } from './../../constant/event-bus-constant';
 import { UserServices } from './../../service/user-service/user.service';
 import Vue from "vue";
 import Component from "vue-class-component";
 import { PATH } from '@/constant/route-constant';
-import { setAxiosHeader, setLocalStorage } from '@/utils/appConfig';
-import EventBus from '@/utils/event-bus';
 import { ROUTE_NAME } from '@/constant/route-constant';
-import { Action, namespace } from 'vuex-class';
+import { Mutation, namespace } from 'vuex-class';
 import { storeModules } from '@/store';
+import { setAxiosHeader, setLocalStorage } from '@/utils/appConfig';
 
-const UserAction = namespace(storeModules.User, Action);
+const UserMutation = namespace(storeModules.User, Mutation);
 
 @Component({
     template: require("./template.html").default,
@@ -19,7 +17,7 @@ const UserAction = namespace(storeModules.User, Action);
 })
 export default class LoginPageComponent extends Vue {
 
-    @UserAction setAuth: (auth: Object) => Promise<void>;
+    @UserMutation setAuth: (auth: Object) => Promise<void>;
 
     valid: boolean = true;
     isLoading: boolean = false;
@@ -48,13 +46,13 @@ export default class LoginPageComponent extends Vue {
             this.userService.checkLogin({
                 email: this.data.userName,
                 password: this.data.password
-            }).then(res => {
+            }).then((res: any) => {
                 this.isLoading = false;
+                this.$toast.success(`Chào mừng, ${res.userName}`);
                 this.setAuthenticate(res);
-                EventBus.$emit(EVENT_BUS.LOGIN);
                 vm.$router.push(PATH.USER_PROFILE);
             }).catch(err => {
-                console.log(err);
+                this.$errorMessage(err);
                 this.isLoading = false;
             })
         }

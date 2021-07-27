@@ -31,7 +31,7 @@ export default class ListDocumentComponent extends Vue {
     categoryName: string = null;
     categoryId: string = null;
 
-    @UserGetter(userTypesStore.Get.Auth) userConfig: Object;
+    @UserGetter(userTypesStore.Get.Auth) userConfig: any;
 
     get isAdmin () {
         if (this.userConfig && this.userConfig['roles']) {

@@ -55,7 +55,7 @@ export default class EditDocumentComponent extends Vue {
 
     @LookupGetter(lookupTypesStore.Get.STATUS) status: IStatus[]
     @LookupAction getLookupData: (type: string) => void;
-    @UserGetter(userTypesStore.Get.Auth) userConfig: Object;
+    @UserGetter(userTypesStore.Get.Auth) userConfig: any;
 
     get isAdmin () {
         if (this.userConfig && this.userConfig['roles']) {

@@ -30,84 +30,96 @@ export default class WeatherForecast24hComponent extends Vue {
             icon: 'https://weatherstoragevn.blob.core.windows.net/images/sea-map/BVBB-NTN-Y.jpg',
             desc: `Không mưa. <br/>
                     Tầm nhìn xa : Tầm nhìn xa trên 10km. <br/>
-                    Gió nam đến tây nam cấp 4-5.`
+                    Gió nam đến tây nam cấp 4-5.`,
+            tab: 1
         },
         {
             title: 'Nam Vịnh Bắc Bộ',
             icon: 'https://weatherstoragevn.blob.core.windows.net/images/sea-map/BVBB-NTN-Y.jpg',
             desc: `Không mưa. <br/>
                     Tầm nhìn xa : Tầm nhìn xa trên 10km. <br/>
-                    Gió nam đến tây nam cấp 4-5.`
+                    Gió nam đến tây nam cấp 4-5.`,
+            tab: 1
         },
         {
             title: 'Quảng Trị đến Quãng Ngãi',
             icon: 'https://weatherstoragevn.blob.core.windows.net/images/sea-map/QTQN-TN-Y.jpg',
             desc: `Không mưa.  <br/>
                 Tầm nhìn xa : Tầm nhìn xa trên 10km.  <br/>
-                Gió tây nam cấp 4-5.`
+                Gió tây nam cấp 4-5.`,
+            tab: 1
         },
         {
             title: 'Bình Định đến Ninh Thuận',
             icon: 'https://weatherstoragevn.blob.core.windows.net/images/sea-map/BDNT-TN-M.jpg',
             desc: `Có mưa rào và dông vài nơi. Trong mưa dông có khả năng xảy ra lốc xoáy. <br/>
                 Tầm nhìn xa : Tầm nhìn xa trên 10km. <br/>
-                Gió tây nam cấp 5, có lúc cấp 6, giật cấp 7. Biển động.`
+                Gió tây nam cấp 5, có lúc cấp 6, giật cấp 7. Biển động.`,
+            tab: 1
         },
         {
             title: 'Bình Thuận đến Cà Mau',
             icon: 'https://weatherstoragevn.blob.core.windows.net/images/sea-map/BTCM-TN-M.jpg',
             desc: `Có mưa rào rải rác và có nơi có dông. Trong mưa dông có khả năng xảy ra lốc xoáy. <br/>
                     Tầm nhìn xa : Tầm nhìn xa trên 10km, giảm xuống 4-10 km trong mưa. <br/>
-                    Gió tây nam cấp 5, có lúc cấp 6, giật cấp 7. Biển động.`
+                    Gió tây nam cấp 5, có lúc cấp 6, giật cấp 7. Biển động.`,
+            tab: 1
         },
         {
             title: 'Cà Mau đến Kiên Giang',
             icon: 'https://weatherstoragevn.blob.core.windows.net/images/sea-map/CMKG-TN-Y.jpg',
             desc: `Có mưa rào rải rác và có nơi có dông. Trong mưa dông có khả năng xảy ra lốc xoáy và gió giật mạnh. <br/>
                 Tầm nhìn xa : Tầm nhìn xa trên 10km, giảm xuống 4-10 km trong mưa.<br/>
-                Gió tây nam cấp 3-4.`
+                Gió tây nam cấp 3-4.`,
+            tab: 1
         },
         {
             title: 'Bắc Biển Đông',
             icon: 'https://weatherstoragevn.blob.core.windows.net/images/sea-map/BBD-TN-Y.jpg',
             desc: `Không mưa. <br/>
                     Tầm nhìn xa : Tầm nhìn xa trên 10km. <br/>
-                    Gió tây nam cấp 5.`
+                    Gió tây nam cấp 5.`,
+            tab: 1
         },
         {
             title: 'Quần đảo Hoàng Sa',
             icon: 'https://weatherstoragevn.blob.core.windows.net/images/sea-map/HS-TN-Y.jpg',
             desc: `Không mưa. <br/>
                     Tầm nhìn xa : Tầm nhìn xa trên 10km. <br/>
-                    Gió tây nam cấp 5.`
+                    Gió tây nam cấp 5.`,
+            tab: 1
         },
         {
             title: 'Vùng Giữa Biển Đông',
             icon: 'https://weatherstoragevn.blob.core.windows.net/images/sea-map/GBD-TN-Y.jpg',
             desc: `Có mưa rào và dông vài nơi, riêng phía Đông có mưa rào và dông rải rác. Trong mưa dông có khả năng xảy ra lốc xoáy và gió giật mạnh. <br/>
                     Tầm nhìn xa : Tầm nhìn xa trên 10km, giảm xuống 4-10 km trong mưa.<br/>
-                    Gió tây nam cấp 5.`
+                    Gió tây nam cấp 5.`,
+            tab: 1
         },
         {
             title: 'Vùng Nam Biển Đông',
             icon: 'https://weatherstoragevn.blob.core.windows.net/images/sea-map/NBD-TN-Y.jpg',
             desc: `Có mưa rào và dông rải rác. Trong mưa dông có khả năng xảy ra lốc xoáy và gió giật mạnh. <br/>
                     Tầm nhìn xa : Tầm nhìn xa trên 10km, giảm xuống 4-10 km trong mưa. <br/>
-                    Gió tây nam cấp 5.`
+                    Gió tây nam cấp 5.`,
+            tab: 1
         },
         {
             title: 'Quần đảo Trường Sa',
             icon: 'https://weatherstoragevn.blob.core.windows.net/images/sea-map/TS-TN-M.jpg',
             desc: `Có mưa rào và dông rải rác. Trong mưa dông có khả năng xảy ra lốc xoáy. <br/>
                     Tầm nhìn xa : Tầm nhìn xa trên 10km, giảm xuống 4-10 km trong mưa. <br/>
-                    Gió tây nam cấp 5, riêng phía Tây Bắc có lúc cấp 6, giật cấp 7. Biển động.`
+                    Gió tây nam cấp 5, riêng phía Tây Bắc có lúc cấp 6, giật cấp 7. Biển động.`,
+            tab: 1
         },
         {
             title: 'Vịnh Thái Lan',
             icon: 'https://weatherstoragevn.blob.core.windows.net/images/sea-map/VTL-TN-Y.jpg',
             desc: `Có mưa rào và dông rải rác. Trong mưa dông có khả năng xảy ra lốc xoáy và gió giật mạnh. <br/>
                     Tầm nhìn xa : Tầm nhìn xa trên 10km, giảm xuống 4-10 km trong mưa. <br/>
-                    Gió tây nam cấp 3-4.`
+                    Gió tây nam cấp 3-4.`,
+            tab: 1
         },
     ]
 
@@ -251,63 +263,72 @@ export default class WeatherForecast24hComponent extends Vue {
                 icon: null,
                 desc: null,
                 region: null,
-                currentPosition: this.position
+                currentPosition: this.position,
+                tab: 0
             },
             {
                 title: 'Phía Tây Bắc Bộ',
                 icon: null,
                 desc: null,
                 region: 'TBB',
-                currentPosition: null
+                currentPosition: null,
+                tab: 0
             },
             {
                 title: 'Phía Đông Bắc Bộ',
                 icon: null,
                 desc: null,
                 region: 'DBB',
-                currentPosition: null
+                currentPosition: null,
+                tab: 0
             },
             {
                 title: 'Đồng bằng sông Hồng',
                 icon: null,
                 desc: null,
                 region: 'DBSH',
-                currentPosition: null
+                currentPosition: null,
+                tab: 0
             },
             {
                 title: 'Thanh Hoá - Thừa Thiên Huế',
                 icon: null,
                 desc: null,
                 region: 'BTB',
-                currentPosition: null
+                currentPosition: null,
+                tab: 0
             },
             {
                 title: 'Đà Nẵng đến Bình Thuận',
                 icon: null,
                 desc: null,
                 region: 'NTB',
-                currentPosition: null
+                currentPosition: null,
+                tab: 0
             },
             {
                 title: 'Tây Nguyên',
                 icon: null,
                 desc: null,
                 region: 'TN',
-                currentPosition: null
+                currentPosition: null,
+                tab: 0
             },
             {
                 title: 'Đông Nam Bộ',
                 icon: null,
                 desc: null,
                 region: 'DNB',
-                currentPosition: null
+                currentPosition: null,
+                tab: 0
             },
             {
                 title: 'Tây Nam Bộ',
                 icon: null,
                 desc: null,
                 region: 'TNB',
-                currentPosition: null
+                currentPosition: null,
+                tab: 0
             },
         ]
     }

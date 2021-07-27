@@ -15,6 +15,7 @@
                 :desc="item.desc"
                 :region="item.region"
                 :currentPosition="item.currentPosition"
+                :tab="item.tab"
             />
         </div>
         <div v-if="activeTab === 1">
@@ -23,6 +24,7 @@
                 :title="item.title"
                 :icon="item.icon"
                 :desc="item.desc"
+                :tab="item.tab"
             />
         </div>
         <div v-if="activeTab === 2">

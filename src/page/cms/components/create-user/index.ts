@@ -75,9 +75,7 @@ export default class CreateUserComponent extends Vue {
         if (index === -1) {
             this.userModel.roleNames.push(val);
         } else {
-            if (this.roles.length > 1) {
-                this.userModel.roleNames.splice(index, 1);
-            }
+            this.userModel.roleNames.splice(index, 1);
         }
     }
 

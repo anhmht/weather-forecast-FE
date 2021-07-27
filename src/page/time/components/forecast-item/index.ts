@@ -29,6 +29,9 @@ export default class ForecastItemComponent extends Vue {
     @Prop({type: String, default: null})
     currentPosition
 
+    @Prop({type: Number, default: 0})
+    tab
+
     weatherIcon: string = null;
     weatherDesc: string = null;
 
@@ -175,6 +178,9 @@ export default class ForecastItemComponent extends Vue {
         let windDir = null;
         let stationId = null;
 
+        this.weatherIcon = null;
+        this.weatherDesc = null;
+
         if (this.region) {
             stationId = this.getStationIdByRegion(this.region);
         } else if (this.currentPosition) {
@@ -210,14 +216,28 @@ export default class ForecastItemComponent extends Vue {
         })
     }
 
-    mounted() {
-        this.getData();
+    keepData() {
+        this.weatherIcon = null;
+        this.weatherDesc = null;
+        this.weatherIcon = this.icon;
+        this.weatherDesc = this.desc;
     }
 
-    @Watch('icon')
-    handleChangeData(val, old) {
-        if(val !== old && val === null) {
+    mounted() {
+        if (this.tab === 0) {
             this.getData();
+        } else if (this.tab === 1) {
+            this.keepData();
+        }
+        
+    }
+
+    @Watch('tab')
+    handleChangeData(val) {
+        if (val === 0) {
+            this.getData();
+        } else if (val === 1) {
+            this.keepData();
         }
     }
 }

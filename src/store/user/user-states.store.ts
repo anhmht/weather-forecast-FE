@@ -6,6 +6,6 @@ export interface IUserState  {
 export class UserState implements IUserState {
     auth?: Object;
     constructor(options: IUserState) {
-        this.auth = options.auth || {};
+        this.auth = options.auth || null;
     }
 }
