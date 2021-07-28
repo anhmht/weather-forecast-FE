@@ -245,7 +245,8 @@ const adminRoutes = [
                 name: ROUTE_NAME.LIST_DOCUMENT,
                 component: ListDocumentComponent,
                 meta: {
-                    requiresAuth: true
+                    requiresAuth: true,
+                    accept: USER_ROLE.DTH
                 },
                 props: {}
             },
@@ -254,7 +255,8 @@ const adminRoutes = [
                 name: ROUTE_NAME.CREATE_DOCUMENT,
                 component: CreateDocumentComponent,
                 meta: {
-                    requiresAuth: true
+                    requiresAuth: true,
+                    accept: USER_ROLE.DTH
                 },
                 props: {}
             },
@@ -263,7 +265,8 @@ const adminRoutes = [
                 name: ROUTE_NAME.LIST_LOCAL,
                 component: ListLocalComponent,
                 meta: {
-                    requiresAuth: true
+                    requiresAuth: true,
+                    accept: USER_ROLE.KTTV
                 },
                 props: {}
             },
@@ -272,7 +275,8 @@ const adminRoutes = [
                 name: ROUTE_NAME.EDIT_DOCUMENT,
                 component: EditDocumentComponent,
                 meta: {
-                    requiresAuth: true
+                    requiresAuth: true,
+                    accept: USER_ROLE.DTH
                 },
                 props: {}
             },
@@ -281,7 +285,8 @@ const adminRoutes = [
                 name: ROUTE_NAME.EDIT_LOCAL,
                 component: EditLocalComponent,
                 meta: {
-                    requiresAuth: true
+                    requiresAuth: true,
+                    accept: USER_ROLE.KTTV
                 },
                 props: {}
             },

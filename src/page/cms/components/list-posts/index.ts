@@ -1,15 +1,16 @@
 import { IPostSearchParameter, PostSearchParameter } from './../../../../model/post/post-filter.model';
 import Vue from "vue";
 import Component from "vue-class-component";
-import { ROUTE_NAME } from "../../../../constant/route-constant";
+import { CATEGORY_IDS, CATEGORY_NAMES, ROUTE_NAME } from "../../../../constant/route-constant";
 import { PostServices } from '../../../../service/post-service/post.service';
 import { Watch } from 'vue-property-decorator';
 import NO_IMAGE from '../../../../../static/img/no-image/no-image.png';
+import { CMS_MENU } from '@/constant/common-constant';
 
 @Component({
     template: require("./template.html").default,
 })
-export default class ListPostComponent extends Vue {
+export default class BaseListPostComponent extends Vue {
     postService: PostServices = new PostServices();
     posts: any = []
     totalItems: number = 0;
@@ -20,6 +21,7 @@ export default class ListPostComponent extends Vue {
     visibleConfirm: boolean = false;
     selectedId: string = null;
     searchParams: IPostSearchParameter = new PostSearchParameter({});
+    categoryType: string = '';
 
     get TotalPageVisible() {
         if (this.totalPages < 7)
@@ -78,12 +80,29 @@ export default class ListPostComponent extends Vue {
     }
 
     async getPosts() {
-        await this.postService.getPosts(this.searchParams).then((res: any) => {
+
+        switch (this.categoryType) {
+            case CATEGORY_NAMES.LIST_POST_WEATHER_NEWS:
+                this.searchParams.categoryId = CATEGORY_IDS.LIST_POST_WEATHER_NEWS;
+                break;
+            case CATEGORY_NAMES.LIST_POST_WEATHER_MAP:
+                this.searchParams.categoryId = CATEGORY_IDS.LIST_POST_WEATHER_MAP;
+                break;
+            default:
+                this.searchParams.categoryId = null;
+                break;
+        }
+
+        await this.postService.getPostsByCategory(this.categoryType, this.searchParams).then((res: any) => {
             this.posts = res.events;
-            this.listPostTitle = this.posts[0] ? this.posts[0].categoryName : null;
+            // this.listPostTitle = this.posts[0] ? this.posts[0].categoryName : null;
             this.totalItems = res.totalItems;
             this.totalPages = res.totalPages;
         }).catch(error => {
+            this.posts = [];
+            this.totalItems = 0;
+            this.totalPages = 0;
+
             console.log(error);
         })
     }
@@ -92,11 +111,54 @@ export default class ListPostComponent extends Vue {
         event.target.src = NO_IMAGE;
     }
 
-    async mounted() {
-        if (this.$route.query.categoryId) {
-            this.searchParams.categoryId = this.$route.query.categoryId as any;
+    setListPostTitle (type:string) {
+        switch (type) {
+            case CATEGORY_NAMES.LIST_POST_WEATHER_NEWS:
+                return CMS_MENU.LIST_POST_WEATHER_NEWS;
+
+            case CATEGORY_NAMES.LIST_POST_WEATHER_MAP:
+                return CMS_MENU.LIST_POST_WEATHER_MAP;
+                
+            case CATEGORY_NAMES.LIST_POST_CANH_BAO_THIEN_TAI:
+                return CMS_MENU.LIST_POST_CANH_BAO_THIEN_TAI;
+                
+            case CATEGORY_NAMES.LIST_POST_THONG_TIN_KHUYEN_CAO:
+                return CMS_MENU.LIST_POST_THONG_TIN_KHUYEN_CAO;
+                
+            case CATEGORY_NAMES.LIST_POST_KT_VH_XH:
+                return CMS_MENU.LIST_POST_KT_VH_XH;
+                
+            case CATEGORY_NAMES.LIST_POST_THOI_TIET_DU_LICH:
+                return CMS_MENU.LIST_POST_THOI_TIET_DU_LICH;
+                
+            case CATEGORY_NAMES.LIST_POST_THOI_TIET_NONG_VU:
+                return CMS_MENU.LIST_POST_THOI_TIET_NONG_VU;
+                
+            case CATEGORY_NAMES.LIST_POST_THOI_TIET_GIAO_THONG:
+                return CMS_MENU.LIST_POST_THOI_TIET_GIAO_THONG;
+                
+            case CATEGORY_NAMES.LIST_POST_THOI_TIET_NGUY_HIEM:
+                return CMS_MENU.LIST_POST_THOI_TIET_NGUY_HIEM;
+                
+            case CATEGORY_NAMES.LIST_POST_THUY_VAN:
+                return CMS_MENU.LIST_POST_THUY_VAN;
+                
+            case CATEGORY_NAMES.LIST_POST_TRANG_THAI_THOI_TIET:
+                return CMS_MENU.LIST_POST_TRANG_THAI_THOI_TIET;
+                
+            default:
+                return '';
         }
+    }
+
+    async mounted() {
+        if (this.$route.params.category) {
+            this.categoryType =  this.$route.params.category as any;
+        }
+
+        this.listPostTitle = this.setListPostTitle(this.categoryType);
         await this.getPosts();
+
         if (this.searchParams.limit <= this.totalItems) {
             this.numPostsInPage = this.searchParams.limit;
         } else {
@@ -104,12 +166,10 @@ export default class ListPostComponent extends Vue {
         }
     }
 
-    @Watch('$route.query.categoryId')
+    @Watch('$route.params.category')
     async handleChangeCategory(val, old) {
         if(val && val !== old) {
-            this.searchParams = new PostSearchParameter({
-                categoryId: val
-            });
+            this.categoryType =  this.$route.params.category as any;
             await this.getPosts();
 
             if (this.searchParams.limit <= this.totalItems) {

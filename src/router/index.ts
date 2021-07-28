@@ -1,4 +1,4 @@
-import { DTH_CATEGORY, KTTV_CATEGORY, PATH, ROUTE_NAME, SUPER_CATEGORY } from "@/constant/route-constant";
+import { DTH_CATEGORY, KTTV_CATEGORY_NAME, PATH, ROUTE_NAME, SUPER_CATEGORY } from "@/constant/route-constant";
 import Vue from "vue";
 import VueRouter, { RouterOptions } from "vue-router";
 
@@ -31,11 +31,8 @@ store.dispatch('user/' + userTypesStore.Set.Auth).then(() => {
                 })
             } else {
                 const isSuperAmin = !!user.roles.find(r => r === USER_ROLE.SUPER);
-                const isDTH = !!user.roles.find(r => r === USER_ROLE.DTH);
-                const isKTTV = !!user.roles.find(r => r === USER_ROLE.KTTV);
                 const categoryId: string = to.query.categoryId ? to.query.categoryId.toString() : null;
-                console.log(isSuperAmin, isDTH, isKTTV, categoryId);
-
+                
                 if (isSuperAmin) {
                     next();
                 } else if (to.matched.some(record => record.meta.accept === USER_ROLE.SUPER)
@@ -44,12 +41,17 @@ store.dispatch('user/' + userTypesStore.Set.Auth).then(() => {
                     // list & create user & SUPER_CATEGORY
                     next({ path: PATH.NOT_AUTHORIZED });
                 } else {
+
+                    const isDTH = !!user.roles.find(r => r === USER_ROLE.DTH);
+                    const isKTTV = !!user.roles.find(r => r === USER_ROLE.KTTV);
+                    const categoryName: string = to.params.category ? to.params.category.toString() : null;
+
                     if (!isKTTV &&
-                        (to.matched.some(record => record.meta.accept === USER_ROLE.KTTV) || (categoryId && KTTV_CATEGORY.indexOf(categoryId) > 0))) {
+                        (to.matched.some(record => record.meta.accept === USER_ROLE.KTTV) || (categoryName && KTTV_CATEGORY_NAME.indexOf(categoryName) > 0))) {
                         // not KTTV
                         next({ path: PATH.NOT_AUTHORIZED });
-                    } else if (!isDTH &&
-                        (to.matched.some(record => record.meta.accept === USER_ROLE.DTH) || (categoryId && DTH_CATEGORY.indexOf(categoryId) > 0))) {
+                    } else if ((!isDTH || !isKTTV) &&
+                        (to.matched.some(record => record.meta.accept === USER_ROLE.DTH))) {
                         // not DTH
                         next({ path: PATH.NOT_AUTHORIZED });
                     } else {
@@ -66,7 +68,7 @@ store.dispatch('user/' + userTypesStore.Set.Auth).then(() => {
                 if (isSuperAmin) {
                     next({ path: PATH.ADMIN, params: { role: 'admin' } });
                 } else if (isKTTV) {
-                    next({ name: ROUTE_NAME.LIST_POST, query: { categoryId: KTTV_CATEGORY[0] } })
+                    next({ name: ROUTE_NAME.LIST_POST, params: { category: KTTV_CATEGORY_NAME[0] } })
                 } else {
                     next({ name: ROUTE_NAME.LIST_DOCUMENT })
                 }

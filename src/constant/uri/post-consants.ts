@@ -7,4 +7,16 @@ export default {
     category: '/api/Category',
     categoryId: '/api/Category/:id',
     getCurrentLocation: '/api/Common/Location/GetCurrentLocation',
+
+    disasterWarning: '/api/event/disasterWarning',
+    recommendedInformation: '/api/event/recommendedInformation',
+    socioculturalEngineering: '/api/event/socioculturalEngineering',
+    travelWeather: '/api/event/travelWeather',
+    agriculturalWeather: '/api/event/agriculturalWeather',
+    trafficWeather: '/api/event/trafficWeather',
+    dangerousWeather: '/api/event/dangerousWeather',
+    hydrological: '/api/event/hydrological',
+    weatherStates: '/api/event/weatherStates',
+    executiveProducer: '/api/event/executiveProducer',
+    disasterPrevention: '/api/event/disasterPrevention',
 }
