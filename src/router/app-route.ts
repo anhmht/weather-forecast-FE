@@ -13,6 +13,7 @@ const LoginPageComponent = () => import("../page/login/LoginPageComponent.vue");
 const PageNotFoundComponent = () => import("../page/not-found/PageNotFoundComponent.vue");
 const PageNotAuthorizedComponent = () => import("../page/not-authorized/PageNotAuthorizedComponent.vue");
 const ForgotPasswordPageComponent = () => import("../page/forgot-password/ForgotPasswordPageComponent.vue");
+const ResetPasswordPageComponent = () => import("../page/reset-password/ResetPasswordPageComponent.vue");
 const RegisterPageComponent = () => import("../page/register/RegisterPageComponent.vue");
 
 const UserProfileComponent = () => import("../page/user-profile/UserProfileComponent.vue");
@@ -105,6 +106,12 @@ const homeRoutes = [
         path: PATH.FORGOT_PASSWORD,
         name: ROUTE_NAME.FORGOT_PASSWORD,
         component: ForgotPasswordPageComponent,
+        props: {}
+    },
+    {
+        path: PATH.RESET_PASSWORD,
+        name: ROUTE_NAME.RESET_PASSWORD,
+        component: ResetPasswordPageComponent,
         props: {}
     },
     {
