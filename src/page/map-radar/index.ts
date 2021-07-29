@@ -82,6 +82,9 @@ export default class HomePageComponent extends Vue {
     customMapStatusControl: any = null;
     customZoomControl: any = 6;
     customWaitControl: any = 1000;
+    customImportVideoControl: any = {};
+
+    importVideos: any = [];
 
     clearTimeout: any = {
         timeout: null,
@@ -642,6 +645,33 @@ export default class HomePageComponent extends Vue {
 
     }
 
+    addVideoImport(previewData) {
+        const videos = previewData.filter(x => x.action === 'customImportVideoControl');
+        videos.forEach((element, index) => {
+            this.importVideos.push({
+                id: element.id,
+                index: index,
+                data: element.data
+            })
+        });
+    }
+
+    getVideoLength(step) {
+        const index = this.importVideos.findIndex(x => x.id === step.id);
+        if (index > -1) {
+            const vid = document.getElementById(`custom-video-${index}`) as any;
+            if (vid.requestFullscreen) {
+                vid.requestFullscreen();
+            } else if (vid.webkitRequestFullscreen) { /* Safari */
+                vid.webkitRequestFullscreen();
+            } else if (vid.msRequestFullscreen) { /* IE11 */
+                vid.msRequestFullscreen();
+            }
+            vid.play();
+            return vid.duration * 1000;
+        }
+    }
+
     async handlePreview(previewData, isRecord = false) {
         clearTimeout(this.clearTimeout.timeout);
         this.isStop = false;
@@ -654,18 +684,24 @@ export default class HomePageComponent extends Vue {
             this.isReview = true;
             await sleep(1000, this.clearTimeout);
         }
+        this.addVideoImport(previewData);
         for (const iterator of previewData) {
+            let duration = iterator.duration;
             if (this.isStop) {
                 this.isStop = false;
                 break;
             }
             this[iterator.action] = iterator;
+            if (iterator.action === 'customImportVideoControl') {
+                duration = this.getVideoLength(iterator);
+            }
             this.handleActionDetail(iterator);
             if (this.isStop) {
                 this.isStop = false;
                 break;
             }
-            await sleep(iterator.duration, this.clearTimeout);
+            await sleep(duration, this.clearTimeout);
+            this.customImportVideoControl = {}
             if (this.isStop) {
                 this.isStop = false;
                 break;
@@ -680,6 +716,7 @@ export default class HomePageComponent extends Vue {
         }
         this.customLocationControl = null;
         this.isShowButtonStop = false;
+        this.importVideos = [];
     }
 
     handleClearTimeout(isRecord = false) {
@@ -689,6 +726,7 @@ export default class HomePageComponent extends Vue {
         this.isShowButtonStop = false;
         this.isRemote = false;
         this.customLocationControl = null;
+        this.importVideos = [];
         if (!isRecord) {
             this.drawer = true;
         }

@@ -168,6 +168,15 @@
                     <v-select v-model="data.data" :items="elevations" label="Độ cao bản đồ" item-text="label" item-value="data"
                         :rules="rules.elevationRules"></v-select>
                 </div>
+                <div v-if="data.actionTypeId === actionListConstant.IMPORT_VIDEO" style="display: flex;align-items: center;">
+                    <input ref="upload" type="file" @change="onChangeDocuments($event.target.files)" title="" hidden accept="video/*" />
+                    <video controls id="video-tag" width="400">
+                        <source id="video-source" :src="data.data">
+                    </video>
+                    <div style="display: flex;justify-content: center;flex: 1;">
+                        <v-btn color="#707070" outlined raised @click="handleClickBrowse">Upload Video</v-btn>
+                    </div>
+                </div>
             </v-form>
         </v-card-text>
         <v-card-actions>
