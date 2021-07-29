@@ -1,6 +1,6 @@
 // import { getLocalStorage } from '@/utils/appConfig';
 import { Watch } from 'vue-property-decorator';
-import { KTTV_CATEGORY, PATH, ROUTE_NAME } from "@/constant/route-constant";
+import { KTTV_CATEGORY_NAME, PATH, ROUTE_NAME } from "@/constant/route-constant";
 import Vue from "vue";
 import Component from "vue-class-component";
 import { Getter, namespace } from 'vuex-class';
@@ -92,7 +92,7 @@ export default class MenuComponent extends Vue {
                 return;
             }
             if (!!this.loginInfo["roles"].find(r => r === USER_ROLE.KTTV)) {
-                this.$router.push({ name: ROUTE_NAME.LIST_POST, query: { categoryId: KTTV_CATEGORY[0]} });
+                this.$router.push({ name: ROUTE_NAME.LIST_POST, params: { category: KTTV_CATEGORY_NAME[0]} });
                 return;
             }
             this.$router.push({ name: ROUTE_NAME.LIST_DOCUMENT });

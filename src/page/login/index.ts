@@ -30,6 +30,7 @@ export default class LoginPageComponent extends Vue {
         nameRules: [v => !!v || 'Vui lòng nhập tài khoản'],
         passRules: [v => !!v || 'Vui lòng nhập mật khẩu']
     }
+    showPass: boolean = false;
 
     setAuthenticate(authConfig) {
         setLocalStorage('auth', authConfig);

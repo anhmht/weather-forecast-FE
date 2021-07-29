@@ -6,7 +6,10 @@
                 <v-text-field label="Tài Khoản" v-model="data.userName" :rules="rules.nameRules" />
             </div>
             <div style="margin-top: 20px;">
-                <v-text-field type="password" label="Mật Khẩu" v-model="data.password" :rules="rules.passRules" />
+                <v-text-field type="password" label="Mật Khẩu" v-model="data.password" :rules="rules.passRules"
+                    :append-icon="showPass ? 'mdi-eye' : 'mdi-eye-off'"
+                    :type="showPass ? 'text' : 'password'"
+                    @click:append="showPass = !showPass"/>
             </div>
         </v-form>
         <div class="login-page-container-wrapper--btn-login">
