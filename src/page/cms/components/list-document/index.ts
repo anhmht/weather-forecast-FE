@@ -3,7 +3,7 @@ import Component from "vue-class-component";
 import { Getter, namespace } from "vuex-class";
 import { storeModules } from "@/store";
 import { IPostSearchParameter, PostSearchParameter } from "@/model/post/post-filter.model";
-import { ROUTE_NAME } from "@/constant/route-constant";
+import { CATEGORY_NAMES, ROUTE_NAME } from "@/constant/route-constant";
 import { PostServices } from "@/service/post-service/post.service";
 import { CategoryServices } from "@/service/category-service/category.service";
 import userTypesStore from "@/store/user/user-types.store";
@@ -26,10 +26,7 @@ export default class ListDocumentComponent extends Vue {
     searchParams: IPostSearchParameter = new PostSearchParameter({});
     postService: PostServices = new PostServices();
     categoryService: CategoryServices = new CategoryServices();
-    produceCategoryName: string = 'Điều hành sản xuất';
-    disasterCategoryName: string = 'Phòng chống thiên tai';
-    categoryName: string = null;
-    categoryId: string = null;
+    categoryType: string = CATEGORY_NAMES.LIST_POST_DIEU_HANH_SAN_XUAT;
 
     @UserGetter(userTypesStore.Get.Auth) userConfig: any;
 
@@ -51,12 +48,11 @@ export default class ListDocumentComponent extends Vue {
         this.activeTab = tab;
 
         if (this.activeTab === 1) {
-            this.categoryName = this.produceCategoryName;
+            this.categoryType = CATEGORY_NAMES.LIST_POST_DIEU_HANH_SAN_XUAT;
         } else if (this.activeTab === 2) {
-            this.categoryName = this.disasterCategoryName;
+            this.categoryType = CATEGORY_NAMES.LIST_POST_PHONG_CHONG_THIEN_TAI;
         }
 
-        await this.getCategoryId();
         await this.getDocuments();
 
         if (this.searchParams.limit <= this.totalItems) {
@@ -121,21 +117,16 @@ export default class ListDocumentComponent extends Vue {
         }
     }
 
-    async getCategoryId() {
-        await this.categoryService.getAllCategories().then((res: any) => {
-            this.searchParams.categoryId = res.find(x => x.name === this.categoryName).categoryId;
-        }).catch(error => {
-            console.log(error);
-        })
-    }
-
     async getDocuments() {
-        await this.postService.getPosts(this.searchParams).then((res: any) => {
+        await this.postService.getPostsByCategory(this.categoryType, this.searchParams).then((res: any) => {
             this.documents = res.events;
             this.totalItems = res.totalItems;
             this.totalPages = res.totalPages;
         }).catch(error => {
             console.log(error);
+            this.documents = [];
+            this.totalItems = 0;
+            this.totalPages = 0;
         })
     }
 
