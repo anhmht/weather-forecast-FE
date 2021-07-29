@@ -40,6 +40,7 @@ export default class CreateDocumentComponent extends Vue {
     isUploading: boolean = false;
     isLoading: boolean = false;
     valid: boolean = true;
+    visibleConfirm: boolean = false;
     publishStatus: string = "Publish";
     categoryService: CategoryServices = new CategoryServices();
     uploadService: UploadServices = new UploadServices();
@@ -115,7 +116,8 @@ export default class CreateDocumentComponent extends Vue {
                 fileName: this.uploadedFile[0].name,
                 dateUploaded: moment().format('DD/MM/YYYY HH:mm:ss'),
                 size: this.convertFileSize(this.uploadedFile[0].size),
-                url: response
+                url: response,
+                link: this.getEmbeddedPreviewer(this.uploadedFile[0].name.split('.')[1], response)
             });
         }).catch(err => {
             this.isUploading = false;
@@ -199,11 +201,28 @@ export default class CreateDocumentComponent extends Vue {
         }
     }
 
-    previewDocument(documentUrl) {
-        let extraWindow = window.open(`https://docs.google.com/viewerng/viewer?url=${documentUrl}`);
-        if (extraWindow) {
-            extraWindow.location.reload();
+    previewDocument() {
+        this.visibleConfirm = true;
+    }
+
+    getEmbeddedPreviewer(fileExtension, fileUrl) {
+        let previewer: string = null;
+
+        switch(fileExtension) {
+            case 'doc':
+            case 'docx':
+            case 'xls':
+            case 'xlsx':
+            case 'ppt':
+            case 'pptx':
+                previewer = `https://view.officeapps.live.com/op/embed.aspx?src=${fileUrl}`;
+                break;
+            default:
+                previewer = `https://docs.google.com/gview?url=${fileUrl}&embedded=true`;
+                break;
         }
+
+        return previewer;
     }
 
     downloadDocument(item) {
