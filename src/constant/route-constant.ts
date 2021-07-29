@@ -81,6 +81,8 @@ export const CATEGORY_NAMES = {
     LIST_POST_THOI_TIET_NGUY_HIEM: 'dangerous',
     LIST_POST_THUY_VAN: 'hydrological',
     LIST_POST_TRANG_THAI_THOI_TIET: 'states',
+    LIST_POST_DIEU_HANH_SAN_XUAT: 'executive-producer',
+    LIST_POST_PHONG_CHONG_THIEN_TAI: 'disaster-prevention',
 }
 
 export const CATEGORY_IDS = {

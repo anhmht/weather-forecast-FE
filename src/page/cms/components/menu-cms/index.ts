@@ -121,6 +121,7 @@ export default class MenuCMSComponent extends Vue {
                 title: CMS_MENU.THONG_TIN_CHI_DAO,
                 icon: 'mdi-bullhorn',
                 name: ROUTE_NAME.LIST_DOCUMENT,
+                accept: USER_ROLE.DTH
             },
             {
                 title: CMS_MENU.HIEN_TUONG_CUC_DOAN,
@@ -149,7 +150,7 @@ export default class MenuCMSComponent extends Vue {
                 list = list.filter(p => !(p.accept === USER_ROLE.KTTV ));
             }
 
-            if (!isDTH) {
+            if (!isDTH && !isKTTV) {
                 list = list.filter(p => !(p.accept === USER_ROLE.DTH ));
             }
 

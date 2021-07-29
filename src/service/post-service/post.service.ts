@@ -3,7 +3,7 @@ import { ApiResponse } from "@/model/app-config";
 import { GenericServices } from "../generic-service/generic.service";
 import Uri from "@/constant/uri/post-consants";
 import IPost from "@/model/post/post.model";
-import { CATEGORY_IDS, CATEGORY_NAMES } from '@/constant/route-constant';
+import { CATEGORY_NAMES } from '@/constant/route-constant';
 
 export class PostServices extends GenericServices {
     getPosts(searchParam: IPostSearchParameter): Promise<ApiResponse> {
@@ -90,6 +90,12 @@ export class PostServices extends GenericServices {
                 break;
             case CATEGORY_NAMES.LIST_POST_TRANG_THAI_THOI_TIET:
                 url = Uri.weatherStates;
+                break;
+            case CATEGORY_NAMES.LIST_POST_DIEU_HANH_SAN_XUAT:
+                url = Uri.executiveProducer;
+                break;
+            case CATEGORY_NAMES.LIST_POST_PHONG_CHONG_THIEN_TAI:
+                url = Uri.disasterPrevention;
                 break;
             default:
                 break;
