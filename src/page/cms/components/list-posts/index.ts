@@ -103,7 +103,7 @@ export default class BaseListPostComponent extends Vue {
             this.totalItems = 0;
             this.totalPages = 0;
 
-            console.log(error);
+            this.$errorMessage(error);
         })
     }
 

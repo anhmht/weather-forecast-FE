@@ -121,7 +121,7 @@ export default class CreateDocumentComponent extends Vue {
             });
         }).catch(err => {
             this.isUploading = false;
-            console.error(err);
+            this.$errorMessage(err);
         });
     }
 
@@ -246,7 +246,7 @@ export default class CreateDocumentComponent extends Vue {
                 this.isLoading = false;
             }).catch(err => {
                 this.$toast.error('Có lỗi khi tạo tin mới');
-                console.log(err);
+                this.$errorMessage(err);
                 this.isLoading = false;
             })
         }
@@ -260,7 +260,7 @@ export default class CreateDocumentComponent extends Vue {
             this.postModel.categoryId = this.$route.query.categoryId as any;
             this.isLoading = false;
         }).catch(error => {
-            console.log(error);
+            this.$errorMessage(error);
             this.isLoading = false;
         });
 

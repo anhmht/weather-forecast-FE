@@ -60,7 +60,7 @@ export default class WarningPageComponent extends Vue {
 
             this.warningPosts = res;
         }).catch(error => {
-            console.log(error);
+            this.$errorMessage(error);
         })
     }
 }

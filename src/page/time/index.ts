@@ -125,7 +125,7 @@ export default class TimePageComponent extends Vue {
 
             this.displayWeatherByHour();
         }).catch(err => {
-            console.log(err);
+            this.$errorMessage(err);
         });
     }
 
@@ -163,7 +163,7 @@ export default class TimePageComponent extends Vue {
 
             this.displayWeatherByDay();
         }).catch(err => {
-            console.log(err);
+            this.$errorMessage(err);
         });
     }
 

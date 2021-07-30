@@ -215,7 +215,7 @@ export default class HydrologicalComponent extends Vue {
                 this.precipitationArray = res.rains;
                 this.totalPages = res.totalPages;
             }).catch(error => {
-                console.log(error);
+                this.$errorMessage(error);
             })
         } else if (stationType === this.stationConstant.METEOROLOGICAL_STATION) {
             this.monitoringService.getMeteorological(10, this.page, stationId, this.fromDate, this.toDate)
@@ -223,7 +223,7 @@ export default class HydrologicalComponent extends Vue {
                 this.meteorologicalArray = res.meteorologicals;
                 this.totalPages = res.totalPages;
             }).catch(error => {
-                console.log(error);
+                this.$errorMessage(error);
             })
         } else if (stationType === this.stationConstant.HYDROLOGICAL_STATION) {
             if(this.hydrologicalType === 0) {
@@ -232,7 +232,7 @@ export default class HydrologicalComponent extends Vue {
                         this.hydrologicalArray = res.hydrologicals;
                         this.totalPages = res.totalPages;
                     }).catch(error => {
-                        console.log(error);
+                        this.$errorMessage(error);
                     })
             } else {
                 this.monitoringService.getHydrologicalForecast(10, this.page, stationId, this.fromDate, this.toDate)
@@ -240,7 +240,7 @@ export default class HydrologicalComponent extends Vue {
                         this.hydrologicalArray = res.getHydrologicalForecasts[0];
                         this.totalPages = res.totalPages;
                     }).catch(error => {
-                        console.log(error);
+                        this.$errorMessage(error);
                     })
             }
         }
@@ -260,14 +260,14 @@ export default class HydrologicalComponent extends Vue {
                 }
             }
         }).catch(error => {
-            console.log(error);
+            this.$errorMessage(error);
         })
 
         // Get hydrological posts
         this.postService.getPostByCategoryAndStatus(this.hydrologicalCategoryId, this.publishStatusId).then((res: any) => {
             this.hydrologicalPosts = res;
         }).catch(error => {
-            console.log(error);
+            this.$errorMessage(error);
         })
     }
 }

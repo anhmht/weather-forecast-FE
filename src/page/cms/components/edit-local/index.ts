@@ -113,7 +113,7 @@ export default class EditLocalComponent extends Vue {
                 }
                 this.isLoading = false;
             }).catch(err => {
-                console.log(err);
+                this.$errorMessage(err);
                 this.isLoading = false;
             })
         }
@@ -175,7 +175,7 @@ export default class EditLocalComponent extends Vue {
                 back ? this.handleBack() : this.fetchData;
             }).catch(err => {
                 this.$toast.error('Có lỗi khi tạo mới');
-                console.log(err);
+                this.$errorMessage(err);
                 this.isLoading = false;
             })
         } else {
@@ -188,7 +188,7 @@ export default class EditLocalComponent extends Vue {
                 }
             }).catch(err => {
                 this.$toast.error('Có lỗi khi tạo mới');
-                console.log(err);
+                this.$errorMessage(err);
                 this.isLoading = false;
             })
         }
@@ -241,7 +241,7 @@ export default class EditLocalComponent extends Vue {
                 this.switchData();
             }
         }).catch(err => {
-            console.log(err);
+            this.$errorMessage(err);
             this.isLoading = false;
         })
     }

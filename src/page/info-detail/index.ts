@@ -30,7 +30,7 @@ export default class InfoDetailPageComponent extends Vue {
             .then(res => {
                 this.postModel = new Post(res);
             }).catch(err => {
-                console.log(err);
+                this.$errorMessage(err);
             });
 
         // Get relative posts
@@ -38,7 +38,7 @@ export default class InfoDetailPageComponent extends Vue {
             .then((res: any) => {
                 this.relativePosts = res.filter(x => x.eventId !== this.$route.params.id);
             }).catch(error => {
-                console.log(error);
+                this.$errorMessage(error);
             });
 
         // Get page title
@@ -46,7 +46,7 @@ export default class InfoDetailPageComponent extends Vue {
             .then((res: any) => {
                 this.pageTitle = res.name;
             }).catch(error => {
-                console.log(error);
+                this.$errorMessage(error);
             });
     }
 

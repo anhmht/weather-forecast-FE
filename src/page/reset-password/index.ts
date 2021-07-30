@@ -53,7 +53,7 @@ export default class ResetPasswordPageComponent extends Vue {
                 this.$router.push(ROUTE_NAME.LOGIN);
             }).catch(err => {
                 this.$toast.error('Có lỗi khi đặt lại mật khẩu');
-                console.log(err);
+                this.$errorMessage(err);
                 this.isLoading = false;
             });
         }

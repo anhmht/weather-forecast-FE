@@ -95,7 +95,7 @@ export default class CreateUserComponent extends Vue {
                 this.isLoading = false;
             }).catch(err => {
                 this.$toast.error('Có lỗi khi tạo tài khoản mới');
-                console.log(err);
+                this.$errorMessage(err);
                 this.isLoading = false;
             })
         }
@@ -168,7 +168,7 @@ export default class CreateUserComponent extends Vue {
             this.userModel.avatarUrl = response;
         }).catch(err => {
             this.isUploading = false;
-            console.error(err);
+            this.$errorMessage(err);
         });
     }
 

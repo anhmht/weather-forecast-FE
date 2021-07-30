@@ -180,7 +180,7 @@ export default class WeatherForecast24hComponent extends Vue {
 
                 resolve({mostFreqIcon, mostFreqWindDir, mostFreqWindLvl, tempRange});
             }).catch(err => {
-                console.log(err);
+                this.$errorMessage(err);
             })
         })
     }

@@ -179,7 +179,7 @@ export default class WeatherForecastComponent extends Vue {
             this.data = data;
             this.isLoading = false;
         }).catch(err => {
-            console.log(err);
+            this.$errorMessage(err);
             this.isLoading = false;
         });
     }

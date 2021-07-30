@@ -65,7 +65,7 @@ export default class ForgotPasswordPageComponent extends Vue {
                 this.$router.push(PATH.LOGIN);
             }).catch(err => {
                 this.$toast.error('Có lỗi khi đăng kí tài khoản');
-                console.log(err);
+                this.$errorMessage(err);
                 this.isLoading = false;
             })
         }

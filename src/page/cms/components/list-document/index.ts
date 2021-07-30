@@ -123,7 +123,7 @@ export default class ListDocumentComponent extends Vue {
             this.totalItems = res.totalItems;
             this.totalPages = res.totalPages;
         }).catch(error => {
-            console.log(error);
+            this.$errorMessage(error);
             this.documents = [];
             this.totalItems = 0;
             this.totalPages = 0;
