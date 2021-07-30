@@ -12,6 +12,7 @@ import { namespace, Getter, Action } from "vuex-class";
 import { storeModules } from '@/store';
 import lookupTypesStore from '@/store/lookup/lookup-types.store';
 import { DataHelper } from '@/utils/data-helper';
+import { CATEGORY_IDS, CATEGORY_NAMES } from '@/constant/route-constant';
 
 const LookupGetter = namespace(storeModules.Lookup, Getter);
 const LookupAction = namespace(storeModules.Lookup, Action);
@@ -42,6 +43,7 @@ export default class CreatePostComponent extends Vue {
     postModel: IPost = new Post({});
 
     category: ICategory[] = []
+    categoryType: string = '';
 
     rules = {
         title: [v => !!v || 'Vui lòng nhập tiêu đề'],
@@ -168,12 +170,56 @@ export default class CreatePostComponent extends Vue {
         return formData;
     }
 
+    setCategoryId () {
+        switch (this.categoryType) {
+            case CATEGORY_NAMES.LIST_POST_WEATHER_NEWS:
+                return CATEGORY_IDS.LIST_POST_WEATHER_NEWS;
+
+            case CATEGORY_NAMES.LIST_POST_WEATHER_MAP:
+                return CATEGORY_IDS.LIST_POST_WEATHER_MAP;
+                
+            case CATEGORY_NAMES.LIST_POST_CANH_BAO_THIEN_TAI:
+                return CATEGORY_IDS.LIST_POST_CANH_BAO_THIEN_TAI;
+                
+            case CATEGORY_NAMES.LIST_POST_THONG_TIN_KHUYEN_CAO:
+                return CATEGORY_IDS.LIST_POST_THONG_TIN_KHUYEN_CAO;
+                
+            case CATEGORY_NAMES.LIST_POST_KT_VH_XH:
+                return CATEGORY_IDS.LIST_POST_KT_VH_XH;
+                
+            case CATEGORY_NAMES.LIST_POST_THOI_TIET_DU_LICH:
+                return CATEGORY_IDS.LIST_POST_THOI_TIET_DU_LICH;
+                
+            case CATEGORY_NAMES.LIST_POST_THOI_TIET_NONG_VU:
+                return CATEGORY_IDS.LIST_POST_THOI_TIET_NONG_VU;
+                
+            case CATEGORY_NAMES.LIST_POST_THOI_TIET_GIAO_THONG:
+                return CATEGORY_IDS.LIST_POST_THOI_TIET_GIAO_THONG;
+                
+            case CATEGORY_NAMES.LIST_POST_THOI_TIET_NGUY_HIEM:
+                return CATEGORY_IDS.LIST_POST_THOI_TIET_NGUY_HIEM;
+                
+            case CATEGORY_NAMES.LIST_POST_THUY_VAN:
+                return CATEGORY_IDS.LIST_POST_THUY_VAN;
+                
+            case CATEGORY_NAMES.LIST_POST_TRANG_THAI_THOI_TIET:
+                return CATEGORY_IDS.LIST_POST_TRANG_THAI_THOI_TIET;
+                
+            default:
+                return '';
+        }
+    }
+
     async mounted() {
+        if (this.$route.params.category) {
+            this.categoryType =  this.$route.params.category as any;
+        }
+        this.postModel.categoryId = this.setCategoryId();
+
         this.isLoading = true;
         // Get category
         await this.categoryService.getAllCategories().then((res: any) => {
             this.category = res;
-            this.postModel.categoryId = this.$route.query.categoryId as any;
             this.isLoading = false;
         }).catch(error => {
             this.$errorMessage(error);
