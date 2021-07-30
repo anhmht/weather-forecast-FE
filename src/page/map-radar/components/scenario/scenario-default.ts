@@ -52,6 +52,11 @@ export const SCENARIO_ACTION = [
         color: 'black'
     },
     {
+        text: 'Import video',
+        value: 'customImportVideoControl',
+        color: 'orange'
+    },
+    {
         text: 'Chờ',
         value: 'customWaitControl',
         color: 'yellow'

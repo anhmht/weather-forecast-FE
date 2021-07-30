@@ -5,6 +5,12 @@
     <div v-if="isRecording" class="fake-transition" :class="!isDisplayFake ? 'hide' : ''">
         <img :src="fakeImage" />
     </div>
+    <div v-if="importVideos.length > 0 && isRecording" class="custom-import-video">
+        <video v-show="item.index === index && item.id === customImportVideoControl.id" v-for="(item, index) in importVideos" :key="item.id" :id="`custom-video-${item.index}`" style="width: 100%;">
+            <source :src="item.data" type="video/mp4">
+        </video>
+    </div>
+    
     <div v-if="isShowMapTitle && !isRecording" class="map-title animate__animated" :class="mapTitle.position" >
         Khu vực: {{mapTitle ? mapTitle.name : ''}}
     </div>
@@ -77,7 +83,7 @@
         <v-icon>mdi-qrcode-scan</v-icon>
     </v-btn>
 
-    <windy-setting :setting.sync="windySetting" @change-windy-setting="changeWindySetting" />
+    <windy-setting v-show="!isRecording" :setting.sync="windySetting" @change-windy-setting="changeWindySetting" />
 
     <v-dialog v-model="isDisplayDialog" persistent max-width="1400">
         <div class="preview-dialog">

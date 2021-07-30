@@ -33,7 +33,7 @@ export default class ForgotPasswordPageComponent extends Vue {
                 this.isLoading = false;
                 this.visibleConfirm = true;
             }).catch(err => {
-                console.log(err);
+                this.$errorMessage(err);
                 this.isLoading = false;
             });
         }
@@ -48,7 +48,7 @@ export default class ForgotPasswordPageComponent extends Vue {
                 this.isLoading = false;
                 this.visibleConfirm = true;
             }).catch(err => {
-                console.log(err);
+                this.$errorMessage(err);
                 this.isLoading = false;
             });
         }

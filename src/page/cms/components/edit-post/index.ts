@@ -78,7 +78,7 @@ export default class EditPostComponent extends Vue {
                 this.$router.go(-1);
             }).catch(err => {
                 this.$toast.error('Có lỗi khi chỉnh sửa tin');
-                console.log(err);
+                this.$errorMessage(err);
                 this.isLoading = false;
             })
         }
@@ -156,7 +156,7 @@ export default class EditPostComponent extends Vue {
             this.postModel.imageUrl = response;
         }).catch(err => {
             this.isUploading = false;
-            console.error(err);
+            this.$errorMessage(err);
         });
     }
 
@@ -172,7 +172,7 @@ export default class EditPostComponent extends Vue {
         this.categoryService.getAllCategories().then((res: any) => {
             this.category = res;
         }).catch(error => {
-            console.log(error);
+            this.$errorMessage(error);
         })
         this.getLookupData(lookupTypesStore.Set.STATUS);
 
@@ -194,7 +194,7 @@ export default class EditPostComponent extends Vue {
                     this.isShownUpload = false;
                 }
             }).catch(err => {
-                console.log(err);
+                this.$errorMessage(err);
                 this.isLoading = false;
             });
     }

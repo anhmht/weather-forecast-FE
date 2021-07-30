@@ -1,0 +1,23 @@
+<div class="reset-password-page-container">
+    <div class="reset-password-page-container-wrapper">
+        <div class="reset-password-page-container-wrapper--title">Đặt lại mật khẩu</div>
+        <v-form ref="resetPasswordForm" v-model="valid" lazy-validation>
+            <div>
+                <v-text-field type="password" placeholder="Nhập mật khẩu mới" v-model="userMisc.password" :rules="rules.password" />
+            </div>
+            <div style="margin-top: 20px;">
+                <v-text-field type="password" placeholder="Nhập lại mật khẩu mới" v-model="userMisc.confirmPassword" :rules="rules.confirmPassword" />
+            </div>
+        </v-form>
+        <div class="reset-password-page-container-wrapper--btn-reset">
+            <v-btn @click="handleResetPassword()" :loading="isLoading" :disabled="isLoading">
+                Đặt lại mật khẩu
+                <template v-slot:loader>
+                    <span class="custom-loader">
+                        <v-icon light>mdi-cached</v-icon>
+                    </span>
+                </template>
+            </v-btn>
+        </div>
+    </div>
+</div>

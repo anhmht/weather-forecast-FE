@@ -103,7 +103,7 @@ export default class UserInfoComponent extends Vue {
             this.data.avatarUrl = response;
         }).catch(err => {
             this.isUploading = false;
-            console.error(err);
+            this.$errorMessage(err);
         });
     }
 
@@ -121,7 +121,7 @@ export default class UserInfoComponent extends Vue {
             console.log(res);
 
         }).catch(err => {
-            console.log(err);
+            this.$errorMessage(err);
         })
     }
 

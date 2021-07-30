@@ -89,7 +89,7 @@ export default class ListUserComponent extends Vue {
             this.totalItems = res.totalItems;
             this.totalPages = res.totalPages;
         }).catch(error => {
-            console.log(error);
+            this.$errorMessage(error);
         });
     }
 
@@ -98,7 +98,7 @@ export default class ListUserComponent extends Vue {
             await this.userService.getAllRole().then((res: any) => {
                 this.userSearchParams.roleIds = res.filter(x => x.name !== USER).map(x => x.name);
             }).catch(error => {
-                console.log(error);
+                this.$errorMessage(error);
             });
         } else if (title === this.listUserTitleConst) {
             this.userSearchParams.roleIds.push(USER);

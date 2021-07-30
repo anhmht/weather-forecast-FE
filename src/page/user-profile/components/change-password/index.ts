@@ -49,7 +49,7 @@ export default class ForgotPasswordPageComponent extends Vue {
                 this.$toast.success('Đổi mật khẩu thành công');
             }).catch(err => {
                 this.$toast.error('Có lỗi khi đổi mật khẩu');
-                console.log(err);
+                this.$errorMessage(err);
             })
         }
     }

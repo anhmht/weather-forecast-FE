@@ -369,3 +369,15 @@
 #progress-bar {
     display: none !important;
 }
+
+.custom-import-video {
+    position: absolute;
+    top: 0;
+    opacity: 1;
+    transition: visibility 0s .5s, opacity .5s linear;
+    width: 100%;
+    &.hide {
+        visibility: hidden;
+        opacity: 0;
+    }
+}

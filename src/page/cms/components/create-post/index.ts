@@ -84,7 +84,7 @@ export default class CreatePostComponent extends Vue {
                 this.isLoading = false;
             }).catch(err => {
                 this.$toast.error('Có lỗi khi tạo tin mới');
-                console.log(err);
+                this.$errorMessage(err);
                 this.isLoading = false;
             })
         }
@@ -158,7 +158,7 @@ export default class CreatePostComponent extends Vue {
             this.postModel.imageUrl = response;
         }).catch(err => {
             this.isUploading = false;
-            console.error(err);
+            this.$errorMessage(err);
         });
     }
 
@@ -176,7 +176,7 @@ export default class CreatePostComponent extends Vue {
             this.postModel.categoryId = this.$route.query.categoryId as any;
             this.isLoading = false;
         }).catch(error => {
-            console.log(error);
+            this.$errorMessage(error);
             this.isLoading = false;
         });
 
@@ -196,7 +196,7 @@ export default class CreatePostComponent extends Vue {
 
             this.isLoading = false;
         }).catch(error => {
-            console.log(error);
+            this.$errorMessage(error);
             this.isLoading = false;
         });
 

@@ -91,7 +91,7 @@ export default class ListLocalComponent extends Vue {
             this.totalItems = data.totalItems;
             this.totalPages = data.totalPages;
         }).catch(err => {
-            console.log(err);
+            this.$errorMessage(err);
         })
     }
 

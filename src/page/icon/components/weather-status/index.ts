@@ -30,7 +30,7 @@ export default class WeatherStatusComponent extends Vue {
         this.postService.getPostById(postId).then((res: any) => {
             this.selectedWeatherStatusContent = res.content;
         }).catch(error => {
-            console.log(error);
+            this.$errorMessage(error);
         })
     }
 
@@ -45,13 +45,13 @@ export default class WeatherStatusComponent extends Vue {
                 }
             }
         }).catch(error => {
-            console.log(error);
+            this.$errorMessage(error);
         })
 
         await this.postService.getPostByCategoryAndStatus(this.weatherStatusCategoryId, this.publishStatusId).then((res: any) => {
             this.weatherStatusPosts = res;
         }).catch(error => {
-            console.log(error);
+            this.$errorMessage(error);
         })
 
         this.loadContent(this.weatherStatusPosts[0].eventId);

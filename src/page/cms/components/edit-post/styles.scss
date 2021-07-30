@@ -2,37 +2,47 @@
     .base-cms-right--body {
         &_wrapper_inner {
             display: flex;
-            flex-wrap: wrap;
             justify-content: space-between;
         }
     
         &_top {
-            .ma-2 {
-                float: right;
+            margin-bottom: 20px;
+
+            > p {
+                font-size: 23px;
+                margin: 0;
+                white-space: normal
+            }
+        }
+    
+        &_left {
+            order: 1;
+            flex: 0 0 calc(70% - 30px);
+
+            &_title {
+                background-color: #fff;
+            }
+        
+            &_editor {
+                margin-top: 20px;
+                background-color: #fff;
+
+                .ck.ck-toolbar.ck-toolbar_grouping>.ck-toolbar__items {
+                    overflow-x: hidden;
+                    overflow-y: hidden;
+                    flex-wrap: wrap;
+                }
+                .ck-content {
+                    min-height: 150px;
+                    max-height: calc(100vh - 700px);
+                    overflow-y: auto;
+                }
             }
 
-            p {
-                font-size: 30px;
+            &_action {
+                margin-top: 20px;
+                float: right;
             }
-        }
-    
-        &_title {
-            background-color: #fff;
-            padding: 20px;
-            order: 1;
-            flex: 0 0 65%;
-        }
-    
-        &_editor {
-            background-color: #fff;
-            order: 3;
-            flex: 0 0 65%;
-            .ck-content { height: calc(100vh - 450px); }
-        }
-    
-        &_action {
-            margin-top: 20px;
-            float: right;
         }
     
         &_setting {
@@ -55,7 +65,7 @@
             &--upload {
                 display: flex;
                 img {
-                    width: 150px;
+                    width: 130px;
                 }
                 &_btn {
                     flex: 1;

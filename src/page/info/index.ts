@@ -227,7 +227,7 @@ export default class InfoPageComponent extends Vue {
 
                 resolve({mostFreqIcon, mostFreqWindDir, mostFreqWindRank, tempRange});
             }).catch(err => {
-                console.log(err);
+                this.$errorMessage(err);
             })
         })
     }
@@ -283,7 +283,7 @@ export default class InfoPageComponent extends Vue {
                     + "Nhiệt độ cao nhất: " + res.tempRange.max + "°C."
             }
         }).catch(err => {
-            console.log(err);
+            this.$errorMessage(err);
         })
     }
 
@@ -426,35 +426,35 @@ export default class InfoPageComponent extends Vue {
                 }
             }
         }).catch(error => {
-            console.log(error);
+            this.$errorMessage(error);
         })
 
         // Get warning posts
         this.postService.getPostByCategoryAndStatus(this.warningCategoryId, this.publishStatusId).then((res: any) => {
             this.warningPosts = res;
         }).catch(error => {
-            console.log(error);
+            this.$errorMessage(error);
         })
 
         // Get recommend posts
         this.postService.getPostByCategoryAndStatus(this.recommendCategoryId, this.publishStatusId).then((res: any) => {
             this.recommendPosts = res;
         }).catch(error => {
-            console.log(error);
+            this.$errorMessage(error);
         })
 
         // Get other posts (Economic - Culture - Society)
         this.postService.getPostByCategoryAndStatus(this.otherCategoryId, this.publishStatusId).then((res: any) => {
             this.otherPosts = res;
         }).catch(error => {
-            console.log(error);
+            this.$errorMessage(error);
         })
 
         // Get weather news posts
         await this.postService.getPostWithContent(this.weatherNewsCategoryId, this.publishStatusId).then((res: any) => {
             this.weatherNewsPosts = res[0];
         }).catch(error => {
-            console.log(error);
+            this.$errorMessage(error);
         })
 
         // Get weather map posts
@@ -462,7 +462,7 @@ export default class InfoPageComponent extends Vue {
             this.firstWeatherMapPost = res[0];
             this.weatherMapPosts = res;
         }).catch(error => {
-            console.log(error);
+            this.$errorMessage(error);
         })
 
         setInterval(this.getNow, 1000);

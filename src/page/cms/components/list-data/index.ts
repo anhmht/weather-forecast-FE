@@ -52,7 +52,7 @@ export default class ListDataComponent extends Vue {
         }).catch(err => {
             this.$toast.error('Có lỗi khi tải dữ liệu');
             this.isUploading = false;
-            console.error(err);
+            this.$errorMessage(err);
         });
     }
 

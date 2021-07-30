@@ -162,7 +162,7 @@ export default class ForecastItemComponent extends Vue {
 
                 resolve({mostFreqIcon, mostFreqWindDir, mostFreqWindRank, tempRange});
             }).catch(err => {
-                console.log(err);
+                this.$errorMessage(err);
             })
         })
     }
@@ -212,7 +212,7 @@ export default class ForecastItemComponent extends Vue {
                 + "Nhiệt độ thấp nhất: " + res.tempRange.min + ".<br/>"
                 + "Nhiệt độ cao nhất: " + res.tempRange.max + ".<br/>";
         }).catch(err => {
-            console.log(err);
+            this.$errorMessage(err);
         })
     }
 

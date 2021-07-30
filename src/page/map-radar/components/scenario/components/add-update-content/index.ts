@@ -8,6 +8,7 @@ import { Getter, namespace } from 'vuex-class';
 import { storeModules } from '@/store';
 import lookupTypesStore, { GeneralLookupTypes } from '@/store/lookup/lookup-types.store';
 import { ScenarioServices } from '@/service/scenario-service/scenario.service';
+import { UploadServices } from '@/service/upload-service/upload.service';
 
 const LookupGetter = namespace(storeModules.Lookup, Getter);
 
@@ -34,6 +35,11 @@ export default class AddUpdateContentComponent extends Vue {
     order
 
     @LookupGetter(lookupTypesStore.Get.LOOKUP_DATA) dtoLookupData: Object;
+
+    uploadedDocs: any = null;
+    progress: number = 0;
+    isUploading: boolean = false;
+    uploadservice: UploadServices = new UploadServices();
 
     durations = [
         { text: '0 giây', value: 0 },
@@ -304,6 +310,73 @@ export default class AddUpdateContentComponent extends Vue {
 
     handleChangeMethod(val) {
 
+    }
+
+    onChangeDocuments(pics) {
+        if (pics.length > 0) {
+            this.processUploadDocuments(pics[0]);
+        }
+    }
+
+    readVideo(video) {
+        var reader = new FileReader();
+        const videoSrc = document.querySelector("#video-source") as any;
+        const videoTag = document.querySelector("#video-tag") as any;
+        reader.onload = function (e) {
+            videoSrc.src = e.target.result
+            videoTag.load();
+        }.bind(this)
+
+        reader.readAsDataURL(video);
+    }
+
+    processUploadDocuments(file) {
+        this.isUploading = true;
+        this.reset();
+        this.uploadVideo({
+            Data: file,
+            FileName: `${new Date().getTime()}_${file.name}`,
+        });
+    }
+
+    uploadVideo(document) {
+        const formData = this.buildUploadDocumentParams(document);
+        document.isUploading = true;
+        const config = {
+            headers: {
+                "content-type": "multipart/form-data"
+            },
+            onUploadProgress: function (progressEvent) {
+                var value = (progressEvent.loaded * 100) / progressEvent.total;
+                var percent = Math.round(value);
+                this.progress = percent;
+            }.bind(this)
+        };
+        this.uploadservice.uploadFile(formData, config).then(response => {
+            this.isUploading = false;
+            this.progress = 0;
+            this.readVideo(document.Data)
+            this.data.data = response;
+        }).catch(err => {
+            this.isUploading = false;
+            console.error(err);
+        });
+    }
+
+    handleClickBrowse() {
+        const upload = this.$refs.upload as any;
+        upload.click();
+    }
+
+    buildUploadDocumentParams(document) {
+        const formData = new FormData();
+        formData.append('file', document.Data, document.FileName);
+        return formData;
+    }
+
+    reset() {
+        this.uploadedDocs = null;
+        this.progress = 0;
     }
 
     @Watch('value')
