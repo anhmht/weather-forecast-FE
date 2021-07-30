@@ -64,9 +64,9 @@ export const PATH = {
     LIST_USER: 'list-user/:role',
     CREATE_USER: 'create-user/:role',
     LIST_DOCUMENT: 'list-document',
-    CREATE_DOCUMENT: 'create-document',
+    CREATE_DOCUMENT: 'create-document/:category',
     LIST_LOCAL: "list-local",
-    EDIT_DOCUMENT: 'edit-document/:id',
+    EDIT_DOCUMENT: 'edit-document/:category/:id',
     EDIT_LOCAL: 'edit-local/:id',
 }
 
@@ -99,6 +99,8 @@ export const CATEGORY_IDS = {
     LIST_POST_THOI_TIET_NGUY_HIEM: '031d1a69-900e-4b63-5d20-08d942e67599',
     LIST_POST_THUY_VAN: '92fb2fa2-12e1-4871-2ecf-08d94344e5e0',
     LIST_POST_TRANG_THAI_THOI_TIET: 'a54d6936-8789-42e4-6515-08d944a940ef',
+    LIST_POST_DIEU_HANH_SAN_XUAT: '4c14b202-72bf-4209-ffd1-08d9486010c7',
+    LIST_POST_PHONG_CHONG_THIEN_TAI: 'e95d0a6f-73a4-4cb8-ffd2-08d9486010c7',
 }
 
 export const SUPER_CATEGORY = [
