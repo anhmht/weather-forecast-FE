@@ -84,7 +84,7 @@ export default class EditLocalComponent extends Vue {
                 this.data = new ExtremePhenomenon({});
             }
         }).catch(err => {
-            this.$errorMessage(err);
+            // this.$errorMessage(err);
             this.isLoading = false;
         })
     }
