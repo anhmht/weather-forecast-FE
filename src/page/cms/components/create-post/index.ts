@@ -171,43 +171,8 @@ export default class CreatePostComponent extends Vue {
     }
 
     setCategoryId () {
-        switch (this.categoryType) {
-            case CATEGORY_NAMES.LIST_POST_WEATHER_NEWS:
-                return CATEGORY_IDS.LIST_POST_WEATHER_NEWS;
-
-            case CATEGORY_NAMES.LIST_POST_WEATHER_MAP:
-                return CATEGORY_IDS.LIST_POST_WEATHER_MAP;
-                
-            case CATEGORY_NAMES.LIST_POST_CANH_BAO_THIEN_TAI:
-                return CATEGORY_IDS.LIST_POST_CANH_BAO_THIEN_TAI;
-                
-            case CATEGORY_NAMES.LIST_POST_THONG_TIN_KHUYEN_CAO:
-                return CATEGORY_IDS.LIST_POST_THONG_TIN_KHUYEN_CAO;
-                
-            case CATEGORY_NAMES.LIST_POST_KT_VH_XH:
-                return CATEGORY_IDS.LIST_POST_KT_VH_XH;
-                
-            case CATEGORY_NAMES.LIST_POST_THOI_TIET_DU_LICH:
-                return CATEGORY_IDS.LIST_POST_THOI_TIET_DU_LICH;
-                
-            case CATEGORY_NAMES.LIST_POST_THOI_TIET_NONG_VU:
-                return CATEGORY_IDS.LIST_POST_THOI_TIET_NONG_VU;
-                
-            case CATEGORY_NAMES.LIST_POST_THOI_TIET_GIAO_THONG:
-                return CATEGORY_IDS.LIST_POST_THOI_TIET_GIAO_THONG;
-                
-            case CATEGORY_NAMES.LIST_POST_THOI_TIET_NGUY_HIEM:
-                return CATEGORY_IDS.LIST_POST_THOI_TIET_NGUY_HIEM;
-                
-            case CATEGORY_NAMES.LIST_POST_THUY_VAN:
-                return CATEGORY_IDS.LIST_POST_THUY_VAN;
-                
-            case CATEGORY_NAMES.LIST_POST_TRANG_THAI_THOI_TIET:
-                return CATEGORY_IDS.LIST_POST_TRANG_THAI_THOI_TIET;
-                
-            default:
-                return '';
-        }
+        let key = Object.keys(CATEGORY_NAMES).find(key => CATEGORY_NAMES[key] === this.categoryType);
+        return key ? CATEGORY_IDS[key] : '';
     }
 
     async mounted() {

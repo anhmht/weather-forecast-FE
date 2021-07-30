@@ -23,6 +23,7 @@ import { UploadServices } from "@/service/upload-service/upload.service";
 import { PostServices } from "@/service/post-service/post.service";
 import NO_IMAGE from '../../../../../static/img/no-image/no-image.png';
 import { USER_ROLE } from "@/constant/common-constant";
+import { CATEGORY_IDS, CATEGORY_NAMES } from "@/constant/route-constant";
 
 const UserGetter = namespace(storeModules.User, Getter);
 const LookupGetter = namespace(storeModules.Lookup, Getter);
@@ -49,6 +50,7 @@ export default class CreateDocumentComponent extends Vue {
     postModel: IPost = new Post({});
 
     category: ICategory[] = []
+    categoryType: string = '';
 
     rules = {
         title: [v => !!v || 'Vui lòng nhập tiêu đề']
@@ -252,12 +254,22 @@ export default class CreateDocumentComponent extends Vue {
         }
     }
 
+    setCategoryId () {
+        let key = Object.keys(CATEGORY_NAMES).find(key => CATEGORY_NAMES[key] === this.categoryType);
+        return key ? CATEGORY_IDS[key] : '';
+    }
+
     async mounted() {
+        if (this.$route.params.category) {
+            this.categoryType =  this.$route.params.category as any;
+        }
+        this.postModel.categoryId = this.setCategoryId();
+
         this.isLoading = true;
         // Get category
         await this.categoryService.getAllCategories().then((res: any) => {
             this.category = res;
-            this.postModel.categoryId = this.$route.query.categoryId as any;
+            // this.postModel.categoryId = this.$route.query.categoryId as any;
             this.isLoading = false;
         }).catch(error => {
             this.$errorMessage(error);

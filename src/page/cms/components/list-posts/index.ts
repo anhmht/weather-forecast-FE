@@ -110,44 +110,9 @@ export default class BaseListPostComponent extends Vue {
         event.target.src = NO_IMAGE;
     }
 
-    setListPostTitle (type:string) {
-        switch (type) {
-            case CATEGORY_NAMES.LIST_POST_WEATHER_NEWS:
-                return CMS_MENU.LIST_POST_WEATHER_NEWS;
-
-            case CATEGORY_NAMES.LIST_POST_WEATHER_MAP:
-                return CMS_MENU.LIST_POST_WEATHER_MAP;
-                
-            case CATEGORY_NAMES.LIST_POST_CANH_BAO_THIEN_TAI:
-                return CMS_MENU.LIST_POST_CANH_BAO_THIEN_TAI;
-                
-            case CATEGORY_NAMES.LIST_POST_THONG_TIN_KHUYEN_CAO:
-                return CMS_MENU.LIST_POST_THONG_TIN_KHUYEN_CAO;
-                
-            case CATEGORY_NAMES.LIST_POST_KT_VH_XH:
-                return CMS_MENU.LIST_POST_KT_VH_XH;
-                
-            case CATEGORY_NAMES.LIST_POST_THOI_TIET_DU_LICH:
-                return CMS_MENU.LIST_POST_THOI_TIET_DU_LICH;
-                
-            case CATEGORY_NAMES.LIST_POST_THOI_TIET_NONG_VU:
-                return CMS_MENU.LIST_POST_THOI_TIET_NONG_VU;
-                
-            case CATEGORY_NAMES.LIST_POST_THOI_TIET_GIAO_THONG:
-                return CMS_MENU.LIST_POST_THOI_TIET_GIAO_THONG;
-                
-            case CATEGORY_NAMES.LIST_POST_THOI_TIET_NGUY_HIEM:
-                return CMS_MENU.LIST_POST_THOI_TIET_NGUY_HIEM;
-                
-            case CATEGORY_NAMES.LIST_POST_THUY_VAN:
-                return CMS_MENU.LIST_POST_THUY_VAN;
-                
-            case CATEGORY_NAMES.LIST_POST_TRANG_THAI_THOI_TIET:
-                return CMS_MENU.LIST_POST_TRANG_THAI_THOI_TIET;
-                
-            default:
-                return '';
-        }
+    setListPostTitle () {
+        let key = Object.keys(CATEGORY_NAMES).find(key => CATEGORY_NAMES[key] === this.categoryType);
+        return key ? CMS_MENU[key] : '';
     }
 
     async mounted() {
@@ -155,7 +120,7 @@ export default class BaseListPostComponent extends Vue {
             this.categoryType =  this.$route.params.category as any;
         }
 
-        this.listPostTitle = this.setListPostTitle(this.categoryType);
+        this.listPostTitle = this.setListPostTitle();
         await this.getPosts();
 
         if (this.searchParams.limit <= this.totalItems) {
@@ -169,7 +134,7 @@ export default class BaseListPostComponent extends Vue {
     async handleChangeCategory(val, old) {
         if(val && val !== old) {
             this.categoryType =  this.$route.params.category as any;
-            this.listPostTitle = this.setListPostTitle(this.categoryType);
+            this.listPostTitle = this.setListPostTitle();
             await this.getPosts();
 
             if (this.searchParams.limit <= this.totalItems) {

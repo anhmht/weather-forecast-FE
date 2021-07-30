@@ -78,14 +78,16 @@ export default class ListDocumentComponent extends Vue {
     }
 
     toCreateDocument() {
+        const category = this.categoryType;
         this.$router.push({
             name: ROUTE_NAME.CREATE_DOCUMENT,
-            query: { categoryId: this.searchParams.categoryId }
+            params: { category }
         });
     }
 
     editDocument(id) {
-        this.$router.push({ name: ROUTE_NAME.EDIT_DOCUMENT , params: { id } })
+        const category = this.categoryType;
+        this.$router.push({ name: ROUTE_NAME.EDIT_DOCUMENT , params: { category, id } })
     }
 
     async deleteDocument() {
