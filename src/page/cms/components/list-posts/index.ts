@@ -40,14 +40,13 @@ export default class BaseListPostComponent extends Vue {
     }
 
     toCreatePost() {
-        this.$router.push({
-            name: ROUTE_NAME.CREATE_POST,
-            query: { categoryId: this.$route.query.categoryId}
-        });
+        const category = this.categoryType;
+        this.$router.push({ name: ROUTE_NAME.CREATE_POST , params: { category } })
     }
 
     editPost(id) {
-        this.$router.push({ name: ROUTE_NAME.EDIT_POST , params: { id } })
+        const category = this.categoryType;
+        this.$router.push({ name: ROUTE_NAME.EDIT_POST , params: { category, id } })
     }
 
     async deletePost() {
@@ -170,6 +169,7 @@ export default class BaseListPostComponent extends Vue {
     async handleChangeCategory(val, old) {
         if(val && val !== old) {
             this.categoryType =  this.$route.params.category as any;
+            this.listPostTitle = this.setListPostTitle(this.categoryType);
             await this.getPosts();
 
             if (this.searchParams.limit <= this.totalItems) {

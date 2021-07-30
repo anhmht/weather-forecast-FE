@@ -13,7 +13,7 @@
                 <div class="base-cms-right--body_left">
                     <div class="base-cms-right--body_left_title pa-5">
                         <div class="mb-2">Tiêu đề</div>
-                        <v-text-field :readonly="!isAdmin" outlined dense :rules="rules.title" v-model="postModel.title"></v-text-field>
+                        <v-text-field outlined dense :rules="rules.title" v-model="postModel.title"></v-text-field>
                     </div>
                     
                     <div v-if="!isShownTextBox" class="base-cms-right--body_left_editor pa-5">
@@ -33,7 +33,7 @@
                         </iframe>
                     </div>
                     <div v-if="isShownButton" class="base-cms-right--body_left_action pa-5">
-                        <v-btn :disabled="!isAdmin" depressed color="primary" @click="createPost()">Lưu tin</v-btn>
+                        <v-btn depressed color="primary" @click="createPost()">Lưu tin</v-btn>
                     </div>
                 </div>
     
@@ -59,7 +59,7 @@
                     <div class="mb-2">Danh mục</div>
                     <v-select :items="category" item-text="name" item-value="categoryId" outlined dense :rules="rules.categoryRules"
                         v-model="postModel.categoryId" readonly></v-select>
-                    <v-btn :disabled="!isAdmin" depressed color="primary" @click="createPost()">Lưu tin</v-btn>
+                    <v-btn depressed color="primary" @click="createPost()">Lưu tin</v-btn>
                 </div>
             </div>
         </v-form>
