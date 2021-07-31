@@ -50,7 +50,7 @@ store.dispatch('user/' + userTypesStore.Set.Auth).then(() => {
                         (to.matched.some(record => record.meta.accept === USER_ROLE.KTTV) || (categoryName && KTTV_CATEGORY_NAME.indexOf(categoryName) > -1))) {
                         // not KTTV
                         next({ path: PATH.NOT_AUTHORIZED });
-                    } else if ((!isDTH || !isKTTV) &&
+                    } else if ((!isDTH && !isKTTV) &&
                         (to.matched.some(record => record.meta.accept === USER_ROLE.DTH))) {
                         // not DTH
                         next({ path: PATH.NOT_AUTHORIZED });
