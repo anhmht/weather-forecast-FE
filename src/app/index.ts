@@ -26,6 +26,7 @@ export default class App extends Vue {
             case ROUTE_NAME.LIST_DATA:
             case ROUTE_NAME.LIST_USER:
             case ROUTE_NAME.CREATE_USER:
+            case ROUTE_NAME.EDIT_USER:
             case ROUTE_NAME.LIST_DOCUMENT:
             case ROUTE_NAME.CREATE_DOCUMENT:
             case ROUTE_NAME.EDIT_DOCUMENT:

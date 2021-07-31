@@ -689,7 +689,8 @@ export const REGION = [
         paddingTopLeft: [100, 0],
         titlePosition: 'right animate__fadeInRightBig',
         animation: 'animate__fadeInBottomLeft',
-        layout: '4-4-5'
+        layout: '4-4-5',
+        hydrological: ["69759", "69749", "69733", "66760", "66768"]
     },
 ]
 

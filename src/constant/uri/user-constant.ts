@@ -11,4 +11,6 @@ export default {
     resendEmail: '/api/Account/resend-verification-email',
     confirmEmail: '​/api/Account/confirm-email',
     changePassword: '/api/Account/change-password',
+    deleteUser: '/api/Account/:email',
+    getUserInfoByEmail: '/api/Account/GetUserInfo/:email'
 }

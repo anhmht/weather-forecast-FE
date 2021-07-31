@@ -276,6 +276,15 @@ export default class AddUpdateContentComponent extends Vue {
         this.valid = this.$refs.contentForm.validate();
 
         if (this.valid) {
+            if (this.data.actionTypeId === SCENARIO_ACTION_ENUM.CHANGE_MAP_STATUS) {
+                this.data.methodId = SCENARIO_ACTION_METHOD_ENUM.PROVINCE;
+            }
+            if (this.data.actionTypeId === SCENARIO_ACTION_ENUM.CHANGE_ZOOM_LEVEL) {
+                this.data.duration = 1000;
+            }
+            if (this.data.actionTypeId === SCENARIO_ACTION_ENUM.CHANGE_ELEVATION) {
+                this.data.methodId = SCENARIO_ACTION_METHOD_ENUM.LEVEL;
+            }
             let requestHolder: Promise<any>;
             let successMessage: string = null;
             let errorMessage: string = null;

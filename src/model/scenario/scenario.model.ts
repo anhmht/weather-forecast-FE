@@ -30,6 +30,7 @@ export interface IScenarioAction {
     order?: number;
     isEnableIcon?: boolean;
     isEnableLayer?: boolean;
+    isDisplayHydrological?: boolean;
     top?: number;
     left?: number;
     right?: number;
@@ -48,6 +49,7 @@ export class ScenarioAction implements IScenarioAction {
     order?: number;
     isEnableIcon?: boolean;
     isEnableLayer?: boolean;
+    isDisplayHydrological?: boolean;
     top?: number;
     left?: number;
     right?: number;
@@ -65,6 +67,7 @@ export class ScenarioAction implements IScenarioAction {
         this.order = option.order || 0;
         this.isEnableIcon = option.isEnableIcon || false;
         this.isEnableLayer = option.isEnableLayer || false;
+        this.isDisplayHydrological = option.isDisplayHydrological || false;
         this.top = option.top || null
         this.left = option.left || null
         this.right = option.right || null

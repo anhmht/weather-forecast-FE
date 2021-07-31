@@ -24,11 +24,14 @@
                     </v-select>
 
                     <div class="add-update-content__row">
-                        <div class="add-update-content__col span-2">
+                        <div class="add-update-content__col span-3">
                             <v-switch v-model="data.isEnableIcon" label="Hiển thị icon, trạng thái thời tiết"></v-switch>
                         </div>
-                        <div class="add-update-content__col span-2">
+                        <div class="add-update-content__col span-3">
                             <v-switch v-model="data.isEnableLayer" label="Hiển thị layer màu từng tỉnh/huyện"></v-switch>
+                        </div>
+                        <div class="add-update-content__col span-3">
+                            <v-switch v-model="data.isDisplayHydrological" label="Hiển thị thông tin thủy văn"></v-switch>
                         </div>
                     </div>
                     <v-label>

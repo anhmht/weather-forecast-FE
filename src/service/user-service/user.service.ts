@@ -78,4 +78,18 @@ export class UserServices extends GenericServices {
             return response.isSuccess ? Promise.resolve(response.data) : Promise.reject(response.message);
         }).catch(error => Promise.reject(error))
     }
+
+    deleteAccount(email: string): Promise<ApiResponse> {
+        const uri = Uri.deleteUser.replace(":email", email)
+        return this.executeDeletingWith(email, uri).then((response: ApiResponse) => {
+            return response.isSuccess ? Promise.resolve(response.data) : Promise.reject(response.message);
+            }).catch(error => Promise.reject(error))
+    }
+
+    getUserInfoByEmail(email: string): Promise<ApiResponse> {
+        const uri = Uri.getUserInfoByEmail.replace(":email", email)
+        return this.executeSelecting(null, uri).then((response: ApiResponse) => {
+            return response.isSuccess ? Promise.resolve(response.data) : Promise.reject(response.message);
+            }).catch(error => Promise.reject(error))
+    }
 }
