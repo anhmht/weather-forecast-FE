@@ -1,12 +1,11 @@
 import { IPostSearchParameter, PostSearchParameter } from './../../../../model/post/post-filter.model';
 import Vue from "vue";
 import Component from "vue-class-component";
-import { CATEGORY_IDS, CATEGORY_NAMES, ROUTE_NAME } from "../../../../constant/route-constant";
+import { CATEGORY_IDS, CATEGORY_NAMES, NOT_FOUND, ROUTE_NAME } from "../../../../constant/route-constant";
 import { PostServices } from '../../../../service/post-service/post.service';
 import { Watch } from 'vue-property-decorator';
 import NO_IMAGE from '../../../../../static/img/no-image/no-image.png';
 import { CMS_MENU } from '@/constant/common-constant';
-
 @Component({
     template: require("./template.html").default,
 })
@@ -98,10 +97,7 @@ export default class BaseListPostComponent extends Vue {
             this.totalItems = res.totalItems;
             this.totalPages = res.totalPages;
         }).catch(error => {
-            this.posts = [];
-            this.totalItems = 0;
-            this.totalPages = 0;
-
+            this.resetData();
             this.$errorMessage(error);
         })
     }
@@ -112,7 +108,13 @@ export default class BaseListPostComponent extends Vue {
 
     setListPostTitle () {
         let key = Object.keys(CATEGORY_NAMES).find(key => CATEGORY_NAMES[key] === this.categoryType);
-        return key ? CMS_MENU[key] : '';
+        return key ? CMS_MENU[key] : NOT_FOUND;
+    }
+
+    resetData () {
+        this.posts = [];
+        this.totalItems = 0;
+        this.totalPages = 0;
     }
 
     async mounted() {
@@ -121,6 +123,8 @@ export default class BaseListPostComponent extends Vue {
         }
 
         this.listPostTitle = this.setListPostTitle();
+        if (this.listPostTitle === NOT_FOUND) return;
+
         await this.getPosts();
 
         if (this.searchParams.limit <= this.totalItems) {
@@ -135,7 +139,11 @@ export default class BaseListPostComponent extends Vue {
         if(val && val !== old) {
             this.categoryType =  this.$route.params.category as any;
             this.listPostTitle = this.setListPostTitle();
-            await this.getPosts();
+            if (this.listPostTitle === NOT_FOUND) {
+                this.resetData();
+            } else {
+                await this.getPosts();
+            }
 
             if (this.searchParams.limit <= this.totalItems) {
                 this.numPostsInPage = this.searchParams.limit;

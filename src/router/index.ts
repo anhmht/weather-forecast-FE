@@ -1,4 +1,4 @@
-import { DTH_CATEGORY, KTTV_CATEGORY_NAME, PATH, ROUTE_NAME, SUPER_CATEGORY } from "@/constant/route-constant";
+import { KTTV_CATEGORY_NAME, PATH, ROUTE_NAME, SUPER_CATEGORY_NAME } from "@/constant/route-constant";
 import Vue from "vue";
 import VueRouter, { RouterOptions } from "vue-router";
 
@@ -31,12 +31,12 @@ store.dispatch('user/' + userTypesStore.Set.Auth).then(() => {
                 })
             } else {
                 const isSuperAmin = !!user.roles.find(r => r === USER_ROLE.SUPER);
-                const categoryId: string = to.query.categoryId ? to.query.categoryId.toString() : null;
-                
+                // const categoryId: string = to.query.categoryId ? to.query.categoryId.toString() : null;
+                const categoryName: string = to.params.category ? to.params.category.toString() : null;
                 if (isSuperAmin) {
                     next();
                 } else if (to.matched.some(record => record.meta.accept === USER_ROLE.SUPER)
-                    || (categoryId && SUPER_CATEGORY.indexOf(categoryId) > 0)) {
+                    || (categoryName && SUPER_CATEGORY_NAME.indexOf(categoryName) > -1)) {
 
                     // list & create user & SUPER_CATEGORY
                     next({ path: PATH.NOT_AUTHORIZED });
@@ -44,10 +44,10 @@ store.dispatch('user/' + userTypesStore.Set.Auth).then(() => {
 
                     const isDTH = !!user.roles.find(r => r === USER_ROLE.DTH);
                     const isKTTV = !!user.roles.find(r => r === USER_ROLE.KTTV);
-                    const categoryName: string = to.params.category ? to.params.category.toString() : null;
+                    
 
                     if (!isKTTV &&
-                        (to.matched.some(record => record.meta.accept === USER_ROLE.KTTV) || (categoryName && KTTV_CATEGORY_NAME.indexOf(categoryName) > 0))) {
+                        (to.matched.some(record => record.meta.accept === USER_ROLE.KTTV) || (categoryName && KTTV_CATEGORY_NAME.indexOf(categoryName) > -1))) {
                         // not KTTV
                         next({ path: PATH.NOT_AUTHORIZED });
                     } else if ((!isDTH || !isKTTV) &&
