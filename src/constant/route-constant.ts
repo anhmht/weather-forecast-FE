@@ -103,9 +103,9 @@ export const CATEGORY_IDS = {
     LIST_POST_PHONG_CHONG_THIEN_TAI: 'e95d0a6f-73a4-4cb8-ffd2-08d9486010c7',
 }
 
-export const SUPER_CATEGORY = [
-    CATEGORY_IDS.LIST_POST_WEATHER_NEWS,
-    CATEGORY_IDS.LIST_POST_WEATHER_MAP
+export const SUPER_CATEGORY_NAME = [
+    CATEGORY_NAMES.LIST_POST_WEATHER_NEWS,
+    CATEGORY_NAMES.LIST_POST_WEATHER_MAP
 ];
 
 export const KTTV_CATEGORY_NAME = [
@@ -122,3 +122,5 @@ export const KTTV_CATEGORY_NAME = [
 
 export const DTH_CATEGORY = [
 ];
+
+export const NOT_FOUND = "Không tìm thấy trang";
