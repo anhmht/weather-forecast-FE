@@ -11,16 +11,19 @@ import { sleep } from '@/utils/common-utils';
 import { Watch } from 'vue-property-decorator';
 import { IForecastSearchParam, ForecastSearchParam } from '@/model/forecast';
 import { WEATHER_TYPE } from '@/constant/forcast-station-constant';
-import { Getter, namespace } from 'vuex-class';
+import { Action, Getter, namespace } from 'vuex-class';
 import { storeModules } from '@/store';
 import userTypesStore from '@/store/user/user-types.store';
 import { USER_ROLE } from '@/constant/common-constant';
 // import * as htmlToImage from 'html-to-image';
 import { SCENARIO_ACTION_DETAIL_ENUM } from './components/scenario/scenario-default';
+import { MonitoringServices } from '@/service/monitoring-service/monitoring.service';
+import lookupTypesStore from '@/store/lookup/lookup-types.store';
 // import * as HME from "h264-mp4-encoder";
 
-
 const UserGetter = namespace(storeModules.User, Getter);
+const LookupAction = namespace(storeModules.Lookup, Action);
+const LookupGetter = namespace(storeModules.Lookup, Getter);
 
 const COLOR = [
     'red', 'green', 'blue', 'yellow', 'DeepPink', 'DeepSkyBlue', 'GreenYellow', 'Lime', 'Thistle', 'NavajoWhite',
@@ -68,10 +71,12 @@ export default class HomePageComponent extends Vue {
     visibleQR: boolean = false;
     weatherService: WeatherServices = new WeatherServices();
     searchParam: IForecastSearchParam = new ForecastSearchParam();
+    monitoringService: MonitoringServices = new MonitoringServices();
 
     layerGroup: any;
     layerProvice: any;
     layerPopup: any;
+    layerHydroPopup: any;
     regionGroup: any;
 
     currentPosition = null;
@@ -122,6 +127,9 @@ export default class HomePageComponent extends Vue {
     isShowTextBox: boolean = false;
 
     @UserGetter(userTypesStore.Get.Auth) userConfig: any;
+
+    @LookupAction getLookupData: (type: string) => Promise<void>
+    @LookupGetter(lookupTypesStore.Get.KTTV) hydrologicalStations
 
     get hasPermission () {
         if (this.userConfig && this.userConfig['roles']) {
@@ -183,6 +191,17 @@ export default class HomePageComponent extends Vue {
         store.set("level", data);
     }
 
+    getHydroLogical(id) {
+        return new Promise((resolve, reject) => {
+            this.monitoringService.getHydrological(1, 1, id, moment().format("YYYY-MM-DD"), moment().format("YYYY-MM-DD"))
+                .then((res: any) => {
+                    resolve(res.hydrologicals[0]);
+                }).catch(error => {
+                    console.log(error);
+                })
+        })
+    }
+
     getHorizontal(ids) {
         let stationId: any = [];
         ids.forEach(element => {
@@ -224,6 +243,10 @@ export default class HomePageComponent extends Vue {
         }
         if (this.layerPopup) {
             this.layerGroup.removeLayer(this.layerPopup);
+            this.layerPopup = null;
+        }
+        if (this.layerHydroPopup) {
+            this.layerGroup.removeLayer(this.layerHydroPopup);
             this.layerPopup = null;
         }
         this.context = {
@@ -340,9 +363,12 @@ export default class HomePageComponent extends Vue {
         bottom = !!data.bottom ? data.bottom : 0;
         left = !!data.left ? data.left : 0;
         right = !!data.right ? data.right : 0;
+        console.log(top, bottom, left, right);
+        
         if (type) {
             return [right, bottom];
         }
+        
         return [left, top]
     }
 
@@ -371,20 +397,6 @@ export default class HomePageComponent extends Vue {
             await sleep(1000, this.clearTimeout);
             method = 'flyToBounds';
             duration = 0.5;
-        };
-        if (mapData.placeId === 'TNB') {
-            method = 'panTo';
-            destination = {
-                lat: 9.9718322535197,
-                lng: 106.70196533203125
-            }
-        };
-        if (mapData.placeId === 'BTB') {
-            method = 'panTo';
-            destination = {
-                lat: 18.33465916334796,
-                lng: 108.77838134765626
-            }
         };
         if (mapData.placeId === 'TQ') {
             const VietNamGeojson = await getGeoJson('nation', 'viet_nam');
@@ -433,13 +445,14 @@ export default class HomePageComponent extends Vue {
         if (mapData.zoom) {
             // await sleep(500, this.clearTimeout);
             this.centerLatlng = map.getBounds().getCenter();
-            console.log(this.centerLatlng);
-
-            map.flyTo(this.centerLatlng, mapData.zoom, { animate: true, duration: 0.2, easeLinearity: 0.2 })
+            map.flyTo(this.centerLatlng, mapData.zoom, {
+                animate: true, duration: 0.2, easeLinearity: 0.2
+            })
             this.layerGroup.addLayer(this.regionGroup);
         }
         await sleep(500, this.clearTimeout);
         this.addPopUPLayer(mapData.provinceIds, mapData.placeId === 'NTB', mapData.animation);
+        this.addHydroLogicalPopUp(mapData.hydrological);
         // document.querySelector('.particles-layer').classList.remove('hide-animation')
         // this.boxData = DataHelper.deepClone(mapData.placeId);
         this.isShowVideoForecase = true;
@@ -524,6 +537,38 @@ export default class HomePageComponent extends Vue {
             })
             this.regionGroup.addLayer(layer);
         });
+    }
+
+    async addHydroLogicalPopUp(ids) {
+        if (!ids) return;
+        const vm = this as any;
+        let isDisplay = false;
+        if (this.customLocationControl && this.customLocationControl.isDisplayHydrological) {
+            isDisplay = true
+        }
+         // @ts-ignore
+        this.layerHydroPopup = new L.LayerGroup();
+        this.layerGroup.addLayer(this.layerHydroPopup);
+
+        for (const element of ids) {
+            const info = await vm.getHydroLogical(element);
+            const station = vm.hydrologicalStations.find(x => x.stationId === element);
+
+            if (station && isDisplay) {
+                // @ts-ignore
+                const layer = L.popup({ closeOnClick: false, closeButton: false, autoClose: true, autoPan: false })
+                    .setLatLng([station.lat, station.lon])
+                    .setContent(`<div class="map-pop-up animate__animated animate__fadeInDown">
+                            <div class="map-pop-up-name">${station.name}</div>
+                            <div class="map-pop-up-data">
+                                    <div class="map-pop-up-data--image"><img src="https://neo-environmental.co.uk/wp-content/uploads/hydro_icon.png"/></div>
+                                    <div class="map-pop-up-data--temp">${info.waterLevel}m</div>
+                                </div>
+                            </div>`)
+                await sleep(500, this.clearTimeout);
+                this.layerPopup.addLayer(layer);
+            }
+        }
     }
 
     async addPopUPLayer(ids, size = false, animation = 'animate__fadeInDown') {
@@ -646,6 +691,7 @@ export default class HomePageComponent extends Vue {
     }
 
     addVideoImport(previewData) {
+        this.importVideos = []
         const videos = previewData.filter(x => x.action === 'customImportVideoControl');
         videos.forEach((element, index) => {
             this.importVideos.push({
@@ -660,13 +706,6 @@ export default class HomePageComponent extends Vue {
         const index = this.importVideos.findIndex(x => x.id === step.id);
         if (index > -1) {
             const vid = document.getElementById(`custom-video-${index}`) as any;
-            if (vid.requestFullscreen) {
-                vid.requestFullscreen();
-            } else if (vid.webkitRequestFullscreen) { /* Safari */
-                vid.webkitRequestFullscreen();
-            } else if (vid.msRequestFullscreen) { /* IE11 */
-                vid.msRequestFullscreen();
-            }
             vid.play();
             return vid.duration * 1000;
         }
@@ -854,6 +893,7 @@ export default class HomePageComponent extends Vue {
     }
 
     handleMove({ step, message }) {
+        this.addVideoImport([step]);
         this[step.action] = step;
         this.handleActionDetail(step);
         const send = {
@@ -865,6 +905,7 @@ export default class HomePageComponent extends Vue {
 
     async mounted() {
         this.initWindyMap();
+        this.getLookupData(lookupTypesStore.Set.KTTV);
     }
 
     @Watch('customZoomControl')

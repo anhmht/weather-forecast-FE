@@ -41,6 +41,9 @@
         align-items: center;
     }
     &__col {
+        &.span-3 {
+            width: 33%;
+        }
         &.span-2 {
             width: 50%;
         }
