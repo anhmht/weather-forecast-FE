@@ -5,7 +5,7 @@
             <div class="d-flex justify-start">
                 <v-text-field label="Tìm kiếm" append-icon="mdi-magnify" outlined dense hide-details class="mr-4" >
                 </v-text-field>
-                <v-btn depressed color="primary" @click="toCreatePost()" height="40px">
+                <v-btn :disabled="isNotFound" depressed color="primary" @click="toCreatePost()" height="40px">
                     + Tạo tin mới
                 </v-btn>
             </div>
@@ -67,7 +67,7 @@
                 <div class="mr-auto">{{numPostsInPage}}/{{totalItems}} tin</div>
                 <div class="d-flex align-center">
                     <v-subheader>Số tin mỗi trang</v-subheader>
-                    <v-select class="ml-3" style="width: 80px;" outlined dense hide-details :items="limitPerPage" v-model="searchParams.limit"
+                    <v-select v-if="!isNotFound"class="ml-3" style="width: 80px;" outlined dense hide-details :items="limitPerPage" v-model="searchParams.limit"
                         @change="getPostsByLimit"></v-select>
                 </div>
                 <v-pagination v-model="searchParams.page" :length="totalPages" :total-visible="TotalPageVisible"

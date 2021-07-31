@@ -33,6 +33,10 @@ export default class BaseListPostComponent extends Vue {
         return NO_IMAGE;
     }
 
+    get isNotFound () {
+        return this.listPostTitle === NOT_FOUND;
+    }
+
     handleDeletePost(id) {
         this.visibleConfirm = true;
         this.selectedId = id;
