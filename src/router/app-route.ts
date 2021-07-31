@@ -30,6 +30,7 @@ const ListDataComponent = () => import("../page/cms/components/list-data/ListDat
 
 const ListUserComponent = () => import("../page/cms/components/list-user/ListUserComponent.vue")
 const CreateUserComponent = () => import("../page/cms/components/create-user/CreateUserComponent.vue")
+const EditUserComponent = () => import("../page/cms/components/edit-user/EditUserComponent.vue")
 
 const ListDocumentComponent = () => import("../page/cms/components/list-document/ListDocumentComponent.vue")
 const CreateDocumentComponent = () => import("../page/cms/components/create-document/CreateDocumentComponent.vue")
@@ -241,6 +242,16 @@ const adminRoutes = [
                 path: PATH.CREATE_USER,
                 name: ROUTE_NAME.CREATE_USER,
                 component: CreateUserComponent,
+                meta: {
+                    requiresAuth: true,
+                    accept: USER_ROLE.SUPER
+                },
+                props: {}
+            },
+            {
+                path: PATH.EDIT_USER,
+                name: ROUTE_NAME.EDIT_USER,
+                component: EditUserComponent,
                 meta: {
                     requiresAuth: true,
                     accept: USER_ROLE.SUPER

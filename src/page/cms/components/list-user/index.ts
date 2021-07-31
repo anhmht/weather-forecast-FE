@@ -19,7 +19,7 @@ export default class ListUserComponent extends Vue {
     limitPerPage: number[] = [5, 10, 15, 20];
     numUsersInPage: number = 0;
     visibleConfirm: boolean = false;
-    selectedId: string = null;
+    selectedEmail: string = null;
     listAdminTitleConst: string = 'Danh sách quản trị viên';
     listUserTitleConst: string = 'Danh sách người dùng';
     createAdminTitleConst: string = 'Tạo quản trị viên';
@@ -52,16 +52,29 @@ export default class ListUserComponent extends Vue {
         });
     }
 
-    editUser(id) {
-
+    editUser(email) {
+        this.$router.push({
+            name: ROUTE_NAME.EDIT_USER,
+            params: { 
+                role: this.$route.params.role,
+                email: email
+            }
+        });
     }
 
-    handleDeleteUser(id) {
-
+    handleDeleteUser(email) {
+        this.visibleConfirm = true;
+        this.selectedEmail = email;
     }
 
     deleteUser() {
-
+        this.userService.deleteAccount(this.selectedEmail);
+        if (this.users.length === 1) {
+            this.userSearchParams.page -= 1;
+        }
+        this.getUsersByPaging();
+        this.visibleConfirm = false;
+        this.$toast.success('Xóa người dùng thành công');
     }
 
     async getUsersByLimit(value = null) {

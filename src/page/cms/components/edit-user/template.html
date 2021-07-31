@@ -1,0 +1,77 @@
+<div class="create-user-container">
+    <div class="base-cms-right--body_wrapper">
+        <div class="base-cms-right--body_top d-flex align-center">
+            <p class="mr-auto">Chỉnh sửa tài khoản</p>
+            <v-btn color="" dark @click="handleBack()">
+                <v-icon dark left>
+                    mdi-chevron-left
+                </v-icon>Trở về
+            </v-btn>
+        </div>
+        <v-form ref="postForm" v-model="valid" lazy-validation>
+            <div class="base-cms-right--body_wrapper_inner">
+                <div class="base-cms-right--body_wrapper_inner-left">
+                    <div class="base-cms-right--body_account d-flex flex-wrap justify-between">
+                        <div class="base-cms-right--body_account-item">
+                            <div>Họ</div>
+                            <v-text-field outlined dense :rules="rules.firstName" v-model="userModel.firstName"></v-text-field>
+                        </div>
+                        <div class="base-cms-right--body_account-item">
+                            <div>Tên</div>
+                            <v-text-field outlined dense :rules="rules.lastName" v-model="userModel.lastName"></v-text-field>
+                        </div>
+                        <div class="base-cms-right--body_account-item">
+                            <div>Tên tài khoản</div>
+                            <v-text-field outlined dense :rules="rules.userName" v-model="userModel.userName"></v-text-field>
+                        </div>
+                    </div>
+        
+                    <div class="base-cms-right--body_type pa-5">
+                        <div>Chọn loại tài khoản</div>
+                        <v-radio-group v-model="roles" multiple>
+                            <v-radio
+                                v-for="r in coRoleList"
+                                :key="r.id"
+                                :value="r.name"
+                                @click="handleClickOnRole(r.name)"
+                            >
+                                <template v-slot:label>
+                                    <div class="d-flex flex-column radio-title">
+                                        <div class="radio-title-main">{{r.role}}</div>
+                                        <div class="radio-title-sub theme--light">{{r.title}}</div>
+                                    </div>
+                                </template>
+                            </v-radio>
+                        </v-radio-group>
+                    </div>
+                </div>
+                
+                <div class="base-cms-right--body_wrapper_inner-right">
+                    <div class="base-cms-right--body_setting">
+                        <div class="base-cms-right--body_setting--upload pa-5">
+                            <div class="mb-2">Hình ảnh</div>
+                            <div class="d-flex align-center">
+                                <div style="position: relative;" class="mr-6">
+                                    <img :src="uploadedDocs" />
+                                    <v-progress-circular v-if="progress > 0" class="progress-bar" :rotate="-90" :size="100"
+                                        :width="15" :value="progress" color="primary">
+                                        {{ progress }}
+                                    </v-progress-circular>
+                                </div>
+                                <div class="base-cms-right--body_setting--upload_btn">
+                                    <input ref="upload" type="file" @change="onChangeDocuments($event.target.files)" title="" hidden
+                                        accept="image/*" />
+                                    <v-btn elevation="2" depressed outlined @click="handleClickBrowse">Upload</v-btn>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pa-5 d-flex justify-end" style="border-top: 1px solid rgba(0,0,0,.12);">
+                            <v-btn  depressed color="primary" @click="editUser()">Chỉnh sửa tài khoản</v-btn>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </v-form>
+        <loading :is-loading="isLoading" absolute/>
+    </div>
+</div>
