@@ -33,8 +33,8 @@
                     flex-wrap: wrap;
                 }
                 .ck-content {
-                    min-height: 150px;
-                    max-height: calc(100vh - 700px);
+                    height: 300px;
+                    min-height: calc(100vh - 460px);
                     overflow-y: auto;
                 }
             }

@@ -165,7 +165,7 @@
                 &_detail {
                     display: inline-block;
                     width: 140px;
-                    border-left: 1px solid #ddd;
+                    border-right: 1px solid #ddd;
                     &_hour {
                         text-align: center;
                     }
@@ -176,52 +176,33 @@
                             width: 50%;
                         }
                     }
-                    &_temp {
-                        display: flex;
-                        align-items: center;
-                        justify-content: space-between;
-                        padding: 0 10px;
+                    .line-info-weather {
+                        text-align: center;
+                        white-space: nowrap;
+                        > div {
+                            border-top: 1px solid rgba($color: #000, $alpha: 0.1);
+                            padding: 3px 10px;
+                            font-size: 14px;
+                            span {
+                                display: none;
+                            }
+                        }
                     }
-                    &_precip {
-                        display: flex;
-                        align-items: center;
-                        justify-content: space-between;
-                        padding: 0 10px;
-                    }
-                    &_wind_lvl {
-                        display: flex;
-                        align-items: center;
-                        justify-content: space-between;
-                        padding: 0 10px;
-                    }
-                    &_wind_spd {
-                        display: flex;
-                        align-items: center;
-                        justify-content: space-between;
-                        padding: 0 10px;
-                    }
-                    &_wind_dir {
-                        display: flex;
-                        align-items: center;
-                        justify-content: space-between;
-                        padding: 0 10px;
-                    }
-                    &_humid {
-                        display: flex;
-                        align-items: center;
-                        justify-content: space-between;
-                        padding: 0 10px;
+                    &:first-child {
+                        position: sticky;
+                        left: 0;
+                        background: #fff;
+                        border-right: 1px solid #ddd;
+                        border-left: 1px solid #ddd;
+                        .line-info-weather  {
+                            text-align: left;
+                        > div span {
+                            display: inline-block;
+                            }
+                        }
                     }
                 }
             }
         }
-    }
-}
-.line-info-weather {
-    > div {
-        border-top: 1px solid rgba($color: #000, $alpha: 0.1);
-        padding: 3px 10px;
-        font-size: 14px;
-        text-align: left;
     }
 }
