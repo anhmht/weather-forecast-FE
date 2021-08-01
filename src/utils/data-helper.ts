@@ -209,8 +209,8 @@ export class DataHelper {
     static generateColorByString(str: string) {
         str = str || "";
         let hash = 0;
-        const s = 90; // saturation
-        const l = str ? 25: 100; // lightness
+        const s =str.length > 0 ? 90 : 1; // saturation
+        const l = str.length > 0 ? 25: 90; // lightness
         for (let i = 0; i < str.length; i++) {
             hash = str.charCodeAt(i) + ((hash << 5) - hash);
         }

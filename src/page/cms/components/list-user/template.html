@@ -47,7 +47,10 @@
                                 </td>
                                 <td>
                                     <div class="base-cms-right--body_table_title">
-                                        <img :src="item.avatarUrl || defaultImage" @error="onImgError" />
+                                        <img v-if="item.avatarUrl && item.avatarUrl !== ''" :src="item.avatarUrl" @error="onImgError(item)" />
+                                        <v-avatar v-else :color="getColor(item.userName)" size="50" rounded>
+                                            <span class="white--text">{{ getShortName(item) }}</span>
+                                        </v-avatar>
                                         {{ item.userName }}
                                     </div>
                                 </td>
@@ -55,7 +58,7 @@
                                 <td>{{ item.roleName }}</td>
                                 <td>{{ item.status }}</td>
                                 <td class="base-cms-right--body_table_action">
-                                    <v-icon v-if="isDisplayButton" @click.native="editUser(item.email)" class="edit-action">mdi-square-edit-outline</v-icon>
+                                    <v-icon v-if="isDisplayButton" @click.native="editUser(item.email)" class="edit-action mr-2">mdi-square-edit-outline</v-icon>
                                     <!-- <v-icon v-if="isDisplayButton" @click.native="handleDeleteUser(item.email)" class="delete-action">mdi-delete</v-icon> -->
                                     <v-tooltip top>
                                         <template v-slot:activator="{ on, attrs }">
