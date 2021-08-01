@@ -7,6 +7,7 @@ import { Getter, namespace } from 'vuex-class';
 import { storeModules } from '@/store';
 import userTypesStore from '@/store/user/user-types.store';
 import { USER_ROLE } from '@/constant/common-constant';
+import { DataHelper } from '@/utils/data-helper';
 
 const UserGetter = namespace(storeModules.User, Getter);
 @Component({
@@ -16,6 +17,8 @@ export default class MenuComponent extends Vue {
     @UserGetter(userTypesStore.Get.Auth) userConfig: any;
 
     isActive: Number = 0;
+    isAvatarError: boolean  = false;
+
     get menuItems() {
         return [
             {
@@ -52,6 +55,18 @@ export default class MenuComponent extends Vue {
     get loginInfo() {
         if (!this.userConfig) return null;
         return this.userConfig
+    }
+
+    get color () {
+        let name = this.loginInfo ? this.userConfig.userName : "";
+        return DataHelper.generateColorByString(name);
+    }
+
+    get avatar () {
+        if (this.loginInfo ) {
+            return this.loginInfo.avatarUrl;
+        }
+        return null;
     }
 
     isShowLoginButton(path) {
@@ -98,6 +113,10 @@ export default class MenuComponent extends Vue {
             this.$router.push({ name: ROUTE_NAME.LIST_DOCUMENT });
         }
         
+    }
+
+    onImgError (event) {
+        this.isAvatarError = true;
     }
 
     mounted() {
