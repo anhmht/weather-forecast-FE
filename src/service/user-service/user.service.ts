@@ -86,8 +86,8 @@ export class UserServices extends GenericServices {
             }).catch(error => Promise.reject(error))
     }
 
-    getUserInfoByEmail(email: string): Promise<ApiResponse> {
-        const uri = Uri.getUserInfoByEmail.replace(":email", email)
+    getUserInfoById(userId: string): Promise<ApiResponse> {
+        const uri = Uri.getUserInfoByUserId.replace(":userId", userId)
         return this.executeSelecting(null, uri).then((response: ApiResponse) => {
             return response.isSuccess ? Promise.resolve(response.data) : Promise.reject(response.message);
             }).catch(error => Promise.reject(error))

@@ -51,10 +51,6 @@ export default class ListUserComponent extends Vue {
         return DataHelper.generateColorByString(str);
     }
 
-    getShortName (item: IUser) {
-        return item.lastName.charAt(0) + item.firstName.charAt(0);
-    }
-
     toCreateUser() {
         this.$router.push({
             name: ROUTE_NAME.CREATE_USER,
@@ -62,12 +58,12 @@ export default class ListUserComponent extends Vue {
         });
     }
 
-    editUser(email) {
+    editUser(userId) {
         this.$router.push({
             name: ROUTE_NAME.EDIT_USER,
             params: { 
                 role: this.$route.params.role,
-                email: email
+                userId: userId
             }
         });
     }

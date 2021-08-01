@@ -12,5 +12,5 @@ export default {
     confirmEmail: '​/api/Account/confirm-email',
     changePassword: '/api/Account/change-password',
     deleteUser: '/api/Account/:email',
-    getUserInfoByEmail: '/api/Account/GetUserInfo/:email'
+    getUserInfoByUserId: '/api/Account/GetUserInfo/:userId'
 }

@@ -190,7 +190,7 @@ export default class EditUserComponent extends Vue {
             this.$errorMessage(error);
         });
         
-        this.userService.getUserInfoByEmail(this.$route.params.email).then((res: any) => {
+        this.userService.getUserInfoById(this.$route.params.userId).then((res: any) => {
             this.userModel = res;
             this.userModel.roleNames = res.roles;
             this.dtAvatarUrl = res.avatarUrl;

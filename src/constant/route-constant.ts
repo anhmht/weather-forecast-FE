@@ -64,7 +64,7 @@ export const PATH = {
     LIST_DATA: 'list-data',
     LIST_USER: 'list-user/:role',
     CREATE_USER: 'create-user/:role',
-    EDIT_USER: 'create-user/:role/:email',
+    EDIT_USER: 'edit-user/:role/:userId',
     LIST_DOCUMENT: 'list-document',
     CREATE_DOCUMENT: 'create-document/:category',
     LIST_LOCAL: "list-local",
