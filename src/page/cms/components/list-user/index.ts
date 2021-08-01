@@ -5,6 +5,8 @@ import Component from "vue-class-component";
 import { ROUTE_NAME } from '@/constant/route-constant';
 import { Watch } from 'vue-property-decorator';
 import NO_IMAGE from '../../../../../static/img/no-image/no-image.png';
+import { DataHelper } from '@/utils/data-helper';
+import { IUser } from '@/model/user';
 
 const USER = 'NormalUser';
 @Component({
@@ -45,6 +47,14 @@ export default class ListUserComponent extends Vue {
         return NO_IMAGE;
     }
 
+    getColor (str: string) {
+        return DataHelper.generateColorByString(str);
+    }
+
+    getShortName (item: IUser) {
+        return item.lastName.charAt(0) + item.firstName.charAt(0);
+    }
+
     toCreateUser() {
         this.$router.push({
             name: ROUTE_NAME.CREATE_USER,
@@ -74,7 +84,7 @@ export default class ListUserComponent extends Vue {
         }
         this.getUsersByPaging();
         this.visibleConfirm = false;
-        this.$toast.success('Xóa người dùng thành công');
+        this.$toast.success('Khóa tài khoản thành công');
     }
 
     async getUsersByLimit(value = null) {
@@ -118,8 +128,9 @@ export default class ListUserComponent extends Vue {
         }
     }
 
-    onImgError (event) {
-        event.target.src = NO_IMAGE;
+    onImgError (item) {
+        // event.target.src = NO_IMAGE;
+        item.avatarUrl = '';
     }
 
     async mounted() {
