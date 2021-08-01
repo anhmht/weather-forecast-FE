@@ -19,6 +19,7 @@ import { USER_ROLE } from '@/constant/common-constant';
 import { SCENARIO_ACTION_DETAIL_ENUM } from './components/scenario/scenario-default';
 import { MonitoringServices } from '@/service/monitoring-service/monitoring.service';
 import lookupTypesStore from '@/store/lookup/lookup-types.store';
+import { UploadServices } from '@/service/upload-service/upload.service';
 // import * as HME from "h264-mp4-encoder";
 
 const UserGetter = namespace(storeModules.User, Getter);
@@ -55,12 +56,18 @@ const COLOR = [
         },
         displayTempInfo(element) {
             (this.$refs.tempInfo as any).renderProvinceData(element);
+        },
+        clearData() {
+            (this.$refs.textBox as any).clearData();
+            (this.$refs.mapTitle as any).clearData();
+            (this.$refs.tempInfo as any).clearData();
         }
     }
 })
 export default class HomePageComponent extends Vue {
     windy: any;
     media: any = null;
+    rawData: any = null;
     player: any = null
     videoStream: any = null;
     isRecording: boolean = false;
@@ -125,6 +132,10 @@ export default class HomePageComponent extends Vue {
     videoLayout: string = 'default';
 
     isShowTextBox: boolean = false;
+
+    progress: number = 0;
+    isUploading: boolean = false;
+    uploadservice: UploadServices = new UploadServices();
 
     @UserGetter(userTypesStore.Get.Auth) userConfig: any;
 
@@ -642,6 +653,7 @@ export default class HomePageComponent extends Vue {
                     });
                     vm.isDisplayDialog = true;
                     vm.media = URL.createObjectURL(completeBlob);
+                    vm.rawData = completeBlob;
                     vm.isRecording = false;
 
                 }, 500);
@@ -652,6 +664,7 @@ export default class HomePageComponent extends Vue {
                 });
                 vm.isDisplayDialog = true;
                 vm.media = URL.createObjectURL(completeBlob);
+                vm.rawData = completeBlob;
                 vm.isRecording = false;
 
                 stream.getTracks().forEach(track => track.stop())
@@ -783,13 +796,6 @@ export default class HomePageComponent extends Vue {
         }
     }
 
-    created() {
-        const webView = (this as any).$route.query.isWebview;
-        this.isWebView = webView ? true : false;
-        console.log(this.isWebView);
-
-    }
-
     initWindyMap() {
         // this.currentPosition = await displayLocation() as any;
         const options = {
@@ -892,15 +898,66 @@ export default class HomePageComponent extends Vue {
         this.$socket.sendMessage(JSON.stringify(send));
     }
 
-    handleMove({ step, message }) {
+    async handleMove({ step, message }) {
+        //@ts-ignore
+        this.clearData();
         this.addVideoImport([step]);
         this[step.action] = step;
+        if (step.action === 'customImportVideoControl') {
+            await sleep(200, this.clearTimeout);
+            this.getVideoLength(step);
+        }
         this.handleActionDetail(step);
         const send = {
             event: 'SUCCESS',
             requestID: message.requestID
         }
         this.$socket.sendMessage(JSON.stringify(send));
+    }
+
+    handleUpload() {
+        this.uploadVideo({
+            Data: this.rawData,
+            FileName: `${new Date().getTime()}_test-vid`,
+        });
+    }
+
+    uploadVideo(video) {
+        const formData = this.buildUploadDocumentParams(video);
+        this.isUploading = true;
+        const config = {
+            headers: {
+                "content-type": "multipart/form-data"
+            },
+            onUploadProgress: function (progressEvent) {
+                var value = (progressEvent.loaded * 100) / progressEvent.total;
+                var percent = Math.round(value);
+                this.progress = percent;
+            }.bind(this)
+        };
+        this.uploadservice.uploadVideo(formData, config).then(response => {
+            this.isUploading = false;
+            this.progress = 0;
+            console.log(response);
+            
+
+        }).catch(err => {
+            this.isUploading = false;
+            console.error(err);
+        });
+    }
+
+    buildUploadDocumentParams(document) {
+        const formData = new FormData();
+        formData.append('file', document.Data, document.FileName);
+        return formData;
+    }
+
+    created() {
+        const webView = (this as any).$route.query.isWebview;
+        this.isWebView = webView ? true : false;
+        console.log(this.isWebView);
+
     }
 
     async mounted() {

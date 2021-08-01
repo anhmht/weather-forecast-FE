@@ -59,12 +59,12 @@ export default class TimePageComponent extends Vue {
     humidByHour: any = [];
     iconByHour: any = [];
     activeTab: number = 1
-
+    // step: number = 0;
 
     // handleTest() {
     //     const message = {
     //         event: 'START',
-    //         scenarioId: '0',
+    //         scenarioId: 'c2257428-6c24-4957-778e-08d94d39a34a',
 
     //     }
     //     this.$socket.sendMessage(JSON.stringify(message));
@@ -73,10 +73,11 @@ export default class TimePageComponent extends Vue {
     // handleMove() {
     //     const message = {
     //         event: 'MOVE',
-    //         scenarioId: '0',
+    //         scenarioId: 'c2257428-6c24-4957-778e-08d94d39a34a',
     //         requestID: '123',
-    //         step: 0
+    //         step: this.step
     //     }
+    //     this.step += 1;
     //     this.$socket.sendMessage(JSON.stringify(message));
     // }
 
