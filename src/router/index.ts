@@ -80,6 +80,9 @@ store.dispatch('user/' + userTypesStore.Set.Auth).then(() => {
             next();
         }
     })
+
+    // @ts-ignore
+    router.push({ path: router.history.pending.fullPath})
 })
 
 export default router;
