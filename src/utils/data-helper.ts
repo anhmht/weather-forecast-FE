@@ -205,4 +205,17 @@ export class DataHelper {
         }
         return text;
     }
+
+    static generateColorByString(str: string) {
+        str = str || "";
+        let hash = 0;
+        const s = 90; // saturation
+        const l = str ? 25: 100; // lightness
+        for (let i = 0; i < str.length; i++) {
+            hash = str.charCodeAt(i) + ((hash << 5) - hash);
+        }
+
+        let h = hash % 360;
+        return 'hsl('+h+', '+s+'%, '+l+'%)';
+    }
 }

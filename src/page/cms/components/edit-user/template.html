@@ -13,16 +13,20 @@
                 <div class="base-cms-right--body_wrapper_inner-left">
                     <div class="base-cms-right--body_account d-flex flex-wrap justify-between">
                         <div class="base-cms-right--body_account-item">
-                            <div>Họ</div>
+                            <div class="mb-2">Họ</div>
                             <v-text-field outlined dense :rules="rules.firstName" v-model="userModel.firstName"></v-text-field>
                         </div>
                         <div class="base-cms-right--body_account-item">
-                            <div>Tên</div>
+                            <div class="mb-2">Tên</div>
                             <v-text-field outlined dense :rules="rules.lastName" v-model="userModel.lastName"></v-text-field>
                         </div>
                         <div class="base-cms-right--body_account-item">
-                            <div>Tên tài khoản</div>
+                            <div class="mb-2">Tên tài khoản</div>
                             <v-text-field outlined dense :rules="rules.userName" v-model="userModel.userName"></v-text-field>
+                        </div>
+                        <div class="base-cms-right--body_account-item">
+                            <div class="mb-2">Email</div>
+                            <v-text-field disabled outlined dense :value="userModel.email"></v-text-field>
                         </div>
                     </div>
         
@@ -52,7 +56,10 @@
                             <div class="mb-2">Hình ảnh</div>
                             <div class="d-flex align-center">
                                 <div style="position: relative;" class="mr-6">
-                                    <img :src="uploadedDocs" />
+                                    <img v-if="dtAvatarUrl && dtAvatarUrl !== '' " :src="dtAvatarUrl" @error="onImgError" />
+                                    <v-avatar v-else :color="color" size="150" rounded>
+                                        <span class="white--text">{{lastLetter}}{{firstLetter}}</span>
+                                    </v-avatar>
                                     <v-progress-circular v-if="progress > 0" class="progress-bar" :rotate="-90" :size="100"
                                         :width="15" :value="progress" color="primary">
                                         {{ progress }}

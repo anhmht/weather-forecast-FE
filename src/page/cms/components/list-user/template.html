@@ -56,13 +56,13 @@
                                 <td>{{ item.status }}</td>
                                 <td class="base-cms-right--body_table_action">
                                     <v-icon v-if="isDisplayButton" @click.native="editUser(item.email)" class="edit-action">mdi-square-edit-outline</v-icon>
-                                    <v-icon v-if="isDisplayButton" @click.native="handleDeleteUser(item.email)" class="delete-action">mdi-delete</v-icon>
+                                    <!-- <v-icon v-if="isDisplayButton" @click.native="handleDeleteUser(item.email)" class="delete-action">mdi-delete</v-icon> -->
                                     <v-tooltip top>
                                         <template v-slot:activator="{ on, attrs }">
                                             <v-icon v-bind="attrs"
                                                 v-on="on"
-                                                @click.native="handleDeleteUser(item.userId)" 
-                                                color="primary">mdi-account-off-outline</v-icon>
+                                                @click.native="handleDeleteUser(item.email)"
+                                                color="error">mdi-account-off-outline</v-icon>
                                         </template>
                                         <span>Khóa tài khoản</span>
                                     </v-tooltip>
@@ -87,7 +87,7 @@
     <v-dialog v-model="visibleConfirm" max-width="450">
         <v-card>
             <v-card-title class="text-h5">
-                Bạn có muốn xoá người dùng này?
+                Bạn có muốn khóa tài khoản này?
             </v-card-title>
             <v-card-actions>
                 <v-spacer></v-spacer>

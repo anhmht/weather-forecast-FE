@@ -1,9 +1,9 @@
 import Vue from "vue";
 import Component from "vue-class-component";
-import NO_IMAGE from '../../../../../static/img/no-image/no-image.png';
 import { UploadServices } from '@/service/upload-service/upload.service';
 import { IUser, User } from "@/model/user";
 import { UserServices } from "@/service/user-service/user.service";
+import { DataHelper } from "@/utils/data-helper";
 
 @Component({
     template: require("./template.html").default,
@@ -14,7 +14,7 @@ export default class EditUserComponent extends Vue {
     uploadservice: UploadServices = new UploadServices();
     userService: UserServices = new UserServices();
     valid: boolean = true;
-    uploadedDocs: any = NO_IMAGE;
+    dtAvatarUrl: any = '';
     progress: number = 0;
     userModel: IUser = new User({});
     roleList: any = [];
@@ -59,6 +59,18 @@ export default class EditUserComponent extends Vue {
     set roles (val) {
     }
 
+    get firstLetter () {
+        return this.userModel.firstName ? this.userModel.firstName.charAt(0) : "";
+    }
+
+    get lastLetter () {
+        return this.userModel.lastName ? this.userModel.lastName.charAt(0) : "";
+    }
+
+    get color () {
+        return DataHelper.generateColorByString(this.userModel.userName);
+    }
+    
     handleClickOnRole (val) {
         let index = this.roles.indexOf(val);
         if (index === -1) {
@@ -96,12 +108,12 @@ export default class EditUserComponent extends Vue {
     }
 
     reset() {
-        this.uploadedDocs = NO_IMAGE;
+        this.dtAvatarUrl = '';
         this.progress = 0;
     }
 
     onChangeDocuments(pics) {
-        if (pics.length > 0) {
+        if (pics && pics.length > 0) {
             this.processUploadDocuments(pics[0]);
         }
     }
@@ -133,7 +145,7 @@ export default class EditUserComponent extends Vue {
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = () => {
-            this.uploadedDocs = reader.result
+            this.dtAvatarUrl = reader.result
         };
     }
 
@@ -167,6 +179,10 @@ export default class EditUserComponent extends Vue {
         return formData;
     }
 
+    onImgError (event) {
+        this.dtAvatarUrl = '';
+    }
+
     async mounted() {
         await this.userService.getAllRole().then((res: any) => {
             this.roleList = res;
@@ -177,7 +193,7 @@ export default class EditUserComponent extends Vue {
         this.userService.getUserInfoByEmail(this.$route.params.email).then((res: any) => {
             this.userModel = res;
             this.userModel.roleNames = res.roles;
-            this.uploadedDocs = res.avatarUrl;
+            this.dtAvatarUrl = res.avatarUrl;
         }).catch(error => {
             this.$errorMessage(error);
         });

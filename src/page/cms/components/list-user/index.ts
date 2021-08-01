@@ -74,7 +74,7 @@ export default class ListUserComponent extends Vue {
         }
         this.getUsersByPaging();
         this.visibleConfirm = false;
-        this.$toast.success('Xóa người dùng thành công');
+        this.$toast.success('Khóa tài khoản thành công');
     }
 
     async getUsersByLimit(value = null) {

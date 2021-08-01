@@ -13,23 +13,23 @@
                 <div class="base-cms-right--body_wrapper_inner-left">
                     <div class="base-cms-right--body_account d-flex flex-wrap justify-between">
                         <div class="base-cms-right--body_account-item">
-                            <div>Họ</div>
+                            <div class="mb-2">Họ</div>
                             <v-text-field outlined dense :rules="rules.firstName" v-model="userModel.firstName"></v-text-field>
                         </div>
                         <div class="base-cms-right--body_account-item">
-                            <div>Tên</div>
+                            <div class="mb-2">Tên</div>
                             <v-text-field outlined dense :rules="rules.lastName" v-model="userModel.lastName"></v-text-field>
                         </div>
                         <div class="base-cms-right--body_account-item">
-                            <div>Tên tài khoản</div>
+                            <div class="mb-2">Tên tài khoản</div>
                             <v-text-field outlined dense :rules="rules.userName" v-model="userModel.userName"></v-text-field>
                         </div>
                         <div class="base-cms-right--body_account-item">
-                            <div>Email</div>
+                            <div class="mb-2">Email</div>
                             <v-text-field outlined dense :rules="rules.email" v-model="userModel.email"></v-text-field>
                         </div>
                         <div class="base-cms-right--body_account-item">
-                            <div>Mật khẩu</div>
+                            <div class="mb-2">Mật khẩu</div>
                             <v-text-field outlined dense :rules="rules.password" v-model="userModel.password"
                                 type="password" :append-icon="isShowPassword ? 'mdi-eye' : 'mdi-eye-off'"
                                 :type="isShowPassword ? 'text' : 'password'"
