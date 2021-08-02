@@ -67,8 +67,8 @@ export class UserServices extends GenericServices {
         }).catch(error => Promise.reject(error))
     }
 
-    confirmEmail(userMisc: IUserMisc): Promise<ApiResponse> {
-        return super.executeSelectingPost(userMisc, Uri.confirmEmail).then((response: ApiResponse) => {
+    confirmEmail(payload: { userId, code }): Promise<ApiResponse> {
+        return super.executeSelectingPost(payload, Uri.confirmEmail).then((response: ApiResponse) => {
             return response.isSuccess ? Promise.resolve(response.data) : Promise.reject(response.message);
         }).catch(error => Promise.reject(error))
     }

@@ -1,3 +1,4 @@
+import { ROUTE_NAME } from "@/constant/route-constant";
 import { UserServices } from "@/service/user-service/user.service";
 import Vue from "vue";
 import Component from "vue-class-component";
@@ -12,7 +13,6 @@ export default class ForgotPasswordPageComponent extends Vue {
     valid: boolean = true;
     isLoading: boolean = false;
     email: string = null;
-    visibleConfirm: boolean = false;
     userService: UserServices = new UserServices();
 
     rules = {
@@ -31,7 +31,7 @@ export default class ForgotPasswordPageComponent extends Vue {
                 email: this.email
             }).then(res => {
                 this.isLoading = false;
-                this.visibleConfirm = true;
+                this.gotoVerify(this.email);
             }).catch(err => {
                 this.$errorMessage(err);
                 this.isLoading = false;
@@ -39,19 +39,8 @@ export default class ForgotPasswordPageComponent extends Vue {
         }
     }
 
-    handleResendEmail() {
-        //@ts-ignore
-        this.valid = this.$refs.forgotPasswordForm.validate();
-        if(this.valid) {
-            this.isLoading = true;
-            this.userService.resendEmail(this.email).then(res => {
-                this.isLoading = false;
-                this.visibleConfirm = true;
-            }).catch(err => {
-                this.$errorMessage(err);
-                this.isLoading = false;
-            });
-        }
+    gotoVerify (email) {
+        this.$router.push({ name: ROUTE_NAME.VERIFYING_EMAIL, query: { "reset-password": email}});
     }
 
 }

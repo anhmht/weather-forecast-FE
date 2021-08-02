@@ -1,4 +1,4 @@
-import { ROUTE_NAME } from "@/constant/route-constant";
+import { PATH, ROUTE_NAME } from "@/constant/route-constant";
 import { IUserMisc, UserMisc } from "@/model/user";
 import { UserServices } from "@/service/user-service/user.service";
 import Vue from "vue";
@@ -50,10 +50,13 @@ export default class ResetPasswordPageComponent extends Vue {
             this.userService.resetPassword(this.userMisc).then(res => {
                 this.isLoading = false;
                 this.$toast.success('Đặt lại mật khẩu thành công');
-                this.$router.push(ROUTE_NAME.LOGIN);
+                
+                setTimeout(() => {
+                    this.$router.push( { path: PATH.LOGIN } );
+                }, 2000);
             }).catch(err => {
                 this.$toast.error('Có lỗi khi đặt lại mật khẩu');
-                this.$errorMessage(err);
+                // this.$errorMessage(err);
                 this.isLoading = false;
             });
         }
