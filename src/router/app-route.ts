@@ -15,6 +15,7 @@ const PageNotAuthorizedComponent = () => import("../page/not-authorized/PageNotA
 const ForgotPasswordPageComponent = () => import("../page/forgot-password/ForgotPasswordPageComponent.vue");
 const ResetPasswordPageComponent = () => import("../page/reset-password/ResetPasswordPageComponent.vue");
 const RegisterPageComponent = () => import("../page/register/RegisterPageComponent.vue");
+const VerifyingEmailComponent = () => import("../page/verifying-email/VerifyingEmailComponent.vue");
 
 const UserProfileComponent = () => import("../page/user-profile/UserProfileComponent.vue");
 const UserInfoComponent = () => import("../page/user-profile/components/user-info/UserInfoComponent.vue");
@@ -96,6 +97,12 @@ const homeRoutes = [
         meta: {
             guest: true
         }
+    },
+    {
+        path: PATH.VERIFYING_EMAIL,
+        name: ROUTE_NAME.VERIFYING_EMAIL,
+        component: VerifyingEmailComponent,
+        props: {},
     },
     {
         path: PATH.REGISTER,

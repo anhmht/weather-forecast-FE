@@ -15,10 +15,17 @@
                 <v-text-field placeholder="Email" v-model="userModel.email" :rules="rules.email" />
             </div>
             <div style="margin-top: 20px;">
-                <v-text-field type="password" placeholder="Mật khẩu" v-model="userModel.password" :rules="rules.password" />
+                <v-text-field placeholder="Mật khẩu" v-model="userModel.password" :rules="rules.password" 
+                :append-icon="showPass ? 'mdi-eye' : 'mdi-eye-off'"
+                :type="showPass ? 'text' : 'password'"
+                @click:append="showPass = !showPass"
+            />
             </div>
             <div style="margin-top: 20px;">
-                <v-text-field type="password" placeholder="Nhập lại mật khẩu" v-model="confirmPassword" :rules="rules.confirmPassword" />
+                <v-text-field type="password" placeholder="Nhập lại mật khẩu" v-model="confirmPassword" :rules="rules.confirmPassword"
+                :append-icon="showConfirmPass ? 'mdi-eye' : 'mdi-eye-off'"
+                :type="showConfirmPass ? 'text' : 'password'"
+                @click:append="showConfirmPass = !showConfirmPass"/>
             </div>
         </v-form>
         <div class="register-page-container-wrapper--btn-register">

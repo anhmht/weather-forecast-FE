@@ -17,6 +17,9 @@ export default class ForgotPasswordPageComponent extends Vue {
     userModel: IUser = new User({});
     confirmPassword: string = null;
 
+    showPass: boolean = false;
+    showConfirmPass: boolean = false;
+
     rules = {
         userName: [
             v => !!v || 'Vui lòng nhập tên tài khoản',
@@ -54,6 +57,10 @@ export default class ForgotPasswordPageComponent extends Vue {
         return true;
     }
 
+    gotoVerify (email) {
+        this.$router.push({ name: ROUTE_NAME.VERIFYING_EMAIL, query: {email: email}});
+    }
+
     handleRegister() {
         //@ts-ignore
         this.valid = this.$refs.registerForm.validate();
@@ -62,10 +69,11 @@ export default class ForgotPasswordPageComponent extends Vue {
             this.userService.register(this.userModel).then(res => {
                 this.$toast.success('Đăng kí tài khoản thành công');
                 this.isLoading = false;
-                this.$router.push(PATH.LOGIN);
+                this.gotoVerify(this.userModel.email);
             }).catch(err => {
                 this.$toast.error('Có lỗi khi đăng kí tài khoản');
-                this.$errorMessage(err);
+                console.log(err);
+                // this.$errorMessage(err);
                 this.isLoading = false;
             })
         }

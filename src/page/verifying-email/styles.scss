@@ -1,0 +1,63 @@
+.confirm-announce-container {
+    background-image: url(/static/img/login-page/bg.png);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding: 15vh 0;
+    font-family: 'Roboto', sans-serif;
+    overflow: hidden;
+    &-wrapper {
+        background: #fff;
+        border-radius: 10px;
+        width: 100%;
+        padding: 60px 50px 40px 50px;
+        max-width: 700px;
+        min-width: 500px;
+        
+        margin: auto;
+        
+        &--title {
+            margin-bottom: 20px;
+            width: 100%;
+            line-height: 46px;
+            font-size: 34px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color:$primary-color;
+            position: relative;
+            &::before {
+                content: "";
+                width: 5px;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                left: -50px;
+                background:$primary-color;
+            }
+        }
+        &::before {
+            content: "";
+            width: 92%;
+            height: 30px;
+            border-radius: 10px;
+            position: absolute;
+            top: -10px;
+            background: rgba(255, 255, 255, 0.6);
+            left: 5%;
+            z-index: -1;
+        }
+
+        &--link {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            color: gray;
+            &-action {
+                margin-left: 5px;
+                cursor: pointer;
+                color: #2196f3;
+            }
+        }
+    }
+
+}
