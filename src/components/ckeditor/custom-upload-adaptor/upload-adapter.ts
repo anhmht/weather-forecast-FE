@@ -1,4 +1,4 @@
-import { BASE_URL } from '../../../constant/common-constant';
+import { BASE_URL } from '../../../constant/env-constant';
 import Uri from '../../../constant/uri/upload-constants';
 import { UploadServices } from '@/service/upload-service/upload.service';
 
