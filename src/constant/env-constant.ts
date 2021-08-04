@@ -1,1 +1,1 @@
-export const BASE_URL = 'https://weathermanagementdev.azurewebsites.net/';
+export const BASE_URL = 'https://weathermanagement.azurewebsites.net/';
