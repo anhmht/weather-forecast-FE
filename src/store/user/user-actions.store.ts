@@ -1,4 +1,4 @@
-import { BASE_URL } from '@/constant/common-constant';
+import { BASE_URL } from '@/constant/env-constant';
 import userConstant from '@/constant/uri/user-constant';
 import { getLocalStorage, removeLocalStorage, setAxiosHeader, setLocalStorage } from '@/utils/appConfig';
 import axios from 'axios';
