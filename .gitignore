@@ -4,3 +4,4 @@ yarn-error.log
 .vscode
 dist/
 package-lock.json
+src/constant/env-constant.ts
