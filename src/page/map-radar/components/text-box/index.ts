@@ -8,10 +8,17 @@ import { sleep } from "@/utils/common-utils";
 })
 export default class TextBoxComponent extends Vue {
     renderData: any = [];
+    isReset: boolean = false;
+    clearTimeout: any = {
+        timeout: null,
+    }
 
     async handleRenderTextBox(textbox) {
-        let clear = { timeout: null };
-        await sleep(textbox.startTime, clear);
+        this.isReset = true;
+        await sleep(textbox.startTime, this.clearTimeout);
+        if (!this.isReset) {
+            return;
+        }
         this.renderData.push({
             ...textbox,
             class: `animate__zoomIn ${textbox.position}`,
@@ -23,7 +30,13 @@ export default class TextBoxComponent extends Vue {
                 this.renderData[index].class = `${textbox.position}`
             }, 500);
         }
-        await sleep(textbox.duration, clear);
+        if (!this.isReset) {
+            return;
+        }
+        await sleep(textbox.duration, this.clearTimeout);
+        if (!this.isReset) {
+            return;
+        }
         index = this.renderData.findIndex(x => x.id === textbox.id);
         if (index > -1) {
             this.renderData[index].class = `animate__zoomOut ${textbox.position}`
@@ -32,6 +45,12 @@ export default class TextBoxComponent extends Vue {
                 this.renderData.splice(index, 1);
             }, 500);
         }
+    }
+
+    clearData() {
+        clearTimeout(this.clearTimeout.timeout);
+        this.renderData = [];
+        this.isReset = false;
     }
 
     getContent(content) {

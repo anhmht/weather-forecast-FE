@@ -15,7 +15,7 @@
                         <div class="mb-2">Tiêu đề</div>
                         <v-text-field outlined dense :rules="rules.title" v-model="postModel.title"></v-text-field>
                     </div>
-                    
+
                     <div v-if="!isShownTextBox" class="base-cms-right--body_left_editor pa-5">
                         <div class="mb-2">Nội dung</div>
                         <div style="width: 100%">
@@ -27,8 +27,8 @@
                         <div class="mb-2">Link YouTube</div>
                         <v-text-field outlined dense :rules="rules.title" v-model="postModel.content"></v-text-field>
                         <iframe v-if="YouTubeVideoId" width="560" height="315" :src="YouTubeVideoId"
-                            title="YouTube video player" frameborder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            title="YouTube video player" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowfullscreen>
                         </iframe>
                     </div>
@@ -36,7 +36,7 @@
                         <v-btn depressed color="primary" @click="createPost()">Lưu tin</v-btn>
                     </div>
                 </div>
-    
+
                 <div v-if="!isShownButton" class="base-cms-right--body_setting pa-5">
                     <div v-if="isShownUpload" class="base-cms-right--body_setting--upload">
                         <div style="position: relative;">

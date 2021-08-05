@@ -13,6 +13,10 @@ import Component from 'vue-class-component';
 })
 export default class CustomVideoForecastProvince extends Vue {
     provinceData: any = null;
+    isReset: boolean = false;
+    clearTimeout: any = {
+        timeout: null,
+    }
 
     get videoLayout() {
         if (!this.provinceData) return;
@@ -27,13 +31,18 @@ export default class CustomVideoForecastProvince extends Vue {
 
     async renderProvinceData(data) {
         console.log(data);
-        
-        let clear = { timeout: null };
-        await sleep(data.startTime, clear);
+        this.isReset = true;
+        await sleep(data.startTime, this.clearTimeout);
+        if (!this.isReset) {
+            return;
+        }
         data.class = `animate__zoomIn ${data.position}`
         data.style = data.customPosition ? `left: ${data.left}px; top: ${data.top}px; transform: none; right: unset; bottom: unset` : ``
         this.provinceData = data;
-        await sleep(data.duration, clear);
+        await sleep(data.duration, this.clearTimeout);
+        if (!this.isReset) {
+            return;
+        }
         this.provinceData = {
             ...this.provinceData,
             class: `animate__zoomOut ${data.position}`
@@ -41,5 +50,11 @@ export default class CustomVideoForecastProvince extends Vue {
         setTimeout(() => {
             this.provinceData = {}
         }, 1000);
+    }
+
+    clearData() {
+        clearTimeout(this.clearTimeout.timeout);
+        this.provinceData = null;
+        this.isReset = false;
     }
 }

@@ -1,6 +1,6 @@
 {
-  "name": "temp",
-  "version": "0.1.0",
+  "name": "dev",
+  "version": "1.0.0",
   "homepage": "https://anhmht.github.io/weather-forecast-FE/",
   "private": true,
   "scripts": {

@@ -1,4 +1,4 @@
-import { BASE_URL } from './constant/common-constant';
+import { BASE_URL } from './constant/env-constant';
 import Vue from "vue";
 import App from "./app/App.vue";
 import Component from "vue-class-component";

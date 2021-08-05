@@ -9,21 +9,40 @@ import Component from 'vue-class-component';
 })
 export default class VideoMapTitleComponent extends Vue {
     title: any = {};
+    isReset: boolean = false;
+    clearTimeout: any = {
+        timeout: null,
+    }
 
     async renderMapTitle(title) {
-        let clear = { timeout: null };
-        await sleep(title.startTime, clear);
+        this.isReset = true;
+        await sleep(title.startTime, this.clearTimeout);
+        if (!this.isReset) {
+            return;
+        }
         title.class = `animate__zoomIn ${title.position}`
         title.style = title.customPosition ? `left: ${title.left}px; top: ${title.top}px; width:${title.width}px; transform: none; right: unset; bottom: unset` : ``
         this.title = title;
-        await sleep(title.duration, clear);
+        if (!this.isReset) {
+            return;
+        }
+        await sleep(title.duration, this.clearTimeout);
         this.title = {
             ...this.title,
             class: `animate__zoomOut ${title.position}`
         }
+        if (!this.isReset) {
+            return;
+        }
         setTimeout(() => {
             this.title = {}
         }, 1000);
+    }
+
+    clearData() {
+        clearTimeout(this.clearTimeout.timeout);
+        this.title = {};
+        this.isReset = false;
     }
 
     getContent(content) {

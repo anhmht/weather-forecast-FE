@@ -59,12 +59,12 @@ export default class TimePageComponent extends Vue {
     humidByHour: any = [];
     iconByHour: any = [];
     activeTab: number = 1
-
+    // step: number = 0;
 
     // handleTest() {
     //     const message = {
     //         event: 'START',
-    //         scenarioId: '0',
+    //         scenarioId: 'c2257428-6c24-4957-778e-08d94d39a34a',
 
     //     }
     //     this.$socket.sendMessage(JSON.stringify(message));
@@ -73,10 +73,11 @@ export default class TimePageComponent extends Vue {
     // handleMove() {
     //     const message = {
     //         event: 'MOVE',
-    //         scenarioId: '0',
+    //         scenarioId: 'c2257428-6c24-4957-778e-08d94d39a34a',
     //         requestID: '123',
-    //         step: 0
+    //         step: this.step
     //     }
+    //     this.step += 1;
     //     this.$socket.sendMessage(JSON.stringify(message));
     // }
 
@@ -178,19 +179,21 @@ export default class TimePageComponent extends Vue {
 
     getMostFrequentByDay(data, result, weatherType) {
         for (let i = DATE.CURRENT; i <= DATE.NEXT_4_DAY; i++) {
-            const mostFrequent = DataHelper.getMostFrequent(data.weatherInformationByDays[i].weatherInformationByHours, weatherType);
+            if (data.weatherInformationByDays[i].weatherInformationByHours.length > 0) {
+                const mostFrequent = DataHelper.getMostFrequent(data.weatherInformationByDays[i].weatherInformationByHours, weatherType);
 
-            if (weatherType === WEATHER_TYPE.Weather) {
-                const icon = ICON.find(x => x.id === mostFrequent)
-                if (icon) {
+                if (weatherType === WEATHER_TYPE.Weather) {
+                    const icon = ICON.find(x => x.id === mostFrequent)
+                    if (icon) {
+                        result.push({
+                            data: icon.url
+                        });
+                    }
+                } else {
                     result.push({
-                        data: icon.url
+                        data: mostFrequent
                     });
                 }
-            } else {
-                result.push({
-                    data: mostFrequent
-                });
             }
         }
     }
@@ -230,16 +233,18 @@ export default class TimePageComponent extends Vue {
         this.currentDayWindDir = WIND_DIRECTION[this.windDirByDay[0].data].abbr;
 
         for (let i = DATE.NEXT_DAY; i <= DATE.NEXT_4_DAY; i++) {
-            this.weatherByDay.push({
-                day: moment().add(i, 'days').format('dddd'),
-                icon: this.iconByDay[i].data,
-                temp: this.tempMinMaxByDay[i].min + '°C - ' + this.tempMinMaxByDay[i].max + '°C',
-                precip: this.precipMinMaxByDay[i].min + ' - ' + this.precipMinMaxByDay[i].max + ' mm',
-                windLvl: this.windLvlMinMaxByDay[i].min + ' - ' + this.windLvlMinMaxByDay[i].max + ' m/s',
-                windSpd: this.windSpdMinMaxByDay[i].min + ' - ' + this.windSpdMinMaxByDay[i].max + ' m/s',
-                humid: this.humidMinMaxByDay[i].min + '% - ' + this.humidMinMaxByDay[i].max + '%',
-                windDir: WIND_DIRECTION[this.windDirByDay[i].data].abbr
-            });
+            if (this.iconByDay[i] !== undefined && this.windDirByDay[i] !== undefined) {
+                this.weatherByDay.push({
+                    day: moment().add(i, 'days').format('dddd'),
+                    icon: this.iconByDay[i].data,
+                    temp: this.tempMinMaxByDay[i].min + '°C - ' + this.tempMinMaxByDay[i].max + '°C',
+                    precip: this.precipMinMaxByDay[i].min + ' - ' + this.precipMinMaxByDay[i].max + ' mm',
+                    windLvl: this.windLvlMinMaxByDay[i].min + ' - ' + this.windLvlMinMaxByDay[i].max + ' m/s',
+                    windSpd: this.windSpdMinMaxByDay[i].min + ' - ' + this.windSpdMinMaxByDay[i].max + ' m/s',
+                    humid: this.humidMinMaxByDay[i].min + '% - ' + this.humidMinMaxByDay[i].max + '%',
+                    windDir: WIND_DIRECTION[this.windDirByDay[i].data].abbr
+                });
+            }
         }
     }
 

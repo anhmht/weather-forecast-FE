@@ -100,12 +100,16 @@
             <div class="preview-dialog-body">
                 <div class="preview-dialog-body--video">
                     <video :src="media" autoplay loop>
-                        <source :src="media" type="application/x-mpegurl">
+                        <source :src="media" type="video/mp4">
                     </video>
                 </div>
                 <div class="preview-dialog-body--action">
                     <v-btn @click="handleDownload()" color="primary">
                         Tải Xuống
+                        <v-icon color="white">mdi-download</v-icon>
+                    </v-btn>
+                    <v-btn @click="handleUpload()" color="primary">
+                        Xử lý video
                         <v-icon color="white">mdi-download</v-icon>
                     </v-btn>
                 </div>

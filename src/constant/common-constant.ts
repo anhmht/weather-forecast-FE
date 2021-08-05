@@ -1,4 +1,3 @@
-export const BASE_URL = 'https://weathermanagement.azurewebsites.net/';
 export const BASE_CLOUD_URL = 'https://weatherstoragevn.blob.core.windows.net/';
 export const DATE = {
     CURRENT: 0,
