@@ -2,8 +2,7 @@
     <div v-if="email"  class="confirm-announce-container-wrapper">
         <div class="confirm-announce-container-wrapper--title">Xác minh tài khoản</div>
         <div class="d-flex flex-column justify-center">
-            <div>Một email xác minh đã được gửi đến email<span v-if="email"><b>: {{email}}</b></span><span v-else> của bạn</span></div>
-            <div>Hãy vào đường liên kết trong email xác minh để hoàn tất quá trình đăng ký.</div>
+            <div v-html="content"></div>
             <div  v-if="!isResending" class="confirm-announce-container-wrapper--link">
                 <div>Nhấn gửi lại nếu bạn chưa nhận được email.</div>
                 <div class="confirm-announce-container-wrapper--link-action" @click="resendEmail()">Gửi lại</div>

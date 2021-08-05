@@ -13,13 +13,23 @@ export default class VerifyingEmailComponent extends Vue {
     
     email: any = null;
     isResending: boolean = false;
-    isLoading: boolean = false;
+    isLoading: boolean = true;
     isError: boolean = false;
 
     userService: UserServices = new UserServices();
 
     get isVerifyingEmail () {
         return (this.$route.query.uid && this.$route.query.code);
+    }
+
+    get isResetPassword () {
+        return !!this.$route.query["reset-password"];
+    }
+
+    get content () {
+        let txt = `<div>Một email xác minh đã được gửi đến email${ this.email ? ': <b>' + this.email +'</b>' : ' của bạn'}</div>
+        <div>Hãy vào đường liên kết trong email xác minh để ${ this.isResetPassword ? 'tạo mới mật khẩu.' : 'hoàn tất quá trình đăng ký.'}</div>`;
+        return txt;
     }
 
     resendEmail() {
@@ -53,7 +63,6 @@ export default class VerifyingEmailComponent extends Vue {
     }
 
     mounted () {
-        debugger
         if (this.$route.query.email) {
             this.email = this.$route.query.email;
         } else if (this.$route.query["reset-password"]){

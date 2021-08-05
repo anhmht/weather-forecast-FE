@@ -67,11 +67,11 @@ export default class ForgotPasswordPageComponent extends Vue {
         if(this.valid) {
             this.isLoading = true;
             this.userService.register(this.userModel).then(res => {
-                this.$toast.success('Đăng kí tài khoản thành công');
+                this.$toast.success('Đăng ký tài khoản thành công');
                 this.isLoading = false;
                 this.gotoVerify(this.userModel.email);
             }).catch(err => {
-                this.$toast.error('Có lỗi khi đăng kí tài khoản');
+                this.$toast.error('Có lỗi khi đăng ký tài khoản');
                 console.log(err);
                 // this.$errorMessage(err);
                 this.isLoading = false;

@@ -103,24 +103,36 @@ const homeRoutes = [
         name: ROUTE_NAME.VERIFYING_EMAIL,
         component: VerifyingEmailComponent,
         props: {},
+        meta: {
+            guest: true
+        }
     },
     {
         path: PATH.REGISTER,
         name: ROUTE_NAME.REGISTER,
         component: RegisterPageComponent,
-        props: {}
+        props: {},
+        meta: {
+            guest: true
+        }
     },
     {
         path: PATH.FORGOT_PASSWORD,
         name: ROUTE_NAME.FORGOT_PASSWORD,
         component: ForgotPasswordPageComponent,
-        props: {}
+        props: {},
+        meta: {
+            guest: true
+        }
     },
     {
         path: PATH.RESET_PASSWORD,
         name: ROUTE_NAME.RESET_PASSWORD,
         component: ResetPasswordPageComponent,
-        props: {}
+        props: {},
+        meta: {
+            guest: true
+        }
     },
     {
         path: PATH.NOT_AUTHORIZED,
