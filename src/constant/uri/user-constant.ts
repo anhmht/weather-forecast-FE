@@ -9,7 +9,7 @@ export default {
     forgotPassword: '/api/Account/forgot-password',
     resetPassword: '/api/Account/reset-password',
     resendEmail: '/api/Account/resend-verification-email',
-    confirmEmail: '​/api/Account/confirm-email',
+    confirmEmail: '/api/Account/confirm-email',
     changePassword: '/api/Account/change-password',
     deleteUser: '/api/Account/:email',
     getUserInfoByUserId: '/api/Account/get-user-detail/:userId'

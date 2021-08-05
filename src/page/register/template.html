@@ -1,6 +1,6 @@
 <div class="register-page-container">
     <div class="register-page-container-wrapper">
-        <div class="register-page-container-wrapper--title">Đăng kí</div>
+        <div class="register-page-container-wrapper--title">Đăng ký</div>
         <v-form ref="registerForm" v-model="valid" lazy-validation>
             <div>
                 <v-text-field placeholder="Tên tài khoản" v-model="userModel.userName" :rules="rules.userName" />
@@ -30,7 +30,7 @@
         </v-form>
         <div class="register-page-container-wrapper--btn-register">
             <v-btn @click="handleRegister()" :loading="isLoading" :disabled="isLoading">
-                Đăng kí
+                Đăng ký
                 <template v-slot:loader>
                     <span class="custom-loader">
                         <v-icon light>mdi-cached</v-icon>
