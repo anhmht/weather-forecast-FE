@@ -167,8 +167,33 @@
 }
 
 .base-header-menu--sub {
-    cursor: pointer;
-    &:hover {
-        color: $primary-color;
+    width: 250px;
+
+    &-username {
+        padding-left: 10px;
+    }
+
+    &-email {
+        padding: 0px 0px 10px 10px;
+    }
+
+    &-logout {
+        color: red;
+        cursor: pointer;
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        border-top: solid 1px #e9e9e9;
+    }
+
+    &-item {
+        cursor: pointer;
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        border-top: solid 1px #e9e9e9;
+        &:hover {
+            color: $primary-color;
+        }
     }
 }
