@@ -71,6 +71,15 @@ export default class MenuComponent extends Vue {
         return null;
     }
 
+    get isAdmin () {
+        if (this.loginInfo && this.loginInfo["roles"]) {
+            return !!this.loginInfo["roles"].find(r => r === USER_ROLE)
+            || !!this.loginInfo["roles"].find(r => r === USER_ROLE.KTTV)
+            || !!this.loginInfo["roles"].find(r => r === USER_ROLE.DTH)
+        }
+        return false;
+    }
+
     isShowLoginButton(path) {
         if (path === PATH.LOGIN && this.loginInfo) {
             return false;

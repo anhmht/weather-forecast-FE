@@ -32,12 +32,16 @@
                                     style="margin: 0px 20px;" hide-details dense v-model="region" dark
                                     @change="handleChangeRegion">
                                 </v-select>
-                                <br/> {{timestamp}}
+                                <br/>
+                                <div v-html="timestamp || '<br/>'"></div>
                             </div>
                             <div class="info-current-forecast-body">
                                 <div v-if="temparatureData" justify="center" class="info-current-forecast-body-icon">
                                         <img :src="temparatureData ? temparatureData.icon : null">
                                         <div class="info-current-forecast-body--info">{{temparatureData.desc}}</div>
+                                </div>
+                                <div v-else justify="center" class="info-current-forecast-body-icon">
+                                    <v-text-field color="primary" :loading="!temparatureData" disabled></v-text-field>
                                 </div>
                             </div>
                         </div>
