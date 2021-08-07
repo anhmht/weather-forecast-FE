@@ -118,6 +118,12 @@ export default class MenuCMSComponent extends Vue {
                 accept: USER_ROLE.KTTV
             },
             {
+                title: CMS_MENU.COMMUNITY_LIST,
+                icon: 'mdi-comment-account-outline',
+                name: ROUTE_NAME.COMMUNITY_LIST,
+                accept: USER_ROLE.SUPER
+            },
+            {
                 title: CMS_MENU.THONG_TIN_CHI_DAO,
                 icon: 'mdi-bullhorn',
                 name: ROUTE_NAME.LIST_DOCUMENT,

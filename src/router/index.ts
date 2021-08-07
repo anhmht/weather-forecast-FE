@@ -62,16 +62,7 @@ store.dispatch('user/' + userTypesStore.Set.Auth).then(() => {
         } else if (to.matched.some(record => record.meta.guest)) { // Each route required Guest
             let user = store.getters['user/' + userTypesStore.Get.Auth];
             if (user) {
-                const isSuperAmin = !!user.roles.find(r => r === USER_ROLE.SUPER);
-                const isKTTV = !!user.roles.find(r => r === USER_ROLE.KTTV);
-
-                if (isSuperAmin) {
-                    next({ path: PATH.ADMIN, params: { role: 'admin' } });
-                } else if (isKTTV) {
-                    next({ name: ROUTE_NAME.LIST_POST, params: { category: KTTV_CATEGORY_NAME[0] } })
-                } else {
-                    next({ name: ROUTE_NAME.LIST_DOCUMENT })
-                }
+                next({ name: ROUTE_NAME.USER_INFO });
             }
             else {
                 next();
