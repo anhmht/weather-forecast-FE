@@ -168,9 +168,10 @@
 
 .base-header-menu--sub {
     width: 250px;
+    padding: 0px;
 
     &-username {
-        padding-left: 10px;
+        padding: 5px 0px 0px 10px;
     }
 
     &-email {
