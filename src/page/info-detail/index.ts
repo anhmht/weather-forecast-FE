@@ -19,6 +19,8 @@ export default class InfoDetailPageComponent extends Vue {
     postModel: IPost = new Post({});
     relativePosts: any = [];
     pageTitle: string = null;
+    GET_POST_LIMIT: number = 11;
+    GET_POST_PAGE: number = 1;
 
     handleViewDetail(postId) {
         this.$router.push({ name: ROUTE_NAME.INFO_DETAIL , params: { id: postId } })
@@ -34,9 +36,9 @@ export default class InfoDetailPageComponent extends Vue {
             });
 
         // Get relative posts
-        await this.postService.getPostByCategoryAndStatus(this.postModel.categoryId, this.postModel.statusId)
+        await this.postService.getPostByCategoryAndStatus(this.postModel.categoryId, this.postModel.statusId, this.GET_POST_LIMIT, this.GET_POST_PAGE)
             .then((res: any) => {
-                this.relativePosts = res.filter(x => x.eventId !== this.$route.params.id);
+                this.relativePosts = res.events.filter(x => x.eventId !== this.$route.params.id);
             }).catch(error => {
                 this.$errorMessage(error);
             });

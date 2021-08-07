@@ -31,9 +31,21 @@
             &_item {
                 display: flex;
                 cursor: pointer;
-                &:hover {
+
+                &_title {
                     h4 {
-                        color: $primary-color;
+                        height: 60px;
+                        line-height: 20px;
+                        display: -webkit-box;
+                        -webkit-line-clamp: 3;
+                        -webkit-box-orient: vertical;
+                        overflow: hidden;
+                    }
+
+                    &:hover {
+                        h4 {
+                            color: $primary-color;
+                        }
                     }
                 }
 
