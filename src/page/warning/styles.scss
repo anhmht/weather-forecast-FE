@@ -77,20 +77,17 @@
         &_item {
             display: flex;
             cursor: pointer;
-            margin-bottom: 20px;
 
             img {
-                width: 35%;
-                height: 160px;
+                width: 100%;
                 object-fit: cover;
-                display: block;
             }
 
             &-info {
-                margin-left: 20px;
-
-                h4 {
-                    overflow: hidden;
+                &:hover {
+                    h4 {
+                        color: $primary-color;
+                    }
                 }
             }
         }
