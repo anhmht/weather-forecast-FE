@@ -36,7 +36,7 @@ export default class WarningPageComponent extends Vue {
         .then((res: any) => {
             moment.locale('vi');
 
-            res.forEach( (element) => {
+            res.events.forEach( (element) => {
                 element.datePosted = moment(element.datePosted).format('L');
             });
 
