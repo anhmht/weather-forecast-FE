@@ -10,13 +10,19 @@
                 <v-avatar v-else :color="color" size="30" class="mr-1">
                     <span class="white--text">{{loginInfo.shortName}}</span>
                 </v-avatar>
-                <span>{{loginInfo.userName}}</span>
             </div>
         </template>
         <v-list>
             <v-list-item>
-                <v-list-item-content>
-                    <v-list-item-title @click="handleMoveToAdmin" class="base-header-menu--sub">Trang Quản lý</v-list-item-title>
+                <v-list-item-content class="base-header-menu--sub">
+                    <v-list-item-title class="base-header-menu--sub-username">{{loginInfo.userName}}</v-list-item-title>
+                    <v-list-item-subtitle class="base-header-menu--sub-email">{{loginInfo.email}}</v-list-item-subtitle>
+                    <v-divider></v-divider>
+                    <v-list-item-title @click="handleUserProfile" class="base-header-menu--sub-item">Quản lí tài khoản</v-list-item-title>
+                    <v-divider></v-divider>
+                    <v-list-item-title @click="handleMoveToAdmin" class="base-header-menu--sub-item">Trang quản lí</v-list-item-title>
+                    <v-divider></v-divider>
+                    <v-list-item-title @click="handleLogout" class="base-header-menu--sub-logout">Đăng xuất</v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
         </v-list>

@@ -1,20 +1,22 @@
-// import { getLocalStorage } from '@/utils/appConfig';
+import { removeLocalStorage, setAxiosHeader } from '@/utils/appConfig';
 import { Watch } from 'vue-property-decorator';
 import { KTTV_CATEGORY_NAME, PATH, ROUTE_NAME } from "@/constant/route-constant";
 import Vue from "vue";
 import Component from "vue-class-component";
-import { Getter, namespace } from 'vuex-class';
+import { Mutation, Getter, namespace } from 'vuex-class';
 import { storeModules } from '@/store';
 import userTypesStore from '@/store/user/user-types.store';
 import { USER_ROLE } from '@/constant/common-constant';
 import { DataHelper } from '@/utils/data-helper';
 
 const UserGetter = namespace(storeModules.User, Getter);
+const UserMutation = namespace(storeModules.User, Mutation);
 @Component({
     template: require("./template.html").default
 })
 export default class MenuComponent extends Vue {
     @UserGetter(userTypesStore.Get.Auth) userConfig: any;
+    @UserMutation setAuth: (auth: any) => Promise<void>;
 
     isActive: Number = 0;
     isAvatarError: boolean  = false;
@@ -82,6 +84,13 @@ export default class MenuComponent extends Vue {
                 throw err;
             }
         });
+    }
+
+    handleLogout() {
+        removeLocalStorage('auth');
+        this.setAuth(null);
+        setAxiosHeader(null);
+        this.$router.push(PATH.INFO);
     }
 
     handleClick(index) {
