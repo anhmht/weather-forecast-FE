@@ -7,7 +7,7 @@
         <template v-slot:activator="{ on, attrs }">
             <div v-bind="attrs" v-on="on" class="base-header-menu-item login d-flex align-center" @click="handleUserProfile">
                 <img v-if="avatar && !isAvatarError" :src="avatar" @error="onImgError" class="mr-1"/>
-                <v-avatar v-else :color="color" size="30" class="mr-1">
+                <v-avatar v-else :color="color" size="30">
                     <span class="white--text">{{loginInfo.shortName}}</span>
                 </v-avatar>
             </div>
