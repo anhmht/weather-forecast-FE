@@ -3,11 +3,11 @@
         v-for="(item,index) in menuItems" @click="handleClick(index)">
         {{item.name}}
     </div>
-    <v-menu v-if="loginInfo" open-on-hover bottom offset-y>
+    <v-menu v-if="loginInfo" open-on-hover bottom left offset-y transition="slide-y-transition">
         <template v-slot:activator="{ on, attrs }">
             <div v-bind="attrs" v-on="on" class="base-header-menu-item login d-flex align-center" @click="handleUserProfile">
                 <img v-if="avatar && !isAvatarError" :src="avatar" @error="onImgError" class="mr-1"/>
-                <v-avatar v-else :color="color" size="30">
+                <v-avatar v-else :color="color" size="35">
                     <span class="white--text">{{loginInfo.shortName}}</span>
                 </v-avatar>
             </div>
@@ -17,13 +17,19 @@
                 <v-list-item-content class="base-header-menu--sub">
                     <v-list-item-title class="base-header-menu--sub-username">{{loginInfo.userName}}</v-list-item-title>
                     <v-list-item-subtitle class="base-header-menu--sub-email">{{loginInfo.email}}</v-list-item-subtitle>
-                    <v-divider></v-divider>
-                    <v-list-item-title @click="handleUserProfile" class="base-header-menu--sub-item">Quản lí tài khoản</v-list-item-title>
-                    <v-divider></v-divider>
-                    <v-list-item-title @click="handleMoveToAdmin" class="base-header-menu--sub-item">Trang quản lí</v-list-item-title>
-                    <v-divider></v-divider>
-                    <v-list-item-title @click="handleLogout" class="base-header-menu--sub-logout">Đăng xuất</v-list-item-title>
                 </v-list-item-content>
+            </v-list-item>
+            <v-divider></v-divider>
+            <v-list-item>
+                <v-list-item-title @click="handleUserProfile" class="base-header-menu--sub-item">Quản lý tài khoản</v-list-item-title>
+            </v-list-item>
+            <v-divider></v-divider>
+            <v-list-item v-if="isAdmin">
+                <v-list-item-title @click="handleMoveToAdmin" class="base-header-menu--sub-item">Quản trị viên</v-list-item-title>
+            </v-list-item>
+            <v-divider v-if="isAdmin"></v-divider>
+            <v-list-item>
+                <v-list-item-title @click="handleLogout" class="base-header-menu--sub-logout">Đăng xuất</v-list-item-title>
             </v-list-item>
         </v-list>
     </v-menu>

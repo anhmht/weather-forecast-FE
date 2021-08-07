@@ -52,7 +52,7 @@ export default class CreateUserComponent extends Vue {
                     break;
                 case 'DTH':
                     r.role = 'Đài truyền hình';
-                    r.title = 'Xuất video, tạo kịch bản trên bản đồ, quản lí video';
+                    r.title = 'Xuất video, tạo kịch bản trên bản đồ, quản lý video';
                     break;
             
                 default:
