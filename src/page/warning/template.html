@@ -31,7 +31,7 @@
             </div>
             <div class="warning-page-container_section-3">
                 <h4>TIN XEM NHIỀU</h4>
-                <div v-for="(item,index) in mostWatchPosts" :key="index" class="warning-page-container_section-3_item">
+                <div v-for="(item,index) in mostWatchPosts" :key="index" @click="handleViewDetail(item.eventId)" class="warning-page-container_section-3_item">
                     <img :src="item.imageUrl">
                     <div class="warning-page-container_section-3_item-info">
                         <h4>{{item.title}}</h4>

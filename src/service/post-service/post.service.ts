@@ -56,6 +56,12 @@ export class PostServices extends GenericServices {
             }).catch(error => Promise.reject(error))
     }
 
+    getMostView(limit: number, page: number, dayNumber: number): Promise<ApiResponse> {
+        return this.executeSelectingPost({limit, page, dayNumber}, Uri.getMostView).then((response: ApiResponse) => {
+            return response.isSuccess ? Promise.resolve(response.data) : Promise.reject(response.message);
+        }).catch(error => Promise.reject(error))
+    }
+
     getPostsByCategory(categoryType: string, searchParam: IPostSearchParameter): Promise<ApiResponse> {
 
         let url: string = null;

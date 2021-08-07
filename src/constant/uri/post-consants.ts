@@ -7,7 +7,7 @@ export default {
     category: '/api/Category',
     categoryId: '/api/Category/:id',
     getCurrentLocation: '/api/Common/Location/GetCurrentLocation',
-
+    getMostView: '/api/Event/get-most-view',
     disasterWarning: '/api/event/disasterWarning',
     recommendedInformation: '/api/event/recommendedInformation',
     socioculturalEngineering: '/api/event/socioculturalEngineering',
