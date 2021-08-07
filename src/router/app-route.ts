@@ -39,6 +39,8 @@ const ListLocalComponent = () => import("../page/cms/components/list-local/ListL
 const EditLocalComponent = () => import("../page/cms/components/edit-local/EditLocalComponent.vue")
 const EditDocumentComponent = () => import("../page/cms/components/edit-document/EditDocumentComponent.vue")
 
+const CommunityComponent = () => import("../page/cms/components/community/CommunityComponent.vue")
+
 const homeRoutes = [
     { path: "/", redirect: { path: PATH.INFO } },
     {
@@ -324,6 +326,16 @@ const adminRoutes = [
                 meta: {
                     requiresAuth: true,
                     accept: USER_ROLE.KTTV
+                },
+                props: {}
+            },
+            {
+                path: PATH.COMMUNITY_LIST,
+                name: ROUTE_NAME.COMMUNITY_LIST,
+                component: CommunityComponent,
+                meta: {
+                    requiresAuth: true,
+                    accept: USER_ROLE.SUPER
                 },
                 props: {}
             },
