@@ -49,7 +49,7 @@ export default class WeatherStatusComponent extends Vue {
         })
 
         await this.postService.getPostByCategoryAndStatus(this.weatherStatusCategoryId, this.publishStatusId).then((res: any) => {
-            this.weatherStatusPosts = res;
+            this.weatherStatusPosts = res.events;
         }).catch(error => {
             this.$errorMessage(error);
         })

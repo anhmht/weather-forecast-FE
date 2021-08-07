@@ -40,7 +40,7 @@ export default class WarningPageComponent extends Vue {
                 element.datePosted = moment(element.datePosted).format('L');
             });
 
-            this.warningPosts = res;
+            this.warningPosts = res.events;
         }).catch(error => {
             this.$errorMessage(error);
         })
