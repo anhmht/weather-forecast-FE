@@ -40,8 +40,18 @@
                                         <img :src="temparatureData ? temparatureData.icon : null">
                                         <div class="info-current-forecast-body--info">{{temparatureData.desc}}</div>
                                 </div>
-                                <div v-else justify="center" class="info-current-forecast-body-icon">
-                                    <v-text-field color="primary" :loading="!temparatureData" disabled></v-text-field>
+                                <div v-else justify="center" class="info-current-forecast-body-icon" style="position: relative;">
+                                    <v-overlay
+                                        absolute
+                                        :value="!temparatureData"
+                                        color="white"
+                                    >
+                                    <v-progress-circular
+                                        indeterminate
+                                        size="64"
+                                        color="#BBDEFB"
+                                    ></v-progress-circular>
+                                    </v-overlay>
                                 </div>
                             </div>
                         </div>

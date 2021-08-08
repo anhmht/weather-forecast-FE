@@ -14,7 +14,7 @@
                 <v-row justify="center">
                     <v-col cols="24" md="9">
                         <div class="info-detail-page-container_section_2_main">
-                            <h2>{{postModel.title}}</h2>
+                            <h2 v-html="postModel.title || '<br/>'"></h2>
                             <br>
                             <div v-html="postModel.content"></div>
                         </div>
