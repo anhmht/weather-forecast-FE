@@ -28,6 +28,10 @@
             background-color: #fff;
             padding: 10px 10px;
 
+            & > h2 {
+                padding-top: 30px;
+            }
+            
             &_item {
                 display: flex;
                 cursor: pointer;
