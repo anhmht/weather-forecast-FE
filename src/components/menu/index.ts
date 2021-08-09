@@ -73,7 +73,7 @@ export default class MenuComponent extends Vue {
 
     get isAdmin () {
         if (this.loginInfo && this.loginInfo["roles"]) {
-            return !!this.loginInfo["roles"].find(r => r === USER_ROLE)
+            return !!this.loginInfo["roles"].find(r => r === USER_ROLE.SUPER)
             || !!this.loginInfo["roles"].find(r => r === USER_ROLE.KTTV)
             || !!this.loginInfo["roles"].find(r => r === USER_ROLE.DTH)
         }
