@@ -1,0 +1,44 @@
+.create-status {
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    &-container {
+        &_header {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        &_body {
+            margin-bottom: 10px;
+            .v-text-field__details {
+                display: none;
+            }
+        }
+        &_footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            &__attach {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                &--item {
+                    display: flex;
+                    align-items: center;
+                    margin-right: 10px;
+                    cursor: pointer;
+                    padding: 5px;
+                    i {
+                        margin-right: 10px;
+                    }
+                    &:hover {
+                        color: #006FFF;
+                        i {
+                            color: #006FFF;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

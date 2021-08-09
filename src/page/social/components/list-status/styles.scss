@@ -1,0 +1,71 @@
+.social-list {
+    &--item {
+        background: #fff;
+        padding: 20px 0;
+        border-radius: 5px;
+        margin-top: 20px;
+        &_header {
+            display: flex;
+            padding: 0 20px;
+            &--avatar {
+
+            }
+            &--content {
+                padding: 0 20px;
+                &__title {
+                    font-weight: 600;
+                }
+                &__time {
+                    color: #A4A4A4;
+                }
+            }
+        }
+        &_body {
+            font-size: 15px;
+            &--content {
+                &_status {
+                    margin: 20px 0;
+                    padding: 0 20px;
+                    &__text {
+                        margin-bottom: 10px;
+                    }
+                    &__button {
+                        cursor: pointer;
+                        color: #006FFF;
+                        width: fit-content;
+                    }
+                }
+                &_image {
+                    img {
+                        height: 300px;
+                        width: 100%;
+                        object-fit: cover;
+                    }
+                }
+            }
+        }
+        &_footer {
+            &--action {
+                padding: 0 20px;
+                display: flex;
+                margin-top: 15px;
+                &_item {
+                    display: flex;
+                    align-items: center;
+                    cursor: pointer;
+                    padding: 5px;
+                    margin-right: 20px;
+                    i {
+                        margin-right: 10px;
+                    }
+                    &:hover {
+                        color: #006FFF;
+                        i {
+                            color: #006FFF;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

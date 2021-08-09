@@ -1,0 +1,15 @@
+<div class="most-view">
+    <h4>Tin xem nhiều</h4>
+    <v-row v-for="(item,index) in mostWatchPosts" :key="index" @click="handleViewDetail(item.eventId)" justify="center">
+        <div class="most-view_item">
+            <v-col cols=4>
+                <img :src="item.imageUrl">
+            </v-col>
+            <v-col cols=8>
+                <div class="most-view_item-info">
+                    <h4>{{item.title}}</h4>
+                </div>
+            </v-col>
+        </div>
+    </v-row>
+</div>
