@@ -62,6 +62,9 @@
                 align-items: center;
                 padding: 10px 0;
                 font-weight: 600;
+
+                cursor: pointer;
+                
                 img {
                     margin-right: 20px;
                     width: 50px;
@@ -71,6 +74,10 @@
 
                 .v-avatar {
                     margin-right: 20px;
+                }
+
+                > span {
+                    text-decoration: underline;
                 }
             }
 

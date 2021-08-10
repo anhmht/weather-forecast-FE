@@ -46,12 +46,12 @@
                                     <v-checkbox color="primary" hide-details></v-checkbox>
                                 </td>
                                 <td>
-                                    <div class="base-cms-right--body_table_title">
+                                    <div class="base-cms-right--body_table_title" @click="isDisplayButton ? editUser(item.userId) : null">
                                         <img v-if="item.avatarUrl && item.avatarUrl !== ''" :src="item.avatarUrl" @error="onImgError(item)" />
                                         <v-avatar v-else :color="getColor(item.userName)" size="50" rounded>
                                             <span class="white--text">{{item.shortName}}</span>
                                         </v-avatar>
-                                        {{ item.userName }}
+                                        <span>{{ item.userName }}</span>
                                     </div>
                                 </td>
                                 <td>{{ $formatDateTime(item.createdOn) }}</td>
