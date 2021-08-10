@@ -1,0 +1,21 @@
+.social-menu {
+    position: fixed;
+    &-list {
+        &--item {
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            font-size: 17px;
+            i {
+                margin-right: 10px;
+            }
+            &.active, &:hover {
+                i {
+                    color: #006FFF;
+                }
+                color: #006FFF;
+            }
+        }
+    }
+}
