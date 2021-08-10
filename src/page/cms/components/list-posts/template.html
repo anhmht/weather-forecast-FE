@@ -46,9 +46,9 @@
                                     <v-checkbox color="primary" hide-details></v-checkbox>
                                 </td>
                                 <td>
-                                    <div class="base-cms-right--body_table_title">
+                                    <div class="base-cms-right--body_table_title" @click="editPost(item.eventId)">
                                         <img :src="item.imageUrl || defaultImage" @error="onImgError" />
-                                        {{ item.title }}
+                                        <span>{{ item.title }}</span>
                                     </div>
                                 </td>
                                 <td>{{ $formatDateTime(item.datePosted) }}</td>
