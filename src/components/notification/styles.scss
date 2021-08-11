@@ -1,0 +1,38 @@
+.notification-container {
+    width: 320px;
+    max-height: 500px;
+    overflow: auto;
+    background-color: #fff;
+    &-list {
+        &--item {
+            padding: 15px;
+            display: flex;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            &_avatar {
+                margin-right: 15px;
+                display: flex;
+                align-items: center;
+                position: relative;
+                &__unread {
+                    position: absolute;
+                    left: -10px;
+                }
+            }
+            &_content {
+                font-size: 14px;
+            }
+            &:hover {
+                background-color: #eee;
+            }
+        }
+    }
+
+    .dot {
+        height: 6px;
+        width: 6px;
+        background-color: blue;
+        border-radius: 50%;
+        display: inline-block;
+    }
+}

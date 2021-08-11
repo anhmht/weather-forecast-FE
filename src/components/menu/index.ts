@@ -12,7 +12,10 @@ import { DataHelper } from '@/utils/data-helper';
 const UserGetter = namespace(storeModules.User, Getter);
 const UserMutation = namespace(storeModules.User, Mutation);
 @Component({
-    template: require("./template.html").default
+    template: require("./template.html").default,
+    components: {
+        "notification": () => import("../notification/NotificationComponent.vue")
+    }
 })
 export default class MenuComponent extends Vue {
     @UserGetter(userTypesStore.Get.Auth) userConfig: any;
