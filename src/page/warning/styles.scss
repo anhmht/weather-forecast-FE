@@ -110,26 +110,28 @@
             cursor: pointer;
             margin-top: 20px;
 
-            img {
-                width: 100%;
+            &--img {
+                width: 60px;
                 height: 60px;
-                object-fit: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                border: 1px solid #ddd ;
+                padding: 0;
+                margin-right: 20px;
             }
 
             &-info {
-                h4 {
-                    height: 60px;
-                    line-height: 20px;
-                    display: -webkit-box;
-                    -webkit-line-clamp: 3;
-                    -webkit-box-orient: vertical;
-                    overflow: hidden;
-                }
+                width: calc(100% - 80px);
+                height: 60px;
+                line-height: 20px;
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
 
                 &:hover {
-                    h4 {
-                        color: $primary-color;
-                    }
+                    color: $primary-color;
                 }
             }
         }
