@@ -685,8 +685,8 @@ export const REGION = [
             opacity: 0.5,
             // fill: false
         },
-        paddingBottomRight: [0, 0],
-        paddingTopLeft: [100, 0],
+        paddingBottomRight: [400, 0],
+        paddingTopLeft: [0, 50],
         titlePosition: 'right animate__fadeInRightBig',
         animation: 'animate__fadeInBottomLeft',
         layout: '4-4-5',

@@ -1,17 +1,19 @@
 <div class="home-page-container">
-    <div  style="width: 100%; height: 100vh;" viewBox="0 0 4000 2080">
+    <div style="width: 100%; height: 100vh;" viewBox="0 0 4000 2080">
         <div :class="forecastData && isWebView ? 'resize' : ''" id="windy"></div>
     </div>
     <div v-if="isRecording" class="fake-transition" :class="!isDisplayFake ? 'hide' : ''">
         <img :src="fakeImage" />
     </div>
     <div v-if="importVideos.length > 0 && isRecording" class="custom-import-video">
-        <video v-show="item.index === index && item.id === customImportVideoControl.id" v-for="(item, index) in importVideos" :key="item.id" :id="`custom-video-${item.index}`" style="width: 100%;">
+        <video v-show="item.index === index && item.id === customImportVideoControl.id"
+            v-for="(item, index) in importVideos" :key="item.id" :id="`custom-video-${item.index}`"
+            style="width: 100%;">
             <source :src="item.data" type="video/mp4">
         </video>
     </div>
-    
-    <div v-if="isShowMapTitle && !isRecording" class="map-title animate__animated" :class="mapTitle.position" >
+
+    <div v-if="isShowMapTitle && !isRecording" class="map-title animate__animated" :class="mapTitle.position">
         Khu vực: {{mapTitle ? mapTitle.name : ''}}
     </div>
 
@@ -21,13 +23,15 @@
         <video-forecast v-if="boxData" :location="boxData" :is-province="isProvinceData"/>
     </div> -->
 
-    <div v-if="isShowVideoForecaseProvince && !isRecording" class="video-forecast-province animate__animated" :class="videoForecastAnimation">
-        <video-forecast-province v-if="provinceData" :location="provinceData" :is-province="isProvinceData" :template-type="videoLayout"/>
+    <div v-if="isShowVideoForecaseProvince && !isRecording" class="video-forecast-province animate__animated"
+        :class="videoForecastAnimation">
+        <video-forecast-province v-if="provinceData" :location="provinceData" :is-province="isProvinceData"
+            :template-type="videoLayout" />
     </div>
 
-    <text-box v-if="isRecording" ref="textBox"/>
+    <text-box v-if="isRecording" ref="textBox" />
 
-    <custom-temp-info v-if="isRecording" ref="tempInfo"/>
+    <custom-temp-info v-if="isRecording" ref="tempInfo" />
 
     <div v-if="!isRecording && forecastData && isWebView" class="result">
         <tool-bar v-if="forecastData" :station-info="forecastData" @changeTime="updateDistrictPopUp" />
@@ -79,7 +83,8 @@
             mdi-keyboard-backspace
         </v-icon>
     </v-btn>
-    <v-btn class="qr-code-scan" icon color="white" v-show="!isRecording && !isWebView && hasPermission" @click="visibleQR = !visibleQR">
+    <v-btn class="qr-code-scan" icon color="white" v-show="!isRecording && !isWebView && hasPermission"
+        @click="visibleQR = !visibleQR">
         <v-icon>mdi-qrcode-scan</v-icon>
     </v-btn>
 
@@ -104,19 +109,32 @@
                     </video>
                 </div>
                 <div class="preview-dialog-body--action">
-                    <v-btn @click="handleDownload()" color="primary">
-                        Tải Xuống
-                        <v-icon color="white">mdi-download</v-icon>
-                    </v-btn>
-                    <v-btn @click="handleUpload()" color="primary">
-                        Xử lý video
-                        <v-icon color="white">mdi-download</v-icon>
-                    </v-btn>
+                    <div class="preview-dialog-body--action_wraper">
+                        <div class="preview-dialog-body--action_process">
+                            <v-btn @click="handleUpload()" color="primary" :disabled="isUploading" :loading="isUploading">
+                                Xử lý video
+                                <v-icon color="white">mdi-download</v-icon>
+                            </v-btn>
+                        </div>
+                        <div class="preview-dialog-body--action_result">
+                            <div style="min-height: 4px;">
+                                <v-progress-linear v-model="progress" indeterminate height="6" color="cyan"
+                                    :indeterminate="progress === 100">
+                                </v-progress-linear>
+                            </div>
+                            <div v-if="executedVideo"  class="preview-dialog-body--action_result__download">
+                                <v-btn @click="handleDownload()" color="primary" :loading="downloadVideoLoading" :disabled="downloadVideoLoading">
+                                    Tải Xuống
+                                    <v-icon color="white">mdi-download</v-icon>
+                                </v-btn>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </v-dialog>
-    
+
     <scenario-modal @remote="handleRemote" @remote-move="handleMove" v-model="drawer" @preview="handlePreview"
         @capture="(e) => handlePreview(e,true)" />
 

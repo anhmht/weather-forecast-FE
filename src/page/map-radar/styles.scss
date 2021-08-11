@@ -110,8 +110,22 @@
             flex: 1;
             display: flex;
             align-items: center;
-            justify-content: center;
-            margin-left: 2vw;
+            &_wraper {
+                height: 200px;
+                width: 100%;
+            }
+            &_process {
+                display: flex;
+                justify-content: center;
+            }
+            &_result {
+                margin-top: 20px;
+                &__download {
+                    display: flex;
+                    justify-content: center;
+                    margin-top: 20px;
+                }
+            }
         }
     }
 
