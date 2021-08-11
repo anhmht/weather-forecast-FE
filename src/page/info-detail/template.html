@@ -14,7 +14,7 @@
                 <v-row justify="center">
                     <v-col cols="24" md="9">
                         <div class="info-detail-page-container_section_2_main">
-                            <h2>{{postModel.title}}</h2>
+                            <h2 v-html="postModel.title || '<br/>'"></h2>
                             <br>
                             <div v-html="postModel.content"></div>
                         </div>
@@ -29,7 +29,9 @@
                                         <img :src="item.imageUrl">
                                     </v-col>
                                     <v-col cols=8>
-                                        <h4>{{item.title}}</h4>
+                                        <div class="info-detail-page-container_section_2_relative_item_title">
+                                            <h4>{{item.title}}</h4>
+                                        </div>
                                     </v-col>
                                 </div>
                             </v-row>

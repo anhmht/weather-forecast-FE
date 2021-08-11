@@ -34,13 +34,13 @@
         }
         &.login {
             background: #e9e9e9;
-            padding: 10px;
+            padding: 5px;
             border-radius: 50px;
         }
 
         img {
-            height: 30px;
-            width: 30px;
+            height: 35px;
+            width: 35px;
             border-radius: 50%;
         }
     }
@@ -167,8 +167,36 @@
 }
 
 .base-header-menu--sub {
-    cursor: pointer;
-    &:hover {
-        color: $primary-color;
+    width: 250px;
+    padding: 0px;
+
+    &-username {
+        padding: 10px 10px 1px 10px;
+        font-weight: 550;
+    }
+
+    &-email {
+        padding: 1px 10px 10px 10px;
+    }
+
+    &-logout {
+        color: #ff5252;
+        cursor: pointer;
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        &:hover {
+            color: red;
+        }
+    }
+
+    &-item {
+        cursor: pointer;
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        &:hover {
+            color: $primary-color;
+        }
     }
 }

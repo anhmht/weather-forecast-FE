@@ -265,7 +265,7 @@ export default class HydrologicalComponent extends Vue {
 
         // Get hydrological posts
         this.postService.getPostByCategoryAndStatus(this.hydrologicalCategoryId, this.publishStatusId).then((res: any) => {
-            this.hydrologicalPosts = res;
+            this.hydrologicalPosts = res.events;
         }).catch(error => {
             this.$errorMessage(error);
         })

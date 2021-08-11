@@ -1,0 +1,10 @@
+<div class="social-menu">
+    <div class="social-menu-list">
+        <div class="social-menu-list--item" v-ripple :class="active === index ? 'active' : ''" v-for="(item, index) in menus" @click="">
+            <v-icon>
+                {{item.icon}}
+            </v-icon>
+            {{item.name}}
+        </div>
+    </div>
+</div>

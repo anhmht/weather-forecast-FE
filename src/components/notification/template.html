@@ -1,0 +1,66 @@
+<v-menu fixed allow-overflow eager bottom left offset-y transition="slide-y-transition" nudge-bottom="10" nudge-right="20">
+    <template v-slot:activator="{ on, attrs }">
+        <div v-bind="attrs" v-on="on" class="base-header-menu-item login d-flex align-center">
+            <v-badge color="red" content="6"  overlap>
+                <v-avatar size="35">
+                    <v-icon>
+                        mdi-bell
+                    </v-icon>
+                </v-avatar>
+            </v-badge>
+        </div>
+    </template>
+    <div class="notification-container">
+        <div class="notification-container-list">
+            <div class="notification-container-list--item">
+                <div class="notification-container-list--item_avatar">
+                    <v-avatar :color="color('TL')" size="35">
+                        <span class="white--text">TL</span>
+                    </v-avatar>
+                </div>
+                <div class="notification-container-list--item_content">
+                    Nhân Trần đã trả lời một bình luận về bài viết của bạn: Bài viết rất bổ ích cho mình thông tin...
+                </div>
+            </div>
+            <div class="notification-container-list--item">
+                <div class="notification-container-list--item_avatar">
+                    <div class="notification-container-list--item_avatar__unread">
+                        <span class="dot"></span>
+                    </div>
+                    <v-avatar :color="color('ND')" size="35">
+                        <span class="white--text">ND</span>
+                    </v-avatar>
+                </div>
+                <div class="notification-container-list--item_content">
+                    Nhân Trần đã trả lời một bình luận về bài viết của bạn: Bài viết rất bổ ích cho mình thông tin...
+                </div>
+            </div>
+            <div class="notification-container-list--item">
+                <div class="notification-container-list--item_avatar">
+                    <div class="notification-container-list--item_avatar__unread">
+                        <span class="dot"></span>
+                    </div>
+                    <v-avatar :color="color('PL')" size="35">
+                        <span class="white--text">PL</span>
+                    </v-avatar>
+                </div>
+                <div class="notification-container-list--item_content">
+                    Nhân Trần đã trả lời một bình luận về bài viết của bạn: Bài viết rất bổ ích cho mình thông tin...
+                </div>
+            </div>
+            <div class="notification-container-list--item">
+                <div class="notification-container-list--item_avatar">
+                    <div class="notification-container-list--item_avatar__unread">
+                        <span class="dot"></span>
+                    </div>
+                    <v-avatar :color="color('TL')" size="35">
+                        <span class="white--text">TL</span>
+                    </v-avatar>
+                </div>
+                <div class="notification-container-list--item_content">
+                    Nhân Trần đã trả lời một bình luận về bài viết của bạn: Bài viết rất bổ ích cho mình thông tin...
+                </div>
+            </div>
+        </div>
+    </div>
+</v-menu>

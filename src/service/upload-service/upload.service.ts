@@ -116,7 +116,7 @@ export class UploadServices extends GenericServices {
             .then((response: any) => {
                 const index = this.cancels.findIndex(x => x.id === id);
                 this.cancels.splice(index, 1);
-                return response.isSuccess ? Promise.resolve(response.data.url) : Promise.reject(response.message);
+                return response.isSuccess ? Promise.resolve(response.data) : Promise.reject(response.message);
             })
             .catch(ex => {
                 const index = this.cancels.findIndex(x => x.id === id);

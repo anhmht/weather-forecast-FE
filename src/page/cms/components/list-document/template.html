@@ -45,7 +45,9 @@
                                     <v-checkbox color="primary" hide-details></v-checkbox>
                                 </td>
                                 <td>
-                                    <div class="base-cms-right--body_table_title">{{ item.title }}</div>
+                                    <div class="base-cms-right--body_table_title" @click="isAdmin ? editDocument(item.eventId) : null">
+                                        <span>{{ item.title }}</span>
+                                    </div>
                                 </td>
                                 <td>{{ item.createdFullName }}</td>
                                 <td>{{ $formatDateTime(item.datePosted) }}</td>

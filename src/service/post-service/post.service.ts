@@ -25,8 +25,8 @@ export class PostServices extends GenericServices {
             }).catch(error => Promise.reject(error))
     }
 
-    getPostByCategoryAndStatus(categoryId: string, statusId: string): Promise<ApiResponse> {
-        return this.executeSelecting({categoryId, statusId}, Uri.postCategoryStatus).then((response: ApiResponse) => {
+    getPostByCategoryAndStatus(categoryId: string, statusId: string, limit?: number, page?: number): Promise<ApiResponse> {
+        return this.executeSelecting({limit, page, categoryId, statusId}, Uri.postCategoryStatus).then((response: ApiResponse) => {
             return response.isSuccess ? Promise.resolve(response.data) : Promise.reject(response.message);
             }).catch(error => Promise.reject(error))
     }
@@ -54,6 +54,12 @@ export class PostServices extends GenericServices {
         return this.executeDeletingWith(id, uri).then((response: ApiResponse) => {
             return response.isSuccess ? Promise.resolve(response.data) : Promise.reject(response.message);
             }).catch(error => Promise.reject(error))
+    }
+
+    getMostView(limit: number, page: number, dayNumber: number): Promise<ApiResponse> {
+        return this.executeSelectingPost({limit, page, dayNumber}, Uri.getMostView).then((response: ApiResponse) => {
+            return response.isSuccess ? Promise.resolve(response.data) : Promise.reject(response.message);
+        }).catch(error => Promise.reject(error))
     }
 
     getPostsByCategory(categoryType: string, searchParam: IPostSearchParameter): Promise<ApiResponse> {

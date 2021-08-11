@@ -67,6 +67,7 @@ const COLOR = [
 export default class HomePageComponent extends Vue {
     windy: any;
     media: any = null;
+    executedVideo: any = null;
     rawData: any = null;
     player: any = null
     videoStream: any = null;
@@ -137,6 +138,8 @@ export default class HomePageComponent extends Vue {
     isUploading: boolean = false;
     uploadservice: UploadServices = new UploadServices();
 
+    downloadVideoLoading: boolean = false;
+
     @UserGetter(userTypesStore.Get.Auth) userConfig: any;
 
     @LookupAction getLookupData: (type: string) => Promise<void>
@@ -182,13 +185,28 @@ export default class HomePageComponent extends Vue {
     }
 
     async handleDownload() {
-        const link = document.createElement("a");
-        // const arrayBuffer = await new Response(this.media).arrayBuffer();
-        link.href = this.media
-        link.setAttribute("download", "test-video"); //or any other extension
-        // document.body.appendChild(link);
-        link.click();
-        // document.body.removeChild(link);
+        this.downloadVideoLoading = true;
+        fetch(this.executedVideo)
+            .then(resp => resp.blob())
+            .then(async blob => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = url;
+                // the filename you want
+                a.download = 'test-video.mp4';
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                this.downloadVideoLoading = false;
+            })
+        // const link = document.createElement("a");
+        // // const arrayBuffer = await new Response(this.media).arrayBuffer();
+        // link.href = this.executedVideo;
+        // link.setAttribute("download", "test-video"); //or any other extension
+        // // document.body.appendChild(link);
+        // link.click();
+        // // document.body.removeChild(link);
 
     }
 
@@ -467,7 +485,7 @@ export default class HomePageComponent extends Vue {
         // document.querySelector('.particles-layer').classList.remove('hide-animation')
         // this.boxData = DataHelper.deepClone(mapData.placeId);
         this.isShowVideoForecase = true;
-        this.displayEachProvince(mapData);
+        // this.displayEachProvince(mapData);
     }
 
     async handleChangeLocation(mapData) {
@@ -516,7 +534,7 @@ export default class HomePageComponent extends Vue {
         this.isShowMapTitle = true;
         this.boxData = DataHelper.deepClone(mapData.placeId);
         this.isShowVideoForecase = true;
-        this.displayEachProvince(mapData, true);
+        // this.displayEachProvince(mapData, true);
     }
 
     addDistrictLayer(districts) {
@@ -631,6 +649,7 @@ export default class HomePageComponent extends Vue {
     }
 
     async capture() {
+        this.executedVideo = null;
         this.isRecording = true;
         const vm = this as any;
         this.player = document.getElementById('player') as any;
@@ -916,6 +935,7 @@ export default class HomePageComponent extends Vue {
     }
 
     handleUpload() {
+        this.executedVideo = null;
         this.uploadVideo({
             Data: this.rawData,
             FileName: `${new Date().getTime()}_test-vid`,
@@ -939,8 +959,7 @@ export default class HomePageComponent extends Vue {
             this.isUploading = false;
             this.progress = 0;
             console.log(response);
-            
-
+            this.executedVideo = response[0];
         }).catch(err => {
             this.isUploading = false;
             console.error(err);

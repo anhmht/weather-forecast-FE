@@ -44,4 +44,5 @@ export const CMS_MENU = {
     LIST_POST_TRANG_THAI_THOI_TIET: 'Các trạng thái thời tiết',
     THONG_TIN_CHI_DAO: 'Thông tin chỉ đạo',
     HIEN_TUONG_CUC_DOAN: 'Các hiện tượng cực đoan',
+    COMMUNITY_LIST: 'Bài viết cộng đồng'
 }

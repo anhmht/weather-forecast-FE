@@ -33,7 +33,8 @@ export const ROUTE_NAME = {
     LIST_LOCAL: "list-local",
     EDIT_DOCUMENT: 'edit-document',
     EDIT_LOCAL: 'edit-local',
-    VERIFYING_EMAIL: 'confirm-email'
+    VERIFYING_EMAIL: 'confirm-email',
+    COMMUNITY_LIST: 'community-list'
 }
 
 export const PATH = {
@@ -71,7 +72,8 @@ export const PATH = {
     LIST_LOCAL: "list-local",
     EDIT_DOCUMENT: 'edit-document/:category/:id',
     EDIT_LOCAL: 'edit-local/:id',
-    VERIFYING_EMAIL: '/confirm-email'
+    VERIFYING_EMAIL: '/confirm-email',
+    COMMUNITY_LIST: 'community-list'
 }
 
 

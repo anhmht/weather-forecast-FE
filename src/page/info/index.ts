@@ -431,21 +431,21 @@ export default class InfoPageComponent extends Vue {
 
         // Get warning posts
         this.postService.getPostByCategoryAndStatus(this.warningCategoryId, this.publishStatusId).then((res: any) => {
-            this.warningPosts = res;
+            this.warningPosts = res.events;
         }).catch(error => {
             this.$errorMessage(error);
         })
 
         // Get recommend posts
         this.postService.getPostByCategoryAndStatus(this.recommendCategoryId, this.publishStatusId).then((res: any) => {
-            this.recommendPosts = res;
+            this.recommendPosts = res.events;
         }).catch(error => {
             this.$errorMessage(error);
         })
 
         // Get other posts (Economic - Culture - Society)
         this.postService.getPostByCategoryAndStatus(this.otherCategoryId, this.publishStatusId).then((res: any) => {
-            this.otherPosts = res;
+            this.otherPosts = res.events;
         }).catch(error => {
             this.$errorMessage(error);
         })

@@ -1,48 +1,16 @@
-<div class="social-page-container">
+<div class="social-page">
     <base-container class="container">
-        <div class="social-page-container_header"></div>
-        <div class="social-page-container_section_1">
-            <v-row justify="center">
-                <v-col cols=9>
-                    <div class="box-bg-n">
-                        <div class="img-news mar-no" style="background-image: url(../../../static/img/social-page/item.jpg)">
-                            <img src="../../../static/img/social-page/item.jpg">
-                        </div>
-                        
-                        <div class="content-bg-n">
-                            <h4>Chiều tối và đêm 13/5, các khu vực đều mưa dông, đề phòng thời tiết nguy hiểm</h4>
-                            <p>16.05.2021</p>
-                        </div>
-                    </div>
-                </v-col>
-                <v-col cols=3>
-                    <div v-for="(item,index) in mainPosts" :key="index" class="social-page-container_section_1--sub">
-                        <div class="img-news" style="background-image: url(../../../static/img/social-page/item.jpg)">
-                            <img src="../../../static/img/social-page/item.jpg">
-                            <!-- <img :src="item.imageUrl" /> -->
-                        </div>
-                        <h4>{{item.title}}</h4>
-                        <p>{{item.date}}</p>
-                    </div>
-                </v-col>
-            </v-row>
-        </div>
-
-        <div class="social-page-container_section_2">
-            <v-row justify="center">
-                <v-col sm="4" md="3" v-for="(item,index) in subPostsFirstRow" :key="index" auto>
-                    <div class="box-item-n">
-                        <div class="img-news mar-no" style="background-image: url(../../../static/img/social-page/item.jpg)">
-                            <img src="../../../static/img/social-page/item.jpg">
-                            <!-- <img :src="item.imageUrl" /> -->
-                        </div>
-                        <div class="content-item-n">
-                            <h4>{{item.title}}</h4>
-                        </div>
-                    </div>
-                </v-col>
-            </v-row>
-            
+        <div class="social-page-container">
+            <div class="social-page-container-left">
+                <menu-social />
+            </div>
+            <div class="social-page-container-middle">
+                <create-status />
+                <list-status />
+            </div>
+            <div class="social-page-container-right">
+                <most-view />
+            </div>
         </div>
     </base-container>
 </div>
