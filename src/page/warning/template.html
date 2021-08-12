@@ -37,18 +37,15 @@
             </div>
             <div class="warning-page-container_section-3">
                 <h4>Tin xem nhiều</h4>
-                <v-row v-for="(item,index) in mostWatchPosts" :key="index" @click="handleViewDetail(item.eventId)" justify="center">
-                    <div class="warning-page-container_section-3_item">
-                        <v-col cols=4>
-                            <img :src="item.imageUrl">
-                        </v-col>
-                        <v-col cols=8>
-                            <div class="warning-page-container_section-3_item-info">
-                                <h4>{{item.title}}</h4>
-                            </div>
-                        </v-col>
+                <div v-for="(item,index) in mostWatchPosts" :key="index" 
+                    @click="handleViewDetail(item.eventId)"
+                    class="warning-page-container_section-3_item">
+
+                    <div class="warning-page-container_section-3_item--img" :style="`background-image: url( ${item.imageUrl})`"></div>
+                    <div class="warning-page-container_section-3_item-info">
+                        <h4>{{item.title}}</h4>
                     </div>
-                </v-row>
+                </div>
             </div>
         </div>
         <div class="warning-page-container_footer"></div>
