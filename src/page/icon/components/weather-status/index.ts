@@ -22,9 +22,19 @@ export default class WeatherStatusComponent extends Vue {
     weatherStatusCategoryName: string = "Các trạng thái thời tiết";
     weatherStatusPosts: any = [];
     selectedWeatherStatusContent: any = [];
+    totalPages: number = 0;
+    GET_POST_LIMIT: number = 10;
+    GET_POST_PAGE: number = 1;
 
     @LookupGetter(lookupTypesStore.Get.STATUS) status: IStatus[]
     @LookupAction getLookupData: (type: string) => Promise<void>;
+
+    get TotalPageVisible() {
+        if (this.totalPages < 7)
+            return this.totalPages;
+        else
+            return 7;
+    }
 
     loadContent(postId) {
         this.postService.getPostById(postId).then((res: any) => {
@@ -32,6 +42,17 @@ export default class WeatherStatusComponent extends Vue {
         }).catch(error => {
             this.$errorMessage(error);
         })
+    }
+
+    async getPosts() {
+        await this.postService.getPostByCategoryAndStatus(this.weatherStatusCategoryId, this.publishStatusId, this.GET_POST_LIMIT, this.GET_POST_PAGE).then((res: any) => {
+            this.weatherStatusPosts = res.events;
+            this.totalPages = res.totalPages;
+        }).catch(error => {
+            this.$errorMessage(error);
+        })
+        
+        this.loadContent(this.weatherStatusPosts[0].eventId);
     }
 
     async mounted() {
@@ -48,12 +69,6 @@ export default class WeatherStatusComponent extends Vue {
             this.$errorMessage(error);
         })
 
-        await this.postService.getPostByCategoryAndStatus(this.weatherStatusCategoryId, this.publishStatusId).then((res: any) => {
-            this.weatherStatusPosts = res.events;
-        }).catch(error => {
-            this.$errorMessage(error);
-        })
-
-        this.loadContent(this.weatherStatusPosts[0].eventId);
+        this.getPosts();
     }
 }
