@@ -1,0 +1,42 @@
+.my-comment {
+    font-size: 15px;
+    background-color: #fff;
+    &:last-child {
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+    }
+    &-item {
+        padding: 15px 20px;
+        border-bottom: 1px solid #eee;
+        &-header {
+            width: 100%;
+            font-weight: 600;
+            display: inline-grid;
+            > div:first-child {
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                word-break: break-all;
+                word-wrap: break-word;
+            }
+        }
+        &-body {
+            display: flex;
+            margin-top: 10px;
+            &--avatar {
+
+            }
+            &--content {
+                width: 100%;
+                margin-left: 20px;
+                &__time {
+                    color: rgba(0, 0, 0, 0.54);
+                    margin-bottom: 5px;
+                }
+                &__text {
+                    color: #000;
+                }
+            }
+        }
+    }
+}

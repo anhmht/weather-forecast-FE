@@ -56,4 +56,12 @@ export default class UserProfileComponent extends Vue {
             this.$router.push(PATH.INFO);
         }
     }
+
+    mounted() {
+        const index = this.menus.findIndex(x => x.path === this.$route.path);
+        if (index > -1) {
+            this.activeTab = index
+        }
+        
+    }
 }

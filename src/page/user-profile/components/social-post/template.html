@@ -1,3 +1,17 @@
 <div class="social-post">
-    Social Post
+    <div class="social-post-container">
+        <div class="social-post-header">
+            <div class="social-post-tab" :class="activeTab === 'my-post' ? 'active' : ''" @click="handleChangeTab('my-post')">
+                Bài viết của bạn
+            </div>
+            <div class="social-post-tab" :class="activeTab === 'my-comment' ? 'active' : ''" @click="handleChangeTab('my-comment')">
+                Bình luận của bạn
+            </div>
+        </div>
+        <div class="social-post-body">
+            <keep-alive>
+                <component :is="activeTab"></component>
+            </keep-alive>
+        </div>
+    </div>
 </div>
