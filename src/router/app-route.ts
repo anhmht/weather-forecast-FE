@@ -5,6 +5,7 @@ const MapRadarComponent = () => import("../page/map-radar/MapRadarComponent.vue"
 const InfoPageComponent = () => import("../page/info/InfoPageComponent.vue");
 const InfoDetailPageComponent = () => import("../page/info-detail/InfoDetailPageComponent.vue");
 const WarningPageComponent = () => import("../page/warning/WarningPageComponent.vue");
+const WeatherComponent = () => import("../page/weather-video/WarningPageComponent.vue");
 const DataPageComponent = () => import("../page/data/DataPageComponent.vue");
 const TimePageComponent = () => import("../page/time/TimePageComponent.vue");
 const IconPageComponent = () => import("../page/icon/IconPageComponent.vue");
@@ -65,6 +66,12 @@ const homeRoutes = [
         path: PATH.WARNING,
         name: ROUTE_NAME.WARNING,
         component: WarningPageComponent,
+        props: {}
+    },
+    {
+        path: PATH.WEATHER_VIDEO,
+        name: ROUTE_NAME.WEATHER_VIDEO,
+        component: WeatherComponent,
         props: {}
     },
     {
