@@ -30,6 +30,10 @@
                 color: #fff;
                 background: rgb(0,0,0);
                 background: linear-gradient(0deg, rgba(0,0,0,0.7) 30%, rgba(0,0,0,0) 100%);
+                
+                h4 {
+                    line-height: 20px;
+                }
                 p {
                     margin-bottom: 0px !important;
                 }
@@ -52,6 +56,9 @@
                 &-info {
                     h4 {
                         overflow: hidden;
+                        padding-top: 10px;
+                        padding-bottom: 5px;
+                        line-height: 20px;
                     }
                 }
             }
@@ -79,6 +86,10 @@
             }
 
             &-info {
+                h4 {
+                    line-height: 20px;
+                    padding-bottom: 5px;
+                }
                 &:hover {
                     h4 {
                         color: $primary-color;

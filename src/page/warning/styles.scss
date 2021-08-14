@@ -58,6 +58,9 @@
                 &-info {
                     h4 {
                         overflow: hidden;
+                        padding-top: 10px;
+                        padding-bottom: 5px;
+                        line-height: 20px;
                     }
                 }
             }
@@ -84,6 +87,10 @@
             }
 
             &-info {
+                h4 {
+                    line-height: 20px;
+                    padding-bottom: 5px;
+                }
                 &:hover {
                     h4 {
                         color: $primary-color;
