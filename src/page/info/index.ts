@@ -339,7 +339,7 @@ export default class InfoPageComponent extends Vue {
     }
 
     viewAllWeatherMaps () {
-        this.$router.push({ name: ROUTE_NAME.WARNING ,
+        this.$router.push({ name: ROUTE_NAME.WEATHER_VIDEO ,
             params: { categoryId: this.weatherMapCategoryId, statusId: this.publishStatusId } })
     }
 

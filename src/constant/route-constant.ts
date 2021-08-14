@@ -34,7 +34,8 @@ export const ROUTE_NAME = {
     EDIT_DOCUMENT: 'edit-document',
     EDIT_LOCAL: 'edit-local',
     VERIFYING_EMAIL: 'confirm-email',
-    COMMUNITY_LIST: 'community-list'
+    COMMUNITY_LIST: 'community-list',
+    WEATHER_VIDEO: 'weather-video',
 }
 
 export const PATH = {
@@ -73,7 +74,8 @@ export const PATH = {
     EDIT_DOCUMENT: 'edit-document/:category/:id',
     EDIT_LOCAL: 'edit-local/:id',
     VERIFYING_EMAIL: '/confirm-email',
-    COMMUNITY_LIST: 'community-list'
+    COMMUNITY_LIST: 'community-list',
+    WEATHER_VIDEO: '/weather-video/:categoryId/:statusId',
 }
 
 
