@@ -73,6 +73,8 @@ export default class InfoPageComponent extends Vue {
     firstWeatherMapPostId: string = null;
     fab:boolean = false;
     currentSection: number = 1;
+    GET_POST_LIMIT: number = 12;
+    GET_POST_PAGE: number = 1;
 
     mapLimit: number = 4;
     weatherLimit: number = 1;
@@ -439,21 +441,21 @@ export default class InfoPageComponent extends Vue {
         })
 
         // Get warning posts
-        this.postService.getPostByCategoryAndStatus(this.warningCategoryId, this.publishStatusId).then((res: any) => {
+        this.postService.getPostByCategoryAndStatus(this.warningCategoryId, this.publishStatusId, this.GET_POST_LIMIT, this.GET_POST_PAGE).then((res: any) => {
             this.warningPosts = res.events;
         }).catch(error => {
             this.$errorMessage(error);
         })
 
         // Get recommend posts
-        this.postService.getPostByCategoryAndStatus(this.recommendCategoryId, this.publishStatusId).then((res: any) => {
+        this.postService.getPostByCategoryAndStatus(this.recommendCategoryId, this.publishStatusId, this.GET_POST_LIMIT, this.GET_POST_PAGE).then((res: any) => {
             this.recommendPosts = res.events;
         }).catch(error => {
             this.$errorMessage(error);
         })
 
         // Get other posts (Economic - Culture - Society)
-        this.postService.getPostByCategoryAndStatus(this.otherCategoryId, this.publishStatusId).then((res: any) => {
+        this.postService.getPostByCategoryAndStatus(this.otherCategoryId, this.publishStatusId, this.GET_POST_LIMIT, this.GET_POST_PAGE).then((res: any) => {
             this.otherPosts = res.events;
         }).catch(error => {
             this.$errorMessage(error);

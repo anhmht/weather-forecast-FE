@@ -20,6 +20,8 @@ export default class WarningPageComponent extends Vue {
     GET_MOST_VIEW_PAGE: number = 1;
     GET_MOST_VIEW_DAY_NUMBER: number = 7;
     GET_MOST_VIEW_STATUS_NAME: string = 'Publish';
+    GET_POST_LIMIT: number = 8;
+    GET_POST_PAGE: number = 1;
 
     get firstWarningPost() {
         return this.warningPosts.length > 0 ? this.warningPosts[0] : {}
@@ -32,7 +34,7 @@ export default class WarningPageComponent extends Vue {
     }
 
     mounted() {
-        this.postService.getPostByCategoryAndStatus(this.$route.params.categoryId, this.$route.params.statusId)
+        this.postService.getPostByCategoryAndStatus(this.$route.params.categoryId, this.$route.params.statusId, this.GET_POST_LIMIT, this.GET_POST_PAGE)
         .then((res: any) => {
             moment.locale('vi');
 

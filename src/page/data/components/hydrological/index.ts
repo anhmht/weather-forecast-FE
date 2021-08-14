@@ -49,8 +49,9 @@ export default class HydrologicalComponent extends Vue {
     publishStatusId: string = "";
     publishStatusName: string = "Publish";
     slideIndex: number = 0;
-
     activeStation: number = 0;
+    GET_POST_LIMIT: number = 12;
+    GET_POST_PAGE: number = 1;
 
     types = [
         {
@@ -264,7 +265,7 @@ export default class HydrologicalComponent extends Vue {
         })
 
         // Get hydrological posts
-        this.postService.getPostByCategoryAndStatus(this.hydrologicalCategoryId, this.publishStatusId).then((res: any) => {
+        this.postService.getPostByCategoryAndStatus(this.hydrologicalCategoryId, this.publishStatusId, this.GET_POST_LIMIT, this.GET_POST_PAGE).then((res: any) => {
             this.hydrologicalPosts = res.events;
         }).catch(error => {
             this.$errorMessage(error);

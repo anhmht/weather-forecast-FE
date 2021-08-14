@@ -10,6 +10,8 @@
         border-radius: 5px;
         background: #fff;
         width: 350px;
+        position: sticky;
+        top: 100px;
         &--item {
             cursor: pointer;
             padding: 10px;
@@ -21,15 +23,14 @@
                 color: #949494;
             }
             &.active {
-                color: #2d68c3;
+                color: #2196F3;
                 i {
-                    color: #2d68c3;
+                    color: #2196F3;
                 }
             }
         }
     }
     &-contents {
-        background: #fff;
         border-radius: 5px;
         flex: 1;
         margin-left: 30px;
