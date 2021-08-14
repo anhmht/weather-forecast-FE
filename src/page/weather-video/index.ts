@@ -18,12 +18,11 @@ export default class WeatherVideosComponent extends Vue {
     postService: PostServices = new PostServices();
     postModel: IPost = new Post({});
     
-    limit: number = 7;
+    firstLimit: number = 8;
+    limit: number = 5;
     page: number = 1;
     mostViewLimit: number = 7;
     dayNumber: number = 7;
-    firstLimit: number = 10;
-
 
     totalItems: number = 0;
     totalPages: number = 0;
