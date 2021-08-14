@@ -31,8 +31,8 @@ export class PostServices extends GenericServices {
             }).catch(error => Promise.reject(error))
     }
 
-    getPostWithContent(categoryId: string, statusId: string): Promise<ApiResponse> {
-        return this.executeSelecting({categoryId, statusId}, Uri.postWithContent).then((response: ApiResponse) => {
+    getPostWithContent(categoryId: string, statusId: string, limit?: number, page?: number): Promise<ApiResponse> {
+        return this.executeSelectingPost({categoryId, statusId, limit , page}, Uri.postWithContent).then((response: ApiResponse) => {
             return response.isSuccess ? Promise.resolve(response.data) : Promise.reject(response.message);
             }).catch(error => Promise.reject(error))
     }

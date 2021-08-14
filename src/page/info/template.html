@@ -80,8 +80,8 @@
                                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                         allowfullscreen>
                                     </iframe>
-                                    <div class="info-current-forecast-body-youtube-more">Xem thêm</div>
-                                    <div v-for="(item,index) in weatherMapPosts" v-if="index >= 1 && index <= 3" :key="index"
+                                    <div v-if="weatherMapPosts.length > 0" class="info-current-forecast-body-youtube-more">Xem thêm</div>
+                                    <div v-for="(item,index) in weatherMapPosts" v-if="index >= 1" :key="index"
                                         class="info-current-forecast-body-youtube-item" @click="goToYoutube(item.content)">
                                         <h4>{{item.title}}</h4>
                                     </div>
