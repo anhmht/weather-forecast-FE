@@ -62,8 +62,8 @@ export default class InfoPageComponent extends Vue {
     warningPosts: any = [];
     recommendPosts: any = [];
     otherPosts: any = [];
-    weatherNewsPosts: any = [];
-    firstWeatherMapPost: any = [];
+    weatherNewsPosts: any = {};
+    firstWeatherMapPost: any = {};
     weatherMapPosts: any = [];
     slideIndex:number = 0;
     region: any = null;
@@ -73,6 +73,10 @@ export default class InfoPageComponent extends Vue {
     firstWeatherMapPostId: string = null;
     fab:boolean = false;
     currentSection: number = 1;
+
+    mapLimit: number = 4;
+    weatherLimit: number = 1;
+    page: number = 1;
 
     @LookupGetter(lookupTypesStore.Get.STATUS) status: IStatus[]
     @LookupAction getLookupData: (type: string) => Promise<void>;
@@ -334,6 +338,11 @@ export default class InfoPageComponent extends Vue {
             params: { categoryId: this.weatherDangerCategoryId, statusId: this.publishStatusId } })
     }
 
+    viewAllWeatherMaps () {
+        this.$router.push({ name: ROUTE_NAME.WARNING ,
+            params: { categoryId: this.weatherMapCategoryId, statusId: this.publishStatusId } })
+    }
+
     getNow() {
         this.timestamp = moment().format('DD/MM/YYYY HH:mm:ss');
         this.currentDate = moment().format('DD/MM/YYYY');
@@ -449,18 +458,19 @@ export default class InfoPageComponent extends Vue {
         }).catch(error => {
             this.$errorMessage(error);
         })
+        
 
         // Get weather news posts
-        await this.postService.getPostWithContent(this.weatherNewsCategoryId, this.publishStatusId).then((res: any) => {
-            this.weatherNewsPosts = res[0];
+        await this.postService.getPostWithContent(this.weatherNewsCategoryId, this.publishStatusId, this.weatherLimit, this.page).then((res: any) => {
+            this.weatherNewsPosts = res && res['events'] ? res['events'][0] : {};
         }).catch(error => {
             this.$errorMessage(error);
         })
 
         // Get weather map posts
-        await this.postService.getPostWithContent(this.weatherMapCategoryId, this.publishStatusId).then((res: any) => {
-            this.firstWeatherMapPost = res[0];
-            this.weatherMapPosts = res;
+        await this.postService.getPostWithContent(this.weatherMapCategoryId, this.publishStatusId, this.mapLimit, this.page).then((res: any) => {
+            this.firstWeatherMapPost = res && res['events'] ? res['events'][0] : {};
+            this.weatherMapPosts = res && res['events'] ? res['events'] : [];
         }).catch(error => {
             this.$errorMessage(error);
         })
