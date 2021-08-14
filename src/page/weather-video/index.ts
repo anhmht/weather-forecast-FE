@@ -41,8 +41,9 @@ export default class WeatherVideosComponent extends Vue {
     }
 
     get totalPageVisible() {
-        if (this.totalPages < 7)
-            return this.totalPages
+        let maxPage = Math.ceil(this.totalItems / 5);
+        if (maxPage < 7)
+            return maxPage;
         else
             return 7
     }

@@ -6,7 +6,7 @@
     <v-menu v-if="loginInfo" open-on-hover bottom left offset-y transition="slide-y-transition">
         <template v-slot:activator="{ on, attrs }">
             <div v-bind="attrs" v-on="on" class="base-header-menu-item login d-flex align-center" @click="handleUserProfile">
-                <img v-if="avatar && !isAvatarError" :src="avatar" @error="onImgError" class="mr-1"/>
+                <img v-if="avatar && !isAvatarError" :src="avatar" @error="onImgError" />
                 <v-avatar v-else :color="color" size="35">
                     <span class="white--text">{{loginInfo.shortName}}</span>
                 </v-avatar>

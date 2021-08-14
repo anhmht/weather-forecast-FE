@@ -21,22 +21,22 @@
         </div>
         <div class="weather-video-container_section-2-3_wrapper">
             <div class="weather-video-container_section-2">
-                <v-row v-for="(item,index) in tblData" :key="index" justify="center">
-                    <div class="weather-video-container_section-2_item">
-                        <v-col cols=4>
-                            <video-thumb :url="item.content"></video-thumb>
-                        </v-col>
-                        <v-col cols=8>
-                            <div class="weather-video-container_section-2_item-info"  @click="goToYoutube(item.content)">
-                                <h4>{{item.title}}</h4>
-                                <p>{{item.datePosted}}</p>
-                            </div>
-                        </v-col>
+                <div v-for="(item,index) in tblData" :key="index"
+                    @click="goToYoutube(item.content)"
+                    class="weather-video-container_section-2_item">
+
+                    <div class="weather-video-container_section-2_item--img">
+                        <video-thumb :url="item.content"></video-thumb>
                     </div>
-                </v-row>
-                <div v-if="totalItems > limit" class="d-flex align-center mt-4 pt-4" style="border-top: 1px solid #ddd;">
+                    <div class="weather-video-container_section-2_item-info">
+                        <h4>{{item.title}}</h4>
+                        <p>{{item.datePosted}}</p>
+                    </div>
+                </div>
+
+                <div v-if="totalPageVisible > 1" class="d-flex align-center mt-4 pt-4" style="border-top: 1px solid #ddd;">
                     <div class="mr-auto">{{numPostsInPage}}/{{totalItems}} tin</div>
-                    <v-pagination v-model="page" :length="totalPages" :total-visible="totalPageVisible"
+                    <v-pagination v-model="page" :length="totalPageVisible" :total-visible="totalPageVisible"
                         @input="searchByPaging"></v-pagination>
                 </div>
             </div>
