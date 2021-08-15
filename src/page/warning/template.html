@@ -1,6 +1,5 @@
 <div class="warning-page-container">
     <base-container class="container">
-        <div class="warning-page-container_header"></div>
         <div class="warning-page-container_section-1">
             <div class="warning-page-container_section-1_main" @click="handleViewDetail(firstPost.eventId)">
                 <img :src="firstPost.imageUrl">
@@ -32,10 +31,27 @@
                     </div>
                 </div>
 
-                <div v-if="totalPageVisible > 1" class="d-flex align-center mt-4 pt-4" style="border-top: 1px solid #ddd;">
-                    <div class="mr-auto">{{numPostsInPage}}/{{totalItems}} tin</div>
-                    <v-pagination v-model="page" :length="totalPageLength" :total-visible="totalPageVisible"
-                        @input="searchByPaging"></v-pagination>
+                <div v-if="isLoadingMore" class="weather-video-container_section-2_item">
+                    <div class="weather-video-container_section-2_item--img">
+                        <v-skeleton-loader
+                            v-bind="{ elevation: 0, }"
+                            tile max-width="220" max-height="120" type="image"
+                        ></v-skeleton-loader>
+                    </div>
+                    <div class="weather-video-container_section-2_item-info">
+                        <v-skeleton-loader
+                            v-bind="{ elevation: 0, }" type="list-item-two-line"
+                        ></v-skeleton-loader>
+                    </div>
+                </div>
+
+                <div v-if="isHasmore" class="d-flex justify-center mt-4 pt-4" >
+                    <v-btn
+                        :disable="isLoadingMore"
+                        color="primary"
+                        elevation="1"
+                        @click="loadMore()"
+                    >Bấm để xem thêm</v-btn>
                 </div>
             </div>
             <div class="warning-page-container_section-3">
@@ -51,6 +67,11 @@
                 </div>
             </div>
         </div>
-        <div class="warning-page-container_footer"></div>
+        <v-btn
+            v-scroll="onScroll" v-show="fab" fab dark
+            fixed bottom right color="primary" @click="toTop"
+          >
+            <v-icon>mdi-chevron-up</v-icon>
+        </v-btn>
     </base-container>
 </div>

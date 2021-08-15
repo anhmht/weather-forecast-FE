@@ -1,13 +1,7 @@
 .warning-page-container {
+    padding-top: 50px;
+    padding-bottom: 50px;
     background-color: #ddd;
-
-    &_header {
-        height: 50px;
-    }
-
-    &_footer {
-        height: 50px;
-    }
 
     &_section-1 {
         display: flex;

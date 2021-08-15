@@ -2,8 +2,6 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import { ROUTE_NAME } from "../../constant/route-constant";
 import { PostServices } from '../../service/post-service/post.service';
-import IPost from "../../model/post/post.model";
-import { Post } from '../../model/post/post.model';
 import moment from "moment";
 import { EVENT_STATUS } from "@/constant/common-constant";
 
@@ -18,7 +16,6 @@ export default class WeatherVideosComponent extends Vue {
     postService: PostServices = new PostServices();
     
     firstLimit: number = 8;
-    limit: number = 5;
     page: number = 1;
     mostViewLimit: number = 7;
     dayNumber: number = 7;
@@ -31,6 +28,9 @@ export default class WeatherVideosComponent extends Vue {
     topPost: any = [];
     mostWatchPosts: any = [];
 
+    isLoadingMore: boolean = false;
+    fab:boolean = false;
+
     get firstPost() {
         return this.topPost.length > 0 ? this.topPost[0] : {}
     }
@@ -39,16 +39,20 @@ export default class WeatherVideosComponent extends Vue {
         return (this.topPost || []).filter((e, i) => i > 0)
     }
 
-    get totalPageLength () {
-        return Math.ceil(this.totalItems / 5);
+    get isHasmore () {
+        return this.totalPages > 0 && this.page < this.totalPages;
     }
 
-    get totalPageVisible() {
-        if (this.totalPageLength < 5)
-            return this.totalPageLength;
-        else
-            return 5
-    }
+    // get totalPageLength () {
+    //     return Math.ceil(this.totalItems / 5);
+    // }
+
+    // get totalPageVisible() {
+    //     if (this.totalPageLength < 5)
+    //         return this.totalPageLength;
+    //     else
+    //         return 5
+    // }
 
     handleViewDetail(postId) {
         this.$router.push({ name: ROUTE_NAME.INFO_DETAIL , params: { id: postId } })
@@ -58,35 +62,41 @@ export default class WeatherVideosComponent extends Vue {
         window.open(linkId);
     }
 
-    async fetchData () {
-        const lm = this.page == 1? this.firstLimit : this.limit;
-
-        await this.postService.getPostWithContent(this.$route.params.categoryId, this.$route.params.statusId, lm, this.page)
+    async loadMore () {
+        this.isLoadingMore = true;
+        this.page++;
+        await this.postService.getPostWithContent(this.$route.params.categoryId, this.$route.params.statusId, this.firstLimit, this.page)
         .then((res: any) => {
+            this.isLoadingMore = false;
             if (res) {
                 let events = (res.events || []).map(e => {
                     e.datePosted = moment(e.datePosted).format('L');
                     return e;
                 });
 
-                this.tblData = this.page == 1 ? events.filter((e, i) => i > 2) : events;
+                // this.tblData = this.page == 1 ? events.filter((e, i) => i > 2) : events;
+                this.isLoadingMore = false;
 
+                this.tblData.push(...events);
+                
                 this.totalItems = res.totalItems;
                 this.totalPages = res.totalPages;
             }
             
         }).catch(error => {
+            this.isLoadingMore = false;
             this.$errorMessage(error);
         })
     }
 
-    async searchByPaging () {
-        await this.fetchData();
-        if (this.limit * this.page <= this.totalItems) {
-            this.numPostsInPage = this.limit * this.page;
-        } else {
-            this.numPostsInPage = this.totalItems;
-        }
+    onScroll (e) {
+        if (typeof window === 'undefined') return
+        const top = window.pageYOffset ||   e.target.scrollTop || 0
+        this.fab = top > 20;
+    }
+
+    toTop () {
+        this.$vuetify.goTo(0);
     }
 
     async mounted() {
@@ -103,12 +113,6 @@ export default class WeatherVideosComponent extends Vue {
 
                 this.totalItems = res.totalItems;
                 this.totalPages = res.totalPages;
-
-                if (this.limit <= this.totalItems) {
-                    this.numPostsInPage = this.limit;
-                } else {
-                    this.numPostsInPage = this.totalItems;
-                }
             }
             
         }).catch(error => {
