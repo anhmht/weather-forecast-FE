@@ -1,0 +1,58 @@
+<div>
+    <div class="image-preview__wrapper" v-show="isVisible">
+        <div class="image-preview__mask" />
+        <span class="image-preview__btn image-preview__close">
+            <v-btn @click="$emit('update:isVisible', false)" icon color="white">
+                <v-icon>mdi-close</v-icon>
+            </v-btn>
+        </span>
+        <span class="image-preview__btn image-preview__prev" @click="handleChangeImage(true)">
+            <v-btn icon color="white">
+                <v-icon>mdi-chevron-left</v-icon>
+            </v-btn>
+        </span>
+        <span class="image-preview__btn image-preview__next" @click="handleChangeImage(false)">
+            <v-btn icon color="white">
+                <v-icon>mdi-chevron-right</v-icon>
+            </v-btn>
+        </span>
+        <div  v-if="data.length > 0 && MediaData.type === 'image'" class="image-preview__btn image-preview__actions">
+            <div class="image-preview__actions__inner">
+                <v-btn @click="handleZoom(false)" icon color="white">
+                    <v-icon>mdi-magnify-plus-outline</v-icon>
+                </v-btn>
+                <v-btn @click="handleZoom(true)" icon color="white">
+                    <v-icon>mdi-magnify-minus-outline</v-icon>
+                </v-btn>
+                <v-btn @click="handleFullScreen" icon color="white">
+                    <v-icon v-if="!isFullScreen">mdi-fullscreen</v-icon>
+                    <v-icon v-else>mdi-fullscreen-exit</v-icon>
+                </v-btn>
+                <v-btn @click="handleRotate(true)" icon color="white">
+                    <v-icon>mdi-rotate-left</v-icon>
+                </v-btn>
+                <v-btn @click="handleRotate(false)" icon color="white">
+                    <v-icon>mdi-rotate-right</v-icon>
+                </v-btn>
+            </div>
+        </div>
+        <div v-if="data.length > 0" class="image-preview__canvas">
+            <v-img
+                v-if="MediaData.type === 'image'"
+                :style="styleObject"
+                :src="MediaData.url"
+                aspect-ratio="1" class="grey lighten-2">
+                <template v-slot:placeholder>
+                    <v-row class="fill-height ma-0" align="center" justify="center">
+                        <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+                    </v-row>
+                </template>
+            </v-img>
+            <div v-else>
+                <video controls autoplay loop autobuffer id="social-video" preload="auto">
+                    <source :src="MediaData.url" type="video/mp4">
+                </video>
+            </div>
+        </div>
+    </div>
+</div>

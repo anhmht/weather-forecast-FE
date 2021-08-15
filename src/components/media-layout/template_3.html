@@ -1,0 +1,19 @@
+<div v-if="Medias" class="social-media-layout-3">
+    <template v-for="(item, index) in Medias" >
+        <div v-if="item.type === 'image'" @click="handlePreview(index)" v-ripple>
+            <v-img :src="item.url" aspect-ratio="1" class="grey lighten-2" height="250">
+                <template v-slot:placeholder>
+                    <v-row class="fill-height ma-0" align="center" justify="center">
+                        <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+                    </v-row>
+                </template>
+            </v-img>
+        </div>
+        <div v-else v-ripple class="social-media-video" @click="handlePreview(index)">
+            <video controls loop preload="none">
+                <source :src="item.url" type="video/mp4">
+            </video>
+            <div></div>  <!--DO NOT Remove -->
+        </div>
+    </template>
+</div>
