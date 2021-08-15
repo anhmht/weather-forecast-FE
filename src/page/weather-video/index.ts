@@ -16,7 +16,6 @@ import { EVENT_STATUS } from "@/constant/common-constant";
 })
 export default class WeatherVideosComponent extends Vue {
     postService: PostServices = new PostServices();
-    postModel: IPost = new Post({});
     
     firstLimit: number = 8;
     limit: number = 5;
@@ -40,12 +39,15 @@ export default class WeatherVideosComponent extends Vue {
         return (this.topPost || []).filter((e, i) => i > 0)
     }
 
+    get totalPageLength () {
+        return Math.ceil(this.totalItems / 5);
+    }
+
     get totalPageVisible() {
-        let maxPage = Math.ceil(this.totalItems / 5);
-        if (maxPage < 7)
-            return maxPage;
+        if (this.totalPageLength < 5)
+            return this.totalPageLength;
         else
-            return 7
+            return 5
     }
 
     handleViewDetail(postId) {

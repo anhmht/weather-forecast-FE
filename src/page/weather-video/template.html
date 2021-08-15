@@ -36,7 +36,7 @@
 
                 <div v-if="totalPageVisible > 1" class="d-flex align-center mt-4 pt-4" style="border-top: 1px solid #ddd;">
                     <div class="mr-auto">{{numPostsInPage}}/{{totalItems}} tin</div>
-                    <v-pagination v-model="page" :length="totalPageVisible" :total-visible="totalPageVisible"
+                    <v-pagination v-model="page" :length="totalPageLength" :total-visible="totalPageVisible"
                         @input="searchByPaging"></v-pagination>
                 </div>
             </div>
