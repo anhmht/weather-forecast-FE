@@ -1,62 +1,34 @@
 <div>
-    <div class="social-post-item">
+    <div v-for="(item, index) in myPosts" :key="index" class="social-post-item">
         <div class="social-post-item-header">
             <div class="social-post-item-header--time">
-                28 thg 8, 2020
-            </div>
-            <div class="social-post-item-header--status unapprove">
-                {{ getStatus(0) }}
-            </div>
-        </div>
-        <div class="social-post-item-body">
-            <div class="social-post-item-body--text">
-                Bão, áp thấp nhiệt đới hoạt động trên khu vực vùng biển phía Tây kinh tuyến 120° Đông, phía Bắc
-                vĩ
-                tuyến 05° Bắc và phía
-                Nam vĩ tuyến 23° Bắc (Biển Đông) và trên đất liền lãnh thổ Việt Nam; bão, áp thấp nhiệt đới hoạt
-                động ngoài khu vực biển
-                Đông,
-            </div>
-            <div class="social-post-item-body--button">
-                <div v-ripple>
-                    Đọc thêm
-                </div>
-            </div>
-        </div>
-        <div class="social-post-item-media">
-            <img
-                src="https://weatherstoragevn.blob.core.windows.net/images/3423d5c2-5e00-4333-9c31-a36b917251411622019377813_Mask Group 4.jpg" />
-        </div>
-    </div>
-    <div class="social-post-item">
-        <div class="social-post-item-header">
-            <div class="social-post-item-header--time">
-                28 thg 8, 2020
+                {{$formatDateTime(item.createDate)}}
             </div>
             <div class="social-post-item-header--status approve">
-                {{ getStatus(1) }}
+                {{getStatus(item.statusId)}}
             </div>
         </div>
-        <div class="social-post-item-body">
-            <div class="social-post-item-body--text">
-                Bão, áp thấp nhiệt đới hoạt động trên khu vực vùng biển phía Tây kinh tuyến 120° Đông, phía Bắc
-                vĩ
-                tuyến 05° Bắc và phía
-                Nam vĩ tuyến 23° Bắc (Biển Đông) và trên đất liền lãnh thổ Việt Nam; bão, áp thấp nhiệt đới hoạt
-                động ngoài khu vực biển
-                Đông,
-            </div>
-            <div class="social-post-item-body--button">
-                <div v-ripple>
+        <div v-if="!isReadMore" class="social-post-item-body">
+            <div class="social-post-item-body--text">{{displayContent(item.content)}}</div>
+            <div v-if="item.content.length >= 255" class="social-post-item-body--button">
+                <div @click="toggleContent" v-ripple>
                     Đọc thêm
                 </div>
             </div>
         </div>
-        <div class="social-post-item-media">
-            <img
-                src="https://weatherstoragevn.blob.core.windows.net/images/3423d5c2-5e00-4333-9c31-a36b917251411622019377813_Mask Group 4.jpg" />
+        <div v-if="isReadMore" class="social-post-item-body">
+            <div class="social-post-item-body--text">{{item.content}}</div>
+            <div v-if="item.content.length >= 255" class="social-post-item-body--button">
+                <div @click="toggleContent" v-ripple>
+                    Thu gọn
+                </div>
+            </div>
         </div>
-        <div class="social-post-item-footer">
+        <div class="social-post-item-media">
+            {{item.listImageUrl}}
+            {{item.listVideoUrl}}
+        </div>
+        <div v-if="item.statusId === 1" class="social-post-item-footer">
             <div class="social-post-item-footer--action">
                 <div class="social-post-item-footer--action_item" v-ripple>
                     <v-icon light>
@@ -74,7 +46,7 @@
                     <v-icon light>
                         mdi-share-outline
                     </v-icon>
-                    Chia sẽ
+                    Chia sẻ
                 </div>
             </div>
         </div>
