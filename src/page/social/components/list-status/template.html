@@ -26,9 +26,7 @@
                     </div>
                 </div>
                 <div class="social-list--item_body--content_image">
-                    <div>
-                        <img src="https://weatherstoragevn.blob.core.windows.net/images/3423d5c2-5e00-4333-9c31-a36b917251411622019377813_Mask Group 4.jpg"/>
-                    </div>
+                    <media-layout :images="sampleImages_1" :videos="samnpleVideos_1" @preview="handlePreview" />
                 </div>
             </div>
         </div>
@@ -53,6 +51,9 @@
                     Chia sẻ
                 </div>
             </div>
+        </div>
+        <div>
+            <comment />
         </div>
     </div>
     <div class="social-list--item">
@@ -84,10 +85,7 @@
                     </div>
                 </div>
                 <div class="social-list--item_body--content_image">
-                    <div>
-                        <img
-                            src="https://weatherstoragevn.blob.core.windows.net/images/3423d5c2-5e00-4333-9c31-a36b917251411622019377813_Mask Group 4.jpg" />
-                    </div>
+                    <media-layout :images="sampleImages_2" :videos="samnpleVideos_2" @preview="handlePreview" />
                 </div>
             </div>
         </div>
@@ -113,5 +111,9 @@
                 </div>
             </div>
         </div>
+        <div>
+            <comment />
+        </div>
     </div>
+    <preview-image :data="selectedItem" :is-visible.sync="isPreivew" :current="selectedIndex"/>
 </div>
