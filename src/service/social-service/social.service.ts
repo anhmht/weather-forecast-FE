@@ -1,17 +1,17 @@
 import { ApiResponse } from "@/model/app-config";
 import { GenericServices } from "../generic-service/generic.service";
 import Uri from "@/constant/uri/social-constant";
-import IPost from "@/model/social/post.model";
+import { ISocialPost } from "@/model/social/post.model";
 import IComment from "@/model/social/comment.model";
 
 export class SocialServices extends GenericServices {
-    createPost(post: IPost): Promise<ApiResponse> {
+    createPost(post: ISocialPost): Promise<ApiResponse> {
         return this.executeSelectingPost(post, Uri.createPost).then((response: ApiResponse) => {
             return response.isSuccess ? Promise.resolve(response.data) : Promise.reject(response.message);
             }).catch(error => Promise.reject(error))
     }
 
-    editPost(post: IPost): Promise<ApiResponse> {
+    editPost(post: ISocialPost): Promise<ApiResponse> {
         return this.executeSelectingPut(post, Uri.editPost).then((response: ApiResponse) => {
             return response.isSuccess ? Promise.resolve(response.data) : Promise.reject(response.message);
             }).catch(error => Promise.reject(error))
