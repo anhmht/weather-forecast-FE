@@ -1,9 +1,12 @@
 <div>
     <div v-for="(item, index) in myPosts" :key="index" class="social-post-item">
         <div class="social-post-item-header">
-            <div class="social-post-item-header--time">
-                {{$formatDateTime(item.createDate)}}
-            </div>
+            <v-tooltip top>
+                <template v-slot:activator="{ on, attrs }">
+                    <span v-bind="attrs" v-on="on" class="social-post-item-header--time">{{$calculateRelativeTime(item.createDate)}}</span>
+                </template>
+                <span>{{$formatDateTime(item.createDate)}}</span>
+            </v-tooltip>
             <div class="social-post-item-header--status approve">
                 {{getStatus(item.statusId)}}
             </div>
@@ -19,7 +22,7 @@
         <div v-if="isReadMore" class="social-post-item-body">
             <div class="social-post-item-body--text">{{item.content}}</div>
             <div v-if="item.content.length >= 255" class="social-post-item-body--button">
-                <div @click="toggleContent" v-ripple>
+                <div @click="toggleContent($event)" v-ripple>
                     Thu gọn
                 </div>
             </div>
@@ -36,7 +39,7 @@
                     </v-icon>
                     Thích
                 </div>
-                <div class="social-post-item-footer--action_item" v-ripple>
+                <div @click="toggleComment" class="social-post-item-footer--action_item" v-ripple>
                     <v-icon light>
                         mdi-comment-text-outline
                     </v-icon>
@@ -49,6 +52,9 @@
                     Chia sẻ
                 </div>
             </div>
+        </div>
+        <div v-if="isCommentable">
+            <comment />
         </div>
     </div>
 </div>
