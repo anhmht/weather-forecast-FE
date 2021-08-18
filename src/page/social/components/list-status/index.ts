@@ -1,4 +1,3 @@
-
 import { DataHelper } from '@/utils/data-helper';
 import Vue from 'vue';
 import Component from 'vue-class-component';
@@ -8,8 +7,9 @@ import Component from 'vue-class-component';
     components: {
         "preview-image": () => import("../../../../components/preview-image/PreviewImage.vue"),
         "media-layout": () => import("../../../../components/media-layout/MediaLayoutComponent.vue"),
-        "comment": () => import("../comment/CommentComponent.vue")
-    }
+        "comment": () => import("../../../../components/comment/CommentComponent.vue"),
+        "reaction": () => import("../../../../components/reaction/ReactionComponent.vue")
+    },
 })
 export default class ListStatusComponent extends Vue {
 

@@ -5,7 +5,7 @@ import { SocialServices } from "@/service/social-service/social.service";
 @Component({
     template: require("./template.html").default,
     components: {
-        "comment": () => import("../../../../social/components/comment/CommentComponent.vue")
+        "comment": () => import("../../../../../components/comment/CommentComponent.vue")
     }
 })
 export default class MyPostComponent extends Vue {

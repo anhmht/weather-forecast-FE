@@ -1,0 +1,39 @@
+.social-reaction {
+    > .theme--dark.v-btn.v-btn--has-bg {
+        background-color: unset !important;
+    }
+    button {
+        
+        border: none !important;
+        box-shadow: none;
+        color: rgba(0,0,0,.87) !important;
+        font-weight: normal;
+        padding: 5px !important;
+        span {
+            text-decoration: none;
+            text-transform: none;
+            letter-spacing: normal;
+            i {
+                font-weight: normal;
+                color: rgba(0,0,0,.54)  !important;
+            }
+        }
+    }
+    &-list {
+        background-color: #fff;
+        display: flex;
+        width: 400px;
+        padding: 5px;
+        > div {
+            cursor: pointer;
+            &:hover {
+                transform: scale(1.2);
+            }
+        }
+    }
+    &-action {
+        width: 30px;
+        height: 30px;
+        margin-right: 10px;
+    }
+}
