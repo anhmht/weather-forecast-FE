@@ -13,5 +13,13 @@ export const StringFormatterPlugin = {
 
             return value;
         };
+
+        Vue.prototype.$displayContent = function (value: string) {
+            if (value.length >= 255) {
+                return `${value.substring(0, 254)}...`;
+            }
+
+            return value;
+        };
     }
 }

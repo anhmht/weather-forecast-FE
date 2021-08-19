@@ -12,7 +12,7 @@ export default {
     removeReactionFromPost: "/api/Post/remove-post-action-icon/:id",
     removeReactionFromComment: "/api/Post/remove-comment-action-icon/:id",
     sharePost: "/api/Post/share",
-    getListPostsAdmin: "/api/Post/get-list",
+    getListPosts: "/api/Post/get-list",
     getListPostsUser: "/api/Post/get-list-user-time-line",
     getPostById: "/api/Post/:id",
     deletePost: "/api/Post/:id",
