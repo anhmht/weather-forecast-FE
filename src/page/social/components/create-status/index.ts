@@ -197,4 +197,11 @@ export default class CreateSatusComponent extends Vue {
             this.$toast.error('Vui lòng nhập nội dung bài viết.');
         }
     }
+
+    removeAllMedia () {
+        this.selectedPhotos = [];
+        this.selectedPVideos = [];
+        this.postModel.imageUrls = [];
+        this.postModel.videoUrls = [];
+    }
 }

@@ -10,8 +10,39 @@
         }
         &_body {
             margin-bottom: 10px;
+            max-height: 50vh;
+            overflow-y: auto;
+            position: relative;
+
             .v-text-field__details {
                 display: none;
+            }
+
+            /* width */
+            &::-webkit-scrollbar {
+                width: 10px;
+            }
+            
+            /* Track */
+            &::-webkit-scrollbar-track {
+                background: #f1f1f1;
+            }
+            
+            /* Handle */
+            &::-webkit-scrollbar-thumb {
+                background: #888;
+            }
+            
+            /* Handle on hover */
+            &::-webkit-scrollbar-thumb:hover {
+                background: #555;
+            }
+
+            &-remove-all-media {
+                position: absolute !important;
+                right: 10px;
+                top: 10px;
+                cursor: pointer;
             }
         }
         &_footer {
