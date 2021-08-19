@@ -14,6 +14,10 @@ import { Prop } from 'vue-property-decorator';
         }
     },
     created() {
+        if (this.editable === true) {
+            this.template = Vue.compile(require("./template_editable.html").default).render;
+            return;
+        }
         const number = this.images.length + this.videos.length;
         console.log(this.videos);
         
@@ -43,6 +47,9 @@ export default class MediaLayoutComponent extends Vue {
     @Prop({ type: Array, default:  [] })
     videos
 
+    @Prop( {type: Boolean, default: false})
+    editable
+
     get Medias() {
         let result = []
         const imagesArr = this.images ? this.images.map(x => {
@@ -61,6 +68,32 @@ export default class MediaLayoutComponent extends Vue {
         console.log(result);
         
         return result;
+    }
+
+    get layoutType () {
+        if (this.Medias.length > 4) return 5;
+        return this.Medias.length;
+    }
+
+    getRatio (index) {
+        switch (this.Medias.length) {
+            case 1:
+                return 9/16
+            case 2:
+                return 3/2
+            case 3:
+                if (index == 0) {
+                    return 16/9
+                } else {
+                    return 1
+                }
+            default:
+                if (index == 0) {
+                    return 1/2
+                } else {
+                    return 3/2
+                }
+        }
     }
 
     handlePreview(index) {
