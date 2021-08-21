@@ -1,13 +1,7 @@
 .warning-page-container {
+    padding-top: 50px;
+    padding-bottom: 50px;
     background-color: #ddd;
-
-    &_header {
-        height: 50px;
-    }
-
-    &_footer {
-        height: 50px;
-    }
 
     &_section-1 {
         display: flex;
@@ -58,6 +52,9 @@
                 &-info {
                     h4 {
                         overflow: hidden;
+                        padding-top: 10px;
+                        padding-bottom: 5px;
+                        line-height: 20px;
                     }
                 }
             }
@@ -71,21 +68,37 @@
     &_section-2 {
         margin: 50px 20px 0px 0px;
         background-color: #fff;
-        padding: 20px;
+        padding: 0 20px 20px;
         flex: 2;
 
         &_item {
             display: flex;
             cursor: pointer;
+            margin-top: 20px;
 
-            img {
-                width: 100%;
-                object-fit: cover;
+            &--img {
+                width: 220px;
+                height: 120px;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                border: 1px solid #ddd ;
+                padding: 0;
+                margin-right: 20px;
             }
 
             &-info {
-                &:hover {
-                    h4 {
+                width: calc(100% - 240px);
+                height: 120px;
+                h4 {
+                    line-height: 20px;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 3;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+                    padding-bottom: 5px;
+
+                    &:hover {
                         color: $primary-color;
                     }
                 }
@@ -110,26 +123,28 @@
             cursor: pointer;
             margin-top: 20px;
 
-            img {
-                width: 100%;
+            &--img {
+                width: 60px;
                 height: 60px;
-                object-fit: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                border: 1px solid #ddd ;
+                padding: 0;
+                margin-right: 20px;
             }
 
             &-info {
-                h4 {
-                    height: 60px;
-                    line-height: 20px;
-                    display: -webkit-box;
-                    -webkit-line-clamp: 3;
-                    -webkit-box-orient: vertical;
-                    overflow: hidden;
-                }
+                width: calc(100% - 80px);
+                height: 60px;
+                line-height: 20px;
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
 
                 &:hover {
-                    h4 {
-                        color: $primary-color;
-                    }
+                    color: $primary-color;
                 }
             }
         }

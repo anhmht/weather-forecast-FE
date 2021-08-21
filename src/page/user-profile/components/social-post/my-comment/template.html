@@ -1,0 +1,26 @@
+<div class="my-comment">
+    <div v-for="(postItem, postIndex) in myComments" :key="postIndex">
+        <div v-for="(commentItem, commentIndex) in postItem.comments" :key="commentIndex" class="my-comment-item">
+            <div class="my-comment-item-header">
+                <div>{{postItem.content}}</div>
+                <div></div> <!-- DONT DELETE THIS DIV -->
+            </div>
+            <div class="my-comment-item-body">
+                <div class="my-comment-item-body--avatar">
+                    <v-avatar :color="getColor(commentItem.creatorShortName)" size="50">
+                        <span class="white--text">{{commentItem.creatorShortName}}</span>
+                    </v-avatar>
+                </div>
+                <div class="my-comment-item-body--content">
+                    <v-tooltip top>
+                        <template v-slot:activator="{ on, attrs }">
+                            <span v-bind="attrs" v-on="on" class="my-comment-item-body--content__time">{{$calculateRelativeTime(commentItem.createDate)}}</span>
+                        </template>
+                        <span>{{$formatDateTime(commentItem.createDate)}}</span>
+                    </v-tooltip>
+                    <div class="my-comment-item-body--content__text">{{commentItem.content}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

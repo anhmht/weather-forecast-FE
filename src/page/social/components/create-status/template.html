@@ -4,34 +4,49 @@
             Đăng bài
         </div>
         <div class="create-status-container_body">
-            <v-textarea filled auto-grow label="Viết trạng thái" rows="2" row-height="30"></v-textarea>
+            <v-textarea filled dense flat auto-grow label="Viết trạng thái" rows="2" row-height="30" v-model="content"></v-textarea>
+            <div style="position: relative;">
+                <media-layout editable :images="selectedPhotos" :videos="selectedPVideos" @preview="handlePreview" />
+                <v-icon v-if="selectedPhotos.length > 0 || selectedPVideos.length > 0"
+                    color="blue-grey" large
+                    class="create-status-container_body-remove-all-media"
+                    @click.native="removeAllMedia"
+                >mdi-close-circle</v-icon>
+            </div>
         </div>
         <div class="create-status-container_footer">
             <div class="create-status-container_footer__attach">
-                <div class="create-status-container_footer__attach--item" v-ripple>
-                    <v-icon light>
+                <div class="create-status-container_footer__attach--item" v-ripple @click="handleClickBrowsePhoto">
+                    <v-icon color="green darken-2">
                         mdi-image
                     </v-icon>
                     Hình ảnh
                 </div>
-                <div class="create-status-container_footer__attach--item" v-ripple>
-                    <v-icon>
-                        mdi-video
+                <input ref="uploadPhoto" type="file" accept="image/*"
+                    @change="onChangePhotos($event.target.files)" hidden multiple
+                />
+                <div class="create-status-container_footer__attach--item" v-ripple @click="handleClickBrowseVideo">
+                    <v-icon color="red darken-2">
+                        mdi-video-box
                     </v-icon>
                     Video
                 </div>
+                <input ref="uploadVideo" type="file" accept="video/*"
+                    @change="onChangeVideos($event.target.files)" hidden multiple
+                />
                 <div class="create-status-container_footer__attach--item" v-ripple>
-                    <v-icon>
-                        mdi-emoticon
+                    <v-icon color="yellow darken-2">
+                        mdi-emoticon-happy-outline
                     </v-icon>
                     Biểu tượng
                 </div>
             </div>
             <div class="create-status-container_footer__action">
-                <v-btn color="primary" depressed>
+                <v-btn color="primary" depressed @click="handlePost">
                     Đăng bài
                 </v-btn>
             </div>
         </div>
     </div>
+    <preview-image :data="selectedItem" :is-visible.sync="isPreivew" :current="selectedIndex"/>
 </div>

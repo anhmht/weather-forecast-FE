@@ -1,3 +1,39 @@
 .social-post {
-
+    background-color: #eee;
+    &-container {
+        border-radius: 5px;
+        background-color: #fff;
+    }
+    &-header {
+        border-bottom: 1px solid #eee;
+        display: flex;
+        padding: 0 20px;
+    }
+    &-body {
+        background-color: #eee;
+    }
+    &-tab {
+        font-size: 16px;
+        color: rgba(0,0,0,.54);
+        margin-left: 30px;
+        padding-top: 20px;
+        cursor: pointer;
+        &:first-child {
+            margin-left: 0;
+        }
+        &.active {
+            font-weight: 600;
+            color: #000;
+            &:after {
+                height: 3px;
+                display: block;
+                width: 90%;
+                margin: 15px auto;
+                margin-bottom: 0;
+                background-color: #2196F3;
+                content: '';
+            }
+        }
+    }
+    
 }

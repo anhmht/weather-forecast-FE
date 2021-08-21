@@ -22,19 +22,14 @@
                     <v-col  cols="24" md="3">
                         <div class="info-detail-page-container_section_2_relative">
                             <h2>Tin liên quan</h2>
-                            <br>
-                            <v-row v-for="(item,index) in relativePosts" @click="handleViewDetail(item.eventId)" :key="index" justify="center">
-                                <div class="info-detail-page-container_section_2_relative_item">
-                                    <v-col cols=4>
-                                        <img :src="item.imageUrl">
-                                    </v-col>
-                                    <v-col cols=8>
-                                        <div class="info-detail-page-container_section_2_relative_item_title">
-                                            <h4>{{item.title}}</h4>
-                                        </div>
-                                    </v-col>
+                            <div v-for="(item,index) in relativePosts" 
+                                @click="handleViewDetail(item.eventId)" :key="index" 
+                                class="info-detail-page-container_section_2_relative_item">
+                                <div class="info-detail-page-container_section_2_relative_item--img" :style="`background-image: url( ${item.imageUrl})`"></div>
+                                <div class="info-detail-page-container_section_2_relative_item_title">
+                                    <h4>{{item.title}}</h4>
                                 </div>
-                            </v-row>
+                            </div>
                         </div>
                     </v-col>
                 </v-row>

@@ -130,4 +130,29 @@ export class UploadServices extends GenericServices {
                 }
             });
     }
+    
+    uploadVideoSocial(formData, config, id = null) {
+        return this.executeSelectingPost(formData, Uri.uploadVideoSocial, {
+            ...config, cancelToken: new this.CancelToken((c) => {
+                // An executor function receives a cancel function as a parameter
+                this.cancels.push({ cancel: c, id });
+            })
+        })
+            .then((response: any) => {
+                const index = this.cancels.findIndex(x => x.id === id);
+                this.cancels.splice(index, 1);
+                return response.isSuccess ? Promise.resolve(response.data) : Promise.reject(response.message);
+            })
+            .catch(ex => {
+                const index = this.cancels.findIndex(x => x.id === id);
+                this.cancels.splice(index, 1);
+                if (axios.isCancel(ex)) {
+                    console.log('Request canceled', ex.message);
+                } else {
+                    // handle error
+                    console.log(ex)
+                    return Promise.reject(ex)
+                }
+            });
+    }
 }

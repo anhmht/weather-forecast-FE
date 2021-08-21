@@ -11,4 +11,6 @@
         </div>
         <div v-html="selectedWeatherStatusContent" class="weather-status-right"></div>
     </div>
+    <v-pagination v-model="GET_POST_PAGE" :length="totalPages" :total-visible="TotalPageVisible"
+        @input="getPosts"></v-pagination>
 </div>

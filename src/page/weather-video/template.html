@@ -1,0 +1,81 @@
+<div class="weather-video-container">
+    <base-container class="container">
+        <div class="weather-video-container_section-1">
+            <div class="weather-video-container_section-1_main" @click="goToYoutube(firstPost.content)">
+                <video-thumb :url="firstPost.content" size="large"></video-thumb>
+                <div class="weather-video-container_section-1_main-info">
+                    <h4>{{firstPost.title}}</h4>
+                    <p>{{firstPost.datePosted}}</p>
+                </div>
+            </div>
+            <div class="weather-video-container_section-1_sub">
+                <div v-for="(item,index) in secondListPost" :key="index" class="weather-video-container_section-1_sub-item"
+                    @click="goToYoutube(item.content)">
+                    <video-thumb :url="item.content" size="medium"></video-thumb>
+                    <div class="weather-video-container_section-1_sub-item-info">
+                        <h4>{{item.title}}</h4>
+                        <p>{{item.datePosted}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="weather-video-container_section-2-3_wrapper">
+            <div class="weather-video-container_section-2">
+                <div v-for="(item,index) in tblData" :key="index"
+                    @click="goToYoutube(item.content)"
+                    class="weather-video-container_section-2_item">
+
+                    <div class="weather-video-container_section-2_item--img">
+                        <video-thumb :url="item.content"></video-thumb>
+                    </div>
+                    <div class="weather-video-container_section-2_item-info">
+                        <h4>{{item.title}}</h4>
+                        <p>{{item.datePosted}}</p>
+                    </div>
+                </div>
+
+                <div v-show="isLoadingMore" class="weather-video-container_section-2_item">
+                    <div class="weather-video-container_section-2_item--img">
+                        <v-skeleton-loader
+                            v-bind="{ elevation: 0, }"
+                            tile max-width="220" max-height="120" type="image"
+                        ></v-skeleton-loader>
+                    </div>
+                    <div class="weather-video-container_section-2_item-info">
+                        <v-skeleton-loader
+                            v-bind="{ elevation: 0, }" type="list-item-two-line"
+                        ></v-skeleton-loader>
+                    </div>
+                </div>
+
+                <div v-if="isHasmore" class="d-flex justify-center mt-4 pt-4" >
+                    <v-btn
+                        :disable="isLoadingMore"
+                        color="primary"
+                        elevation="1"
+                        @click="loadMore()"
+                    >Bấm để xem thêm</v-btn>
+                </div>
+            </div>
+            <div class="weather-video-container_section-3">
+                <h4>Tin xem nhiều</h4>
+                <div v-for="(item,index) in mostWatchPosts" :key="index" 
+                    @click="handleViewDetail(item.eventId)"
+                    class="weather-video-container_section-3_item">
+
+                    <div class="weather-video-container_section-3_item--img" :style="`background-image: url( ${item.imageUrl})`"></div>
+                    <div class="weather-video-container_section-3_item-info">
+                        <h4>{{item.title}}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <v-btn
+            v-scroll="onScroll" v-show="fab" fab dark
+            fixed bottom right color="primary" @click="toTop"
+          >
+            <v-icon>mdi-chevron-up</v-icon>
+        </v-btn>
+    </base-container>
+
+</div>
