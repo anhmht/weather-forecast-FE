@@ -4,6 +4,9 @@ import { UploadServices } from "@/service/upload-service/upload.service";
 import Vue from "vue";
 import Component from "vue-class-component";
 // import NO_IMAGE from '../../../../../static//img/no-image/no-image.png';
+
+const PHOTO_LIMIT = 10;
+const VIDEO_LIMIT = 5;
 @Component({
     template: require("./template.html").default,
     components: {
@@ -42,8 +45,12 @@ export default class CreateSatusComponent extends Vue {
     }
 
     handleClickBrowsePhoto() {
-        const upload = this.$refs.uploadPhoto as any;
-        upload.click();
+        if (this.selectedPhotos.length < PHOTO_LIMIT) {
+            const upload = this.$refs.uploadPhoto as any;
+            upload.click();
+        } else {
+            this.$toast.info(`Giới hạn: ${PHOTO_LIMIT} hình ảnh/bài viết.`)
+        }
     }
 
     onChangePhotos(pics) {
@@ -53,8 +60,12 @@ export default class CreateSatusComponent extends Vue {
     }
 
     handleClickBrowseVideo() {
-        const upload = this.$refs.uploadVideo as any;
-        upload.click();
+        if (this.selectedPVideos.length < VIDEO_LIMIT) {
+            const upload = this.$refs.uploadVideo as any;
+            upload.click();
+        } else {
+            this.$toast.info(`Giới hạn: ${VIDEO_LIMIT} video/bài viết.`)
+        }
     }
 
     onChangeVideos(videos) {
@@ -64,7 +75,26 @@ export default class CreateSatusComponent extends Vue {
     }
 
     processUploadDocuments(files, type) {
-        for ( let i = 0; i< files.length; i++) {
+        let maxLength = files.length;
+
+        switch (type) {
+            case this.mediaType.FOTO:
+                if ((maxLength + this.selectedPhotos.length) > PHOTO_LIMIT) {
+                    this.$toast.info(`Giới hạn: ${PHOTO_LIMIT} hình ảnh/bài viết.`);
+                    maxLength = PHOTO_LIMIT - this.selectedPhotos.length;
+                }
+                break;
+            case this.mediaType.VID:
+                if ((maxLength + this.selectedPVideos.length)> VIDEO_LIMIT) {
+                    this.$toast.info(`Giới hạn: ${VIDEO_LIMIT} video/bài viết.`);
+                    maxLength = VIDEO_LIMIT - this.selectedPVideos.length;
+                }
+                break;
+            default:
+                break;
+        }
+
+        for ( let i = 0; i< maxLength; i++) {
             let file = files[i];
             if (this.validateFileExtention(file.name, type)) {
                 this.uploadingMedia.push({
@@ -131,11 +161,16 @@ export default class CreateSatusComponent extends Vue {
         }
 
         if (type === this.mediaType.VID) {
-            this.uploadservice.uploadFile(formData, config).then(response => {
+            this.uploadservice.uploadVideoSocial(formData, config).then(response => {
                 const docIndex = this.uploadingMedia.findIndex(e => e.Index === document.Index);
                 this.uploadingMedia.splice(docIndex, 1);
-                this.onloadedDocument(response, type);
-                this.toBase64(document.Data, type);
+                if (response && response.length > 0) {
+
+                    this.onloadedDocument(response[0], type);
+                    this.toBase64(document.Data, type);
+                    // this.selectedPVideos.push(response[0]);
+                }
+                
             }).catch(err => {
                 this.$errorMessage(err);
             });
