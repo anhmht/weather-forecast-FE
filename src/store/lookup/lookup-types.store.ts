@@ -22,4 +22,6 @@ export const GeneralLookupTypes = {
     "ACTION_AREA_TYPE": 5,
     "SCENARIO_ACTION_TYPE": 6,
     "POSITION": 7,
+    "POST_STATUS": 8,
+    "REACTION": 9
 }

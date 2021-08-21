@@ -89,8 +89,8 @@ export class SocialServices extends GenericServices {
             }).catch(error => Promise.reject(error))
     }
 
-    getListPostsAdmin(limit: number, page: number, commentLimit: number): Promise<ApiResponse> {
-        return this.executeSelectingPost({limit, page, commentLimit}, Uri.getListPostsAdmin).then((response: ApiResponse) => {
+    getListPosts(limit: number, page: number, commentLimit: number): Promise<ApiResponse> {
+        return this.executeSelectingPost({limit, page, commentLimit}, Uri.getListPosts).then((response: ApiResponse) => {
             return response.isSuccess ? Promise.resolve(response.data) : Promise.reject(response.message);
             }).catch(error => Promise.reject(error))
     }

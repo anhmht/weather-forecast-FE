@@ -1,13 +1,13 @@
 <div class="social-list">
-    <div class="social-list--item">
+    <div class="social-list--item" v-for="(item,index) in socialPost" :key="index">
         <div class="social-list--item_header">
             <div class="social-list--item_header--avatar">
-                <v-avatar :color="getColor('CN')" size="50">
-                    <span class="white--text">CN</span>
+                <v-avatar :color="getColor(item.creatorShortName)" size="50">
+                    <span class="white--text">{{item.creatorShortName}}</span>
                 </v-avatar>
             </div>
             <div class="social-list--item_header--content">
-                <div class="social-list--item_header--content__title">Cao Nguyên</div>
+                <div class="social-list--item_header--content__title">{{item.creatorFullName}}</div>
                 <div class="social-list--item_header--content__time">4 hours ago</div>
             </div>
         </div>
@@ -15,28 +15,24 @@
             <div class="social-list--item_body--content">
                 <div class="social-list--item_body--content_status">
                     <div class="social-list--item_body--content_status__text">
-                        Bão, áp thấp nhiệt đới hoạt động trên khu vực vùng biển phía Tây kinh tuyến 120° Đông, phía Bắc vĩ tuyến 05° Bắc và phía
-                        Nam vĩ tuyến 23° Bắc (Biển Đông) và trên đất liền lãnh thổ Việt Nam; bão, áp thấp nhiệt đới hoạt động ngoài khu vực biển
-                        Đông,
+                        {{$displayContent(item.content)}}
                     </div>
-                    <div class="social-list--item_body--content_status__button">
-                        <div v-ripple>
+                    <div v-if="item.content.length >= 255" class="social-list--item_body--content_status__button">
+                        <div @click="toggleContent" v-ripple>
                             Đọc thêm
                         </div>
                     </div>
                 </div>
-                <div class="social-list--item_body--content_image">
-                    <media-layout :images="sampleImages_1" :videos="samnpleVideos_1" @preview="handlePreview" />
+                <div v-if="item.listImageUrl.length > 0 || item.listVideoUrl.length > 0"
+                    class="social-list--item_body--content_image">
+                    <media-layout :images="item.listImageUrl" :videos="item.listVideoUrl" @preview="handlePreview" />
                 </div>
             </div>
         </div>
         <div class="social-list--item_footer">
             <div class="social-list--item_footer--action">
                 <div class="social-list--item_footer--action_item" v-ripple>
-                    <v-icon light>
-                        mdi-thumb-up-outline
-                    </v-icon>
-                    Thích
+                    <reaction />
                 </div>
                 <div class="social-list--item_footer--action_item" v-ripple>
                     <v-icon light>
@@ -56,64 +52,10 @@
             <comment />
         </div>
     </div>
-    <div class="social-list--item">
-        <div class="social-list--item_header">
-            <div class="social-list--item_header--avatar">
-                <v-avatar :color="getColor('CN')" size="50">
-                    <span class="white--text">CN</span>
-                </v-avatar>
-            </div>
-            <div class="social-list--item_header--content">
-                <div class="social-list--item_header--content__title">Cao Nguyên</div>
-                <div class="social-list--item_header--content__time">4 hours ago</div>
-            </div>
-        </div>
-        <div class="social-list--item_body">
-            <div class="social-list--item_body--content">
-                <div class="social-list--item_body--content_status">
-                    <div class="social-list--item_body--content_status__text">
-                        Bão, áp thấp nhiệt đới hoạt động trên khu vực vùng biển phía Tây kinh tuyến 120° Đông, phía Bắc vĩ
-                        tuyến 05° Bắc và phía
-                        Nam vĩ tuyến 23° Bắc (Biển Đông) và trên đất liền lãnh thổ Việt Nam; bão, áp thấp nhiệt đới hoạt
-                        động ngoài khu vực biển
-                        Đông,
-                    </div>
-                    <div class="social-list--item_body--content_status__button">
-                        <div v-ripple>
-                            Đọc thêm
-                        </div>
-                    </div>
-                </div>
-                <div class="social-list--item_body--content_image">
-                    <media-layout :images="sampleImages_2" :videos="samnpleVideos_2" @preview="handlePreview" />
-                </div>
-            </div>
-        </div>
-        <div class="social-list--item_footer">
-            <div class="social-list--item_footer--action">
-                <div class="social-list--item_footer--action_item" v-ripple>
-                    <v-icon light>
-                        mdi-thumb-up-outline
-                    </v-icon>
-                    Thích
-                </div>
-                <div class="social-list--item_footer--action_item" v-ripple>
-                    <v-icon light>
-                        mdi-comment-text-outline
-                    </v-icon>
-                    Bình luận
-                </div>
-                <div class="social-list--item_footer--action_item" v-ripple>
-                    <v-icon light>
-                        mdi-share-outline
-                    </v-icon>
-                    Chia sẻ
-                </div>
-            </div>
-        </div>
-        <div>
-            <comment />
-        </div>
-    </div>
-    <preview-image :data="selectedItem" :is-visible.sync="isPreivew" :current="selectedIndex"/>
+    <transition name="fade-transition">
+        <v-skeleton-loader  v-if="isLoading" style="margin-top: 20px;" v-bind="attrs" type="list-item-avatar-two-line, image">
+        </v-skeleton-loader>
+    </transition>
+    
+    <preview-image :data="selectedItem" :is-visible.sync="isPreivew" :current="selectedIndex" />
 </div>
