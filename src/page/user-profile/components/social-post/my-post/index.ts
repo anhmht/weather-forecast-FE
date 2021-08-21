@@ -1,5 +1,6 @@
 import Component from "vue-class-component";
 import Vue from "vue";
+import { ISocialPost } from '@/model/post';
 import { SocialServices } from "@/service/social-service/social.service";
 import { storeModules } from "@/store";
 import { GeneralLookupTypes } from "@/store/lookup/lookup-types.store";
@@ -17,14 +18,23 @@ const LookupAction = namespace(storeModules.Lookup, Action);
     }
 })
 export default class MyPostComponent extends Vue {
-    GET_LIST_POST_ADMIN_LIMIT: number = 10;
-    GET_LIST_POST_ADMIN_PAGE: number = 1;
-    GET_LIST_POST_ADMIN_COMMENT_LIMIT: number = 10;
-    myPosts: any = [];
+    myPosts: ISocialPost[] = [];
     isPreview: boolean = false;
     isDisplayComment: boolean = false;
     selectedItem: any = [];
     selectedIndex: number = 0;
+    searchParam = {
+        limit: 2,
+        page: 1,
+        commentLimit: 0
+    }
+    attrs: any = {
+        class: 'mb-6',
+        boilerplate: true,
+        elevation: 2,
+    }
+    totalPages: number = 0;
+    isLoading: boolean = false;
     socialService: SocialServices = new SocialServices();
 
     @LookupAction getGeneralLookup: (payload: number[]) => Promise<void>;
@@ -75,20 +85,42 @@ export default class MyPostComponent extends Vue {
         this.isPreview = true;
     }
 
-    async mounted() {
-        this.socialService
-            .getListPostsUser(
-                this.GET_LIST_POST_ADMIN_LIMIT,
-                this.GET_LIST_POST_ADMIN_PAGE,
-                this.GET_LIST_POST_ADMIN_COMMENT_LIMIT
-            )
+    loadMorePost() {
+        window.addEventListener('scroll', () => {
+            const {
+                scrollTop,
+                scrollHeight,
+                clientHeight
+            } = document.documentElement;
+
+            if (scrollTop + clientHeight >= scrollHeight - 5 && !this.isLoading) {
+                if (this.searchParam.page < this.totalPages) {
+                    this.searchParam.page += 1;
+                    this.fetchData();
+                }
+            }
+        }, { passive: true });
+    }
+
+    fetchData() {
+        this.isLoading = true;
+        this.socialService.getListPostsUser(
+            this.searchParam.limit,
+            this.searchParam.page,
+            this.searchParam.commentLimit)
             .then((res: any) => {
-                this.myPosts = res.posts;
-                console.log(this.myPosts);
-            })
-            .catch(error => {
+                this.myPosts = this.myPosts.concat(res.posts);
+                this.totalPages = res.totalPages;
+                this.isLoading = false;
+            }).catch(error => {
                 this.$errorMessage(error);
-            });
+                this.isLoading = false;
+            })
+    }
+
+    async mounted() {
+        this.fetchData();
+        this.loadMorePost();
 
         const payload = [
             GeneralLookupTypes.REACTION,
