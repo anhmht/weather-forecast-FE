@@ -17,7 +17,7 @@
         <div class="create-status-container_footer">
             <div class="create-status-container_footer__attach">
                 <div class="create-status-container_footer__attach--item" v-ripple @click="handleClickBrowsePhoto">
-                    <v-icon light>
+                    <v-icon color="green darken-2">
                         mdi-image
                     </v-icon>
                     Hình ảnh
@@ -26,8 +26,8 @@
                     @change="onChangePhotos($event.target.files)" hidden multiple
                 />
                 <div class="create-status-container_footer__attach--item" v-ripple @click="handleClickBrowseVideo">
-                    <v-icon>
-                        mdi-video
+                    <v-icon color="red darken-2">
+                        mdi-video-box
                     </v-icon>
                     Video
                 </div>
@@ -35,8 +35,8 @@
                     @change="onChangeVideos($event.target.files)" hidden multiple
                 />
                 <div class="create-status-container_footer__attach--item" v-ripple>
-                    <v-icon>
-                        mdi-emoticon
+                    <v-icon color="yellow darken-2">
+                        mdi-emoticon-happy-outline
                     </v-icon>
                     Biểu tượng
                 </div>
