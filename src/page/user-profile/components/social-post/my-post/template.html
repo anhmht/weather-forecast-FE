@@ -11,35 +11,21 @@
                 {{getStatus(item.statusId)}}
             </div>
         </div>
-        <div v-if="!isReadMore" class="social-post-item-body">
+        <div class="social-post-item-body">
             <div class="social-post-item-body--text">{{displayContent(item.content)}}</div>
-            <div v-if="item.content.length >= 255" class="social-post-item-body--button">
-                <div @click="toggleContent" v-ripple>
-                    Đọc thêm
-                </div>
+            <div v-if="item.content.length >= 255" class="social-post-item-body--button" @click="toggleContent($event.target, item)" v-ripple>
+                Đọc thêm
             </div>
         </div>
-        <div v-if="isReadMore" class="social-post-item-body">
-            <div class="social-post-item-body--text">{{item.content}}</div>
-            <div v-if="item.content.length >= 255" class="social-post-item-body--button">
-                <div @click="toggleContent($event)" v-ripple>
-                    Thu gọn
-                </div>
-            </div>
-        </div>
-        <div class="social-post-item-media">
-            {{item.listImageUrl}}
-            {{item.listVideoUrl}}
+        <div v-if="item.listImageUrl.length !== 0 || item.listVideoUrl.length !== 0" class="social-post-item-media">
+            <media-layout :images="item.listImageUrl" :videos="item.listVideoUrl" @preview="handlePreview" />
         </div>
         <div v-if="item.statusId === 1" class="social-post-item-footer">
             <div class="social-post-item-footer--action">
                 <div class="social-post-item-footer--action_item" v-ripple>
-                    <v-icon light>
-                        mdi-thumb-up-outline
-                    </v-icon>
-                    Thích
+                    <reaction />
                 </div>
-                <div @click="toggleComment" class="social-post-item-footer--action_item" v-ripple>
+                <div @click="toggleComment($event.target)" class="social-post-item-footer--action_item" v-ripple>
                     <v-icon light>
                         mdi-comment-text-outline
                     </v-icon>
@@ -53,8 +39,9 @@
                 </div>
             </div>
         </div>
-        <div v-if="isCommentable">
+        <div>
             <comment />
         </div>
     </div>
+    <preview-image :data="selectedItem" :is-visible.sync="isPreview" :current="selectedIndex"/>
 </div>
