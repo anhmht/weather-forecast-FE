@@ -22,7 +22,8 @@ export default class ListStatusComponent extends Vue {
     }
 
     socialPost: ISocialPost[] = []
-    isReadMore: boolean = false;
+    isDisplayComment: boolean = false;
+    likeId: number = 1;
 
     isLoading: boolean = false;
     totalPages: number = 0;
@@ -32,20 +33,7 @@ export default class ListStatusComponent extends Vue {
         elevation: 2,
     }
 
-    //https://weatherstoragevn.blob.core.windows.net/images/3423d5c2-5e00-4333-9c31-a36b917251411622019377813_Mask Group 4.jpg
-    // sampleImages_1: any = ["https://weatherstoragevn.blob.core.windows.net/images/3423d5c2-5e00-4333-9c31-a36b917251411622019377813_Mask Group 4.jpg",
-    //     "https://weatherstoragevn.blob.core.windows.net/file/sample-video/download (3).jpg",
-    //     "https://weatherstoragevn.blob.core.windows.net/file/sample-video/the-last-of-us-part-ii-duality-artwork-light-desktop-image-block-01-ps4-06feb20-en-us.jpg"
-    // ];
-    //https://weatherstoragevn.blob.core.windows.net/file/sample-video/oceans.mp4
-    // samnpleVideos_1: any = ["https://createvideo-aase.streaming.media.azure.net/9985d049-b48a-43ae-9fb1-9ba4a2555227/ignite.ism/manifest", "https://amssamples.streaming.mediaservices.windows.net/622b189f-ec39-43f2-93a2-201ac4e31ce1/BigBuckBunny.ism/manifest"];
-
-    // sampleImages_2: any = ["https://weatherstoragevn.blob.core.windows.net/file/sample-video/download (3).jpg",
-    //     "https://weatherstoragevn.blob.core.windows.net/file/sample-video/the-last-of-us-part-ii-duality-artwork-light-desktop-image-block-01-ps4-06feb20-en-us.jpg"
-    // ];
-    //https://weatherstoragevn.blob.core.windows.net/file/sample-video/oceans.mp4
-    // samnpleVideos_2: any = ["https://amssamples.streaming.mediaservices.windows.net/622b189f-ec39-43f2-93a2-201ac4e31ce1/BigBuckBunny.ism/manifest"];
-    isPreivew: boolean = false;
+    isPreview: boolean = false;
     selectedItem: any = [];
     selectedIndex: number = 0;
 
@@ -56,11 +44,63 @@ export default class ListStatusComponent extends Vue {
     handlePreview(data) {
         this.selectedItem = data.medias;
         this.selectedIndex = data.index;
-        this.isPreivew = true;
+        this.isPreview = true;
     }
 
-    toggleContent(event) {
-        this.isReadMore = !this.isReadMore;
+    displayContent(content) {
+        if (content.length >= 255) {
+            return `${content.substring(0, 254)}...`;
+        }
+
+        return content;
+    }
+
+    toggleContent(target, item) {
+        if (target.innerText === "Đọc thêm") {
+            target.parentElement.firstElementChild.innerText = item.content;
+            target.innerText = "Rút gọn";
+        } else if (target.innerText === "Rút gọn") {
+            target.parentElement.firstElementChild.innerText = this.displayContent(item.content);
+            target.innerText = "Đọc thêm";
+        }
+    }
+
+    toggleComment(target) {
+        if (!this.isDisplayComment) {
+            target.parentElement.parentElement.nextElementSibling.style.display = 'none';
+        } else {
+            target.parentElement.parentElement.nextElementSibling.style.display = 'block';
+        }
+        this.isDisplayComment = !this.isDisplayComment;
+    }
+
+    handleReaction(data, postId) {
+        this.addReactionToPost(postId, data.valueId);
+    }
+
+    handleLike(currentChecking, postId) {
+        if (currentChecking !== null) {
+            this.addReactionToPost(postId, this.likeId);
+        } else {
+            this.removeReactionFromPost(postId);
+        }
+    }
+
+    addReactionToPost(postId, iconId) {
+        this.removeReactionFromPost(postId);
+        this.service.addReactionToPost(postId, iconId)
+            .then((res: any) => {})
+            .catch(error => {
+                this.$errorMessage(error);
+            });
+    }
+
+    removeReactionFromPost(postId) {
+        this.service.removeReactionFromPost(postId)
+            .then((res: any) => {})
+            .catch(error => {
+                this.$errorMessage(error);
+            });
     }
 
     fetchData() {
