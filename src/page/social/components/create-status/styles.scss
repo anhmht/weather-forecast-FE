@@ -10,13 +10,10 @@
         }
         &_body {
             margin-bottom: 10px;
+            min-height: 90px;
             max-height: 50vh;
             overflow-y: auto;
             position: relative;
-
-            .v-text-field__details {
-                display: none;
-            }
 
             /* width */
             &::-webkit-scrollbar {

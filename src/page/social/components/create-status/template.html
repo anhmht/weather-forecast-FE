@@ -4,7 +4,7 @@
             Đăng bài
         </div>
         <div class="create-status-container_body">
-            <v-textarea filled dense flat auto-grow label="Viết trạng thái" rows="2" row-height="30" v-model="content"></v-textarea>
+            <v-textarea ref="createTextarea" filled dense flat auto-grow label="Viết trạng thái" rows="2" row-height="30" v-model="content" hide-details></v-textarea>
             <div style="position: relative;">
                 <media-layout editable :images="selectedPhotos" :videos="selectedPVideos" @preview="handlePreview" />
                 <v-icon v-if="selectedPhotos.length > 0 || selectedPVideos.length > 0"
@@ -34,12 +34,25 @@
                 <input ref="uploadVideo" type="file" accept="video/*"
                     @change="onChangeVideos($event.target.files)" hidden multiple
                 />
-                <div class="create-status-container_footer__attach--item" v-ripple>
-                    <v-icon color="yellow darken-2">
-                        mdi-emoticon-happy-outline
-                    </v-icon>
-                    Biểu tượng
-                </div>
+                <v-menu
+                    bottom
+                    origin="center center"
+                    transition="scale-transition"
+                    :close-on-content-click="false"
+                >
+                    <template v-slot:activator="{ on, attrs }">
+                        <div class="create-status-container_footer__attach--item" v-ripple
+                            v-bind="attrs"
+                            v-on="on">
+                            <v-icon color="yellow darken-2">
+                                mdi-emoticon-happy-outline
+                            </v-icon>
+                            Biểu tượng
+                        </div>
+                    </template>
+                    <emoji-picker @insert-emoji="handleClickOnEmoji" />
+                </v-menu>
+                
             </div>
             <div class="create-status-container_footer__action">
                 <v-btn color="primary" depressed @click="handlePost">

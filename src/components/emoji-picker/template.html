@@ -1,0 +1,30 @@
+<div class="emoji-picker-component">
+    <div class="emoji-picker-component--search">
+		<v-text-field v-model="search" dense label="Tìm kiếm" outlined clearable flat hide-details></v-text-field>
+    </div>
+    <div class="emoji-picker-component--tab">
+        <v-tabs v-model="tab" show-arrows grow>
+			<v-tab v-for="(group, index) in groupEmojiTabs" :key="'group-emoji-' + index"
+				class="primary--text" ripple
+				:href="'#group-tabs-' + convertGroupName(group.group)"
+				style="min-width: 20px; padding: 0 10px;"
+			>
+				<div>{{group.char}}</div>
+			</v-tab>
+        </v-tabs>
+		<v-tabs-items v-model="tab">
+			<v-tab-item
+				v-for="(obj, index) in groupOfItems"
+				:key="'group-tabs-' + index"
+				:value="'group-tabs-' + obj.name"
+			>
+				<v-card flat class="emoji-picker-component--items-container">
+					<div v-for="(item, i) in obj.src" :key="'group-item-' + i"
+						class="emoji-picker-component--items-container-item" ripple
+						@click="handleClickOnEmoji(item.char)"
+					>{{item.char}}</div>
+				</v-card>
+			</v-tab-item>
+		</v-tabs-items>
+    </div>
+</div>
