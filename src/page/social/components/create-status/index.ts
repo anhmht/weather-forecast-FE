@@ -1,6 +1,7 @@
 import { ISocialPost, SocialPost } from "@/model/social";
 import { SocialServices } from "@/service/social-service/social.service";
 import { UploadServices } from "@/service/upload-service/upload.service";
+import { DataHelper } from "@/utils/data-helper";
 import Vue from "vue";
 import Component from "vue-class-component";
 // import NO_IMAGE from '../../../../../static//img/no-image/no-image.png';
@@ -12,6 +13,7 @@ const VIDEO_LIMIT = 5;
     components: {
         "media-layout": () => import("../../../../components/media-layout/MediaLayoutComponent.vue"),
         "preview-image": () => import("../../../../components/preview-image/PreviewImage.vue"),
+        "emoji-picker": () => import("../../../../components/emoji-picker/EmojiPickerComponent.vue")
     }
 })
 export default class CreateSatusComponent extends Vue {
@@ -238,5 +240,17 @@ export default class CreateSatusComponent extends Vue {
         this.selectedPVideos = [];
         this.postModel.imageUrls = [];
         this.postModel.videoUrls = [];
+    }
+
+    handleClickOnEmoji (val) {
+        const vm = this;
+        if (vm.$refs.createTextarea) {
+            let cnt = DataHelper.insertCharacterAtCursorPositionOfTextArea(vm.$refs.createTextarea, val);
+            this.content = cnt;
+        }
+    }
+
+    beforeDestroy () {
+        this.reset();
     }
 }

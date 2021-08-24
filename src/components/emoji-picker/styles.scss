@@ -1,0 +1,50 @@
+.emoji-picker-component {
+    width: 320px;
+    height: 400px;
+    background-color: #fff;
+
+    &--search {
+        padding: 10px;
+        border-bottom: 1px solid #eee;
+    }
+
+    &--tab {
+        .v-tabs {
+            border-bottom: 1px solid #eee;
+        }
+    }
+
+    &--items-container{
+        display: grid;
+        grid-template-columns: repeat(10, 1fr);
+        padding: 10px;
+        column-gap: 7px;
+        height: 280px;
+        overflow-y: auto;
+        overflow-x: hidden;
+
+        /* width */
+        &::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        /* Track */
+        &::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        /* Handle */
+        &::-webkit-scrollbar-thumb {
+            background: #888;
+        }
+        
+        /* Handle on hover */
+        &::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+        
+        &-item {
+            cursor: pointer;
+        }
+    }
+}
