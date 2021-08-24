@@ -6,7 +6,22 @@
             </v-avatar>
         </div>
         <div class="social-comment-input-text">
-            <v-textarea filled auto-grow label="Viết Bình luận..." rows="1" row-height="16"></v-textarea>
+            <v-menu
+                bottom
+                origin="center center"
+                transition="scale-transition"
+                :close-on-content-click="false"
+            >
+                <template v-slot:activator="{ on, attrs }">
+                    <div class="social-comment-input-text--emoticon" v-ripple
+                        v-bind="attrs"
+                        v-on="on">
+                        <v-icon color="blue-grey darken-2">mdi-emoticon-happy-outline</v-icon>
+                    </div>
+                </template>
+                <emoji-picker @insert-emoji="handleClickOnEmoji" />
+            </v-menu>
+            <v-textarea ref="commentTextarea" filled auto-grow label="Viết bình luận..." rows="1" row-height="16" v-model="newComment"></v-textarea>
         </div>
     </div>
     <div class="social-comment-list">
