@@ -50,6 +50,7 @@ export default class ReactionComponent extends Vue {
                 color: icon.color
             }
         }
+        this.$emit('like', this.currentChecking);
     }
 
     mounted() {

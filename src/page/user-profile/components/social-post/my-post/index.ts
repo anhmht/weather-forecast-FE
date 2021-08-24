@@ -35,6 +35,7 @@ export default class MyPostComponent extends Vue {
     }
     totalPages: number = 0;
     isLoading: boolean = false;
+    likeId: number = 1;
     socialService: SocialServices = new SocialServices();
 
     @LookupAction getGeneralLookup: (payload: number[]) => Promise<void>;
@@ -85,6 +86,35 @@ export default class MyPostComponent extends Vue {
         this.isPreview = true;
     }
 
+    handleReaction(data, postId) {
+        this.addReactionToPost(postId, data.valueId);
+    }
+
+    handleLike(currentChecking, postId) {
+        if (currentChecking !== null) {
+            this.addReactionToPost(postId, this.likeId);
+        } else {
+            this.removeReactionFromPost(postId);
+        }
+    }
+
+    addReactionToPost(postId, iconId) {
+        this.removeReactionFromPost(postId);
+        this.socialService.addReactionToPost(postId, iconId)
+            .then((res: any) => {})
+            .catch(error => {
+                this.$errorMessage(error);
+            });
+    }
+
+    removeReactionFromPost(postId) {
+        this.socialService.removeReactionFromPost(postId)
+            .then((res: any) => {})
+            .catch(error => {
+                this.$errorMessage(error);
+            });
+    }
+
     loadMorePost() {
         window.addEventListener('scroll', () => {
             const {
@@ -115,7 +145,7 @@ export default class MyPostComponent extends Vue {
             }).catch(error => {
                 this.$errorMessage(error);
                 this.isLoading = false;
-            })
+            });
     }
 
     async mounted() {
