@@ -23,7 +23,7 @@ export default class MyPostComponent extends Vue {
     selectedItem: any = [];
     selectedIndex: number = 0;
     searchParam = {
-        limit: 2,
+        limit: 5,
         page: 1,
         commentLimit: 0
     }
@@ -50,10 +50,10 @@ export default class MyPostComponent extends Vue {
 
     displayContent(content) {
         if (content.length >= 255) {
-            return `${content.substring(0, 254)}...`;
+            return `${content.substring(0, 254)}...`.split('\n').join('<br/>');
         }
 
-        return content;
+        return content.split('\n').join('<br/>');
     }
 
     toggleContent(target, item) {
