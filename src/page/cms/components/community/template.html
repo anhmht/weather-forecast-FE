@@ -4,8 +4,10 @@
             <!-- <p class="mr-auto">Bài viết cộng đồng</p> -->
             <div class="mr-auto">
                 <template>
-                    <v-tabs background-color="transparent" v-model="tab">
-                        <v-tab>Bài viết cộng đồng</v-tab>
+                    <v-tabs background-color="transparent" height="28" 
+                        v-model="tab" active-class="base-cms--body_top-active"
+                    >
+                        <v-tab class="mr-4">Bài viết cộng đồng</v-tab>
                         <v-tab>Bình luận</v-tab>
                     </v-tabs>
                 </template>

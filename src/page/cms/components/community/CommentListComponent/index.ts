@@ -28,6 +28,25 @@ export default class CommentListComponent extends BaseApprovalListComponent {
         })
     }
 
+    async searchByLimit () {
+        this.searchParams.page = 1;
+        await this.fetchData();
+        if (this.searchParams.limit <= this.totalItems) {
+            this.numPostsInPage = this.searchParams.limit;
+        } else {
+            this.numPostsInPage = this.totalItems;
+        }
+    }
+
+    async searchByPaging () {
+        await this.fetchData();
+        if (this.searchParams.limit * this.searchParams.page <= this.totalItems) {
+            this.numPostsInPage = this.searchParams.limit * this.searchParams.page;
+        } else {
+            this.numPostsInPage = this.totalItems;
+        }
+    }
+    
     async mounted() {
         this.searchParams.statusIds = [0, 1, 2, 3, 4];
         await this.getCommentForApproval();

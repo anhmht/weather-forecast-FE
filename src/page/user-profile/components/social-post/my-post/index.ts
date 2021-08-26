@@ -3,11 +3,10 @@ import Vue from "vue";
 import { ISocialPost } from '@/model/post';
 import { SocialServices } from "@/service/social-service/social.service";
 import { storeModules } from "@/store";
-import { GeneralLookupTypes } from "@/store/lookup/lookup-types.store";
-import { Action, namespace } from "vuex-class";
+import lookupTypesStore, { GeneralLookupTypes } from "@/store/lookup/lookup-types.store";
+import { Getter, namespace } from "vuex-class";
 
-const LookupAction = namespace(storeModules.Lookup, Action);
-
+const LookupGetter = namespace(storeModules.Lookup, Getter);
 @Component({
     template: require("./template.html").default,
     components: {
@@ -38,19 +37,15 @@ export default class MyPostComponent extends Vue {
     likeId: number = 1;
     socialService: SocialServices = new SocialServices();
 
-    @LookupAction getGeneralLookup: (payload: number[]) => Promise<void>;
+    @LookupGetter(lookupTypesStore.Get.LOOKUP_DATA) dtoLookupData: Object;
 
-    getStatus(statusId) {
-        switch (statusId) {
-            case 0:
-                return "Chờ duyệt";
-            case 1:
-                return "Đã duyệt";
-            case 2:
-                return "Không duyệt";
-            default:
-                return "";
-        }
+    get lookupPostStatus () {
+        return this.dtoLookupData[GeneralLookupTypes.POST_STATUS] || [];
+    }
+
+    getStatus (statusId) {
+        let status = this.lookupPostStatus.find(e => e.valueId === statusId);
+        return status ? status.description : "";
     }
 
     displayContent(content) {
@@ -151,10 +146,5 @@ export default class MyPostComponent extends Vue {
     async mounted() {
         this.fetchData();
         this.loadMorePost();
-
-        const payload = [
-            GeneralLookupTypes.REACTION,
-        ];
-        await this.getGeneralLookup(payload);
     }
 }

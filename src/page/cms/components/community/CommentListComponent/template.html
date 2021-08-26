@@ -12,7 +12,7 @@
                         <th class="base-cms--body_table_header" style="max-width: 500px">NỘI DUNG</th>
                         <th class="base-cms--body_table_header" style="width: 60px;">HÌNH ẢNH / VIDEO</th>
                         <th class="base-cms--body_table_header">NGÀY TẠO</th>
-                        <th class="base-cms--body_table_header" style="width: 130px;">TRẠNG THÁI</th>
+                        <th class="base-cms--body_table_header" style="width: 150px;">TRẠNG THÁI</th>
                         <th class="base-cms--body_table_header"></th>
                     </tr>
                 </thead>
@@ -36,14 +36,12 @@
                         <td class="base-cms--body_table_content">
                             <p>{{ item.content }}</p>
                         </td>
-                        <td>
-                            <v-icon v-if="item.hasMedia" color="green dark-2">mdi-check-decagram</v-icon>
+                        <td style="text-align: center;">
+                            <v-icon v-if="item.hasMedia" color="blue dark-2">mdi-check-decagram</v-icon>
                         </td>
                         <td>{{ $formatDate(item.createDate) }}</td>
                         <td>
-                            <div class="base-cms--body_table_status" :class="'base-cms--body_table_status-' + item.statusId">
-                                {{ getStatus(item.statusId) }}
-                            </div>
+                            <div class="base-cms--body_table_status" :class="'base-cms--body_table_status-' + item.statusId">{{item.statusName}}</div>
                         </td>
                         <td class="base-cms--body_table_action">
                             <!-- <v-icon color="green" class="mr-2">mdi-check-bold</v-icon> -->

@@ -30,49 +30,12 @@ export default class BaseApprovalListComponent extends Vue {
         return this.dtSource || [];
     }
 
-    async fetchData () {
-        // todo
-    }
-
-
-    async searchByLimit () {
-        this.searchParams.page = 1;
-        await this.fetchData();
-        if (this.searchParams.limit <= this.totalItems) {
-            this.numPostsInPage = this.searchParams.limit;
-        } else {
-            this.numPostsInPage = this.totalItems;
-        }
-    }
-
-    async searchByPaging () {
-        await this.fetchData();
-        if (this.searchParams.limit * this.searchParams.page <= this.totalItems) {
-            this.numPostsInPage = this.searchParams.limit * this.searchParams.page;
-        } else {
-            this.numPostsInPage = this.totalItems;
-        }
-    }
-
     getColor (str: string) {
         return DataHelper.generateColorByString(str);
     }
 
     onImgError (item) {
         item.creatorAvatarUrl = '';
-    }
-
-    getStatus (statusId) {
-        switch (statusId) {
-            case 0:
-                return 'Chờ duyệt';
-            case 1:
-                return 'Đã duyệt';
-            case 2:
-                return 'Không duyệt';
-            default:
-                return '';
-        }
     }
 
     getShortContent (text: string , limit: number = 150) {
