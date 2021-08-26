@@ -1,151 +1,33 @@
 <div class="cms-community-list-container">
     <div class="base-cms--body_wrapper">
         <div class="base-cms--body_top d-lg-flex align-center">
-            <p class="mr-auto">Bài viết cộng đồng</p>
+            <!-- <p class="mr-auto">Bài viết cộng đồng</p> -->
+            <div class="mr-auto">
+                <template>
+                    <v-tabs background-color="transparent" height="28" 
+                        v-model="tab" active-class="base-cms--body_top-active"
+                    >
+                        <v-tab class="mr-4">Bài viết cộng đồng</v-tab>
+                        <v-tab>Bình luận</v-tab>
+                    </v-tabs>
+                </template>
+            </div>
             <v-text-field label="Tìm kiếm" append-icon="mdi-magnify" outlined dense hide-details>
             </v-text-field>
         </div>
-        <div class="base-cms--body_table">
-            <template>
-                <v-simple-table fixed-header height="calc(100vh - 261px)">
-                    <template v-slot:default>
-                        <thead>
-                            <tr>
-                                <th class="base-cms--body_table_header_checkbox" style="width: 40px;">
-                                    <v-checkbox color="primary" hide-details>
-                                    </v-checkbox>
-                                </th>
-                                <th class="base-cms--body_table_header">TÊN TÀI KHOẢN</th>
-                                <th class="base-cms--body_table_header" style="max-width: 500px">NỘI DUNG</th>
-                                <th class="base-cms--body_table_header" style="width: 60px;">HÌNH ẢNH</th>
-                                <th class="base-cms--body_table_header">NGÀY TẠO</th>
-                                <th class="base-cms--body_table_header" style="width: 130px;">TRẠNG THÁI</th>
-                                <th class="base-cms--body_table_header"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-if="coList.length === 0">
-                                <td colspan="7" style="text-align: center;">Không có dữ liệu</td>
-                            </tr>
-                            <tr v-else v-for="(item, index) in coList" :key="index">
-                                <td class="base-cms--body_table_checkbox">
-                                    <v-checkbox color="primary" hide-details></v-checkbox>
-                                </td>
-                                <td>
-                                    <div class="base-cms--body_table_title">
-                                        <img v-if="item.avatarUrl && item.avatarUrl !== ''" :src="item.avatarUrl" @error="onImgError(item)" />
-                                        <v-avatar v-else :color="getColor(item.userName)" size="40">
-                                            <span class="white--text">{{item.shortName}}</span>
-                                        </v-avatar>
-                                        {{ item.userName }}
-                                    </div>
-                                </td>
-                                <td class="base-cms--body_table_content">
-                                    <p>{{ item.content }}</p>
-                                </td>
-                                <td>
-                                    <div v-if="item.imageUrl && item.imageUrl !== ''"
-                                        class="base-cms--body_table_thumbnails"
-                                        :style="`background-image: url('${item.imageUrl }');`"></div>
-                                </td>
-                                <td>{{ $formatDate(item.date) }}</td>
-                                <td>
-                                    <div class="base-cms--body_table_status" :class="'base-cms--body_table_status-' + item.status">
-                                        {{ getStatus(item.status) }}
-                                    </div>
-                                </td>
-                                <td class="base-cms--body_table_action">
-                                    <!-- <v-icon color="green" class="mr-2">mdi-check-bold</v-icon> -->
-                                    <v-menu transition="slide-x-transition" bottom left>
-                                        <template v-slot:activator="{ on, attrs }">
-                                            <v-btn v-bind="attrs"class="mr-2"  v-on="on" dark icon>
-                                                <v-icon dark color="success">
-                                                    mdi-check-bold
-                                                </v-icon>
-                                            </v-btn>
-                                        </template>
-                                        <v-list>
-                                            <v-list-item>
-                                                <v-list-item-title><v-btn style="text-transform: initial;" text>Duyệt bài</v-btn></v-list-item-title>
-                                            </v-list-item>
-                                            <v-divider></v-divider>
-                                            <v-list-item>
-                                                <v-list-item-title><v-btn style="text-transform: initial;" text>Không duyệt</v-btn></v-list-item-title>
-                                            </v-list-item>
-                                        </v-list>
-                                    </v-menu>
-                                    
-                                    <v-btn dark icon @click.passive="handleViewPost(item.Id)">
-                                        <v-icon dark color="blue">mdi-eye</v-icon>
-                                    </v-btn>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </template>
-                </v-simple-table>
-            </template>
-            <div class="d-flex align-center pa-4">
-                <div class="mr-auto">{{numPostsInPage}}/{{totalItems}} bài viết</div>
-                <div class="d-flex align-center" >
-                    <v-subheader>Số bài viết mỗi trang</v-subheader>
-                    <v-select v-if="coList.length > 0"  class="ml-3" style="width: 80px;" :items="limitPerPage"
-                        v-model="searchParams.limit" outlined dense hide-details
-                        @change="searchByLimit"></v-select>
-                </div>
-                <v-pagination v-model="searchParams.page" :length="totalPages" :total-visible="totalPageVisible"
-                    @input="searchByPaging"></v-pagination>
-            </div>
-        </div>
-    </div>
 
-    <v-dialog
-        transition="dialog-bottom-transition"
-        max-width="600"
-        v-model="viewDetailDialog"
-        class="cms-community-list-dialog"
-    >
-        <template v-if="currentItem">
-            <v-card color="#EEEEEE">
-                <v-toolbar elevation="1" flat><b>Bài viết cộng đồng</b></v-toolbar>
-                <div class="cms-community-list-dialog-container" color="white">
-                    <v-card-subtitle>
-                        <div class="cms-community-list-dialog-title">
-                            <img v-if="currentItem.avatarUrl && currentItem.avatarUrl !== ''" :src="currentItem.avatarUrl" @error="onImgError(item)" />
-                            <v-avatar v-else :color="getColor(currentItem.userName)" size="40">
-                                <span class="white--text">{{currentItem.shortName}}</span>
-                            </v-avatar>
-                            <div class="cms-community-list-dialog-subtitle">
-                                <div class="user-name">{{ currentItem.userName }}</div>
-                                <div class="post-date">{{ $formatDate(currentItem.date) }}</div>
-                            </div>
-                        </div>
-                    </v-card-subtitle>
-                    
-                    <v-card-text class="cms-community-list-dialog-content">
-                        <p class="text--primary" :class="reveal ? 'show' : 'hide'">{{ currentItem.content }}</p>
-                    </v-card-text>
-                    <v-card-actions>
-                        <v-btn text dark color="primary" @click="reveal = !reveal" style="text-transform: initial;">{{ reveal ? 'Rút gọn': 'Đọc thêm'}}</v-btn>
-                    </v-card-actions>
-                    <v-img v-if="currentItem.imageUrl && currentItem.imageUrl !==''"
-                        :src="currentItem.imageUrl"
-                        height="300"
-                        contain
-                        class="grey darken-4"
-                    ></v-img>
+        <v-tabs-items v-model="tab">
+            <v-tab-item>
+                <div class="base-cms--body_table">
+                    <post-list-tab />
                 </div>
-                <v-card-actions class="justify-end cms-community-list-dialog-action pt-3 pb-3">
-                    <v-btn style="text-transform: initial;" class="mr-2"
-                        depressed
-                        @click="viewDetailDialog = false"
-                    >Hủy</v-btn>
-                    <v-btn style="text-transform: initial;"
-                        color="primary"
-                        depressed
-                        @click="viewDetailDialog = false"
-                    >Duyệt bài</v-btn>
-                </v-card-actions>
-            </v-card>
-        </template>
-    </v-dialog>
+            </v-tab-item>
+
+            <v-tab-item>
+                <div class="base-cms--body_table">
+                    <comment-list-tab />
+                </div>
+            </v-tab-item>
+        </v-tabs-items>
+    </div>
 </div>

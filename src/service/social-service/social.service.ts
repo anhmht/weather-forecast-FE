@@ -1,7 +1,7 @@
 import { ApiResponse } from "@/model/app-config";
 import { GenericServices } from "../generic-service/generic.service";
 import Uri from "@/constant/uri/social-constant";
-import { ISocialPost } from "@/model/social/post.model";
+import { ISocialApprovalSearchParam, ISocialPost } from "@/model/social/post.model";
 import IComment from "@/model/social/comment.model";
 
 export class SocialServices extends GenericServices {
@@ -130,6 +130,32 @@ export class SocialServices extends GenericServices {
 
     getListCommentsUser(limit: number, page: number): Promise<ApiResponse> {
         return this.executeSelectingPost({limit, page}, Uri.getListCommentsUser).then((response: ApiResponse) => {
+            return response.isSuccess ? Promise.resolve(response.data) : Promise.reject(response.message);
+            }).catch(error => Promise.reject(error))
+    }
+
+    getPostForApproval(payload: ISocialApprovalSearchParam): Promise<ApiResponse> {
+        return this.executeSelectingPost(payload, Uri.getPostForApproval).then((response: ApiResponse) => {
+            return response.isSuccess ? Promise.resolve(response.data) : Promise.reject(response.message);
+            }).catch(error => Promise.reject(error))
+    }
+
+    getCommentForApproval(payload: ISocialApprovalSearchParam): Promise<ApiResponse> {
+        return this.executeSelectingPost(payload, Uri.getCommentForApproval).then((response: ApiResponse) => {
+            return response.isSuccess ? Promise.resolve(response.data) : Promise.reject(response.message);
+            }).catch(error => Promise.reject(error))
+    }
+
+    getPostDetailForApproval(id: string): Promise<ApiResponse> {
+        const uri = Uri.getPostDetailForApproval.replace(":id", id)
+        return this.executeSelecting(null, uri).then((response: ApiResponse) => {
+            return response.isSuccess ? Promise.resolve(response.data) : Promise.reject(response.message);
+            }).catch(error => Promise.reject(error))
+    }
+
+    getCommentDetailForApproval(id: string): Promise<ApiResponse> {
+        const uri = Uri.getCommentDetailForApproval.replace(":id", id)
+        return this.executeSelecting(null, uri).then((response: ApiResponse) => {
             return response.isSuccess ? Promise.resolve(response.data) : Promise.reject(response.message);
             }).catch(error => Promise.reject(error))
     }

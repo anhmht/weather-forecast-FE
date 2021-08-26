@@ -18,3 +18,21 @@ export class SocialPost implements ISocialPost {
         this.videoUrls = option.videoUrls || []
     }
 }
+
+export interface ISocialApprovalSearchParam {
+    limit: number;
+    page: number;
+    statusIds?: number[];
+}
+
+export class SocialApprovalSearchParam implements ISocialApprovalSearchParam {
+    limit: number;
+    page: number;
+    statusIds?: number[];
+
+    constructor(option?: any) {
+        this.limit = option.limit || 10;
+        this.page = option.page || 1;
+        this.statusIds = option.statusIds || [];
+    }
+}
