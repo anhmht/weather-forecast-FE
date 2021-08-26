@@ -151,28 +151,27 @@ export default class CreateSatusComponent extends Vue {
                 document.progress = percent;
             }.bind(this)
         };
+
+        this.toBase64(document.Data, type);
+        
         if (type === this.mediaType.FOTO) {
             this.uploadservice.upload(formData, config).then(response => {
                 const docIndex = this.uploadingMedia.findIndex(e => e.Index === document.Index);
                 this.uploadingMedia.splice(docIndex, 1);
                 this.onloadedDocument(response, type);
-                this.toBase64(document.Data, type);
+                // this.toBase64(document.Data, type);
             }).catch(err => {
                 this.$errorMessage(err);
             });
         }
 
         if (type === this.mediaType.VID) {
-            this.uploadservice.uploadVideoSocial(formData, config).then(response => {
+            this.uploadservice.uploadFile(formData, config).then(response => {
                 const docIndex = this.uploadingMedia.findIndex(e => e.Index === document.Index);
                 this.uploadingMedia.splice(docIndex, 1);
-                if (response && response.length > 0) {
 
-                    this.onloadedDocument(response[0], type);
-                    this.toBase64(document.Data, type);
-                    // this.selectedPVideos.push(response[0]);
-                }
-                
+                this.onloadedDocument(response, type);
+                // this.toBase64(document.Data, type);
             }).catch(err => {
                 this.$errorMessage(err);
             });
