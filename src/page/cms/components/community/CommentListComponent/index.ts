@@ -1,5 +1,6 @@
 import BaseApprovalListComponent from "../BaseApprovaListComponent/base-approval-list";
 import Component from "vue-class-component";
+import { Watch } from "vue-property-decorator";
 
 @Component({
     template: require("./template.html").default,
@@ -48,11 +49,23 @@ export default class CommentListComponent extends BaseApprovalListComponent {
     }
     
     async mounted() {
-        this.searchParams.statusIds = [0, 1, 2, 3, 4];
+        this.searchParams.statusIds = this.status;
         await this.getCommentForApproval();
 
         if (this.searchParams.limit <= this.totalItems) {
             this.numPostsInPage = this.searchParams.limit;
+        } else {
+            this.numPostsInPage = this.totalItems;
+        }
+    }
+
+    @Watch('status')
+    async handleChangeStatus () {
+        this.searchParams.statusIds = this.status;
+        
+        await this.fetchData();
+        if (this.searchParams.limit * this.searchParams.page <= this.totalItems) {
+            this.numPostsInPage = this.searchParams.limit * this.searchParams.page;
         } else {
             this.numPostsInPage = this.totalItems;
         }

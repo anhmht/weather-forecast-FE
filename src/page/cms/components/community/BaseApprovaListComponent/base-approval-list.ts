@@ -2,8 +2,12 @@ import { ISocialApprovalSearchParam, SocialApprovalSearchParam } from "@/model/s
 import { SocialServices } from "@/service/social-service/social.service";
 import { DataHelper } from "@/utils/data-helper";
 import Vue from "vue";
+import { Prop } from "vue-property-decorator";
 
 export default class BaseApprovalListComponent extends Vue {
+    @Prop()
+    status: number[];
+    
     searchParams: ISocialApprovalSearchParam = new SocialApprovalSearchParam({});
 
     totalItems: number = 0;
