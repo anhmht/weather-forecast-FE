@@ -18,7 +18,7 @@ import { Prop } from 'vue-property-decorator';
             this.template = Vue.compile(require("./template_editable.html").default).render;
             return;
         }
-        const number = this.images.length + this.videos.length;
+        const number = (this.images ? this.images.length : 0) + (this.videos ? this.videos.length : 0);
         console.log(this.videos);
         
         switch (number) {

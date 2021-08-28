@@ -48,6 +48,44 @@ export default class SocialPostListComponent extends BaseApprovalListComponent {
         }
     }
 
+    handleViewPost (Id: string) {
+        let obj = this.coList.find(e => e.id === Id);
+        if (obj) {
+            this.socialService.getPostDetailForApproval(obj.id).then(res => {
+                this.currentItem = {...res};
+                this.reveal = false;
+                this.viewDetailDialog = true;
+            }).catch(err => {
+                this.currentItem = null;
+                this.viewDetailDialog = false;
+                console.log(err);
+            })
+        }
+    }
+
+    handleApprove (id: string) {
+        this.socialService.approvePost(id).then(res => {
+            this.fetchData();
+        }).catch(err => {
+            console.log(err);
+        })
+    }
+
+    handleBlock (id: string) {
+        let blockStatus = this.lookupPostStatus.find(e => e.valueText === 'Blocked');
+        if (blockStatus) {
+            this.handleUpdateStatus(id, blockStatus.valueId)
+        }
+    }
+
+    handleUpdateStatus (id: string, statusId: string) {
+        this.socialService.changePostStatus(id, statusId).then(res => {
+            this.fetchData();
+        }).catch(err => {
+            console.log(err);
+        })
+    }
+
     async mounted() {
         this.searchParams.statusIds = this.status;
         await this.getPostForApproval();
@@ -61,6 +99,7 @@ export default class SocialPostListComponent extends BaseApprovalListComponent {
 
     @Watch('status')
     async handleChangeStatus () {
+        this.searchParams.page = 1;
         this.searchParams.statusIds = this.status;
         
         await this.fetchData();

@@ -47,6 +47,45 @@ export default class CommentListComponent extends BaseApprovalListComponent {
             this.numPostsInPage = this.totalItems;
         }
     }
+
+    
+    handleViewPost (Id: string) {
+        let obj = this.coList.find(e => e.id === Id);
+        if (obj) {
+            this.socialService.getCommentDetailForApproval(obj.id).then(res => {
+                this.currentItem = {...res};
+                this.reveal = false;
+                this.viewDetailDialog = true;
+            }).catch(err => {
+                this.currentItem = null;
+                this.viewDetailDialog = false;
+                console.log(err);
+            })
+        }
+    }
+
+    handleApprove (id: string) {
+        this.socialService.approveComment(id).then(res => {
+            this.fetchData();
+        }).catch(err => {
+            console.log(err);
+        })
+    }
+
+    handleBlock (id: string) {
+        let blockStatus = this.lookupPostStatus.find(e => e.valueText === 'Blocked');
+        if (blockStatus) {
+            this.handleUpdateStatus(id, blockStatus.valueId)
+        }
+    }
+
+    handleUpdateStatus (id: string, statusId: string) {
+        this.socialService.changeCommentStatus(id, statusId).then(res => {
+            this.fetchData();
+        }).catch(err => {
+            console.log(err);
+        })
+    }
     
     async mounted() {
         this.searchParams.statusIds = this.status;
@@ -61,6 +100,7 @@ export default class CommentListComponent extends BaseApprovalListComponent {
 
     @Watch('status')
     async handleChangeStatus () {
+        this.searchParams.page = 1;
         this.searchParams.statusIds = this.status;
         
         await this.fetchData();

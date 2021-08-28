@@ -46,3 +46,13 @@ export const CMS_MENU = {
     HIEN_TUONG_CUC_DOAN: 'Các hiện tượng cực đoan',
     COMMUNITY_LIST: 'Bài viết cộng đồng'
 }
+
+// 'Private', 'Blocked', 'Waiting for approval', 'Deleted', 'Public'
+// 3,4,1,5,2
+export const SOCIAL_POST_STATUS = {
+    PRIVATE: 3,
+    BLOCKED: 4,
+    WAITING: 1,
+    DELETED: 5,
+    PUBLIC: 2,
+}
