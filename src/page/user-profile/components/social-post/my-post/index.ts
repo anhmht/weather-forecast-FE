@@ -49,7 +49,7 @@ export default class MyPostComponent extends Vue {
     }
 
     displayContent(content) {
-        if (content.length >= 255) {
+        if (content.length >= 255 || content.split(/\r\n|\r|\n/).length >= 4) {
             return `${content.substring(0, 254)}...`.split('\n').join('<br/>');
         }
 

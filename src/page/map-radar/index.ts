@@ -28,7 +28,8 @@ const LookupGetter = namespace(storeModules.Lookup, Getter);
 
 const COLOR = [
     'red', 'green', 'blue', 'yellow', 'DeepPink', 'DeepSkyBlue', 'GreenYellow', 'Lime', 'Thistle', 'NavajoWhite',
-    'MidnightBlue', 'orange', 'purple', 'aqua', 'Aquamarine', 'RoyalBlue', 'Teal', 'DarkGreen', 'Salmon'
+    'MidnightBlue', 'orange', 'purple', 'aqua', 'Aquamarine', 'RoyalBlue', 'Teal', 'DarkGreen', 'Salmon',
+    'DarkKhaki', 'Crimson', 'Indigo', 'Cyan', 'Chocolate', 'Azure' 
 ]
 @Component({
     template: require("./template.html").default,
