@@ -61,7 +61,7 @@ export default class MyPostComponent extends Vue {
             target.parentElement.firstElementChild.innerText = item.content;
             target.innerText = "Rút gọn";
         } else if (target.innerText === "Rút gọn") {
-            target.parentElement.firstElementChild.innerText = this.displayContent(item.content);
+            target.parentElement.firstElementChild.innerHTML = this.displayContent(item.content);
             target.innerText = "Đọc thêm";
         }
     }
