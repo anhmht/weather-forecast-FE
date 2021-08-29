@@ -38,6 +38,8 @@ export default class BaseApprovalListComponent extends Vue {
     selectedItem: any = [];
     selectedIndex: number = 0;
 
+    isShowMore: boolean = false;
+
     @LookupGetter(lookupTypesStore.Get.LOOKUP_DATA) dtoLookupData: Object;
 
     get totalPageVisible() {
@@ -53,6 +55,16 @@ export default class BaseApprovalListComponent extends Vue {
 
     get lookupPostStatus () {
         return this.dtoLookupData[GeneralLookupTypes.POST_STATUS] || [];
+    }
+    
+    get contentOfDetail () {
+        if(this.$refs.contentOnDialog) {
+            const p = this.$refs.contentOnDialog as any;
+            this.isShowMore = p.offsetHeight != p.scrollHeight;
+        } else {
+            this.isShowMore = false;
+        }
+        return this.currentItem ? this.currentItem.content : '';
     }
 
     checkAprrovalVisible (statusId) {

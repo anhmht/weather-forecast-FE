@@ -110,10 +110,10 @@
                     </v-card-subtitle>
                     
                     <v-card-text class="cms-community-list-dialog-content">
-                        <p ref="contentOnDialog" class="text--primary" :class="reveal ? 'show' : 'hide'">{{ currentItem.content }}</p>
+                        <p ref="contentOnDialog" class="text--primary" :class="reveal ? 'show' : 'hide'">{{ contentOfDetail }}</p>
                     </v-card-text>
                     <v-card-actions >
-                        <v-btn text dark color="primary" @click="reveal = !reveal" style="text-transform: initial;">{{ reveal ? 'Rút gọn': 'Đọc thêm'}}</v-btn>
+                        <v-btn v-if="isShowMore" text dark color="primary" @click="reveal = !reveal" style="text-transform: initial;">{{ reveal ? 'Rút gọn': 'Đọc thêm'}}</v-btn>
                     </v-card-actions>
                     <media-layout :images="currentItem.listImageUrl" :videos="currentItem.listVideoUrl" @preview="handlePreview" />
                 </div>
