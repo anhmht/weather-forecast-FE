@@ -12,6 +12,10 @@
                     </v-tabs>
                 </template>
             </div>
+            <v-select dense hide-details class="mr-4"
+                :items="dtStatusList" item-text="description" item-value="valueId" v-model="selectedStatus"
+                label="Trạng thái" outlined
+            ></v-select>
             <v-text-field label="Tìm kiếm" append-icon="mdi-magnify" outlined dense hide-details>
             </v-text-field>
         </div>
@@ -19,13 +23,13 @@
         <v-tabs-items v-model="tab">
             <v-tab-item>
                 <div class="base-cms--body_table">
-                    <post-list-tab />
+                    <post-list-tab :status="statusForSearch" />
                 </div>
             </v-tab-item>
 
             <v-tab-item>
                 <div class="base-cms--body_table">
-                    <comment-list-tab />
+                    <comment-list-tab :status="statusForSearch" />
                 </div>
             </v-tab-item>
         </v-tabs-items>

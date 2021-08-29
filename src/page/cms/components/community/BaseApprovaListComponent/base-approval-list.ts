@@ -2,8 +2,23 @@ import { ISocialApprovalSearchParam, SocialApprovalSearchParam } from "@/model/s
 import { SocialServices } from "@/service/social-service/social.service";
 import { DataHelper } from "@/utils/data-helper";
 import Vue from "vue";
+import { Component, Prop } from "vue-property-decorator";
+import { Getter, namespace } from "vuex-class";
+import { storeModules } from "@/store";
+import lookupTypesStore, { GeneralLookupTypes } from "@/store/lookup/lookup-types.store";
+import { SOCIAL_POST_STATUS } from "@/constant/common-constant";
 
+const LookupGetter = namespace(storeModules.Lookup, Getter);
+@Component({
+    components: {
+        "preview-image": () => import("../../../../../components/preview-image/PreviewImage.vue"),
+        "media-layout": () => import("../../../../../components/media-layout/MediaLayoutComponent.vue"),
+    },
+})
 export default class BaseApprovalListComponent extends Vue {
+    @Prop()
+    status: number[];
+    
     searchParams: ISocialApprovalSearchParam = new SocialApprovalSearchParam({});
 
     totalItems: number = 0;
@@ -19,6 +34,14 @@ export default class BaseApprovalListComponent extends Vue {
 
     dtSource: any = [];
 
+    isPreview: boolean = false;
+    selectedItem: any = [];
+    selectedIndex: number = 0;
+
+    isShowMore: boolean = false;
+
+    @LookupGetter(lookupTypesStore.Get.LOOKUP_DATA) dtoLookupData: Object;
+
     get totalPageVisible() {
         if (this.totalPages < 7)
             return this.totalPages
@@ -28,6 +51,36 @@ export default class BaseApprovalListComponent extends Vue {
 
     get coList () {
         return this.dtSource || [];
+    }
+
+    get lookupPostStatus () {
+        return this.dtoLookupData[GeneralLookupTypes.POST_STATUS] || [];
+    }
+    
+    get contentOfDetail () {
+        if(this.$refs.contentOnDialog) {
+            const p = this.$refs.contentOnDialog as any;
+            this.isShowMore = p.offsetHeight != p.scrollHeight;
+        } else {
+            this.isShowMore = false;
+        }
+        return this.currentItem ? this.currentItem.content : '';
+    }
+
+    checkAprrovalVisible (statusId) {
+        const allow = [
+            SOCIAL_POST_STATUS.BLOCKED,
+            SOCIAL_POST_STATUS.WAITING
+        ]
+        return allow.includes(statusId);
+    }
+
+    checkBlockVisible (statusId) {
+        const allow = [
+            SOCIAL_POST_STATUS.PUBLIC,
+            SOCIAL_POST_STATUS.WAITING
+        ]
+        return allow.includes(statusId);
     }
 
     getColor (str: string) {
@@ -46,12 +99,9 @@ export default class BaseApprovalListComponent extends Vue {
         return text;
     }
 
-    handleViewPost (Id: string) {
-        let obj = this.coList.find(e => e.Id === Id);
-        if (obj) {
-            this.currentItem = obj;
-            this.reveal = false;
-            this.viewDetailDialog = true;
-        }
+    handlePreview(data) {
+        this.selectedItem = data.medias;
+        this.selectedIndex = data.index;
+        this.isPreview = true;
     }
 }

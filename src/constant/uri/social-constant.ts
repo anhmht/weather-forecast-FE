@@ -21,6 +21,6 @@ export default {
     getListCommentsUser: "/api/Post/get-list-comment-of-user",
     getPostForApproval: "/api/Post/get-post-for-approval",
     getCommentForApproval: "/api/Post/get-comment-for-approval",
-    getPostDetailForApproval: "/api/Post/get-post-detail-for-approval/{id}",
-    getCommentDetailForApproval: "/api/Post/get-comment-detail-for-approval/{id}"
+    getPostDetailForApproval: "/api/Post/get-post-detail-for-approval/:id",
+    getCommentDetailForApproval: "/api/Post/get-comment-detail-for-approval/:id"
 };

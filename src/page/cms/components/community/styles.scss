@@ -80,6 +80,8 @@
                     white-space: nowrap;
                     overflow: hidden;
                     text-overflow: ellipsis;
+                    cursor: pointer;
+                    
                     img {
                         margin-right: 10px;
                         width: 40px;
@@ -118,17 +120,29 @@
                     border-radius: 30px;
                     padding: 5px;
                     text-align: center;
-                    &-0 {
+
+                    &-1 {
                         color: #D16F00;
                         background: #FFF5E5 0% 0% no-repeat padding-box;
                     }
-    
-                    &-1 {
+
+                    &-2 {
+                        color: #2196f3;
+                        border: #fff 1px solid;
+                    }
+
+                    &-3 {
                         color: #4A4A4A;
                         background: #EEEEEE 0% 0% no-repeat padding-box;
+                        border: #fff 1px solid;
                     }
     
-                    &-2 {
+                    &-4 {
+                        color: #FF0000;
+                        background: #FFEBEB 0% 0% no-repeat padding-box;
+                    }
+
+                    &-5 {
                         color: #FF0000;
                         background: #FFEBEB 0% 0% no-repeat padding-box;
                     }
