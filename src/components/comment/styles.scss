@@ -27,9 +27,11 @@
     }
     &-list {
         margin-top: 20px;
+        > div {
+            margin-bottom: 10px;
+        }
         &--item {
             display: flex;
-            margin-bottom: 20px;
             &:last-child {
                 margin-bottom: 0;
             }
@@ -54,6 +56,33 @@
                         }
                     }
                 }
+            }
+            &_reply {
+                display: flex;
+                font-size: 14px;
+                align-items: center;
+                color: #A4A4A4;
+                > div {
+                    margin: 5px;
+                    cursor: pointer;
+                    &:first-child {
+                        margin-left: 0;
+                    }
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+            }
+        }
+    }
+    &-more {
+        display: flex;
+        margin-top: 20px;
+        font-weight: 500;
+        > div {
+            cursor: pointer;
+            &:hover {
+                text-decoration: underline;
             }
         }
     }

@@ -119,7 +119,12 @@ module.exports = {
                             }
                         }
                     },
-                    "css-loader",
+                    {
+                        loader: "fast-css-loader",
+                        options: {
+                            modules: true
+                        }
+                    },
                     {
                         loader: "postcss-loader",
                         options: styles.getPostCssConfig({
@@ -137,17 +142,19 @@ module.exports = {
                 test: /\.s[ac]ss$/i,
                 use: [
                     "style-loader",
-                    "css-loader",
+                    "fast-css-loader",
                     {
                         loader: "sass-loader", // compiles Sass to CSS
                         options: {
-                            implementation: require("sass"),
+                            implementation: require.resolve("sass"),
+                            sourceMap: false,
                             sassOptions: {
                                 includePaths: [
                                     `${__dirname}/src/theme/main.scss`
-                                ]
-                            },
-                            additionalData: '@import "~@/theme/main.scss";'
+                                ],
+                                fiber: require("fibers")
+                            }
+                            // additionalData: '@import "~@/theme/main.scss";'
                         }
                     }
                 ]
@@ -155,21 +162,26 @@ module.exports = {
         ]
     },
     optimization: {
-        // minimizer: [
-        //     new UglifyJsPlugin({
-        //         test: /\.js(\?.*)?$/i,
-        //         cache: true,
-        //         parallel: true
-        //     })
-        // ],
+        // minimizer: [new UglifyJsPlugin()],
         runtimeChunk: true
     },
     plugins: [
+        new CleanWebpackPlugin(),
         new VueLoaderPlugin({}),
+        new WorkerPlugin(),
         new CKEditorWebpackPlugin({
             // See https://ckeditor.com/docs/ckeditor5/latest/features/ui-language.html
             language: "en",
             translationsOutputFile: /app/
+        }),
+        new MiniCssExtractPlugin({
+            filename: devMode
+                ? "app/css/[name]." + random + ".css"
+                : "app/css/app.[name].[hash]." + random + ".css",
+            chunkFilename: devMode
+                ? "app/css/[id]." + random + ".css"
+                : "app/css/[name].[hash]." + random + ".css",
+            ignoreOrder: true
         })
     ]
 };
