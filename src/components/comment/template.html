@@ -25,56 +25,43 @@
         </div>
     </div>
     <div class="social-comment-list">
-        <div class="social-comment-list--item">
-            <div class="social-comment-list--item_avatar">
-                <v-avatar :color="getColor('TR')" size="50">
-                    <span class="white--text">TR</span>
-                </v-avatar>
-            </div>
-            <div class="social-comment-list--item_text">
-                <div class="social-comment-list--item_text__header">
-                    <div class="social-comment-list--item_text__header--name">The Rock</div>
-                    <div class="social-comment-list--item_text__header--time">28 thg 8, 2020</div>
+        <div v-for="(item,index) in commentList">
+            <div class="social-comment-list--item">
+                <div class="social-comment-list--item_avatar">
+                    <v-avatar :color="getColor(item.creatorShortName)" size="50">
+                        <span class="white--text">{{item.creatorShortName}}</span>
+                    </v-avatar>
                 </div>
-                <div class="social-comment-list--item_text__body">
-                    {{renderText(`Bài viết rất bổ ích, cảm ơn bạn cho mình thông tin Bài viết rất bổ ích, cảm ơn bạn cho mình thông tin Bài viết rất bổ
-                    ích, cảm ơn bạn cho mình thông tin Bài viết rất bổ ích, cảm ơn bạn cho mình thông tin Bài viết rất bổ ích, cảm ơn bạn
-                    cho mình thông tin`)}}
-                    <span>Xem thêm</span>
+                <div class="social-comment-list--item_text">
+                    <div class="social-comment-list--item_text__header">
+                        <div class="social-comment-list--item_text__header--name">{{item.creatorFullName}}</div>
+                        <div class="social-comment-list--item_text__header--time">
+                            <v-tooltip top>
+                                <template v-slot:activator="{ on, attrs }">
+                                    <span v-bind="attrs" v-on="on"
+                                        class="social-post-item-header--time">{{$calculateRelativeTime(item.createDate)}}</span>
+                                </template>
+                                <span>{{$formatDateTime(item.createDate)}}</span>
+                            </v-tooltip>
+                        </div>
+                    </div>
+                    <div class="social-comment-list--item_text__body">
+                        {{renderText(item.content)}}
+                        <!-- <span>Xem thêm</span> -->
+                        <div class="social-comment-list--item_reply">
+                            <div>Thích</div>
+                            <span>·</span>
+                            <div>Trả lời</div>
+                        </div>
+                    </div>
                 </div>
             </div>
+            
         </div>
-        <div class="social-comment-list--item">
-            <div class="social-comment-list--item_avatar">
-                <v-avatar :color="getColor('JC')" size="50">
-                    <span class="white--text">JC</span>
-                </v-avatar>
-            </div>
-            <div class="social-comment-list--item_text">
-                <div class="social-comment-list--item_text__header">
-                    <div class="social-comment-list--item_text__header--name">John Cena</div>
-                    <div class="social-comment-list--item_text__header--time">28 thg 8, 2020</div>
-                </div>
-                <div class="social-comment-list--item_text__body">
-                    {{renderText(`Bài viết rất bổ ích, cảm ơn bạn cho mình thông tin`)}}
-                </div>
-            </div>
-        </div>
-        <div class="social-comment-list--item">
-            <div class="social-comment-list--item_avatar">
-                <v-avatar :color="getColor('NC')" size="50">
-                    <span class="white--text">NC</span>
-                </v-avatar>
-            </div>
-            <div class="social-comment-list--item_text">
-                <div class="social-comment-list--item_text__header">
-                    <div class="social-comment-list--item_text__header--name">Chuck Norris</div>
-                    <div class="social-comment-list--item_text__header--time">28 thg 8, 2020</div>
-                </div>
-                <div class="social-comment-list--item_text__body">
-                    {{renderText(`Bài viết rất bổ ích, cảm ơn bạn cho mình thông tin`)}}
-                </div>
-            </div>
+    </div>
+    <div v-if="visibleLoadMore" class="social-comment-more">
+        <div v-ripple @click="handleLoadMoreComment">
+            Xem Thêm Bình Luận
         </div>
     </div>
 </div>

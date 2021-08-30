@@ -17,7 +17,7 @@ export default class ListStatusComponent extends Vue {
 
     service: SocialServices = new SocialServices();
     searchParam = {
-        limit: 2,
+        limit: 5,
         page: 1
     }
 

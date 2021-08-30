@@ -23,7 +23,7 @@ export default class MyPostComponent extends Vue {
     selectedItem: any = [];
     selectedIndex: number = 0;
     searchParam = {
-        limit: 2,
+        limit: 5,
         page: 1,
         commentLimit: 0
     }
@@ -49,11 +49,11 @@ export default class MyPostComponent extends Vue {
     }
 
     displayContent(content) {
-        if (content.length >= 255) {
-            return `${content.substring(0, 254)}...`;
+        if (content.length >= 255 || content.split(/\r\n|\r|\n/).length >= 4) {
+            return `${content.substring(0, 254)}...`.split('\n').join('<br/>');
         }
 
-        return content;
+        return content.split('\n').join('<br/>');
     }
 
     toggleContent(target, item) {
@@ -61,7 +61,7 @@ export default class MyPostComponent extends Vue {
             target.parentElement.firstElementChild.innerText = item.content;
             target.innerText = "Rút gọn";
         } else if (target.innerText === "Rút gọn") {
-            target.parentElement.firstElementChild.innerText = this.displayContent(item.content);
+            target.parentElement.firstElementChild.innerHTML = this.displayContent(item.content);
             target.innerText = "Đọc thêm";
         }
     }

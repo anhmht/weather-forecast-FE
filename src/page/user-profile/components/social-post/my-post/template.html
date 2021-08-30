@@ -12,7 +12,7 @@
             </div>
         </div>
         <div class="social-post-item-body">
-            <div class="social-post-item-body--text">{{displayContent(item.content)}}</div>
+            <div class="social-post-item-body--text" v-html="displayContent(item.content)"></div>
             <div v-if="item.content.length >= 255" class="social-post-item-body--button" @click="toggleContent($event.target, item)" v-ripple>
                 Đọc thêm
             </div>
