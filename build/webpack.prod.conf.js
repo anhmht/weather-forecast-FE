@@ -32,7 +32,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     devtool: config.build.productionSourceMap ? config.build.devtool : false,
     output: {
         path: config.build.assetsRoot,
-        publicPath: "/weather-forecast-FE/",
+        publicPath: "/", // github-page: "/weather-forecast-FE/",
         filename: utils.assetsPath("js/[name].[chunkhash]." + random + ".js"),
         chunkFilename: utils.assetsPath(
             "js/[name].[chunkhash]." + random + ".js"

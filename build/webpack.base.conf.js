@@ -151,8 +151,7 @@ module.exports = {
                             sassOptions: {
                                 includePaths: [
                                     `${__dirname}/src/theme/main.scss`
-                                ],
-                                fiber: require("fibers")
+                                ]
                             }
                             // additionalData: '@import "~@/theme/main.scss";'
                         }
