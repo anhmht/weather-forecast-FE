@@ -127,6 +127,11 @@ export class SocialServices extends GenericServices {
             return response.isSuccess ? Promise.resolve(response.data) : Promise.reject(response.message);
             }).catch(error => Promise.reject(error))
     }
+    getListSubComments(limit: number, page: number, commentId: string): Promise<ApiResponse> {
+        return this.executeSelectingPost({ limit, page, commentId }, Uri.getListSubComments).then((response: ApiResponse) => {
+            return response.isSuccess ? Promise.resolve(response.data) : Promise.reject(response.message);
+            }).catch(error => Promise.reject(error))
+    }
 
     getListCommentsUser(limit: number, page: number): Promise<ApiResponse> {
         return this.executeSelectingPost({limit, page}, Uri.getListCommentsUser).then((response: ApiResponse) => {

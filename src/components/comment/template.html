@@ -1,8 +1,9 @@
 <div class="social-comment">
     <div class="social-comment-input">
         <div class="social-comment-input-avatar">
-            <v-avatar :color="getColor('CN')" size="50">
-                <span class="white--text">CN</span>
+            <img v-if="avatar && !isAvatarError" :src="avatar" @error="onImgError" />
+            <v-avatar v-else :color="getColor(loginInfo.shortName)" size="50">
+                <span class="white--text">{{loginInfo.shortName}}</span>
             </v-avatar>
         </div>
         <div class="social-comment-input-text">
@@ -33,31 +34,43 @@
                     </v-avatar>
                 </div>
                 <div class="social-comment-list--item_text">
-                    <div class="social-comment-list--item_text__header">
-                        <div class="social-comment-list--item_text__header--name">{{item.creatorFullName}}</div>
-                        <div class="social-comment-list--item_text__header--time">
-                            <v-tooltip top>
-                                <template v-slot:activator="{ on, attrs }">
-                                    <span v-bind="attrs" v-on="on"
-                                        class="social-post-item-header--time">{{$calculateRelativeTime(item.createDate)}}</span>
-                                </template>
-                                <span>{{$formatDateTime(item.createDate)}}</span>
-                            </v-tooltip>
+                    <div>
+                        <div class="social-comment-list--item_text__header">
+                            <div class="social-comment-list--item_text__header--name">{{item.creatorFullName}}</div>
+                            <div class="social-comment-list--item_text__header--time">
+                                <v-tooltip top>
+                                    <template v-slot:activator="{ on, attrs }">
+                                        <span v-bind="attrs" v-on="on"
+                                            class="social-post-item-header--time">{{$calculateRelativeTime(item.createDate)}}</span>
+                                    </template>
+                                    <span>{{$formatDateTime(item.createDate)}}</span>
+                                </v-tooltip>
+                            </div>
+                        </div>
+                        <div class="social-comment-list--item_text__body">
+                            {{renderText(item.content)}}
+                            <!-- <span>Xem thêm</span> -->
+                        </div>
+                        <div class="social-comment-list--item_text__reaction">
+                            <reaction-count :action-icons="item.actionIcons" />
                         </div>
                     </div>
-                    <div class="social-comment-list--item_text__body">
-                        {{renderText(item.content)}}
-                        <!-- <span>Xem thêm</span> -->
-                        <div class="social-comment-list--item_reply">
-                            <div>Thích</div>
-                            <span>·</span>
-                            <div>Trả lời</div>
-                        </div>
+                    <div class="social-comment-list--item_reply">
+                        <reaction :action-icons="item.actionIcons" @save="handleReaction($event, item)"
+                            @like="handleLike($event, item.id)" is-comment/>
+                        <span v-if="!subComment">·</span>
+                        <div v-ripple @click="handleLoadSubComment(item.id)" v-if="!subComment">Trả lời</div>
+                    </div>
+                    <div v-if="item.isShowSubComment" class="social-comment-list--item_sub">
+                        <sub-comment :comment-id="item.id"/>
                     </div>
                 </div>
             </div>
             
         </div>
+    </div>
+    <div class="social-comment-loading" v-if="isLoading">
+        <loading :is-loading="isLoading" absolute color="#FFFFFF" size="35"/>
     </div>
     <div v-if="visibleLoadMore" class="social-comment-more">
         <div v-ripple @click="handleLoadMoreComment">

@@ -1,0 +1,6 @@
+<div class="reaction-count">
+    {{reactionCount}}
+    <v-avatar size="20" v-for="(item, index) in reactions" :key="index">
+        <img :src="$getReaction(item.iconId).url" alt="item.desc">
+    </v-avatar>
+</div>

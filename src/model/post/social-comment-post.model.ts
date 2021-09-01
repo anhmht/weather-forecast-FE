@@ -1,29 +1,28 @@
-export interface ISocialPost {
-    actionIcons?: any;
-    approvedByFullName?: string;
+export interface IPostComment{
+    actionIcons ?: any;
+    approvedByFullName ?: string;
     approvedByUserName: string;
-    comments?: any;
-    content?: string;
-    createBy?: string;
-    createDate?: string;
-    creatorAvatarUrl?: string;
-    creatorFullName?: string;
-    creatorShortName?: string;
-    id?: string;
-    listImageUrl?: any
-    listVideoUrl?: any
-    numberOfComment?: number
-    publicDate?: string;
-    shares?: string;
-    statusId?: number;
-    isShowComment?: boolean;
+    content ?: string;
+    createBy ?: string;
+    createDate ?: string;
+    creatorAvatarUrl ?: string;
+    creatorFullName ?: string;
+    creatorShortName ?: string;
+    id ?: string;
+    listImageUrl ?: any
+    listVideoUrl ?: any
+    numberOfSubComment ?: number
+    publicDate ?: string;
+    parentCommentId?: string;
+    postId?: string;
+    statusId ?: number;
+    isShowSubComment ?: boolean;
 }
 
-export class SocialPost implements ISocialPost {
+export class PostComment implements IPostComment {
     actionIcons?: any;
     approvedByFullName?: string;
     approvedByUserName: string;
-    comments?: any;
     content?: string;
     createBy?: string;
     createDate?: string;
@@ -33,17 +32,17 @@ export class SocialPost implements ISocialPost {
     id?: string;
     listImageUrl?: any
     listVideoUrl?: any
-    numberOfComment?: number
+    numberOfSubComment?: number
     publicDate?: string;
-    shares?: string;
+    parentCommentId?: string;
+    postId?: string;
     statusId?: number;
-    isShowComment?: boolean;
-
-    constructor(option?: ISocialPost) {
+    isShowSubComment?: boolean;
+    
+    constructor(option?: IPostComment) {
         this.actionIcons = option.actionIcons || null;
         this.approvedByFullName = option.approvedByFullName || null;
         this.approvedByUserName = option.approvedByUserName || null;
-        this.comments = option.comments || null;
         this.content = option.content || null;
         this.createBy = option.createBy || null;
         this.createDate = option.createDate || null;
@@ -53,10 +52,11 @@ export class SocialPost implements ISocialPost {
         this.id = option.id || null;
         this.listImageUrl = option.listImageUrl || null;
         this.listVideoUrl = option.listVideoUrl || null;
-        this.numberOfComment = option.numberOfComment || 0;
+        this.numberOfSubComment = option.numberOfSubComment || 0;
         this.publicDate = option.publicDate || null;
-        this.shares = option.shares || null;
+        this.parentCommentId = option.parentCommentId || null;
+        this.postId = option.postId || null;
         this.statusId = option.statusId || null;
-        this.isShowComment = option.isShowComment || false;
+        this.isShowSubComment = option.isShowSubComment || false;
     }
 }
