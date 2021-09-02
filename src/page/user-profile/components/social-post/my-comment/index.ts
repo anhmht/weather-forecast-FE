@@ -7,27 +7,58 @@ import { SocialServices } from "@/service/social-service/social.service";
     template: require("./template.html").default
 })
 export default class MyCommentComponent extends Vue {
-    GET_LIST_COMMENTS_USER_LIMIT: number = 10;
-    GET_LIST_COMMENTS_USER_PAGE: number = 1;
     myComments: any = [];
+    isLoading: boolean = false;
+    totalPages: number = 0;
+    searchParam = {
+        limit: 2,
+        page: 1
+    };
+    attrs: any = {
+        class: "mb-6",
+        boilerplate: true,
+        elevation: 2
+    };
     socialService: SocialServices = new SocialServices();
 
     getColor(name) {
         return DataHelper.generateColorByString(name);
     }
 
-    mounted() {
+    loadMorePost() {
+        window.addEventListener('scroll', () => {
+            const {
+                scrollTop,
+                scrollHeight,
+                clientHeight
+            } = document.documentElement;
+
+            if (scrollTop + clientHeight >= scrollHeight - 5 && !this.isLoading) {
+                if (this.searchParam.page < this.totalPages) {
+                    this.searchParam.page += 1;
+                    this.fetchData();
+                }
+            }
+        }, { passive: true });
+    }
+
+    fetchData() {
+        this.isLoading = true;
         this.socialService
-            .getListCommentsUser(
-                this.GET_LIST_COMMENTS_USER_LIMIT,
-                this.GET_LIST_COMMENTS_USER_PAGE
-            )
+            .getListCommentsUser(this.searchParam.limit, this.searchParam.page)
             .then((res: any) => {
-                this.myComments = res.items;
-                console.log(this.myComments);
+                this.myComments = this.myComments.concat(res.items);
+                this.totalPages = res.totalPages;
+                this.isLoading = false;
             })
             .catch(error => {
                 this.$errorMessage(error);
+                this.isLoading = false;
             });
+    }
+
+    mounted() {
+        this.fetchData();
+        this.loadMorePost();
     }
 }
