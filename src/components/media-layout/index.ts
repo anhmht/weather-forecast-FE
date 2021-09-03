@@ -65,8 +65,6 @@ export default class MediaLayoutComponent extends Vue {
             }
         }) : [];
         result = imagesArr.concat(videoArr);
-        console.log(result);
-        
         return result;
     }
 

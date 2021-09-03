@@ -22,7 +22,6 @@ export default class ListStatusComponent extends Vue {
     }
 
     socialPost: ISocialPost[] = []
-    isDisplayComment: boolean = false;
     likeId: number = 1;
 
     isLoading: boolean = false;
@@ -65,13 +64,11 @@ export default class ListStatusComponent extends Vue {
         }
     }
 
-    toggleComment(target) {
-        if (!this.isDisplayComment) {
-            target.parentElement.parentElement.nextElementSibling.style.display = 'none';
-        } else {
-            target.parentElement.parentElement.nextElementSibling.style.display = 'block';
+    toggleComment(id) {
+        const post = this.socialPost.find(x => x.id === id);
+        if (post && !post.isShowComment) {
+            Vue.set(post, 'isShowComment', true)
         }
-        this.isDisplayComment = !this.isDisplayComment;
     }
 
     handleReaction(data, postId) {

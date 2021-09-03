@@ -37,9 +37,9 @@
         <div class="social-list--item_footer">
             <div class="social-list--item_footer--action">
                 <div class="social-list--item_footer--action_item" v-ripple>
-                    <reaction :actionIcons="item.actionIcons" @save="handleReaction($event, item.id)" @like="handleLike($event, item.id)" />
+                    <reaction :action-icons="item.actionIcons" @save="handleReaction($event, item.id)" @like="handleLike($event, item.id)" />
                 </div>
-                <div @click="toggleComment($event.target)" class="social-list--item_footer--action_item" v-ripple>
+                <div @click="toggleComment(item.id)" class="social-list--item_footer--action_item" v-ripple>
                     <v-icon light>
                         mdi-comment-text-outline
                     </v-icon>
@@ -53,8 +53,8 @@
                 </div>
             </div>
         </div>
-        <div>
-            <comment :post-id="item.id"/>
+        <div v-if="item.isShowComment">
+            <comment :id="item.id" @preview="handlePreview"/>
         </div>
     </div>
     <transition name="fade-transition">

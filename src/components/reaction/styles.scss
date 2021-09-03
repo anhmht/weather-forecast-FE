@@ -24,6 +24,7 @@
         display: flex;
         width: 400px;
         padding: 5px;
+        border-radius: 20px;
         > div {
             cursor: pointer;
             &:hover {
@@ -36,4 +37,16 @@
         height: 30px;
         margin-right: 10px;
     }
+    &.comment {
+        button {
+            padding: 0 !important;
+            height: 20px !important;
+        }
+        .v-btn__content {
+            color: #A4A4A4;
+        }
+    }
+    &-menu {
+        border-radius: 25px;
+    } 
 }

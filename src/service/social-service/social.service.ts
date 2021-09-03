@@ -2,7 +2,7 @@ import { ApiResponse } from "@/model/app-config";
 import { GenericServices } from "../generic-service/generic.service";
 import Uri from "@/constant/uri/social-constant";
 import { ISocialApprovalSearchParam, ISocialPost } from "@/model/social/post.model";
-import IComment from "@/model/social/comment.model";
+import { IComment } from "@/model/social/comment.model";
 
 export class SocialServices extends GenericServices {
     createPost(post: ISocialPost): Promise<ApiResponse> {
@@ -124,6 +124,11 @@ export class SocialServices extends GenericServices {
 
     getListCommentsByPost(limit: number, page: number, postId: string): Promise<ApiResponse> {
         return this.executeSelectingPost({limit, page, postId}, Uri.getListCommentsAdmin).then((response: ApiResponse) => {
+            return response.isSuccess ? Promise.resolve(response.data) : Promise.reject(response.message);
+            }).catch(error => Promise.reject(error))
+    }
+    getListSubComments(limit: number, page: number, commentId: string): Promise<ApiResponse> {
+        return this.executeSelectingPost({ limit, page, commentId }, Uri.getListSubComments).then((response: ApiResponse) => {
             return response.isSuccess ? Promise.resolve(response.data) : Promise.reject(response.message);
             }).catch(error => Promise.reject(error))
     }

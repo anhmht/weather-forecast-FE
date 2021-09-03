@@ -10,12 +10,28 @@ import { Getter, namespace } from "vuex-class";
 const LookupGetter = namespace(storeModules.Lookup, Getter);
 
 @Component({
-    template: require("./template.html").default,
-    mixins: [ReactionMixin]
+    mixins: [ReactionMixin],
+    render: function (createElement) {
+        if (!this.template) {
+            return createElement("span", "Loading...");
+        } else {
+            return this.template();
+        }
+    },
+    created() {
+        if (!this.isComment) {
+            this.template = Vue.compile(require("./template.html").default).render;
+            return;
+        }
+        this.template = Vue.compile(require("./template-comment.html").default).render;
+    }
 })
 export default class ReactionComponent extends Vue {
     @Prop({ type: Array, default: () => [] })
     actionIcons
+
+    @Prop({ type: Boolean, default: false })
+    isComment
 
     currentChecking: any = null;
         

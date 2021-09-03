@@ -29,7 +29,7 @@ const LookupGetter = namespace(storeModules.Lookup, Getter);
 const COLOR = [
     'red', 'green', 'blue', 'yellow', 'DeepPink', 'DeepSkyBlue', 'GreenYellow', 'Lime', 'Thistle', 'NavajoWhite',
     'MidnightBlue', 'orange', 'purple', 'aqua', 'Aquamarine', 'RoyalBlue', 'Teal', 'DarkGreen', 'Salmon',
-    'DarkKhaki', 'Crimson', 'Indigo', 'Cyan', 'Chocolate', 'Azure' 
+    'DarkKhaki', 'Crimson', 'Indigo', 'Cyan', 'Chocolate', 'Azure'
 ]
 @Component({
     template: require("./template.html").default,
@@ -394,11 +394,11 @@ export default class HomePageComponent extends Vue {
         left = !!data.left ? data.left : 0;
         right = !!data.right ? data.right : 0;
         console.log(top, bottom, left, right);
-        
+
         if (type) {
             return [right, bottom];
         }
-        
+
         return [left, top]
     }
 
@@ -822,7 +822,7 @@ export default class HomePageComponent extends Vue {
             // Required: API key
             key: "PsLAtXpsPTZexBwUkO7Mx5I", // REPLACE WITH YOUR KEY !!!
             // key: 'yw7vbuA1PQmaUPe0SNECjxmOIv5AJ4FC', // Production Github Page !!!
-            // key: 'oixjdU358Nvzz8CGDQhcBAswQ2ngOshM', // Production Azure web static!!!
+            // key: 'oixjdU358Nvzz8CGDQhcBAswQ2ngOshM', // Production Azure docker!!!
             // Put additional console output
             // verbose: true,
             // Optional: Initial state of the map
