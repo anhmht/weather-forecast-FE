@@ -166,11 +166,11 @@ export default class CreateSatusComponent extends Vue {
         }
 
         if (type === this.mediaType.VID) {
-            this.uploadservice.uploadFile(formData, config).then(response => {
+            this.uploadservice.uploadVideoSocial(formData, config).then(response => {
                 const docIndex = this.uploadingMedia.findIndex(e => e.Index === document.Index);
                 this.uploadingMedia.splice(docIndex, 1);
 
-                this.onloadedDocument(response, type);
+                this.onloadedDocument(response[3], type); // 1: IOS m3u8; 3: Web + android: mpd
                 // this.toBase64(document.Data, type);
             }).catch(err => {
                 this.$errorMessage(err);

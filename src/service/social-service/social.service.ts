@@ -2,7 +2,7 @@ import { ApiResponse } from "@/model/app-config";
 import { GenericServices } from "../generic-service/generic.service";
 import Uri from "@/constant/uri/social-constant";
 import { ISocialApprovalSearchParam, ISocialPost } from "@/model/social/post.model";
-import IComment from "@/model/social/comment.model";
+import { IComment } from "@/model/social/comment.model";
 
 export class SocialServices extends GenericServices {
     createPost(post: ISocialPost): Promise<ApiResponse> {

@@ -40,7 +40,7 @@
             </div>
         </div>
         <div>
-            <comment />
+            <comment :id="item.id" @preview="handlePreview"/>
         </div>
     </div>
     <transition name="fade-transition">

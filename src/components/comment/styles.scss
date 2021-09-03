@@ -23,6 +23,13 @@
                 top: 5px;
                 z-index: 1;
             }
+            &--attachment {
+                position: absolute;
+                right: 30px;
+                top: 5px;
+                z-index: 1;
+                cursor: pointer;
+            }
         }
         &-avatar {
             img {

@@ -54,7 +54,7 @@
             </div>
         </div>
         <div v-if="item.isShowComment">
-            <comment :id="item.id"/>
+            <comment :id="item.id" @preview="handlePreview"/>
         </div>
     </div>
     <transition name="fade-transition">

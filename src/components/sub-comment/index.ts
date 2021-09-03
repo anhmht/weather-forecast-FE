@@ -9,7 +9,10 @@ import { Prop } from "vue-property-decorator";
     }
 })
 export default class SubCommentComponent extends Vue {
-    @Prop({ required: true }) commentId
+    @Prop({ required: true }) commentId;
+    @Prop({ type: String, default: null }) postId;
     
-
+    handlePreview(data) {
+        this.$emit('preview', data);
+    }
 }
