@@ -4,9 +4,13 @@
             Đăng bài
         </div>
         <div class="create-status-container_body">
-            <v-textarea ref="createTextarea" filled dense flat auto-grow label="Viết trạng thái" rows="2" row-height="30" v-model="content" hide-details></v-textarea>
+            <div class="create-status-container_body__textarea">
+                <v-textarea ref="createTextarea" filled dense flat auto-grow 
+                    label="Viết trạng thái" rows="2" row-height="30" v-model="content" hide-details>
+                </v-textarea>
+            </div>
             <div>
-                <media-layout editable :images.sync="selectedPhotos" :videos.sync="selectedPVideos" @preview="handlePreview" />
+                <media-layout editable :images.sync="selectedPhotos" :videos.sync="selectedVideos" @preview="handlePreview" />
             </div>
         </div>
         <div class="create-status-container_footer">

@@ -1,7 +1,7 @@
 <div v-if="Medias" class="social-media-layout-editable" :class="`social-media-layout-editable-layout-${layoutType}`">
     <template v-if="index < 4" v-for="(item, index) in Medias">
         <div v-if="item.type === 'image'" @click="handlePreview(index)" v-ripple style="position: relative;">
-            <v-img :src="item.url" :aspect-ratio="getRatio(index)" class="grey lighten-2" :max-height="Medias.length === 1 ? '50vh' : null">
+            <v-img :src="item.url" :aspect-ratio="getRatio(index)" class="grey lighten-2" :max-height="getImageHeight(index)">
                 <template v-slot:placeholder>
                     <v-row class="fill-height ma-0" align="center" justify="center">
                         <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
@@ -17,7 +17,7 @@
             <v-icon
                 color="blue-grey"
                 class="create-status-container_body-remove-all-media"
-                @click="removeMedia(item)"
+                @click.stop="removeMedia(item)"
             >mdi-close-circle</v-icon>
         </div>
         <div v-else v-ripple class="social-media-video" style="position: relative;">
@@ -33,7 +33,7 @@
             <v-icon
                 color="blue-grey"
                 class="create-status-container_body-remove-all-media"
-                @click="removeMedia(item)"
+                @click.stop="removeMedia(item)"
             >mdi-close-circle</v-icon>
         </div>
     </template>

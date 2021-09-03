@@ -94,6 +94,23 @@ export default class MediaLayoutComponent extends Vue {
         }
     }
 
+    getImageHeight (index) {
+        switch (this.Medias.length) {
+            case 1:
+                return 400
+            case 2:
+                return 200
+            case 3:
+                return 200
+            default:
+                if (index == 0) {
+                    return 400
+                } else {
+                    return 396/3
+                }
+        }
+    }
+
     handlePreview(index) {
         this.$emit('preview', {index, medias: this.Medias})
     }
