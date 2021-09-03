@@ -98,4 +98,13 @@ export default class MediaLayoutComponent extends Vue {
         this.$emit('preview', {index, medias: this.Medias})
     }
 
+    removeMedia (item) {
+        if (!item) return;
+
+        if(item.type == 'image') {
+            this.$emit('update:images', this.images.filter(e => e !== item.url));
+        } else if (item.type == 'video') {
+            this.$emit('update:videos', this.videos.filter(e => e !== item.url));
+        }
+    }
 }

@@ -1,6 +1,6 @@
 <div v-if="Medias" class="social-media-layout-editable" :class="`social-media-layout-editable-layout-${layoutType}`">
     <template v-if="index < 4" v-for="(item, index) in Medias">
-        <div v-if="item.type === 'image'" @click="handlePreview(index)" v-ripple>
+        <div v-if="item.type === 'image'" @click="handlePreview(index)" v-ripple style="position: relative;">
             <v-img :src="item.url" :aspect-ratio="getRatio(index)" class="grey lighten-2" :max-height="Medias.length === 1 ? '50vh' : null">
                 <template v-slot:placeholder>
                     <v-row class="fill-height ma-0" align="center" justify="center">
@@ -8,21 +8,33 @@
                     </v-row>
                 </template>
             </v-img>
+            
             <div v-if="index === 3 && Medias.length > 4" class="social-media-layout-editable-layout-5-last" @click="handlePreview(3)">
                 <div>
                     + {{Medias.length - 4}}
                 </div>
             </div>
+            <v-icon
+                color="blue-grey"
+                class="create-status-container_body-remove-all-media"
+                @click="removeMedia(item)"
+            >mdi-close-circle</v-icon>
         </div>
-        <div v-else v-ripple class="social-media-video">
+        <div v-else v-ripple class="social-media-video" style="position: relative;">
             <video controls loop>
                 <source :src="item.url" type="video/mp4">
             </video>
+            
             <div v-if="index === 3 && Medias.length > 4" class="social-media-layout-editable-layout-5-last"  @click="handlePreview(3)">
                 <div>
                     + {{Medias.length - 4}}
                 </div>
             </div>
+            <v-icon
+                color="blue-grey"
+                class="create-status-container_body-remove-all-media"
+                @click="removeMedia(item)"
+            >mdi-close-circle</v-icon>
         </div>
     </template>
 </div>
