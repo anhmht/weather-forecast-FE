@@ -7,11 +7,6 @@
             <v-textarea ref="createTextarea" filled dense flat auto-grow label="Viết trạng thái" rows="2" row-height="30" v-model="content" hide-details></v-textarea>
             <div>
                 <media-layout editable :images.sync="selectedPhotos" :videos.sync="selectedPVideos" @preview="handlePreview" />
-                <!-- <v-icon v-if="selectedPhotos.length > 0 || selectedPVideos.length > 0"
-                    color="blue-grey" large
-                    class="create-status-container_body-remove-all-media"
-                    @click.native="removeAllMedia"
-                >mdi-close-circle</v-icon> -->
             </div>
         </div>
         <div class="create-status-container_footer">
