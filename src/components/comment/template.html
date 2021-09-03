@@ -1,65 +1,104 @@
 <div class="social-comment">
     <div class="social-comment-input">
         <div class="social-comment-input-avatar">
-            <v-avatar :color="getColor('CN')" size="50">
-                <span class="white--text">CN</span>
+            <img v-if="avatar && !isAvatarError" :src="avatar" @error="onImgError" />
+            <v-avatar v-else :color="getColor(loginInfo.shortName)" size="50">
+                <span class="white--text">{{loginInfo.shortName}}</span>
             </v-avatar>
         </div>
         <div class="social-comment-input-text">
-            <v-textarea filled auto-grow label="Viết Bình luận..." rows="1" row-height="16"></v-textarea>
+            <v-menu
+                bottom
+                origin="center center"
+                transition="scale-transition"
+                :close-on-content-click="false"
+            >
+                <template v-slot:activator="{ on, attrs }">
+                    <input ref="upload" type="file" @change="onChangeDocuments($event.target.files)" title="" hidden accept="image/*,video/*" />
+                    <div class="social-comment-input-text--attachment" v-ripple @click="handleClickBrowsePhoto">
+                        <v-icon color="blue-grey darken-2">mdi-camera</v-icon>
+                    </div>
+                    <div class="social-comment-input-text--emoticon" v-ripple
+                        v-bind="attrs"
+                        v-on="on">
+                        <v-icon color="blue-grey darken-2">mdi-emoticon-happy-outline</v-icon>
+                    </div>
+                </template>
+                <emoji-picker @insert-emoji="handleClickOnEmoji" />
+            </v-menu>
+            <v-textarea @keydown.enter.exact.prevent 
+                @keyup.enter.exact="handlePostComment"
+                ref="commentTextarea" 
+                filled auto-grow 
+                label="Viết bình luận..." 
+                rows="1" row-height="16"
+                v-model="newComment"></v-textarea>
+            <div v-if="uploadedDocs" style="display: flex;justify-content: space-between;">
+                <v-img :src="uploadSrc" aspect-ratio="1" class="grey lighten-2" height="100" width="130" contain style="flex: unset;" @click="handlePreview()">
+                    <template v-if="isUploading" v-slot:placeholder>
+                        <v-row class="fill-height ma-0" align="center" justify="center">
+                            <v-progress-circular :value="progress" :indeterminate="progress === 100" color="grey lighten-5"></v-progress-circular>
+                        </v-row>
+                    </template>
+                </v-img>
+                <div>
+                    <v-btn icon color="black" @click="reset">
+                        <v-icon>mdi-close</v-icon>
+                    </v-btn>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="social-comment-list">
-        <div class="social-comment-list--item">
-            <div class="social-comment-list--item_avatar">
-                <v-avatar :color="getColor('TR')" size="50">
-                    <span class="white--text">TR</span>
-                </v-avatar>
-            </div>
-            <div class="social-comment-list--item_text">
-                <div class="social-comment-list--item_text__header">
-                    <div class="social-comment-list--item_text__header--name">The Rock</div>
-                    <div class="social-comment-list--item_text__header--time">28 thg 8, 2020</div>
+    <div class="social-comment-list" v-if="commentList.length > 0">
+        <div v-for="(item,index) in commentList">
+            <div class="social-comment-list--item">
+                <div class="social-comment-list--item_avatar">
+                    <v-avatar :color="getColor(item.creatorShortName)" size="50">
+                        <span class="white--text">{{item.creatorShortName}}</span>
+                    </v-avatar>
                 </div>
-                <div class="social-comment-list--item_text__body">
-                    {{renderText(`Bài viết rất bổ ích, cảm ơn bạn cho mình thông tin Bài viết rất bổ ích, cảm ơn bạn cho mình thông tin Bài viết rất bổ
-                    ích, cảm ơn bạn cho mình thông tin Bài viết rất bổ ích, cảm ơn bạn cho mình thông tin Bài viết rất bổ ích, cảm ơn bạn
-                    cho mình thông tin`)}}
-                    <span>Xem thêm</span>
+                <div class="social-comment-list--item_text">
+                    <div>
+                        <div class="social-comment-list--item_text__header">
+                            <div class="social-comment-list--item_text__header--name">{{item.creatorFullName}}</div>
+                            <div class="social-comment-list--item_text__header--time">
+                                <v-tooltip top>
+                                    <template v-slot:activator="{ on, attrs }">
+                                        <span v-bind="attrs" v-on="on"
+                                            class="social-post-item-header--time">{{$calculateRelativeTime(item.createDate)}}</span>
+                                    </template>
+                                    <span>{{$formatDateTime(item.createDate)}}</span>
+                                </v-tooltip>
+                            </div>
+                        </div>
+                        <div class="social-comment-list--item_text__body">
+                            {{renderText(item.content)}}
+                            <!-- <span>Xem thêm</span> -->
+                        </div>
+                        <div class="social-comment-list--item_text__reaction">
+                            <reaction-count :action-icons="item.actionIcons" />
+                        </div>
+                    </div>
+                    <div class="social-comment-list--item_reply">
+                        <reaction :action-icons="item.actionIcons" @save="handleReaction($event, item)"
+                            @like="handleLike($event, item.id)" is-comment/>
+                        <span v-if="!subComment">·</span>
+                        <div v-ripple @click="handleLoadSubComment(item.id)" v-if="!subComment">Trả lời</div>
+                    </div>
+                    <div v-if="item.isShowSubComment" class="social-comment-list--item_sub">
+                        <sub-comment :comment-id="item.id" :post-id="id" @preview="handlePreview"/>
+                    </div>
                 </div>
             </div>
+            
         </div>
-        <div class="social-comment-list--item">
-            <div class="social-comment-list--item_avatar">
-                <v-avatar :color="getColor('JC')" size="50">
-                    <span class="white--text">JC</span>
-                </v-avatar>
-            </div>
-            <div class="social-comment-list--item_text">
-                <div class="social-comment-list--item_text__header">
-                    <div class="social-comment-list--item_text__header--name">John Cena</div>
-                    <div class="social-comment-list--item_text__header--time">28 thg 8, 2020</div>
-                </div>
-                <div class="social-comment-list--item_text__body">
-                    {{renderText(`Bài viết rất bổ ích, cảm ơn bạn cho mình thông tin`)}}
-                </div>
-            </div>
-        </div>
-        <div class="social-comment-list--item">
-            <div class="social-comment-list--item_avatar">
-                <v-avatar :color="getColor('NC')" size="50">
-                    <span class="white--text">NC</span>
-                </v-avatar>
-            </div>
-            <div class="social-comment-list--item_text">
-                <div class="social-comment-list--item_text__header">
-                    <div class="social-comment-list--item_text__header--name">Chuck Norris</div>
-                    <div class="social-comment-list--item_text__header--time">28 thg 8, 2020</div>
-                </div>
-                <div class="social-comment-list--item_text__body">
-                    {{renderText(`Bài viết rất bổ ích, cảm ơn bạn cho mình thông tin`)}}
-                </div>
-            </div>
+    </div>
+    <div class="social-comment-loading" v-if="isLoading">
+        <loading :is-loading="isLoading" absolute color="#FFFFFF" size="35"/>
+    </div>
+    <div v-if="visibleLoadMore" class="social-comment-more">
+        <div v-ripple @click="handleLoadMoreComment">
+            Xem Thêm Bình Luận
         </div>
     </div>
 </div>

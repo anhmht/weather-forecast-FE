@@ -1,26 +1,26 @@
-export default interface IComment {
-    postId: string;
-    content: string;
-    parentCommentId: string;
-    imageUrls: string[];
-    videoUrls: string[];
-    anonymousUser: {
-        fullName: string,
-        phone: string,
-        email: string
+export interface IComment {
+    postId?: string;
+    content?: string;
+    parentCommentId?: string;
+    imageUrls?: string[];
+    videoUrls?: string[];
+    anonymousUser?: {
+        fullName?: string,
+        phone?: string,
+        email?: string
     }
 }
 
 export class Comment implements IComment {
-    postId: string;
-    content: string;
-    parentCommentId: string;
-    imageUrls: string[];
-    videoUrls: string[];
-    anonymousUser: {
-        fullName: string,
-        phone: string,
-        email: string
+    postId?: string;
+    content?: string;
+    parentCommentId?: string;
+    imageUrls?: string[];
+    videoUrls?: string[];
+    anonymousUser?: {
+        fullName?: string,
+        phone?: string,
+        email?: string
     }
 
     constructor(option?: any) {

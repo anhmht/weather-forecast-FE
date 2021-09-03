@@ -1,5 +1,5 @@
 <div v-if="Medias" class="social-media-layout-2">
-    <template v-for="(item, index) in Medias" :key="index">
+    <template v-for="(item, index) in Medias">
         <div v-if="item.type === 'image'" @click="handlePreview(index)" v-ripple>
             <v-img :src="item.url" aspect-ratio="1" class="grey lighten-2" height="500">
                 <template v-slot:placeholder>

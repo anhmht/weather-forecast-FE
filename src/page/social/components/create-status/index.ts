@@ -1,6 +1,7 @@
 import { ISocialPost, SocialPost } from "@/model/social";
 import { SocialServices } from "@/service/social-service/social.service";
 import { UploadServices } from "@/service/upload-service/upload.service";
+import { DataHelper } from "@/utils/data-helper";
 import Vue from "vue";
 import Component from "vue-class-component";
 // import NO_IMAGE from '../../../../../static//img/no-image/no-image.png';
@@ -12,6 +13,7 @@ const VIDEO_LIMIT = 5;
     components: {
         "media-layout": () => import("../../../../components/media-layout/MediaLayoutComponent.vue"),
         "preview-image": () => import("../../../../components/preview-image/PreviewImage.vue"),
+        "emoji-picker": () => import("../../../../components/emoji-picker/EmojiPickerComponent.vue")
     }
 })
 export default class CreateSatusComponent extends Vue {
@@ -149,12 +151,15 @@ export default class CreateSatusComponent extends Vue {
                 document.progress = percent;
             }.bind(this)
         };
+
+        this.toBase64(document.Data, type);
+        
         if (type === this.mediaType.FOTO) {
             this.uploadservice.upload(formData, config).then(response => {
                 const docIndex = this.uploadingMedia.findIndex(e => e.Index === document.Index);
                 this.uploadingMedia.splice(docIndex, 1);
                 this.onloadedDocument(response, type);
-                this.toBase64(document.Data, type);
+                // this.toBase64(document.Data, type);
             }).catch(err => {
                 this.$errorMessage(err);
             });
@@ -164,13 +169,9 @@ export default class CreateSatusComponent extends Vue {
             this.uploadservice.uploadVideoSocial(formData, config).then(response => {
                 const docIndex = this.uploadingMedia.findIndex(e => e.Index === document.Index);
                 this.uploadingMedia.splice(docIndex, 1);
-                if (response && response.length > 0) {
 
-                    this.onloadedDocument(response[0], type);
-                    this.toBase64(document.Data, type);
-                    // this.selectedPVideos.push(response[0]);
-                }
-                
+                this.onloadedDocument(response[3], type); // 1: IOS m3u8; 3: Web + android: mpd
+                // this.toBase64(document.Data, type);
             }).catch(err => {
                 this.$errorMessage(err);
             });
@@ -238,5 +239,17 @@ export default class CreateSatusComponent extends Vue {
         this.selectedPVideos = [];
         this.postModel.imageUrls = [];
         this.postModel.videoUrls = [];
+    }
+
+    handleClickOnEmoji (val) {
+        const vm = this;
+        if (vm.$refs.createTextarea) {
+            let cnt = DataHelper.insertCharacterAtCursorPositionOfTextArea(vm.$refs.createTextarea, val);
+            this.content = cnt;
+        }
+    }
+
+    beforeDestroy () {
+        this.reset();
     }
 }

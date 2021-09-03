@@ -12,7 +12,7 @@
             </div>
         </div>
         <div class="social-post-item-body">
-            <div class="social-post-item-body--text">{{displayContent(item.content)}}</div>
+            <div class="social-post-item-body--text" v-html="displayContent(item.content)"></div>
             <div v-if="item.content.length >= 255" class="social-post-item-body--button" @click="toggleContent($event.target, item)" v-ripple>
                 Đọc thêm
             </div>
@@ -23,7 +23,7 @@
         <div v-if="item.statusId === 1" class="social-post-item-footer">
             <div class="social-post-item-footer--action">
                 <div class="social-post-item-footer--action_item" v-ripple>
-                    <reaction />
+                    <reaction :action-icons="item.actionIcons" @save="handleReaction($event, item.id)" @like="handleLike($event, item.id)" />
                 </div>
                 <div @click="toggleComment($event.target)" class="social-post-item-footer--action_item" v-ripple>
                     <v-icon light>
@@ -40,8 +40,12 @@
             </div>
         </div>
         <div>
-            <comment />
+            <comment :id="item.id" @preview="handlePreview"/>
         </div>
     </div>
+    <transition name="fade-transition">
+        <v-skeleton-loader v-if="isLoading" style="margin-top: 20px;" v-bind="attrs" type="list-item-avatar-two-line, image">
+        </v-skeleton-loader>
+    </transition>
     <preview-image :data="selectedItem" :is-visible.sync="isPreview" :current="selectedIndex"/>
 </div>

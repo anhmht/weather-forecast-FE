@@ -23,4 +23,8 @@
             </div>
         </div>
     </div>
+    <transition name="fade-transition">
+        <v-skeleton-loader v-if="isLoading" style="margin-top: 20px;" v-bind="attrs" type="list-item-avatar-two-line, image">
+        </v-skeleton-loader>
+    </transition>
 </div>

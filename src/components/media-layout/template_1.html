@@ -9,7 +9,7 @@
         </v-img>
     </div>
     <div v-else v-ripple class="social-media-video">
-        <video controls autoplay loop preload="auto">
+        <video controls autoplay loop preload="auto" @click="handlePreview(0)">
             <source :src="Medias[0].url" type="video/mp4">
         </video>
     </div>

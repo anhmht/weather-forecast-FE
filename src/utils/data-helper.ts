@@ -218,4 +218,49 @@ export class DataHelper {
         let h = hash % 360;
         return 'hsl('+h+', '+s+'%, '+l+'%)';
     }
+
+    static insertCharacterAtCursorPositionOfTextArea (refTextarea, value) {
+        let tArea = refTextarea.$refs ? refTextarea.$refs.input : refTextarea;
+        let startPos = tArea.selectionStart;
+        let endPos = tArea.selectionEnd;
+        let cursorPos = startPos;
+        let tmpStr = tArea.value;
+    
+        // insert new character:
+        const result = tmpStr.substring(0, startPos) + value + tmpStr.substring(endPos, tmpStr.length);
+        
+        // set cursor after new character:
+        setTimeout(() => {
+            cursorPos += value.length;
+            tArea.selectionStart = tArea.selectionEnd = cursorPos;
+        }, 10);
+        return result;
+    }
+    
+    static convertDecimalCodeToEmoji (text) {
+        let result = text;
+        let matchList = text.match(/(\&\#([0-9]*)\;)/gm);
+        if (matchList && matchList.length > 0) {
+            matchList = matchList.filter((v,i, self) => {
+                return self.indexOf(v) === i;
+            });
+            
+            matchList.forEach(el => {
+                result = result.replaceAll(el, String.fromCodePoint(el.slice(2,-1)))
+            });
+        }
+        return result;
+    }
+    
+    static convertEmojiToDecimal (text) {
+        let result = text;
+        let reg = new RegExp(/(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/g);
+        let emojiList = text.match(reg);
+        if (emojiList && emojiList.length > 0) {
+            emojiList = emojiList.forEach(e => {
+                result = result.replaceAll(e, `&#${e.codePointAt(0).toString()};`)
+            });
+        }        
+        return result;
+    }
 }

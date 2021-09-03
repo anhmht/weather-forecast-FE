@@ -15,7 +15,8 @@ export interface ISocialPost {
     numberOfComment?: number
     publicDate?: string;
     shares?: string;
-    statusId?: number
+    statusId?: number;
+    isShowComment?: boolean;
 }
 
 export class SocialPost implements ISocialPost {
@@ -35,7 +36,8 @@ export class SocialPost implements ISocialPost {
     numberOfComment?: number
     publicDate?: string;
     shares?: string;
-    statusId?: number
+    statusId?: number;
+    isShowComment?: boolean;
 
     constructor(option?: ISocialPost) {
         this.actionIcons = option.actionIcons || null;
@@ -54,6 +56,7 @@ export class SocialPost implements ISocialPost {
         this.numberOfComment = option.numberOfComment || 0;
         this.publicDate = option.publicDate || null;
         this.shares = option.shares || null;
-        this.statusId = option.statusId || null
+        this.statusId = option.statusId || null;
+        this.isShowComment = option.isShowComment || false;
     }
 }

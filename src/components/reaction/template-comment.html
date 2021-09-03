@@ -1,0 +1,24 @@
+<div class="social-reaction comment">
+    <v-menu open-on-hover content-class="social-reaction-menu" top offset-y transition="scroll-y-reverse-transition">
+        <template v-slot:activator="{ on, attrs }">
+            <v-btn dark v-bind="attrs" v-on="on" @click="handleLike">
+                <template v-if="currentChecking">
+                    <span :style="{color: currentChecking.color}">{{currentChecking.desc}}</span>
+                </template>
+                <template v-else>
+                    Thích
+                </template>
+            </v-btn>
+        </template>
+        <div class="social-reaction-list">
+            <v-img v-for="(item,index) in lookupReaction" :src="$getReaction(item.valueId).url" :key="index"
+                aspect-ratio="1" height="40" class="lighten-2" contain @click="handleReaction(item)">
+                <template v-slot:placeholder>
+                    <v-row class="fill-height ma-0" align="center" justify="center">
+                        <v-progress-circular indeterminate color="lighten-5"></v-progress-circular>
+                    </v-row>
+                </template>
+            </v-img>
+        </div>
+    </v-menu>
+</div>

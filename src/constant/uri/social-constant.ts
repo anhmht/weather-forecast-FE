@@ -18,5 +18,10 @@ export default {
     deletePost: "/api/Post/:id",
     deleteComment: "/api/Post/comment/:id",
     getListCommentsAdmin: "/api/Post/get-list-comment",
+    getListSubComments: "/api/Post/get-sub-comments",
     getListCommentsUser: "/api/Post/get-list-comment-of-user",
+    getPostForApproval: "/api/Post/get-post-for-approval",
+    getCommentForApproval: "/api/Post/get-comment-for-approval",
+    getPostDetailForApproval: "/api/Post/get-post-detail-for-approval/:id",
+    getCommentDetailForApproval: "/api/Post/get-comment-detail-for-approval/:id"
 };
