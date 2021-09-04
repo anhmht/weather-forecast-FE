@@ -85,7 +85,19 @@
     }
 
     &-layout-editable {
+        &--progress {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+        }
+
+        .is-uploading {
+            opacity: 0.4;
+        }
+
         &-layout {
+            
             &-1 {
                 display: grid;
                 grid-template-columns: 100%;
@@ -93,7 +105,7 @@
                 > div {
                     video {
                         object-fit: initial;
-                        height: 500px;
+                        // height: 500px;
                         vertical-align: middle;
                     }
                 }
@@ -106,7 +118,7 @@
                 > div {
                     video {
                         object-fit: initial;
-                        height: 100%;
+                        // height: 100%;
                         vertical-align: middle;
                     }
                 }
@@ -120,7 +132,7 @@
                 > div {
                     video {
                         object-fit: initial;
-                        height: 100%;
+                        // height: 100%;
                         vertical-align: middle;
                     }
                 }
@@ -137,7 +149,7 @@
                 > div {
                     video {
                         object-fit: initial;
-                        height: 100%;
+                        // height: 100%;
                         vertical-align: middle;
                     }
                 }
@@ -153,7 +165,7 @@
                 > div {
                     video {
                         object-fit: initial;
-                        height: 100%;
+                        // height: 100%;
                         vertical-align: middle;
                     }
                 }

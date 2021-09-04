@@ -25,7 +25,6 @@ export default class CreateSatusComponent extends Vue {
     isUploading: boolean = false;
     selectedPhotos: any = [];
     selectedVideos: any = [];
-    uploadingMedia: any = [];
 
     isPreivew: boolean = false;
     selectedItem: any = [];
@@ -96,10 +95,13 @@ export default class CreateSatusComponent extends Vue {
                 break;
         }
 
+        let uploadingMedia = [];
         for ( let i = 0; i< maxLength; i++) {
             let file = files[i];
             if (this.validateFileExtention(file.name, type)) {
-                this.uploadingMedia.push({
+                const Id = this.generateUniqSerial();
+                uploadingMedia.push({
+                    Id,
                     Data: file,
                     Progress: 0,
                     FileName: `${new Date().getTime()}_${file.name}`,
@@ -110,7 +112,7 @@ export default class CreateSatusComponent extends Vue {
             }
         }
 
-        this.uploadingMedia.forEach(e => {
+        uploadingMedia.forEach(e => {
             this.uploadDocument(e, type);
         });
     }
@@ -138,9 +140,13 @@ export default class CreateSatusComponent extends Vue {
         return false;
     }
 
-    uploadDocument(document, type) {
+    async uploadDocument(document, type) {
         const formData = this.buildUploadDocumentParams(document);
-        document.isUploading = true;
+        // document.isUploading = true;
+        // this.toBase64(document.Data, type);
+        await this.toBase64(document, type);
+        const self = this;
+
         const config = {
             headers: {
                 "content-type": "multipart/form-data"
@@ -148,18 +154,24 @@ export default class CreateSatusComponent extends Vue {
             onUploadProgress: function (progressEvent) {
                 var value = (progressEvent.loaded * 100) / progressEvent.total;
                 var percent = Math.round(value);
-                document.progress = percent;
+                if (type === self.mediaType.FOTO) {
+                    var doc = self.selectedPhotos.find(e => e.id === document.Id);
+                    if (doc) {
+                        doc.progress = percent;
+                    }
+                } else if (type === self.mediaType.VID) {
+                    var doc = self.selectedVideos.find(e => e.id === document.Id);
+                    if (doc) {
+                        doc.progress = percent;
+                    }
+                }
+                // document.Progress = percent;
             }.bind(this)
         };
-
-        this.toBase64(document.Data, type);
         
         if (type === this.mediaType.FOTO) {
             this.uploadservice.upload(formData, config).then(response => {
-                const docIndex = this.uploadingMedia.findIndex(e => e.Index === document.Index);
-                this.uploadingMedia.splice(docIndex, 1);
-                this.onloadedDocument(response, type);
-                // this.toBase64(document.Data, type);
+                this.onloadedDocument(response, type, document.Id);
             }).catch(err => {
                 this.$errorMessage(err);
             });
@@ -167,11 +179,7 @@ export default class CreateSatusComponent extends Vue {
 
         if (type === this.mediaType.VID) {
             this.uploadservice.uploadVideoSocial(formData, config).then(response => {
-                const docIndex = this.uploadingMedia.findIndex(e => e.Index === document.Index);
-                this.uploadingMedia.splice(docIndex, 1);
-
-                this.onloadedDocument(response[3], type); // 1: IOS m3u8; 3: Web + android: mpd
-                // this.toBase64(document.Data, type);
+                this.onloadedDocument(response[3], type, document.Id); // 1: IOS m3u8; 3: Web + android: mpd
             }).catch(err => {
                 this.$errorMessage(err);
             });
@@ -185,24 +193,41 @@ export default class CreateSatusComponent extends Vue {
         return formData;
     }
 
-    onloadedDocument (url, type) {
+    onloadedDocument (url, type, id) {
         if (type === this.mediaType.FOTO) {
-            this.postModel.imageUrls.push(url);
+            let obj = this.selectedPhotos.find(e => e.id === id);
+            if (obj) { obj.uploaded = url }
         }
         if (type === this.mediaType.VID) {
-            this.postModel.videoUrls.push(url);
+            let obj = this.selectedVideos.find(e => e.id === id);
+            if (obj) { obj.uploaded = url }
         }
     }
 
-    private toBase64(file, type) {
+    private async toBase64(document, type) {
+        const file = document.Data;
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = () => {
             if (type === this.mediaType.FOTO) {
-                this.selectedPhotos.push(reader.result);
+                // this.selectedPhotos.push(reader.result);
+                this.selectedPhotos.push({
+                    id: document.Id,
+                    url: reader.result,
+                    progress: document.Progress,
+                    uploaded: null,
+                    type: 'image'
+                });
             }
             if (type === this.mediaType.VID) {
-                this.selectedVideos.push(reader.result);
+                // this.selectedVideos.push(reader.result);
+                this.selectedVideos.push({
+                    id: document.Id,
+                    url: reader.result,
+                    progress: document.Progress,
+                    uploaded: null,
+                    type: 'video'
+                });
             }
         };
     }
@@ -219,8 +244,23 @@ export default class CreateSatusComponent extends Vue {
         this.isPreivew = true;
     }
 
+    buildParamsForCreating () {
+        if (this.selectedPhotos.find(e => e.uploaded == null) || this.selectedVideos.find(e => e.uploaded == null)) {
+            this.$toast.error('Hình ảnh/Video đang được xử lý.');
+            return false;
+        }
+
+        this.postModel.imageUrls = this.selectedPhotos.map(e => e.uploaded);
+        this.postModel.videoUrls = this.selectedVideos.map(e => e.uploaded);
+        return true;
+    }
+
     handlePost () {
         if (!!this.content && this.content.trim() !== "") {
+            if (!this.buildParamsForCreating()) {
+                return;
+            }
+
             this.socialService.createPost(this.postModel)
             .then( res => {
                 this.$toast.success('Đăng bài mới thành công. Bài viết đang được xét duyệt.');
@@ -240,6 +280,13 @@ export default class CreateSatusComponent extends Vue {
             let cnt = DataHelper.insertCharacterAtCursorPositionOfTextArea(vm.$refs.createTextarea, val);
             this.content = cnt;
         }
+    }
+
+    generateUniqSerial() {  
+        return 'xxxx-xxxx-xxx-xxxx'.replace(/[x]/g, (c) => {  
+            const r = Math.floor(Math.random() * 16);  
+            return r.toString(16);  
+      });  
     }
 
     beforeDestroy () {
