@@ -71,13 +71,29 @@ export default class MediaLayoutComponent extends Vue {
         return result;
     }
 
+    get EditableMedias () {
+        const imagesArr = this.images || [];
+        const videoArr = this.videos || [];
+        return imagesArr.concat(videoArr);
+    }
+
     get layoutType () {
-        if (this.Medias.length > 4) return 5;
-        return this.Medias.length;
+        if (this.EditableMedias.length > 4) return 5;
+        return this.EditableMedias.length;
+    }
+
+    get progressOfOthers () {
+        let p = 0;
+        const others = this.EditableMedias.filter((e, i) => i > 2);
+        others.map(e => {
+            p += e.progress;
+            return e;
+        })
+        return p/(others.length || 1);
     }
 
     getRatio (index) {
-        switch (this.Medias.length) {
+        switch (this.EditableMedias.length) {
             case 1:
                 return 9/16
             case 2:
@@ -98,7 +114,7 @@ export default class MediaLayoutComponent extends Vue {
     }
 
     getImageHeight (index) {
-        switch (this.Medias.length) {
+        switch (this.EditableMedias.length) {
             case 1:
                 return 400
             case 2:
@@ -115,18 +131,19 @@ export default class MediaLayoutComponent extends Vue {
     }
 
     handlePreview(index) {
-        this.$emit('preview', {index, medias: this.Medias})
+        this.$emit('preview', {index, medias: this.editable? this.EditableMedias: this.Medias})
     }
 
     removeMedia (item) {
         if (!item) return;
 
         if(item.type == 'image') {
-            this.$emit('update:images', this.images.filter(e => e !== item.url));
+            this.$emit('update:images', this.images.filter(e => e.id !== item.id));
         } else if (item.type == 'video') {
-            this.$emit('update:videos', this.videos.filter(e => e !== item.url));
+            this.$emit('update:videos', this.videos.filter(e => e.id !== item.id));
         }
     }
+
     initPlayer() {
         setTimeout(() => {
             //@ts-ignore
