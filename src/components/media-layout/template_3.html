@@ -12,7 +12,7 @@
         <div v-else v-ripple class="social-media-video" @click="handlePreview(index)">
             <v-img src="https://weatherstoragevn.blob.core.windows.net/static-photo/video.jpg" aspect-ratio="1" height="250"
                 class="grey lighten-2" contain style="flex: unset" @click="handlePreview(index)">
-                <template v-if="isUploading" v-slot:placeholder>
+                <template v-slot:placeholder>
                     <v-row class="fill-height ma-0" align="center" justify="center">
                         <v-progress-circular indeterminate color="grey lighten-5">
                         </v-progress-circular>
