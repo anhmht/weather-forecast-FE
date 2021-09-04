@@ -234,13 +234,6 @@ export default class CreateSatusComponent extends Vue {
         }
     }
 
-    removeAllMedia () {
-        this.selectedPhotos = [];
-        this.selectedVideos = [];
-        this.postModel.imageUrls = [];
-        this.postModel.videoUrls = [];
-    }
-
     handleClickOnEmoji (val) {
         const vm = this;
         if (vm.$refs.createTextarea) {
