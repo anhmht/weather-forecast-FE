@@ -13,13 +13,13 @@ const LookupGetter = namespace(storeModules.Lookup, Getter);
         "comment": () => import("../../../../../components/comment/CommentComponent.vue"),
         "reaction": () => import("../../../../../components/reaction/ReactionComponent.vue"),
         "preview-image": () => import("../../../../../components/preview-image/PreviewImage.vue"),
-        "media-layout": () => import("../../../../../components/media-layout/MediaLayoutComponent.vue")
+        "media-layout": () => import("../../../../../components/media-layout/MediaLayoutComponent.vue"),
+        "reaction-count": () => import("../../../../../components/reaction-count/ReactionCountComponent.vue")
     }
 })
 export default class MyPostComponent extends Vue {
     myPosts: ISocialPost[] = [];
     isPreview: boolean = false;
-    isDisplayComment: boolean = false;
     selectedItem: any = [];
     selectedIndex: number = 0;
     searchParam = {
@@ -66,13 +66,11 @@ export default class MyPostComponent extends Vue {
         }
     }
 
-    toggleComment(target) {
-        if (!this.isDisplayComment) {
-            target.parentElement.parentElement.nextElementSibling.style.display = 'none';
-        } else {
-            target.parentElement.parentElement.nextElementSibling.style.display = 'block';
+    toggleComment(id) {
+        const post = this.myPosts.find(x => x.id === id);
+        if (post && !post.isShowComment) {
+            Vue.set(post, 'isShowComment', true)
         }
-        this.isDisplayComment = !this.isDisplayComment;
     }
 
     handlePreview(data) {
