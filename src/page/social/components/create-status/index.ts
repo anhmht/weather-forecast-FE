@@ -24,7 +24,7 @@ export default class CreateSatusComponent extends Vue {
 
     isUploading: boolean = false;
     selectedPhotos: any = [];
-    selectedPVideos: any = [];
+    selectedVideos: any = [];
     uploadingMedia: any = [];
 
     isPreivew: boolean = false;
@@ -62,7 +62,7 @@ export default class CreateSatusComponent extends Vue {
     }
 
     handleClickBrowseVideo() {
-        if (this.selectedPVideos.length < VIDEO_LIMIT) {
+        if (this.selectedVideos.length < VIDEO_LIMIT) {
             const upload = this.$refs.uploadVideo as any;
             upload.click();
         } else {
@@ -87,9 +87,9 @@ export default class CreateSatusComponent extends Vue {
                 }
                 break;
             case this.mediaType.VID:
-                if ((maxLength + this.selectedPVideos.length)> VIDEO_LIMIT) {
+                if ((maxLength + this.selectedVideos.length)> VIDEO_LIMIT) {
                     this.$toast.info(`Giới hạn: ${VIDEO_LIMIT} video/bài viết.`);
-                    maxLength = VIDEO_LIMIT - this.selectedPVideos.length;
+                    maxLength = VIDEO_LIMIT - this.selectedVideos.length;
                 }
                 break;
             default:
@@ -202,14 +202,14 @@ export default class CreateSatusComponent extends Vue {
                 this.selectedPhotos.push(reader.result);
             }
             if (type === this.mediaType.VID) {
-                this.selectedPVideos.push(reader.result);
+                this.selectedVideos.push(reader.result);
             }
         };
     }
 
     reset() {
         this.selectedPhotos = [];
-        this.selectedPVideos = [];
+        this.selectedVideos = [];
         this.postModel = new SocialPost({});
     }
 
@@ -232,13 +232,6 @@ export default class CreateSatusComponent extends Vue {
         } else {
             this.$toast.error('Vui lòng nhập nội dung bài viết.');
         }
-    }
-
-    removeAllMedia () {
-        this.selectedPhotos = [];
-        this.selectedPVideos = [];
-        this.postModel.imageUrls = [];
-        this.postModel.videoUrls = [];
     }
 
     handleClickOnEmoji (val) {

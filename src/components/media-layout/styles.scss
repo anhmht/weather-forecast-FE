@@ -102,7 +102,7 @@
                 display: grid;
                 grid-template-columns: 100%;
                 grid-gap: 2px;
-                width: calc(100% - 4px);
+                width: 100%;
                 > div {
                     video {
                         object-fit: initial;
@@ -116,7 +116,7 @@
                 display: grid;
                 grid-template-columns: 50% 50%;
                 grid-gap: 2px;
-                width: calc(100% - 4px);
+                width: calc(100% - 2px);
                 > div {
                     video {
                         object-fit: initial;
@@ -133,7 +133,7 @@
                 display: grid;
                 grid-template-columns: 50.3% 49.7%;
                 grid-gap: 2px;
-                width: calc(100% - 4px);
+                width: calc(100% - 2px);
                 > div {
                     video {
                         object-fit: initial;
@@ -149,7 +149,7 @@
                 display: grid;
                 grid-template-columns: 50.3% 49.7%;
                 grid-gap: 2px;
-                width: calc(100% - 4px);
+                width: calc(100% - 2px);
                 > div {
                     video {
                         object-fit: initial;
