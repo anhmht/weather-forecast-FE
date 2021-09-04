@@ -1,16 +1,21 @@
 import { ISocialPost } from '@/model/post';
 import { SocialServices } from '@/service/social-service/social.service';
+import { storeModules } from '@/store';
+import userTypesStore from '@/store/user/user-types.store';
 import { DataHelper } from '@/utils/data-helper';
 import Vue from 'vue';
 import Component from 'vue-class-component';
+import { Getter, namespace } from 'vuex-class';
 
+const UserGetter = namespace(storeModules.User, Getter);
 @Component({
     template: require("./template.html").default,
     components: {
         "preview-image": () => import("../../../../components/preview-image/PreviewImage.vue"),
         "media-layout": () => import("../../../../components/media-layout/MediaLayoutComponent.vue"),
         "comment": () => import("../../../../components/comment/CommentComponent.vue"),
-        "reaction": () => import("../../../../components/reaction/ReactionComponent.vue")
+        "reaction": () => import("../../../../components/reaction/ReactionComponent.vue"),
+        "reaction-count": () => import("../../../../components/reaction-count/ReactionCountComponent.vue")
     },
 })
 export default class ListStatusComponent extends Vue {
@@ -35,6 +40,8 @@ export default class ListStatusComponent extends Vue {
     isPreview: boolean = false;
     selectedItem: any = [];
     selectedIndex: number = 0;
+
+    @UserGetter(userTypesStore.Get.Auth) userConfig: any;
 
     getColor(name) {
         return DataHelper.generateColorByString(name);
@@ -71,8 +78,14 @@ export default class ListStatusComponent extends Vue {
         }
     }
 
-    handleReaction(data, postId) {
-        this.addReactionToPost(postId, data.valueId);
+    async handleReaction(data, post) {
+        const isReactionToThisPost = post.actionIcons.find(x => x.isCurrentUserChecking);
+        if (isReactionToThisPost) {
+            await this.removeReactionFromPost(post.id);
+            this.addReactionToPost(post.id, data.valueId);
+        } else {
+            this.addReactionToPost(post.id, data.valueId);
+        }
     }
 
     handleLike(currentChecking, postId) {
@@ -86,18 +99,47 @@ export default class ListStatusComponent extends Vue {
     addReactionToPost(postId, iconId) {
         this.removeReactionFromPost(postId);
         this.service.addReactionToPost(postId, iconId)
-            .then((res: any) => {})
+            .then((res: any) => {
+                this.updateSocialPostList(postId, iconId);
+            })
             .catch(error => {
                 this.$errorMessage(error);
             });
     }
 
-    removeReactionFromPost(postId) {
-        this.service.removeReactionFromPost(postId)
-            .then((res: any) => {})
+    async removeReactionFromPost(postId) {
+        return await this.service.removeReactionFromPost(postId)
+            .then((res: any) => {
+                const index = this.socialPost.findIndex(x => x.id === postId);
+                const currentActionIndex = this.socialPost[index].actionIcons.findIndex(x => x.isCurrentUserChecking);
+                if (this.socialPost[index].actionIcons[currentActionIndex].count === 1) {
+                    this.socialPost[index].actionIcons.splice(currentActionIndex, 1);
+                    return;
+                }
+                Vue.set(this.socialPost[index].actionIcons[currentActionIndex], 'isCurrentUserChecking', false);
+                Vue.set(this.socialPost[index].actionIcons[currentActionIndex], 'count', this.socialPost[index].actionIcons[currentActionIndex].count - 1);
+            })
             .catch(error => {
                 this.$errorMessage(error);
             });
+    }
+
+    updateSocialPostList(postId, iconId) {
+        const index = this.socialPost.findIndex(x => x.id === postId);
+        const iconIndex = this.socialPost[index].actionIcons.findIndex(x => x.iconId === iconId);
+        if (iconIndex > -1) {
+            Vue.set(this.socialPost[index].actionIcons[iconIndex], 'iconId', iconId);
+            Vue.set(this.socialPost[index].actionIcons[iconIndex], 'isCurrentUserChecking', true);
+            Vue.set(this.socialPost[index].actionIcons[iconIndex], 'count', this.socialPost[index].actionIcons[iconIndex].count + 1);
+            Vue.set(this.socialPost[index].actionIcons[iconIndex], 'fullNames', [...this.socialPost[index].actionIcons[iconIndex].fullNames, this.userConfig.firstName]);
+        } else {
+            this.socialPost[index].actionIcons.push({
+                count: 1,
+                iconId,
+                fullNames: [this.userConfig.firstName],
+                isCurrentUserChecking: true
+            })
+        }
     }
 
     fetchData() {

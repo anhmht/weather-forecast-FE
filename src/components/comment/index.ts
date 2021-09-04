@@ -69,6 +69,30 @@ export default class CommentComponent extends Vue {
         return this.uploadResult;
     }
 
+    numberSubComment(item) {
+        return item.numberOfSubComment ? item.numberOfSubComment : null;
+    }
+
+    getMeidaSrc(comment) {
+        const src = comment.listImageUrl.concat(comment.listVideoUrl)
+        const url = src[0];
+        if (this.validateFileExtention(url)) {
+            return url
+        } else {
+            return 'https://weatherstoragevn.blob.core.windows.net/static-photo/video.jpg';
+        }
+    }
+
+    previewData(comment) {
+        const src = comment.listImageUrl.concat(comment.listVideoUrl);
+        const url = src[0];
+        if (this.validateFileExtention(url)) {
+            return { medias: [{ url, type: 'image' }] };
+        } else {
+            return { medias: [{ url, type: 'video' }] };// 1: IOS m3u8; 3: Web + android: mpd
+        }
+    }
+
     onImgError(event) {
         this.isAvatarError = true;
     }
@@ -138,8 +162,6 @@ export default class CommentComponent extends Vue {
                 }
                 Vue.set(this.commentList[index].actionIcons[currentActionIndex], 'isCurrentUserChecking', false);
                 Vue.set(this.commentList[index].actionIcons[currentActionIndex], 'count', this.commentList[index].actionIcons[currentActionIndex].count - 1);
-                console.log(this.commentList[index].actionIcons[currentActionIndex]);
-                
             }).catch(error => {
                 this.$errorMessage(error);
             });

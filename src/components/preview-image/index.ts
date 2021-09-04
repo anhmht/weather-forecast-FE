@@ -93,7 +93,7 @@ export default class PreviewImageComponent extends Vue {
     initPlayer() {
         setTimeout(() => {
             //@ts-ignore
-            this.player = amp('player', { /* Options */
+            this.player = amp('preview-player', { /* Options */
                 techOrder: ["azureHtml5JS", "flashSS", "html5FairPlayHLS", "silverlightSS", "html5"],
                 "nativeControlsForTouch": false,
                 autoplay: true,
