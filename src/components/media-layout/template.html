@@ -15,9 +15,15 @@
             </div>
         </div>
         <div v-else v-ripple class="social-media-video">
-            <video controls loop>
-                <source :src="item.url" type="video/mp4">
-            </video>
+            <v-img src="https://weatherstoragevn.blob.core.windows.net/static-photo/video.jpg" aspect-ratio="1" height="250"
+                class="grey lighten-2" contain style="flex: unset" @click="handlePreview(index)">
+                <template v-if="isUploading" v-slot:placeholder>
+                    <v-row class="fill-height ma-0" align="center" justify="center">
+                        <v-progress-circular indeterminate color="grey lighten-5">
+                        </v-progress-circular>
+                    </v-row>
+                </template>
+            </v-img>
             <div v-if="index === 3" class="social-media-layout-5-last"  @click="handlePreview(3)">
                 <div>
                     + {{Medias.length - 4}}

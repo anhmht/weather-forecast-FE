@@ -9,7 +9,7 @@
         </v-img>
     </div>
     <div v-else v-ripple class="social-media-video">
-        <video ref="player" id="player" class="azuremediaplayer amp-default-skin" autoplay controls @click="handlePreview(0)" width="640" height="400">
+        <video ref="player" :id="`player-${postId}`" class="azuremediaplayer amp-default-skin" controls @click="handlePreview(0)" width="640" height="400">
             <source :src="Medias[0].url" type="application/vnd.ms-sstr+xml"
                 data-setup='{"streamingFormats": ["SMOOTH", "HLS","HLS-V3", "HLS-V4"] }' />
             <p class="amp-no-js">

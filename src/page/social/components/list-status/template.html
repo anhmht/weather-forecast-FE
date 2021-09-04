@@ -31,7 +31,7 @@
                 </div>
                 <div v-if="item.listImageUrl.length > 0 || item.listVideoUrl.length > 0"
                     class="social-list--item_body--content_image">
-                    <media-layout :images="item.listImageUrl" :videos="item.listVideoUrl" @preview="handlePreview" />
+                    <media-layout :post-id="item.id" :images="item.listImageUrl" :videos="item.listVideoUrl" @preview="handlePreview" />
                 </div>
             </div>
         </div>

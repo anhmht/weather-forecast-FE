@@ -18,7 +18,7 @@
             </div>
         </div>
         <div v-if="item.listImageUrl.length !== 0 || item.listVideoUrl.length !== 0" class="social-post-item-media">
-            <media-layout :images="item.listImageUrl" :videos="item.listVideoUrl" @preview="handlePreview" />
+            <media-layout :post-id="item.id" :images="item.listImageUrl" :videos="item.listVideoUrl" @preview="handlePreview" />
         </div>
         <div v-if="item.statusId === 1" class="social-post-item-footer">
             <div class="social-post-item-footer--action">

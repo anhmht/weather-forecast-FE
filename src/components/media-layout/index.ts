@@ -48,6 +48,9 @@ export default class MediaLayoutComponent extends Vue {
     @Prop( {type: Boolean, default: false})
     editable
 
+    @Prop({ type: String, default: null })
+    postId
+
     player: any = null;
 
     get Medias() {
@@ -101,10 +104,10 @@ export default class MediaLayoutComponent extends Vue {
     initPlayer() {
         setTimeout(() => {
             //@ts-ignore
-            this.player = amp('player', { /* Options */
+            this.player = amp(`player-${this.postId}`, { /* Options */
                 techOrder: ["azureHtml5JS", "flashSS", "html5FairPlayHLS", "silverlightSS", "html5"],
                 "nativeControlsForTouch": false,
-                autoplay: true,
+                autoplay: false,
                 controls: true,
                 width: "640",
                 height: "400",
@@ -146,6 +149,12 @@ export default class MediaLayoutComponent extends Vue {
                 }
             }
         })
+    }
+
+    beforeDestroy() {
+        if (this.player) {
+            this.player.dispose();
+        }
     }
 
 }
