@@ -1,26 +1,20 @@
 <div v-if="EditableMedias" class="social-media-layout-editable" :class="`social-media-layout-editable-layout-${layoutType}`">
     <template v-if="index < 4" v-for="(item, index) in EditableMedias">
         <div v-if="item.type === 'image'" @click="handlePreview(index)" v-ripple style="position: relative;">
-            <v-img :src="item.url" :aspect-ratio="getRatio(index)" class="grey lighten-2" :class="{'is-uploading': item.progress < 100 }" :max-height="getImageHeight(index)">
+            <v-img :src="item.url" :aspect-ratio="getRatio(index)" class="grey lighten-2"
+                :class="{'is-uploading': item.progress < 100 }" :max-height="getImageHeight(index)">
                 <template v-slot:placeholder>
                     <v-row class="fill-height ma-0" align="center" justify="center">
-                        <v-progress-circular :size="50" :width="5" :value="item.progress" :indeterminate="item.progress === 100" color="grey lighten-5"></v-progress-circular>
+                        <v-progress-circular :size="50" :width="5" indeterminate color="grey lighten-5"></v-progress-circular>
                     </v-row>
                 </template>
             </v-img>
 
-            <v-row v-if="item.progress < 100 && !(index === 3 && EditableMedias.length > 4)" 
+            <v-row v-if="getProgress(index) < 100" 
                 class="ma-0 social-media-layout-editable--progress" align="center" justify="center" 
                 :style="`height: ${getImageHeight(index)}px;`" >
-                <v-progress-circular :value="item.progress" :indeterminate="item.progress === 100"
-                    :rotate="360" :size="50" :width="5" color="blue-grey"
-                ></v-progress-circular>
-            </v-row>
 
-            <v-row v-if="index === 3 && EditableMedias.length > 4 && progressOfOthers" 
-                class="ma-0 social-media-layout-editable--progress" align="center" justify="center" 
-                :style="`height: ${getImageHeight(index)}px;`" >
-                <v-progress-circular :value="progressOfOthers" :indeterminate="progressOfOthers === 100"
+                <v-progress-circular :value="getProgress(index)" :indeterminate="getProgress(index) === 98"
                     :rotate="360" :size="50" :width="5" color="blue-grey"
                 ></v-progress-circular>
             </v-row>
@@ -36,23 +30,25 @@
                 @click.stop="removeMedia(item)"
             >mdi-close-circle</v-icon>
         </div>
-        <div v-else v-ripple class="social-media-video" style="position: relative;">
-            <video controls loop :class="{'is-uploading': item.progress < 100 }" :height="getImageHeight(index)">
+        <div v-else v-ripple class="social-media-video" style="position: relative;" @click="handlePreview(index)">
+            <!-- <video controls loop :class="{'is-uploading': item.progress < 100 }" :height="getImageHeight(index)">
                 <source :src="item.url" type="video/mp4">
-            </video>
+            </video> -->
+            <v-img src="https://weatherstoragevn.blob.core.windows.net/static-photo/video.jpg"
+                :aspect-ratio="getRatio(index)" class="grey lighten-2" 
+                :class="{'is-uploading': item.progress < 100 }" :max-height="getImageHeight(index)">
+                <template v-slot:placeholder>
+                    <v-row class="fill-height ma-0" align="center" justify="center">
+                        <v-progress-circular :size="50" :width="5" indeterminate color="grey lighten-5"></v-progress-circular>
+                    </v-row>
+                </template>
+            </v-img>
 
-            <v-row v-if="item.progress < 100 && !(index === 3 && EditableMedias.length > 4)" 
+            <v-row v-if="getProgress(index) < 100" 
                 class="ma-0 social-media-layout-editable--progress" align="center" justify="center" 
                 :style="`height: ${getImageHeight(index)}px;`" >
-                <v-progress-circular :value="item.progress" :indeterminate="item.progress === 100"
-                    :rotate="360" :size="50" :width="5" color="blue-grey"
-                ></v-progress-circular>
-            </v-row>
-
-            <v-row v-if="index === 3 && EditableMedias.length > 4 && progressOfOthers" 
-                class="ma-0 social-media-layout-editable--progress" align="center" justify="center" 
-                :style="`height: ${getImageHeight(index)}px;`" >
-                <v-progress-circular :value="progressOfOthers" :indeterminate="progressOfOthers === 100"
+                
+                <v-progress-circular :value="getProgress(index)" :indeterminate="getProgress(index) === 95"
                     :rotate="360" :size="50" :width="5" color="blue-grey"
                 ></v-progress-circular>
             </v-row>

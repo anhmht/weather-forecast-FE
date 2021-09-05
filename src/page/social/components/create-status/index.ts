@@ -141,12 +141,11 @@ export default class CreateSatusComponent extends Vue {
     }
 
     async uploadDocument(document, type) {
-        const formData = this.buildUploadDocumentParams(document);
-        // document.isUploading = true;
-        // this.toBase64(document.Data, type);
         await this.toBase64(document, type);
-        const self = this;
+        this.clearFileBrowser();
 
+        const self = this;
+        const formData = this.buildUploadDocumentParams(document);
         const config = {
             headers: {
                 "content-type": "multipart/form-data"
@@ -154,23 +153,31 @@ export default class CreateSatusComponent extends Vue {
             onUploadProgress: function (progressEvent) {
                 var value = (progressEvent.loaded * 100) / progressEvent.total;
                 var percent = Math.round(value);
+
                 if (type === self.mediaType.FOTO) {
+                    // It's not really done
+                    percent = percent > 98 ? 98 : percent;
                     var doc = self.selectedPhotos.find(e => e.id === document.Id);
                     if (doc) {
                         doc.progress = percent;
                     }
                 } else if (type === self.mediaType.VID) {
+                    // It's not really done
+                    percent = percent > 95 ? 95 : percent;
                     var doc = self.selectedVideos.find(e => e.id === document.Id);
                     if (doc) {
                         doc.progress = percent;
                     }
                 }
+                console.log("video-upload", type, document.Id, percent);
+                
                 // document.Progress = percent;
             }.bind(this)
         };
         
         if (type === this.mediaType.FOTO) {
             this.uploadservice.upload(formData, config).then(response => {
+                this.setUploadStatusCompleted(type, document.Id)
                 this.onloadedDocument(response, type, document.Id);
             }).catch(err => {
                 this.$errorMessage(err);
@@ -179,6 +186,7 @@ export default class CreateSatusComponent extends Vue {
 
         if (type === this.mediaType.VID) {
             this.uploadservice.uploadVideoSocial(formData, config).then(response => {
+                this.setUploadStatusCompleted(type, document.Id)
                 this.onloadedDocument(response[3], type, document.Id); // 1: IOS m3u8; 3: Web + android: mpd
             }).catch(err => {
                 this.$errorMessage(err);
@@ -236,6 +244,23 @@ export default class CreateSatusComponent extends Vue {
         this.selectedPhotos = [];
         this.selectedVideos = [];
         this.postModel = new SocialPost({});
+    }
+
+    clearFileBrowser () {
+        const uploadPhoto = this.$refs.uploadPhoto as any;
+        if (uploadPhoto) uploadPhoto.value = [];
+        const uploadVideo = this.$refs.uploadVideo as any;
+        if (uploadVideo) uploadVideo.value = [];
+    }
+
+    setUploadStatusCompleted (type, id) {
+        let doc = null;
+        if (type === this.mediaType.FOTO) {
+            doc = this.selectedPhotos.find(e => e.id === id);
+        } else if (type === this.mediaType.VID) {
+            doc = this.selectedVideos.find(e => e.id === id);
+        }
+        if (doc) { doc.progress = 100; }
     }
 
     handlePreview(data) {

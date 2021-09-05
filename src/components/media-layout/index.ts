@@ -82,14 +82,20 @@ export default class MediaLayoutComponent extends Vue {
         return this.EditableMedias.length;
     }
 
-    get progressOfOthers () {
+    getProgress (index) {
         let p = 0;
-        const others = this.EditableMedias.filter((e, i) => i > 2);
-        others.map(e => {
-            p += e.progress;
-            return e;
-        })
-        return p/(others.length || 1);
+        if (index === 3 && this.EditableMedias.length > 4) {
+            const others = this.EditableMedias.filter((e, i) => i > 2);
+            others.map(e => {
+                p += e.progress;
+                return e;
+            })
+            p = p/(others.length);
+        } else {
+            const item = this.EditableMedias[index];
+            if (item) p = item.progress;
+        }
+        return p;
     }
 
     getRatio (index) {
