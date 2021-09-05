@@ -20,42 +20,69 @@ export default class ReactionMixin extends Vue {
         {
             id: 1,
             url: "https://weatherstoragevn.blob.core.windows.net/static-photo/emoji/like.png",
-            color: '#006FFF'
+            color: '#006FFF',
+            name: 'Like'
+
         },
         {
             id: 2,
             url: "https://weatherstoragevn.blob.core.windows.net/static-photo/emoji/heart.png",
-            color: '#F35369'
+            color: '#F35369',
+            name: 'Heart'
         },
         {
             id: 3,
             url: "https://weatherstoragevn.blob.core.windows.net/static-photo/emoji/smile.png",
-            color: '#F5C33B'
+            color: '#F5C33B',
+            name: 'Smile'
         },
         {
             id: 4,
             url: "https://weatherstoragevn.blob.core.windows.net/static-photo/emoji/haha.png",
-            color: '#F5C33B'
+            color: '#F5C33B',
+            name: 'Laugh'
         },
         {
             id: 5,
             url: "https://weatherstoragevn.blob.core.windows.net/static-photo/emoji/wow.png",
-            color: '#F5C33B'
+            color: '#F5C33B',
+            name: 'Wow'
         },
         {
             id: 6,
             url: "https://weatherstoragevn.blob.core.windows.net/static-photo/emoji/sad.png",
-            color: '#F5C33B'
+            color: '#F5C33B',
+            name: 'Sad'
         },
         {
             id: 7,
             url: "https://weatherstoragevn.blob.core.windows.net/static-photo/emoji/angry.png",
-            color: '#FB724B'
+            color: '#FB724B',
+            name: 'Angry'
         },
         {
             id: 8,
             url: "https://weatherstoragevn.blob.core.windows.net/static-photo/emoji/dislike.png",
-            color: '#FB724B'
+            color: '#FB724B',
+            name: 'DisLike'
+        },
+        {
+            id: 9,
+            url: "https://weatherstoragevn.blob.core.windows.net/static-photo/emoji/comment.jpg",
+            color: '#006FFF',
+            name: 'Comment'
+        },
+        {
+            id: 10,
+            url: "https://weatherstoragevn.blob.core.windows.net/static-photo/emoji/share.png",
+            color: '#006FFF',
+            name: 'Share'
+        },
+        {
+            id: 11,
+            url: "https://cdn.vuetifyjs.com/images/logos/v.png",
+            color: '#006FFF',
+            name: 'Post'
         },
     ]
 
@@ -65,6 +92,17 @@ export default class ReactionMixin extends Vue {
         return {
             valueId: reaction.valueId,
             desc: reaction.description,
+            url: icon.url,
+            color: icon.color
+        }
+    }
+
+    $getReactionByName(name) {
+        const icon = this.data.find(x => x.name === name);
+        const reaction = this.lookupReaction.find(x => x.valueId === icon.id);
+        return {
+            valueId: reaction ? reaction.valueId : null,
+            desc: reaction ? reaction.description : null,
             url: icon.url,
             color: icon.color
         }

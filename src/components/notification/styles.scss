@@ -14,6 +14,11 @@
                 display: flex;
                 align-items: center;
                 position: relative;
+                img {
+                    height: 35px;
+                    width: 35px;
+                    border-radius: 50%;
+                }
                 &__unread {
                     position: absolute;
                     left: -10px;
@@ -31,7 +36,7 @@
     .dot {
         height: 6px;
         width: 6px;
-        background-color: blue;
+        background-color: #006FFF;
         border-radius: 50%;
         display: inline-block;
     }

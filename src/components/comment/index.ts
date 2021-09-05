@@ -113,10 +113,6 @@ export default class CommentComponent extends Vue {
         }
     }
 
-    handleNewLine() {
-        this.newComment = `${this.newComment}\n`;
-    }
-
     handleLoadMoreComment() {
         if (this.searchParam.page < this.totalPages) {
             this.searchParam.page += 1;

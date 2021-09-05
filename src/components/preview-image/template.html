@@ -49,7 +49,7 @@
                 </template>
             </v-img>
             <div v-else>
-                <video ref="player" id="preview-player" class="azuremediaplayer amp-default-skin" autoplay controls width="640" height="400">
+                <video v-show="isShowPlayer" ref="player" id="preview-player" class="azuremediaplayer amp-default-skin" autoplay controls width="640" height="400">
                     <source
                         :src="MediaData.url"
                         type="application/vnd.ms-sstr+xml"

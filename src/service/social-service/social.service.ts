@@ -164,4 +164,23 @@ export class SocialServices extends GenericServices {
             return response.isSuccess ? Promise.resolve(response.data) : Promise.reject(response.message);
             }).catch(error => Promise.reject(error))
     }
+
+    getNotification(searchParam): Promise<ApiResponse> {
+        return this.executeSelectingPost(searchParam, Uri.getNotification).then((response: ApiResponse) => {
+            return response.isSuccess ? Promise.resolve(response.data) : Promise.reject(response.message);
+        }).catch(error => Promise.reject(error))
+    }
+
+    setReadNotification(id: string): Promise<ApiResponse> {
+        const uri = Uri.setReadNotification.replace(":id", id)
+        return this.executeSelectingPost(null, uri).then((response: ApiResponse) => {
+            return response.isSuccess ? Promise.resolve(response.data) : Promise.reject(response.message);
+        }).catch(error => Promise.reject(error))
+    }
+
+    getCountNotification(): Promise<ApiResponse> {
+        return this.executeSelecting(null, Uri.getCountNotification).then((response: ApiResponse) => {
+            return response.isSuccess ? Promise.resolve(response.data) : Promise.reject(response.message);
+        }).catch(error => Promise.reject(error))
+    }
 }
