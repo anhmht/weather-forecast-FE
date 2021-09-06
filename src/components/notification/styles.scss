@@ -32,6 +32,10 @@
             }
         }
     }
+    &-loading {
+        position: relative;
+        height: 50px;
+    }
 
     .dot {
         height: 6px;

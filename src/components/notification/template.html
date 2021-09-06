@@ -1,4 +1,5 @@
-<v-menu fixed allow-overflow eager bottom left offset-y transition="slide-y-transition" nudge-bottom="10" nudge-right="20">
+<v-menu fixed allow-overflow eager bottom left offset-y :close-on-content-click="false"
+ transition="slide-y-transition" nudge-bottom="10" nudge-right="20">
     <template v-slot:activator="{ on, attrs }">
         <div v-bind="attrs" v-on="on" class="base-header-menu-item login d-flex align-center">
             <v-badge color="red" :content="notificationCount" :value="notificationCount"  overlap>
@@ -36,6 +37,14 @@
                     <b>{{item.fromUserFullName}}</b> {{item.content}}
                 </div>
             </div>
+        </div>
+        <div class="notification-container-loading" v-if="isLoading">
+            <loading :is-loading="isLoading" absolute color="#FFFFFF" size="35" />
+        </div>
+        <div v-if="visibleLoadMore" class="notification-container-load-more">
+            <v-btn text color="primary"  @click="handleLoadMore">
+                Xem thêm các thông báo khác
+            </v-btn>
         </div>
     </div>
 </v-menu>

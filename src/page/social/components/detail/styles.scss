@@ -1,0 +1,83 @@
+.social-detail {
+    &--item {
+        background: #fff;
+        padding-top: 20px;
+        border-radius: 5px;
+        &_header {
+            display: flex;
+            padding: 0 20px;
+            &--avatar {
+                img {
+                    height: 50px;
+                    width: 50px;
+                    border-radius: 50%;
+                }
+            }
+            &--content {
+                padding: 0 20px;
+                &__title {
+                    font-weight: 600;
+                }
+                &__time {
+                    color: #A4A4A4;
+                }
+            }
+        }
+        &_body {
+            font-size: 15px;
+            &--content {
+                &_status {
+                    margin: 20px 0;
+                    padding: 0 20px;
+                    &__text {
+                        margin-bottom: 10px;
+                    }
+                    &__button {
+                        cursor: pointer;
+                        color: #006FFF;
+                        width: fit-content;
+                    }
+                }
+                &_image {
+                    > div {
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+        &_reaction {
+            display: flex;
+            padding: 0 20px;
+            justify-content: space-between;
+            margin: 10px 0;
+            align-items: center;
+            .reaction-count {
+                box-shadow: unset;
+            }
+        }
+        &_footer {
+            &--action {
+                border-top: 1px solid #ddd;
+                border-bottom: 1px solid #ddd;
+                padding: 0 20px;
+                display: flex;
+                &_item {
+                    display: flex;
+                    align-items: center;
+                    cursor: pointer;
+                    padding: 5px;
+                    margin-right: 20px;
+                    i {
+                        margin-right: 10px;
+                    }
+                    &:hover {
+                        color: #006FFF;
+                        i {
+                            color: #006FFF;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

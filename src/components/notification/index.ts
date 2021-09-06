@@ -55,6 +55,7 @@ export default class NotificationComponent extends Vue {
     @UserGetter(userTypesStore.Get.Auth) userConfig: any;
     @LookupAction getGeneralLookup: (payload: number[]) => Promise<void>;
 
+    isLoading: boolean = false;
     service: SocialServices = new SocialServices();
     searchParam = {
         limit: 10,
@@ -72,6 +73,10 @@ export default class NotificationComponent extends Vue {
                 content
             }
         })
+    }
+
+    get visibleLoadMore() {
+        return this.searchParam.page < this.totalPages
     }
 
     getIconReaction(action) {
@@ -96,7 +101,7 @@ export default class NotificationComponent extends Vue {
         return DataHelper.generateColorByString(name);
     }
 
-    handleLoadMoreComment() {
+    handleLoadMore() {
         if (this.searchParam.page < this.totalPages) {
             this.searchParam.page += 1;
             this.fetchData();
@@ -104,11 +109,14 @@ export default class NotificationComponent extends Vue {
     }
 
     fetchData() {
+        this.isLoading = true;
         this.service.getNotification(this.searchParam).then((res: any) => {
-            this.notification = res.items;
+            this.notification = this.notification.concat(res.items);
             this.totalPages = res.totalPages;
+            this.isLoading = false;
         }).catch(err => {
             console.log(err);
+            this.isLoading = false;
         });
 
         this.service.getCountNotification().then((res: any) => {
