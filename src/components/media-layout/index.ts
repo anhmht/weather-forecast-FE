@@ -51,6 +51,9 @@ export default class MediaLayoutComponent extends Vue {
     @Prop({ type: String, default: null })
     postId
 
+    @Prop({type: Boolean, default: false})
+    tile
+
     player: any = null;
 
     get Medias() {

@@ -15,7 +15,8 @@ const UserGetter = namespace(storeModules.User, Getter);
         "media-layout": () => import("../../../../components/media-layout/MediaLayoutComponent.vue"),
         "comment": () => import("../../../../components/comment/CommentComponent.vue"),
         "reaction": () => import("../../../../components/reaction/ReactionComponent.vue"),
-        "reaction-count": () => import("../../../../components/reaction-count/ReactionCountComponent.vue")
+        "reaction-count": () => import("../../../../components/reaction-count/ReactionCountComponent.vue"),
+        "edit-status": () => import("../edit-status/EditStatusComponent.vue"),
     },
 })
 export default class ListStatusComponent extends Vue {
@@ -40,6 +41,9 @@ export default class ListStatusComponent extends Vue {
     isPreview: boolean = false;
     selectedItem: any = [];
     selectedIndex: number = 0;
+    selectedPostId: string = null;
+
+    viewEditPostDialog: boolean = false;
 
     @UserGetter(userTypesStore.Get.Auth) userConfig: any;
 
@@ -169,6 +173,23 @@ export default class ListStatusComponent extends Vue {
                 }
             }
         }, { passive: true });
+    }
+
+    isOwner (username: string) {
+        if (this.userConfig && this.userConfig.userName) {
+            return this.userConfig.userName === username;
+        }
+        return false;
+    }
+
+    handleSelectPost (id: string) {
+        this.selectedPostId = id;
+        this.viewEditPostDialog = true;
+    }
+
+    handleCloseEditModal (id: string) {
+        this.selectedPostId = null;
+        this.viewEditPostDialog = false;
     }
 
     mounted() {
