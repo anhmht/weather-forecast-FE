@@ -1,6 +1,6 @@
 
 import { IPostComment } from "@/model/post/social-comment-post.model";
-import { Comment } from "@/model/social/comment.model";
+import { Comment, IComment } from "@/model/social/comment.model";
 import { SocialServices } from "@/service/social-service/social.service";
 import { UploadServices } from "@/service/upload-service/upload.service";
 import { storeModules } from "@/store";
@@ -18,7 +18,8 @@ const UserGetter = namespace(storeModules.User, Getter);
         "emoji-picker": () => import("../../components/emoji-picker/EmojiPickerComponent.vue"),
         "reaction": () => import("../reaction/ReactionComponent.vue"),
         "reaction-count": () => import("../reaction-count/ReactionCountComponent.vue"),
-        "sub-comment": () => import("../sub-comment/SubCommentComponent.vue")
+        "sub-comment": () => import("../sub-comment/SubCommentComponent.vue"),
+        "anonymous-form": () => import("./anonymous-form/AnonymousFormComponent.vue")
     }
 })
 export default class CommentComponent extends Vue {
@@ -38,6 +39,9 @@ export default class CommentComponent extends Vue {
         limit: 5,
         page: 1
     }
+
+    anoymousComment: IComment = null;
+    visibleAnonymousForm: boolean = false;
 
     commentList: IPostComment[] = [];
     isAvatarError: boolean = false;
@@ -281,6 +285,8 @@ export default class CommentComponent extends Vue {
         this.uploadResult = null;
         this.newComment = null;
         this.preview = null;
+        this.visibleAnonymousForm = false;
+        this.anoymousComment = null;
     }
 
     handlePreview(data = null) {
@@ -292,7 +298,7 @@ export default class CommentComponent extends Vue {
     }
 
     handlePostComment() {
-        const comment = new Comment({
+        this.anoymousComment = new Comment({
             postId: this.subComment ? this.postId : this.id,
             content: this.newComment,
             parentCommentId: this.subComment ? this.id : undefined,
@@ -300,7 +306,15 @@ export default class CommentComponent extends Vue {
             videoUrls: this.preview && this.preview.type === 'video' ? [this.preview.url] : [],
         });
         if (!!this.newComment && this.newComment.trim() !== "") {
-            this.service.createComment(comment)
+            if (this.isUploading) {
+                this.$toast.error('Vui lòng chờ, hệ thống đang tải lên Hình ảnh/Video');
+                return;
+            }
+            if (!this.userConfig) {
+                this.visibleAnonymousForm = true;
+                return;
+            }
+            this.service.createComment(this.anoymousComment)
                 .then(res => {
                     this.$toast.success('Đăng bình luận thành công.Bình luận đang được xét duyệt.');
                     this.reset();

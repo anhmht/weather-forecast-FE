@@ -5,6 +5,7 @@ import userTypesStore from "@/store/user/user-types.store";
 import { DataHelper } from "@/utils/data-helper";
 import Vue from "vue";
 import Component from "vue-class-component";
+import { Watch } from "vue-property-decorator";
 import { Getter, namespace } from "vuex-class";
 
 const UserGetter = namespace(storeModules.User, Getter);
@@ -130,14 +131,29 @@ export default class SocialDetailComponent extends Vue {
         }
     }
 
-    mounted() {
+    fetchData() {
         this.postId = this.$route.params.postId;
         this.isLoading = true;
         this.service.getPostById(this.postId).then((res: any) => {
             this.item = res;
             this.isLoading = false;;
         }).catch(err => {
+            this.isLoading = false;
+            this.$router.replace({
+                path: '/error'
+            })
             this.$errorMessage(err);
         })
+    }
+
+    mounted() {
+        this.fetchData();
+    }
+
+    @Watch("$route.params.postId")
+    handleChangeRoute(val) {
+        if (val) {
+            this.fetchData();
+        }
     }
 }

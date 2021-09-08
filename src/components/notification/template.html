@@ -13,7 +13,7 @@
     </template>
     <div class="notification-container">
         <div class="notification-container-list">
-            <div class="notification-container-list--item" v-for="(item, index) in transformData" :key="index">
+            <div class="notification-container-list--item" v-for="(item, index) in transformData" :key="index" @click="handleAction(item)">
                 <div class="notification-container-list--item_avatar">
                     <div v-if="!item.isRead" class="notification-container-list--item_avatar__unread">
                         <span class="dot"></span>
@@ -33,8 +33,19 @@
                     </v-badge>
                     
                 </div>
-                <div class="notification-container-list--item_content">
-                    <b>{{item.fromUserFullName}}</b> {{item.content}}
+                <div class="notification-container-list--item_content" :class="item.isRead ? 'read' : ''">
+                    <div>
+                        <b>{{item.fromUserFullName}}</b> {{item.content}}
+                    </div>
+                    <div>
+                        <v-tooltip top>
+                            <template v-slot:activator="{ on, attrs }">
+                                <span v-bind="attrs" v-on="on"
+                                    class="social-post-item-header--time">{{$calculateRelativeTime(item.createDate)}}</span>
+                            </template>
+                            <span>{{$formatDateTime(item.createDate)}}</span>
+                        </v-tooltip>
+                    </div>
                 </div>
             </div>
         </div>

@@ -26,6 +26,10 @@
             }
             &_content {
                 font-size: 14px;
+                color: #000;
+                &.read {
+                    color: #757575;
+                }
             }
             &:hover {
                 background-color: #eee;

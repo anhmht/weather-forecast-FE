@@ -1,3 +1,4 @@
+import { ROUTE_NAME } from '@/constant/route-constant';
 import ReactionMixin from '@/mixins/reaction';
 import { SocialServices } from '@/service/social-service/social.service';
 import { storeModules } from '@/store';
@@ -94,6 +95,28 @@ export default class NotificationComponent extends Vue {
                 return vm.$getReactionByName('Share').url
             default:
                 return vm.$getReactionByName(action).url
+        }
+    }
+
+    handleAction(notification) {
+        switch (notification.action) {
+            case NOTIFICATION_ACTION.SHARE_POST:
+                break;
+            case NOTIFICATION_ACTION.CREATE_COMMENT:
+            case NOTIFICATION_ACTION.EDIT_COMMENT:
+            case NOTIFICATION_ACTION.CHANGE_COMMMENT_STATUS:
+                break;
+            case NOTIFICATION_ACTION.CREATE_POST:
+            case NOTIFICATION_ACTION.EDIT_POST:
+            case NOTIFICATION_ACTION.CHANGE_POST_STATUS:
+            default:
+                this.$router.push({
+                    name: ROUTE_NAME.SOCIAL_DETAIL,
+                    params: {
+                        postId: notification.postId
+                    }
+                })
+                break;
         }
     }
 

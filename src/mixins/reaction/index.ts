@@ -68,7 +68,7 @@ export default class ReactionMixin extends Vue {
         },
         {
             id: 9,
-            url: "https://weatherstoragevn.blob.core.windows.net/static-photo/emoji/comment.jpg",
+            url: "https://weatherstoragevn.blob.core.windows.net/static-photo/emoji/comment.png",
             color: '#006FFF',
             name: 'Comment'
         },
@@ -80,7 +80,7 @@ export default class ReactionMixin extends Vue {
         },
         {
             id: 11,
-            url: "https://cdn.vuetifyjs.com/images/logos/v.png",
+            url: "https://weatherstoragevn.blob.core.windows.net/static-photo/emoji/post.png",
             color: '#006FFF',
             name: 'Post'
         },
