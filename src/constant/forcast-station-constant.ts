@@ -881,7 +881,9 @@ export const MAP_PROVINCE = [
         paddingTopLeft: [1000, 0],
         titlePosition: 'left animate__fadeInLeftBig',
         animation: 'animate__fadeInDown',
-        layout: '4-4'
+        layout: '4-4',
+        logo: 'https://weatherstoragevn.blob.core.windows.net/static-photo/logo/logo_vinhlong.png',
+        logoAdmin: 'https://weatherstoragevn.blob.core.windows.net/static-photo/logo/logo-admin_vinhlong.png'
     },
     {
         id: 'DIEMVN_17',
@@ -1141,7 +1143,9 @@ export const MAP_PROVINCE = [
             color: "#ff7800",
             weight: 3,
             opacity: 0.5
-        }
+        },
+        logo: 'https://weatherstoragevn.blob.core.windows.net/static-photo/logo/logo_dongnai.png',
+        logoAdmin: 'https://weatherstoragevn.blob.core.windows.net/static-photo/logo/logo-admin_dongnai.png'
     },
     {
         id: "DiemNB10_10",
