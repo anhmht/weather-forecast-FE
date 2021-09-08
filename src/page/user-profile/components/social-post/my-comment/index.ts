@@ -19,7 +19,7 @@ export default class MyCommentComponent extends Vue {
     isLoading: boolean = false;
     totalPages: number = 0;
     searchParam = {
-        limit: 2,
+        limit: 5,
         page: 1
     };
     attrs: any = {
@@ -111,7 +111,7 @@ export default class MyCommentComponent extends Vue {
                 clientHeight
             } = document.documentElement;
 
-            if (scrollTop + clientHeight >= scrollHeight - 5 && !this.isLoading) {
+            if (scrollTop + clientHeight >= scrollHeight - 50 && !this.isLoading) {
                 if (this.searchParam.page < this.totalPages) {
                     this.searchParam.page += 1;
                     this.fetchData();

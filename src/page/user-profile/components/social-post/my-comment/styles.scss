@@ -11,6 +11,7 @@
         &-header {
             width: 100%;
             display: flex;
+            align-items: center;
             justify-content: space-between;
             > div:first-child {
                 overflow: hidden;
@@ -24,6 +25,7 @@
                 border-radius: 30px;
                 padding: 5px 10px;
                 text-align: center;
+                min-width: 100px;
                 &.unapprove {
                     color: #D16F00;
                     background: #FFF5E5 0% 0% no-repeat padding-box;
