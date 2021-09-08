@@ -11,7 +11,8 @@ Vue.use(VueRouter);
 
 let config: RouterOptions = {
     routes: [...AppRoutes],
-    linkActiveClass: "active"
+    linkActiveClass: "active",
+    mode: 'history',
 };
 const router: VueRouter = new VueRouter(config);
 

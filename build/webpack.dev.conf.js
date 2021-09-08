@@ -19,7 +19,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     // these devServer options should be customized in /config/index.js
     devServer: {
         https: true,
-        historyApiFallback: false,
+        historyApiFallback: true,
         hot: true,
         host: process.env.HOST || config.dev.host,
         port: process.env.PORT || config.dev.port,

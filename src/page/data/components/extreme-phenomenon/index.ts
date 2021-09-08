@@ -32,7 +32,19 @@ export default class EditLocalComponent extends Vue {
         provinceId: 86,
         districtId: null,
         date: moment().format('YYYY-MM-DD').toString()
-    };
+        };
+    
+    get currentProvince() {
+        const hostName = window.location.hostname;
+        let province = this.dtoLookupData[GeneralLookupTypes.PROVINCE].find(e => {
+            let name = DataHelper.convertToNonAccent(e.name);
+            if (hostName.includes(name)) {
+                return e
+            }
+            return false;
+        });
+        return province;
+    }
     
     get lookupProvince () {
         let list = this.dtoLookupData[GeneralLookupTypes.PROVINCE] || []
@@ -95,6 +107,7 @@ export default class EditLocalComponent extends Vue {
             GeneralLookupTypes.DISTRICT
         ];
         await this.getGeneralLookup(payload);
+        this.searchParams.provinceId = this.currentProvince.id;
         this.searchParams.districtId = this.lookupDistrict[0] ? this.lookupDistrict[0].id : null;
 
         this.searchExtremePhenomenonDetail();

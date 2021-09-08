@@ -14,6 +14,11 @@
                 display: flex;
                 align-items: center;
                 position: relative;
+                img {
+                    height: 35px;
+                    width: 35px;
+                    border-radius: 50%;
+                }
                 &__unread {
                     position: absolute;
                     left: -10px;
@@ -21,17 +26,25 @@
             }
             &_content {
                 font-size: 14px;
+                color: #000;
+                &.read {
+                    color: #757575;
+                }
             }
             &:hover {
                 background-color: #eee;
             }
         }
     }
+    &-loading {
+        position: relative;
+        height: 50px;
+    }
 
     .dot {
         height: 6px;
         width: 6px;
-        background-color: blue;
+        background-color: #006FFF;
         border-radius: 50%;
         display: inline-block;
     }

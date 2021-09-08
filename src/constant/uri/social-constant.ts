@@ -23,5 +23,8 @@ export default {
     getPostForApproval: "/api/Post/get-post-for-approval",
     getCommentForApproval: "/api/Post/get-comment-for-approval",
     getPostDetailForApproval: "/api/Post/get-post-detail-for-approval/:id",
-    getCommentDetailForApproval: "/api/Post/get-comment-detail-for-approval/:id"
+    getCommentDetailForApproval: "/api/Post/get-comment-detail-for-approval/:id",
+    getNotification: "/api/SocialNotification/get-list",
+    getCountNotification: "/api/SocialNotification/get-count-unread-notification",
+    setReadNotification: "/api/SocialNotification/set-read-notification/:id",
 };

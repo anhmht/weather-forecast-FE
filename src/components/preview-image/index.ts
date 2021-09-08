@@ -21,6 +21,8 @@ export default class PreviewImageComponent extends Vue {
     currentIndex: number = 0;
     player: any = null;
 
+    isShowPlayer: boolean = false;
+
     get styleObject() {
         return {
             transform: `scale(${this.scale}) rotate(${this.degree}deg)`,
@@ -91,9 +93,9 @@ export default class PreviewImageComponent extends Vue {
     }
 
     initPlayer() {
-        setTimeout(() => {
+        const vm = this as any;
             //@ts-ignore
-            this.player = amp('player', { /* Options */
+            this.player = amp('preview-player', { /* Options */
                 techOrder: ["azureHtml5JS", "flashSS", "html5FairPlayHLS", "silverlightSS", "html5"],
                 "nativeControlsForTouch": false,
                 autoplay: true,
@@ -116,18 +118,19 @@ export default class PreviewImageComponent extends Vue {
                     ]
                 },
                 poster: ""
-            }, function () {
+            }, () => {
                 console.log('Good to go!');
-                // add an event listener
-                this.addEventListener('ended', function () {
-                    console.log('Finished!');
-                });
+                vm.isShowPlayer = true;
+                const player = document.getElementById('preview-player') as any;
+                setTimeout(() => {
+                    player.style = '';
+                }, 500);
             });
             this.player.src([{
                 src: this.MediaData.url,
                 type: "application/vnd.ms-sstr+xml"
             }]);
-        }, 500);
+        
     }
 
     handleScroll(event) {
@@ -163,6 +166,7 @@ export default class PreviewImageComponent extends Vue {
         } else {
             if (this.player) {
                 this.player.dispose();
+                this.isShowPlayer = false;
             }
             window.removeEventListener("wheel", this.handleScroll);
             document.documentElement.style.overflow = "auto";

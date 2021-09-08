@@ -1,13 +1,15 @@
-import { ISocialPost } from '@/model/post';
-import { SocialServices } from '@/service/social-service/social.service';
-import { storeModules } from '@/store';
-import userTypesStore from '@/store/user/user-types.store';
-import { DataHelper } from '@/utils/data-helper';
-import Vue from 'vue';
-import Component from 'vue-class-component';
-import { Getter, namespace } from 'vuex-class';
+import { ISocialPost } from "@/model/post";
+import { SocialServices } from "@/service/social-service/social.service";
+import { storeModules } from "@/store";
+import userTypesStore from "@/store/user/user-types.store";
+import { DataHelper } from "@/utils/data-helper";
+import Vue from "vue";
+import Component from "vue-class-component";
+import { Watch } from "vue-property-decorator";
+import { Getter, namespace } from "vuex-class";
 
 const UserGetter = namespace(storeModules.User, Getter);
+
 @Component({
     template: require("./template.html").default,
     components: {
@@ -18,19 +20,11 @@ const UserGetter = namespace(storeModules.User, Getter);
         "reaction-count": () => import("../../../../components/reaction-count/ReactionCountComponent.vue")
     },
 })
-export default class ListStatusComponent extends Vue {
-
+export default class SocialDetailComponent extends Vue {
     service: SocialServices = new SocialServices();
-    searchParam = {
-        limit: 5,
-        page: 1
-    }
-
-    socialPost: ISocialPost[] = []
-    likeId: number = 1;
-
+    postId: string = null;
+    item: ISocialPost = null;
     isLoading: boolean = false;
-    totalPages: number = 0;
     attrs: any = {
         class: 'mb-6',
         boilerplate: true,
@@ -72,10 +66,7 @@ export default class ListStatusComponent extends Vue {
     }
 
     toggleComment(id) {
-        const post = this.socialPost.find(x => x.id === id);
-        if (post && !post.isShowComment) {
-            Vue.set(post, 'isShowComment', true)
-        }
+        Vue.set(this.item, 'isShowComment', true)
     }
 
     async handleReaction(data, post) {
@@ -90,7 +81,7 @@ export default class ListStatusComponent extends Vue {
 
     handleLike(currentChecking, postId) {
         if (currentChecking !== null) {
-            this.addReactionToPost(postId, this.likeId);
+            this.addReactionToPost(postId, 1);
         } else {
             this.removeReactionFromPost(postId);
         }
@@ -110,14 +101,13 @@ export default class ListStatusComponent extends Vue {
     async removeReactionFromPost(postId) {
         return await this.service.removeReactionFromPost(postId)
             .then((res: any) => {
-                const index = this.socialPost.findIndex(x => x.id === postId);
-                const currentActionIndex = this.socialPost[index].actionIcons.findIndex(x => x.isCurrentUserChecking);
-                if (this.socialPost[index].actionIcons[currentActionIndex].count === 1) {
-                    this.socialPost[index].actionIcons.splice(currentActionIndex, 1);
+                const currentActionIndex = this.item.actionIcons.findIndex(x => x.isCurrentUserChecking);
+                if (this.item.actionIcons[currentActionIndex].count === 1) {
+                    this.item.actionIcons.splice(currentActionIndex, 1);
                     return;
                 }
-                Vue.set(this.socialPost[index].actionIcons[currentActionIndex], 'isCurrentUserChecking', false);
-                Vue.set(this.socialPost[index].actionIcons[currentActionIndex], 'count', this.socialPost[index].actionIcons[currentActionIndex].count - 1);
+                Vue.set(this.item.actionIcons[currentActionIndex], 'isCurrentUserChecking', false);
+                Vue.set(this.item.actionIcons[currentActionIndex], 'count', this.item.actionIcons[currentActionIndex].count - 1);
             })
             .catch(error => {
                 this.$errorMessage(error);
@@ -125,15 +115,14 @@ export default class ListStatusComponent extends Vue {
     }
 
     updateSocialPostList(postId, iconId) {
-        const index = this.socialPost.findIndex(x => x.id === postId);
-        const iconIndex = this.socialPost[index].actionIcons.findIndex(x => x.iconId === iconId);
+        const iconIndex = this.item.actionIcons.findIndex(x => x.iconId === iconId);
         if (iconIndex > -1) {
-            Vue.set(this.socialPost[index].actionIcons[iconIndex], 'iconId', iconId);
-            Vue.set(this.socialPost[index].actionIcons[iconIndex], 'isCurrentUserChecking', true);
-            Vue.set(this.socialPost[index].actionIcons[iconIndex], 'count', this.socialPost[index].actionIcons[iconIndex].count + 1);
-            Vue.set(this.socialPost[index].actionIcons[iconIndex], 'fullNames', [...this.socialPost[index].actionIcons[iconIndex].fullNames, this.userConfig.firstName]);
+            Vue.set(this.item.actionIcons[iconIndex], 'iconId', iconId);
+            Vue.set(this.item.actionIcons[iconIndex], 'isCurrentUserChecking', true);
+            Vue.set(this.item.actionIcons[iconIndex], 'count', this.item.actionIcons[iconIndex].count + 1);
+            Vue.set(this.item.actionIcons[iconIndex], 'fullNames', [...this.item.actionIcons[iconIndex].fullNames, this.userConfig.firstName]);
         } else {
-            this.socialPost[index].actionIcons.push({
+            this.item.actionIcons.push({
                 count: 1,
                 iconId,
                 fullNames: [this.userConfig.firstName],
@@ -143,37 +132,28 @@ export default class ListStatusComponent extends Vue {
     }
 
     fetchData() {
+        this.postId = this.$route.params.postId;
         this.isLoading = true;
-        this.service.getListPosts(this.searchParam.limit, this.searchParam.page, 0)
-            .then((res: any) => {
-                this.socialPost = this.socialPost.concat(res.posts);
-                this.totalPages = res.totalPages;
-                this.isLoading = false;
-            }).catch(err => {
-                this.isLoading = false;
+        this.service.getPostById(this.postId).then((res: any) => {
+            this.item = res;
+            this.isLoading = false;;
+        }).catch(err => {
+            this.isLoading = false;
+            this.$router.replace({
+                path: '/error'
             })
-    }
-
-    loadMorePost() {
-        window.addEventListener('scroll', () => {
-            const {
-                scrollTop,
-                scrollHeight,
-                clientHeight
-            } = document.documentElement;
-
-            if (scrollTop + clientHeight >= scrollHeight - 5 && !this.isLoading) {
-                if (this.searchParam.page < this.totalPages) {
-                    this.searchParam.page += 1;
-                    this.fetchData();
-                }
-            }
-        }, { passive: true });
+            this.$errorMessage(err);
+        })
     }
 
     mounted() {
         this.fetchData();
-        this.loadMorePost();
     }
 
+    @Watch("$route.params.postId")
+    handleChangeRoute(val) {
+        if (val) {
+            this.fetchData();
+        }
+    }
 }

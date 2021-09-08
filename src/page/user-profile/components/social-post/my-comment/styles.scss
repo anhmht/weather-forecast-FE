@@ -10,22 +10,39 @@
         border-bottom: 1px solid #eee;
         &-header {
             width: 100%;
-            font-weight: 600;
-            display: inline-grid;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             > div:first-child {
                 overflow: hidden;
                 white-space: nowrap;
                 text-overflow: ellipsis;
                 word-break: break-all;
                 word-wrap: break-word;
+                font-weight: 600;
+            }
+            &--status {
+                border-radius: 30px;
+                padding: 5px 10px;
+                text-align: center;
+                min-width: 100px;
+                &.unapprove {
+                    color: #D16F00;
+                    background: #FFF5E5 0% 0% no-repeat padding-box;
+                }
+                &.approve {
+                    color: #4A4A4A;
+                    background: #EEEEEE 0% 0% no-repeat padding-box;
+                }
+                &.not-approve {
+                    color: #FF0000;
+                    background: #FFEBEB 0% 0% no-repeat padding-box;
+                }
             }
         }
         &-body {
             display: flex;
             margin-top: 10px;
-            &--avatar {
-
-            }
             &--content {
                 width: 100%;
                 margin-left: 20px;
@@ -35,6 +52,12 @@
                 }
                 &__text {
                     color: #000;
+                }
+                &__button {
+                    cursor: pointer;
+                    color: #2196F3;
+                    width: fit-content;
+                    margin-bottom: 10px;
                 }
             }
         }

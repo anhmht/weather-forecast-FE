@@ -53,7 +53,8 @@
         <div v-for="(item,index) in commentList">
             <div class="social-comment-list--item">
                 <div class="social-comment-list--item_avatar">
-                    <v-avatar :color="getColor(item.creatorShortName)" size="50">
+                    <img v-if="item.creatorAvatarUrl" :src="item.creatorAvatarUrl" />
+                    <v-avatar v-else :color="getColor(item.creatorShortName)" size="50">
                         <span class="white--text">{{item.creatorShortName}}</span>
                     </v-avatar>
                 </div>
@@ -78,12 +79,23 @@
                         <div class="social-comment-list--item_text__reaction">
                             <reaction-count :action-icons="item.actionIcons" />
                         </div>
+                        <div v-if="item.listImageUrl.length > 0 || item.listVideoUrl.length > 0" class="social-comment-list--item_text__image">
+                            <v-img :src="getMeidaSrc(item)" aspect-ratio="1" class="grey lighten-2" height="100" width="130" contain style="flex: unset;"
+                                @click="handlePreview(previewData(item))">
+                                <template v-if="isUploading" v-slot:placeholder>
+                                    <v-row class="fill-height ma-0" align="center" justify="center">
+                                        <v-progress-circular :value="progress" :indeterminate="progress === 100" color="grey lighten-5">
+                                        </v-progress-circular>
+                                    </v-row>
+                                </template>
+                            </v-img>
+                        </div>
                     </div>
                     <div class="social-comment-list--item_reply">
                         <reaction :action-icons="item.actionIcons" @save="handleReaction($event, item)"
                             @like="handleLike($event, item.id)" is-comment/>
                         <span v-if="!subComment">·</span>
-                        <div v-ripple @click="handleLoadSubComment(item.id)" v-if="!subComment">Trả lời</div>
+                        <div v-ripple @click="handleLoadSubComment(item.id)" v-if="!subComment">{{numberSubComment(item)}} Phản hồi</div>
                     </div>
                     <div v-if="item.isShowSubComment" class="social-comment-list--item_sub">
                         <sub-comment :comment-id="item.id" :post-id="id" @preview="handlePreview"/>
@@ -101,4 +113,5 @@
             Xem Thêm Bình Luận
         </div>
     </div>
+    <anonymous-form v-model="visibleAnonymousForm" :content="anoymousComment" @reset="reset"/>
 </div>

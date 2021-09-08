@@ -19,9 +19,9 @@
                         @click="handleChangeTab(3)">
                         NAM BỘ
                     </li>
-                    <li :class="activeTab === 4 ? 'active' : ''"
+                    <li v-if="currentProvince" :class="activeTab === 4 ? 'active' : ''"
                         @click="handleChangeTab(4)">
-                        VĨNH LONG
+                        {{ currentProvince.name.toUpperCase() }}
                     </li>
                     <li :class="activeTab === 5 ? 'active' : ''"
                         @click="handleChangeTab(5)">
@@ -59,9 +59,9 @@
                 <weather-forecast region="TNB" style="margin-top: 20px" key="TNB"/>
             </div>
         </div>
-        <div v-if="activeTab === 4" class="data-page-container-wrapper">
+        <div v-if="currentProvince && activeTab === 4" class="data-page-container-wrapper">
             <div class="data-page-container-wrapper-col">
-                <weather-forecast region="TNB" province="49" key="49"/>
+                <weather-forecast :region="currentRegion" :province="currentProvince.placeId" :key="currentProvince.placeId"/>
             </div>
         </div>
         <div v-if="activeTab === 5" class="data-page-container-wrapper">
@@ -79,21 +79,14 @@
                                     <tr>
                                         <th>Hiện tượng cực đoan</th>
                                         <th v-for="(item,index) in wardInfo" :key="index">
-                                            {{item.name}}
+                                            {{item.ten}}
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr v-for="(item, index) in disasters" :key="index">
                                         <th>{{ item.name }}</th>
-                                        <td>Cấp {{ getRandomArbitrary(item.min, item.max) }}</td>
-                                        <td>Cấp {{ getRandomArbitrary(item.min, item.max) }}</td>
-                                        <td>Cấp {{ getRandomArbitrary(item.min, item.max) }}</td>
-                                        <td>Cấp {{ getRandomArbitrary(item.min, item.max) }}</td>
-                                        <td>Cấp {{ getRandomArbitrary(item.min, item.max) }}</td>
-                                        <td>Cấp {{ getRandomArbitrary(item.min, item.max) }}</td>
-                                        <td>Cấp {{ getRandomArbitrary(item.min, item.max) }}</td>
-                                        <td>Cấp {{ getRandomArbitrary(item.min, item.max) }}</td>
+                                        <td v-for="(info, i) in wardInfo.length" :key="i">Cấp {{ getRandomArbitrary(item.min, item.max) }}</td>
                                     </tr>
                                 </tbody>
                             </template>

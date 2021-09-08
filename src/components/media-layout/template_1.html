@@ -9,8 +9,12 @@
         </v-img>
     </div>
     <div v-else v-ripple class="social-media-video">
-        <video controls autoplay loop preload="auto" @click="handlePreview(0)">
-            <source :src="Medias[0].url" type="video/mp4">
+        <video ref="player" :id="`player-${postId}`" class="azuremediaplayer amp-default-skin" controls @click="handlePreview(0)" width="640" height="400">
+            <source :src="Medias[0].url" type="application/vnd.ms-sstr+xml"
+                data-setup='{"streamingFormats": ["SMOOTH", "HLS","HLS-V3", "HLS-V4"] }' />
+            <p class="amp-no-js">
+                To view this video please enable JavaScript, and consider upgrading to a web browser that supports HTML5 video
+            </p>
         </video>
     </div>
 </div>

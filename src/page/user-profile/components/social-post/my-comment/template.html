@@ -3,7 +3,9 @@
         <div v-for="(commentItem, commentIndex) in postItem.comments" :key="commentIndex" class="my-comment-item">
             <div class="my-comment-item-header">
                 <div>{{postItem.content}}</div>
-                <div></div> <!-- DONT DELETE THIS DIV -->
+                <div class="my-comment-item-header--status approve">
+                    {{getStatus(postItem.statusId)}}
+                </div>
             </div>
             <div class="my-comment-item-body">
                 <div class="my-comment-item-body--avatar">
@@ -18,7 +20,17 @@
                         </template>
                         <span>{{$formatDateTime(commentItem.createDate)}}</span>
                     </v-tooltip>
-                    <div class="my-comment-item-body--content__text">{{commentItem.content}}</div>
+                    <div>
+                        <div class="my-comment-item-body--content__text" v-html="displayContent(commentItem.content)"></div>
+                        <div v-if="commentItem.content.length >= 255 || commentItem.content.split(/\r\n|\r|\n/).length >= 4" class="my-comment-item-body--content__button" @click="toggleContent($event.target, commentItem)" v-ripple>
+                            Đọc thêm
+                        </div>
+                        <div v-if="commentItem.listImageUrl.length > 0 || commentItem.listVideoUrl.length > 0">
+                            <v-img :src="getMediaSrc(commentItem)" aspect-ratio="1" class="grey lighten-2" height="100" width="130" contain style="flex: unset;"
+                                @click="handlePreview(previewData(commentItem))">
+                            </v-img>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -27,4 +39,5 @@
         <v-skeleton-loader v-if="isLoading" style="margin-top: 20px;" v-bind="attrs" type="list-item-avatar-two-line, image">
         </v-skeleton-loader>
     </transition>
+    <preview-image :data="selectedItem" :is-visible.sync="isPreview" :current="selectedIndex"/>
 </div>

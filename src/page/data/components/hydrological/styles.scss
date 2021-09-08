@@ -60,16 +60,19 @@
                 }
                 /* Track */
                 &::-webkit-scrollbar-track {
-                    display: none;
-                }
-                /* Handle */
-                &::-webkit-scrollbar-thumb {
-                    background: #ddd;
+                    background: #ccc;
                     border-radius: 10px;
                 }
+                
+                /* Handle */
+                &::-webkit-scrollbar-thumb {
+                    background: #888;
+                    border-radius: 10px;
+                }
+                
                 /* Handle on hover */
                 &::-webkit-scrollbar-thumb:hover {
-                    background: #fff;
+                    background: #555;
                 }
             }
 
@@ -169,17 +172,21 @@
                 }
                 /* Track */
                 &::-webkit-scrollbar-track {
-                    display: none;
-                }
-                /* Handle */
-                &::-webkit-scrollbar-thumb {
-                    background: #ddd;
+                    background: #ccc;
                     border-radius: 10px;
                 }
+                
+                /* Handle */
+                &::-webkit-scrollbar-thumb {
+                    background: #888;
+                    border-radius: 10px;
+                }
+                
                 /* Handle on hover */
                 &::-webkit-scrollbar-thumb:hover {
-                    background: #fff;
+                    background: #555;
                 }
+
                 thead {
                     background-color: linear-gradient(359deg, #f5f5f538, #f3f3f32e);
                 }
@@ -213,16 +220,19 @@
                     }
                     /* Track */
                     &::-webkit-scrollbar-track {
-                        display: none;
-                    }
-                    /* Handle */
-                    &::-webkit-scrollbar-thumb {
-                        background: #ddd;
+                        background: #ccc;
                         border-radius: 10px;
                     }
+                    
+                    /* Handle */
+                    &::-webkit-scrollbar-thumb {
+                        background: #888;
+                        border-radius: 10px;
+                    }
+                    
                     /* Handle on hover */
                     &::-webkit-scrollbar-thumb:hover {
-                        background: #fff;
+                        background: #555;
                     }
                 }
             }
@@ -231,18 +241,18 @@
                 .v-pagination {
                     justify-content: flex-end;
                 }
-                .theme--light.v-pagination .v-pagination__navigation {
-                    box-shadow: none;
-                    background: none;
-                    i {
-                        color: #fff !important;
-                    }
-                }
-                .theme--light.v-pagination .v-pagination__item {
-                    background: none;
-                    box-shadow: none;
-                    color: #fff;
-                }
+                // .theme--light.v-pagination .v-pagination__navigation {
+                //     box-shadow: none;
+                //     background: none;
+                //     i {
+                //         color: #fff !important;
+                //     }
+                // }
+                // .theme--light.v-pagination .v-pagination__item {
+                //     background: none;
+                //     box-shadow: none;
+                //     color: #fff;
+                // }
                 .v-application .primary {
                     background-color: $primary-color !important;
                     border-color: $primary-color !important;
@@ -354,16 +364,19 @@
                 }
                 /* Track */
                 &::-webkit-scrollbar-track {
-                    display: none;
-                }
-                /* Handle */
-                &::-webkit-scrollbar-thumb {
-                    background: #666;
+                    background: #ccc;
                     border-radius: 10px;
                 }
+                
+                /* Handle */
+                &::-webkit-scrollbar-thumb {
+                    background: #888;
+                    border-radius: 10px;
+                }
+                
                 /* Handle on hover */
                 &::-webkit-scrollbar-thumb:hover {
-                    background: #666;
+                    background: #555;
                 }
             }
         }
