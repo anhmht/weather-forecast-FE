@@ -187,7 +187,13 @@ export default class ListStatusComponent extends Vue {
         this.viewEditPostDialog = true;
     }
 
-    handleCloseEditModal (id: string) {
+    handleCloseEditModal (id?: string) {
+        if (id) {
+            let index = this.socialPost.findIndex(e => e.id === id);
+            if (index > -1) {
+                this.socialPost.splice(index, 1); 
+            }
+        }
         this.selectedPostId = null;
         this.viewEditPostDialog = false;
     }

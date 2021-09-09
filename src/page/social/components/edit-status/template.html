@@ -1,6 +1,12 @@
 <div v-if="currentItem">
     <v-card color="#EEEEEE">
-        <v-toolbar elevation="1" flat><b>Chỉnh sửa bài viết</b></v-toolbar>
+        <v-toolbar elevation="1" flat><b>Chỉnh sửa bài viết</b>
+            <v-spacer></v-spacer>
+
+            <v-btn icon @click="handleClose">
+                <v-icon color="grey">mdi-close</v-icon>
+            </v-btn>
+        </v-toolbar>
         <div class="social-list-edit-post-dialog-container" color="white">
             <v-card-subtitle>
                 <div class="social-list-edit-post-dialog-title">
@@ -64,7 +70,7 @@
                             
                         </div>
                     </div>
-                    <div>
+                    <div class="mt-3">
                         <media-layout editable tile :images.sync="selectedPhotos" :videos.sync="selectedVideos" @preview="handlePreview" />
                     </div>
                 </div>

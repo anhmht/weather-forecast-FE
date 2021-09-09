@@ -300,16 +300,31 @@ export default class EditStatusComponent extends Vue {
       });  
     }
 
+    checkDataChanged () {
+        const newModel = new SocialPost({
+            id: this.currentItem.id,
+            content: this.currentItem.content,
+            imageUrls: this.currentItem.listImageUrl,
+            videoUrls: this.currentItem.listVideoUrl,
+        });
+
+        if (Object.entries(newModel).toString() === Object.entries(this.postModel).toString()) {
+            this.$toast.warning('Không có thay đổi.');
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     handleSavePost () {
         if (!!this.content && this.content.trim() !== "") {
-            if (!this.buildParamsForUpdating()) {
-                return;
-            }
+            if (!this.buildParamsForUpdating()) return;
+            if (this.checkDataChanged() ===  false) return;
 
             this.socialService.editPost(this.postModel)
             .then( res => {
                 this.$toast.success('Chỉnh sửa thành công. Bài viết đang được xét duyệt.');
-                this.handleClose();
+                this.handleClose(this.postId);
             }).catch( err => {
                 this.$toast.error('Có lỗi khi sửa bài');
                 console.log(err);
@@ -319,9 +334,9 @@ export default class EditStatusComponent extends Vue {
         }
     }
 
-    handleClose () {
+    handleClose (id?: string) {
         this.reset();
-        this.$emit("handle-close-modal");
+        this.$emit("handle-close-modal", id);
     }
 
     initData () {
