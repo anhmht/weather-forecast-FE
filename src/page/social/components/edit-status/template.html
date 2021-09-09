@@ -1,0 +1,92 @@
+<div v-if="currentItem">
+    <v-card color="#EEEEEE">
+        <v-toolbar elevation="1" flat><b>Chỉnh sửa bài viết</b>
+            <v-spacer></v-spacer>
+
+            <v-btn icon @click="handleClose">
+                <v-icon color="grey">mdi-close</v-icon>
+            </v-btn>
+        </v-toolbar>
+        <div class="social-list-edit-post-dialog-container" color="white">
+            <v-card-subtitle>
+                <div class="social-list-edit-post-dialog-title">
+                    <img v-if="currentItem.creatorAvatarUrl && currentItem.creatorAvatarUrl !== ''" :src="currentItem.creatorAvatarUrl" @error="onImgError(currentItem)" />
+                    <v-avatar v-else :color="getColor(currentItem.createBy)" size="40">
+                        <span class="white--text">{{currentItem.creatorShortName}}</span>
+                    </v-avatar>
+                    <div class="social-list-edit-post-dialog-subtitle">
+                        <div class="user-name">{{ currentItem.creatorFullName }}</div>
+                        <div class="post-date">{{ $formatDate(currentItem.createDate) }}</div>
+                    </div>
+                </div>
+            </v-card-subtitle>
+            
+            <div class="social-list-edit-post-dialog__status-content">
+                <div class="social-list-edit-post-dialog__status-content-container">
+                    <div class="social-list-edit-post-dialog__status-content-container_body">
+                        <div class="social-list-edit-post-dialog__status-content-container_body__textarea">
+                            <v-textarea ref="createTextarea" filled dense flat auto-grow rows="2" row-height="30" v-model="content" hide-details>
+                            </v-textarea>
+                        </div>
+                    </div>
+                    <div class="social-list-edit-post-dialog__status-content-container_footer">
+                        <div class="social-list-edit-post-dialog__status-content-container_footer__attach">
+                            <div class="social-list-edit-post-dialog__status-content-container_footer__attach--item" v-ripple @click="handleClickBrowsePhoto">
+                                <v-icon color="green darken-2">
+                                    mdi-image
+                                </v-icon>
+                                Hình ảnh
+                            </div>
+                            <input ref="uploadPhoto" type="file" accept="image/*"
+                                @change="onChangePhotos($event.target.files)" hidden multiple
+                            />
+                            <div class="social-list-edit-post-dialog__status-content-container_footer__attach--item" v-ripple @click="handleClickBrowseVideo">
+                                <v-icon color="red darken-2">
+                                    mdi-video-box
+                                </v-icon>
+                                Video
+                            </div>
+                            <input ref="uploadVideo" type="file" accept="video/*"
+                                @change="onChangeVideos($event.target.files)" hidden multiple
+                            />
+                            <v-menu
+                                bottom
+                                origin="center center"
+                                transition="scale-transition"
+                                :close-on-content-click="false"
+                            >
+                                <template v-slot:activator="{ on, attrs }">
+                                    <div class="social-list-edit-post-dialog__status-content-container_footer__attach--item" v-ripple
+                                        v-bind="attrs"
+                                        v-on="on">
+                                        <v-icon color="yellow darken-2">
+                                            mdi-emoticon-happy-outline
+                                        </v-icon>
+                                        Biểu tượng
+                                    </div>
+                                </template>
+                                <emoji-picker @insert-emoji="handleClickOnEmoji" />
+                            </v-menu>
+                            
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <media-layout editable tile :images.sync="selectedPhotos" :videos.sync="selectedVideos" @preview="handlePreview" />
+                    </div>
+                </div>
+                <preview-image :data="selectedItem" :is-visible.sync="isPreivew" :current="selectedIndex"/>
+            </div>
+            
+        </div>
+        <v-card-actions class="justify-end social-list-edit-post-dialog-action pt-3 pb-3">
+            <v-btn style="text-transform: initial;" class="mr-2" @click="handleClose"
+                depressed
+            >Hủy</v-btn>
+            <v-btn style="text-transform: initial;"
+                color="primary"
+                depressed
+                @click="handleSavePost"
+            >Lưu</v-btn>
+        </v-card-actions>
+    </v-card>
+</div>
