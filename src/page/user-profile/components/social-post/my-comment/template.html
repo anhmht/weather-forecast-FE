@@ -3,8 +3,10 @@
         <div v-for="(commentItem, commentIndex) in postItem.comments" :key="commentIndex" class="my-comment-item">
             <div class="my-comment-item-header">
                 <div>{{postItem.content}}</div>
-                <div class="my-comment-item-header--status approve">
-                    {{getStatus(postItem.statusId)}}
+                <div>
+                    <div class="my-comment-item-header--status approve">
+                        {{getStatus(commentItem.statusId)}}
+                    </div>
                 </div>
             </div>
             <div class="my-comment-item-body">

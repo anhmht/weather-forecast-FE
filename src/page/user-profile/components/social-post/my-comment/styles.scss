@@ -9,9 +9,14 @@
         padding: 15px 20px;
         border-bottom: 1px solid #eee;
         &-header {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
+            // width: 100%;
+            // display: flex;
+            // justify-content: space-between;
+            display: grid;
+            grid-template-columns: 80% 20%;
+            grid-gap: 10px;
+            width: calc(100% - 10px);
+
             > div:first-child {
                 overflow: hidden;
                 white-space: nowrap;
@@ -19,7 +24,6 @@
                 word-break: break-all;
                 word-wrap: break-word;
                 font-weight: 600;
-                width: 33vw;
             }
             &--status {
                 border-radius: 30px;
