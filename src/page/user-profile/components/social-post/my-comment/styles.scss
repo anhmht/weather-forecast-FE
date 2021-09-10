@@ -9,10 +9,11 @@
         padding: 15px 20px;
         border-bottom: 1px solid #eee;
         &-header {
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            display: grid;
+            grid-template-columns: auto auto;
+            grid-gap: 10px;
+            width: calc(100% - 10px);
+
             > div:first-child {
                 overflow: hidden;
                 white-space: nowrap;
@@ -25,7 +26,22 @@
                 border-radius: 30px;
                 padding: 5px 10px;
                 text-align: center;
-                min-width: 100px;
+                width: fit-content;
+                float: right;
+
+                // &.unapprove {
+                //     color: #D16F00;
+                //     background: #FFF5E5 0% 0% no-repeat padding-box;
+                // }
+                // &.approve {
+                //     color: #4A4A4A;
+                //     background: #EEEEEE 0% 0% no-repeat padding-box;
+                // }
+                // &.not-approve {
+                //     color: #FF0000;
+                //     background: #FFEBEB 0% 0% no-repeat padding-box;
+                // }
+
                 &-1 {
                     color: #D16F00;
                     background: #FFF5E5 0% 0% no-repeat padding-box;
