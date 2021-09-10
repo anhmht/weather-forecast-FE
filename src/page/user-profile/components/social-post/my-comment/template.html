@@ -4,7 +4,7 @@
             <div class="my-comment-item-header">
                 <div>{{postItem.content}}</div>
                 <div>
-                    <div class="my-comment-item-header--status approve">
+                    <div class="my-comment-item-header--status approve" :class="`my-comment-item-header--status-${commentItem.statusId}`">
                         {{getStatus(commentItem.statusId)}}
                     </div>
                 </div>
