@@ -14,7 +14,8 @@ const LookupGetter = namespace(storeModules.Lookup, Getter);
         "reaction": () => import("../../../../../components/reaction/ReactionComponent.vue"),
         "preview-image": () => import("../../../../../components/preview-image/PreviewImage.vue"),
         "media-layout": () => import("../../../../../components/media-layout/MediaLayoutComponent.vue"),
-        "reaction-count": () => import("../../../../../components/reaction-count/ReactionCountComponent.vue")
+        "reaction-count": () => import("../../../../../components/reaction-count/ReactionCountComponent.vue"),
+        "edit-status": () => import("../../../../social/components/edit-status/EditStatusComponent.vue"),
     }
 })
 export default class MyPostComponent extends Vue {
@@ -36,6 +37,9 @@ export default class MyPostComponent extends Vue {
     isLoading: boolean = false;
     likeId: number = 1;
     socialService: SocialServices = new SocialServices();
+
+    selectedPostId: string = null;
+    viewEditPostDialog: boolean = false;
 
     @LookupGetter(lookupTypesStore.Get.LOOKUP_DATA) dtoLookupData: Object;
 
@@ -139,6 +143,16 @@ export default class MyPostComponent extends Vue {
                 this.$errorMessage(error);
                 this.isLoading = false;
             });
+    }
+
+    handleSelectPost (id: string) {
+        this.selectedPostId = id;
+        this.viewEditPostDialog = true;
+    }
+
+    handleCloseEditModal() {
+        this.selectedPostId = null;
+        this.viewEditPostDialog = false;
     }
 
     async mounted() {
