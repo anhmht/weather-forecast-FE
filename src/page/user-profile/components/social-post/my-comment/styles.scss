@@ -9,11 +9,10 @@
         padding: 15px 20px;
         border-bottom: 1px solid #eee;
         &-header {
-            display: grid;
-            grid-template-columns: auto auto;
-            grid-gap: 10px;
-            width: calc(100% - 10px);
-
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             > div:first-child {
                 overflow: hidden;
                 white-space: nowrap;
@@ -26,22 +25,7 @@
                 border-radius: 30px;
                 padding: 5px 10px;
                 text-align: center;
-                width: fit-content;
-                float: right;
-
-                // &.unapprove {
-                //     color: #D16F00;
-                //     background: #FFF5E5 0% 0% no-repeat padding-box;
-                // }
-                // &.approve {
-                //     color: #4A4A4A;
-                //     background: #EEEEEE 0% 0% no-repeat padding-box;
-                // }
-                // &.not-approve {
-                //     color: #FF0000;
-                //     background: #FFEBEB 0% 0% no-repeat padding-box;
-                // }
-
+                min-width: 100px;
                 &-1 {
                     color: #D16F00;
                     background: #FFF5E5 0% 0% no-repeat padding-box;

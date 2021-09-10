@@ -1,7 +1,8 @@
-<v-menu fixed allow-overflow eager bottom left offset-y transition="slide-y-transition" nudge-bottom="10" nudge-right="20">
+<v-menu fixed allow-overflow eager bottom left offset-y :close-on-content-click="false"
+ transition="slide-y-transition" nudge-bottom="10" nudge-right="20">
     <template v-slot:activator="{ on, attrs }">
         <div v-bind="attrs" v-on="on" class="base-header-menu-item login d-flex align-center">
-            <v-badge color="red" content="6"  overlap>
+            <v-badge color="red" :content="notificationCount" :value="notificationCount"  overlap>
                 <v-avatar size="35">
                     <v-icon>
                         mdi-bell
@@ -12,55 +13,49 @@
     </template>
     <div class="notification-container">
         <div class="notification-container-list">
-            <div class="notification-container-list--item">
+            <div class="notification-container-list--item" v-for="(item, index) in transformData" :key="index" @click="handleAction(item)">
                 <div class="notification-container-list--item_avatar">
-                    <v-avatar :color="color('TL')" size="35">
-                        <span class="white--text">TL</span>
-                    </v-avatar>
-                </div>
-                <div class="notification-container-list--item_content">
-                    Nhân Trần đã trả lời một bình luận về bài viết của bạn: Bài viết rất bổ ích cho mình thông tin...
-                </div>
-            </div>
-            <div class="notification-container-list--item">
-                <div class="notification-container-list--item_avatar">
-                    <div class="notification-container-list--item_avatar__unread">
+                    <div v-if="!item.isRead" class="notification-container-list--item_avatar__unread">
                         <span class="dot"></span>
                     </div>
-                    <v-avatar :color="color('ND')" size="35">
-                        <span class="white--text">ND</span>
-                    </v-avatar>
+                    <v-badge avatar bottom bordered overlap>
+                        <template v-slot:badge>
+                            <v-avatar>
+                                <v-img :src="getIconReaction(item.action)"></v-img>
+                            </v-avatar>
+                        </template>
+                        <template>
+                            <img v-if="item.fromUserAvatar" :src="item.fromUserAvatar" />
+                            <v-avatar v-else :color="color(item.fromUserShortName)" size="35">
+                                <span class="white--text">{{item.fromUserShortName}}</span>
+                            </v-avatar>
+                        </template>
+                    </v-badge>
+                    
                 </div>
-                <div class="notification-container-list--item_content">
-                    Nhân Trần đã trả lời một bình luận về bài viết của bạn: Bài viết rất bổ ích cho mình thông tin...
-                </div>
-            </div>
-            <div class="notification-container-list--item">
-                <div class="notification-container-list--item_avatar">
-                    <div class="notification-container-list--item_avatar__unread">
-                        <span class="dot"></span>
+                <div class="notification-container-list--item_content" :class="item.isRead ? 'read' : ''">
+                    <div>
+                        <b>{{item.fromUserFullName}}</b> {{item.content}}
                     </div>
-                    <v-avatar :color="color('PL')" size="35">
-                        <span class="white--text">PL</span>
-                    </v-avatar>
-                </div>
-                <div class="notification-container-list--item_content">
-                    Nhân Trần đã trả lời một bình luận về bài viết của bạn: Bài viết rất bổ ích cho mình thông tin...
-                </div>
-            </div>
-            <div class="notification-container-list--item">
-                <div class="notification-container-list--item_avatar">
-                    <div class="notification-container-list--item_avatar__unread">
-                        <span class="dot"></span>
+                    <div>
+                        <v-tooltip top>
+                            <template v-slot:activator="{ on, attrs }">
+                                <span v-bind="attrs" v-on="on"
+                                    class="social-post-item-header--time">{{$calculateRelativeTime(item.createDate)}}</span>
+                            </template>
+                            <span>{{$formatDateTime(item.createDate)}}</span>
+                        </v-tooltip>
                     </div>
-                    <v-avatar :color="color('TL')" size="35">
-                        <span class="white--text">TL</span>
-                    </v-avatar>
-                </div>
-                <div class="notification-container-list--item_content">
-                    Nhân Trần đã trả lời một bình luận về bài viết của bạn: Bài viết rất bổ ích cho mình thông tin...
                 </div>
             </div>
+        </div>
+        <div class="notification-container-loading" v-if="isLoading">
+            <loading :is-loading="isLoading" absolute color="#FFFFFF" size="35" />
+        </div>
+        <div v-if="visibleLoadMore" class="notification-container-load-more">
+            <v-btn text color="primary"  @click="handleLoadMore">
+                Xem thêm các thông báo khác
+            </v-btn>
         </div>
     </div>
 </v-menu>

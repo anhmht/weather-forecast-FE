@@ -1,5 +1,82 @@
 export const STATION = [
     {
+        "id": "DiemDN10_1",
+        "ten": "Biên Hòa",
+        "x": 106.857,
+        "y": 10.9474,
+        "place_id": "DN_1",
+    },
+    {
+        "id": "DiemDN10_2",
+        "ten": "Cẩm Mỹ",
+        "x": 107.254,
+        "y": 10.8008,
+        "place_id": "DN_2",
+    },
+    {
+        "id": "DiemDN10_3",
+        "ten": "Long Khánh",
+        "x": 107.236,
+        "y": 10.9351,
+        "place_id": "DN_3",
+    },
+    {
+        "id": "DiemDN10_4",
+        "ten": "Long Thành",
+        "x": 107.001,
+        "y": 10.7867,
+        "place_id": "DN_4",
+    },
+    {
+        "id": "DiemDN10_5",
+        "ten": "Nhơn Trạch",
+        "x": 106.885,
+        "y": 10.6949,
+        "place_id": "DN_5",
+    },
+    {
+        "id": "DiemDN10_6",
+        "ten": "Thống Nhất",
+        "x": 107.155,
+        "y": 10.9901,
+        "place_id": "DN_6",
+    },
+    {
+        "id": "DiemDN10_7",
+        "ten": "Trảng Bom",
+        "x": 107.035,
+        "y": 10.9665,
+        "place_id": "DN_7",
+    },
+    {
+        "id": "DiemDN10_8",
+        "ten": "Tân Phú",
+        "x": 107.379,
+        "y": 11.3955,
+        "place_id": "DN_8",
+    },
+    {
+        "id": "DiemDN10_9",
+        "ten": "Vĩnh Cửu",
+        "x": 107.049,
+        "y": 11.2368,
+        "place_id": "DN_9",
+    },
+    {
+        "id": "DiemDN10_10",
+        "ten": "Xuân Lộc",
+        "x": 107.424,
+        "y": 10.9204,
+        "place_id": "DN_10",
+    },
+    {
+        "id": "DiemDN10_11",
+        "ten": "Định Quán",
+        "x": 107.287,
+        "y": 11.1983,
+        "place_id": "DN_11",
+    },
+    {
         "id": "DiemNB10_1",
         "ten": "Bình Phước",
         "x": 106.908,
@@ -804,7 +881,9 @@ export const MAP_PROVINCE = [
         paddingTopLeft: [1000, 0],
         titlePosition: 'left animate__fadeInLeftBig',
         animation: 'animate__fadeInDown',
-        layout: '4-4'
+        layout: '4-4',
+        logo: 'https://weatherstoragevn.blob.core.windows.net/static-photo/logo/logo_vinhlong.png',
+        logoAdmin: 'https://weatherstoragevn.blob.core.windows.net/static-photo/logo/logo-admin_vinhlong.png'
     },
     {
         id: 'DIEMVN_17',
@@ -1054,13 +1133,19 @@ export const MAP_PROVINCE = [
         id: "DiemNB10_4",
         name: "Đồng Nai",
         zoom: 12,
+        districtIds: [
+            'DN_1', 'DN_2', 'DN_3', 'DN_4',
+            'DN_5', 'DN_6', 'DN_7', 'DN_8', 'DN_9', 'DN_10', 'DN_11'
+        ],
         geojson: 'dong_nai',
         placeId: '39',
         style: {
             color: "#ff7800",
             weight: 3,
             opacity: 0.5
-        }
+        },
+        logo: 'https://weatherstoragevn.blob.core.windows.net/static-photo/logo/logo_dongnai.png',
+        logoAdmin: 'https://weatherstoragevn.blob.core.windows.net/static-photo/logo/logo-admin_dongnai.png'
     },
     {
         id: "DiemNB10_10",

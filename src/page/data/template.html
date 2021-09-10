@@ -79,21 +79,14 @@
                                     <tr>
                                         <th>Hiện tượng cực đoan</th>
                                         <th v-for="(item,index) in wardInfo" :key="index">
-                                            {{item.name}}
+                                            {{item.ten}}
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr v-for="(item, index) in disasters" :key="index">
                                         <th>{{ item.name }}</th>
-                                        <td>Cấp {{ getRandomArbitrary(item.min, item.max) }}</td>
-                                        <td>Cấp {{ getRandomArbitrary(item.min, item.max) }}</td>
-                                        <td>Cấp {{ getRandomArbitrary(item.min, item.max) }}</td>
-                                        <td>Cấp {{ getRandomArbitrary(item.min, item.max) }}</td>
-                                        <td>Cấp {{ getRandomArbitrary(item.min, item.max) }}</td>
-                                        <td>Cấp {{ getRandomArbitrary(item.min, item.max) }}</td>
-                                        <td>Cấp {{ getRandomArbitrary(item.min, item.max) }}</td>
-                                        <td>Cấp {{ getRandomArbitrary(item.min, item.max) }}</td>
+                                        <td v-for="(info, i) in wardInfo.length" :key="i">Cấp {{ getRandomArbitrary(item.min, item.max) }}</td>
                                     </tr>
                                 </tbody>
                             </template>

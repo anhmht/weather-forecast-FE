@@ -9,7 +9,11 @@ const WeatherComponent = () => import("../page/weather-video/WarningPageComponen
 const DataPageComponent = () => import("../page/data/DataPageComponent.vue");
 const TimePageComponent = () => import("../page/time/TimePageComponent.vue");
 const IconPageComponent = () => import("../page/icon/IconPageComponent.vue");
+
 const SocialPageComponent = () => import("../page/social/SocialPageComponent.vue");
+const SocialHomePageComponent = () => import("../page/social/components/home/SocialHomeComponent.vue");
+const SocialDetailPageComponent = () => import("../page/social/components/detail/SocialDetailComponent.vue");
+
 const LoginPageComponent = () => import("../page/login/LoginPageComponent.vue");
 const PageNotFoundComponent = () => import("../page/not-found/PageNotFoundComponent.vue");
 const PageNotAuthorizedComponent = () => import("../page/not-authorized/PageNotAuthorizedComponent.vue");
@@ -96,7 +100,22 @@ const homeRoutes = [
         path: PATH.SOCIAL,
         name: ROUTE_NAME.SOCIAL,
         component: SocialPageComponent,
-        props: {}
+        props: {},
+        children: [
+            { path: PATH.SOCIAL, redirect: { path: PATH.SOCIAL_HOME } },
+            {
+                path: PATH.SOCIAL_HOME,
+                name: ROUTE_NAME.SOCIAL_HOME,
+                component: SocialHomePageComponent,
+                props: {}
+            },
+            {
+                path: PATH.SOCIAL_DETAIL,
+                name: ROUTE_NAME.SOCIAL_DETAIL,
+                component: SocialDetailPageComponent,
+                props: {}
+            },
+        ]
     },
     {
         path: PATH.LOGIN,

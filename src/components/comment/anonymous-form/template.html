@@ -1,0 +1,23 @@
+<v-dialog persistent v-model="visibleAddComment" max-width="600px">
+    <v-card>
+        <v-toolbar dark color="primary">
+            <v-btn :loading="buttonLoading" :disabled="buttonLoading" icon dark @click="visibleAddComment = false">
+                <v-icon>mdi-close</v-icon>
+            </v-btn>
+            <v-toolbar-title>Tạo Bình luận</v-toolbar-title>
+        </v-toolbar>
+        <v-card-text>
+            <v-form v-if="data" ref="AnonymousForm" v-model="valid" lazy-validation>
+                <v-text-field label="Họ và tên" v-model="data.anonymousUser.fullName" :rules="rules.fullName"></v-text-field>
+                <v-text-field style="margin-top: 20px;" label="Số điện thoại" v-model="data.anonymousUser.phone" :rules="rules.phone"></v-text-field>
+                <v-text-field style="margin-top: 20px;" label="E-mail" v-model="data.anonymousUser.email" :rules="rules.email"></v-text-field>
+            </v-form>
+        </v-card-text>
+        <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn :loading="buttonLoading" :disabled="buttonLoading" color="primary" @click="handleSave">
+                Bình luận
+            </v-btn>
+        </v-card-actions>
+    </v-card>
+</v-dialog>
