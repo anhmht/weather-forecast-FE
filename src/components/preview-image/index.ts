@@ -36,6 +36,13 @@ export default class PreviewImageComponent extends Vue {
         return this.data[this.currentIndex];
     }
 
+    get isBinaryVideo () {
+        if (this.MediaData && this.MediaData.type === 'video') {
+            return this.MediaData.url.includes("data:video/mp4;base64");
+        }
+        return false;
+    }
+
     handleZoom(isZoomOut: boolean) {
         if (isZoomOut) {
             this.scale -= .2
@@ -84,7 +91,7 @@ export default class PreviewImageComponent extends Vue {
         this.$nextTick(() => {
             if (this.MediaData.type === 'video') {
                 if (typeof this.$refs.player != 'undefined') {
-                    this.initPlayer();
+                    if (!this.isBinaryVideo) this.initPlayer();
                 }
             }
         })
@@ -156,7 +163,7 @@ export default class PreviewImageComponent extends Vue {
             this.$nextTick(() => {
                 if (this.MediaData.type === 'video') {
                     if (typeof this.$refs.player != 'undefined') {
-                        this.initPlayer();
+                        if (!this.isBinaryVideo) this.initPlayer();
                     }
                 }
             })
