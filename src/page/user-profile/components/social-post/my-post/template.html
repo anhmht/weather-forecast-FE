@@ -8,7 +8,7 @@
                 <span>{{$formatDateTime(item.createDate)}}</span>
             </v-tooltip>
             <div class="ml-auto d-flex">
-                <div class="social-post-item-header--status approve">
+                <div class="social-post-item-header--status" :class="`social-post-item-header--status-${item.statusId}`">
                     {{getStatus(item.statusId)}}
                 </div>
                 <v-menu transition="slide-x-transition" bottom left>
