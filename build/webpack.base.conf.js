@@ -100,10 +100,6 @@ module.exports = {
                 ]
             },
             {
-                test: /\.(json|geojson)$/,
-                loader: "json-loader"
-            },
-            {
                 test: /ckeditor5-[^/\\]+[/\\]theme[/\\]icons[/\\][^/\\]+\.svg$/,
                 use: ["raw-loader"]
             },
