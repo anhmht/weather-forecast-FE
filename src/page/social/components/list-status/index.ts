@@ -101,7 +101,6 @@ export default class ListStatusComponent extends Vue {
     }
 
     addReactionToPost(postId, iconId) {
-        this.removeReactionFromPost(postId);
         this.service.addReactionToPost(postId, iconId)
             .then((res: any) => {
                 this.updateSocialPostList(postId, iconId);

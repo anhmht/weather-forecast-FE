@@ -1647,12 +1647,40 @@ export const MAP_TYPE = [
         name: "Tốc độ gió"
     },
     {
+        type: "gust",
+        name: "Cơn gió"
+    },
+    {
+        type: "gustAccu",
+        name: "Lượng gió tích lũy"
+    },
+    {
+        type: "satellite",
+        name: "Vệ tinh"
+    },
+    {
         type: "rain",
         name: "Lượng mưa"
     },
     {
+        type: "rainAccu",
+        name: "Lượng mưa tích lũy"
+    },
+    {
         type: "clouds",
         name: "Lượng mây"
+    },
+    {
+        type: "hclouds",
+        name: "Mây cao"
+    },
+    {
+        type: "mclouds",
+        name: "Mây trung bình"
+    },
+    {
+        type: "lclouds",
+        name: "Mây thấp"
     },
     {
         type: "pressure",
@@ -1669,7 +1697,68 @@ export const MAP_TYPE = [
     {
         type: "waves",
         name: "Dải sóng"
-    }
+    },
+    {
+        type: "snowAccu",
+        name: "Lượng tuyết tích lũy"
+    },
+    {
+        type: "snowcover",
+        name: "Tuyết phủ"
+    },
+    {
+        type: "ptype",
+        name: "Loại lượng mưa"
+    },
+    {
+        type: "dewpoint",
+        name: "Điểm sương"
+    },
+    {
+        type: "rh",
+        name: "Độ ẩm"
+    },
+    {
+        type: "deg0",
+        name: "Độ cao đóng băng"
+    },
+    {
+        type: "fog",
+        name: "Sương mù"
+    },
+    {
+        type: "cape",
+        name: "Chỉ số CAPE"
+    },
+    {
+        type: "swell1",
+        name: "Sóng cồn 1"
+    },
+    {
+        type: "swell2",
+        name: "Sóng cồn 2"
+    },
+    {
+        type: "wwaves",
+        name: "Sóng do gió tạo thành"
+    },
+    {
+        type: "currents",
+        name: "Luồng hải lưu"
+    },
+    {
+        type: "cosc",
+        name: "Nồng độ CO"
+    },
+    {
+        type: "dustsm",
+        name: "Khối lượng bụi"
+    },
+    {
+        type: "so2sm",
+        name: "SO2"
+    },
+
 ];
 
 export const WEATHER_TYPE = {

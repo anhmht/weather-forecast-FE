@@ -213,6 +213,9 @@ export default class HomePageComponent extends Vue {
 
     handleChangeMap(mapData) {
         const { store } = this.windy;
+        const a = store.getAllowed('overlay');
+        console.log(a);
+        
         store.set("overlay", mapData.type);
     }
 
