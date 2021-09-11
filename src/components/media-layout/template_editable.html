@@ -19,14 +19,14 @@
                 ></v-progress-circular>
             </v-row>
             
-            <div v-if="index === 3 && EditableMedias.length > 4" class="social-media-layout-editable-layout-5-last" @click="handlePreview(3)">
+            <div v-if="index === 3 && EditableMedias.length > 4" :class="`social-media-layout-editable-layout-${layoutType}-last`" @click="handlePreview(3)">
                 <div>
                     + {{EditableMedias.length - 4}}
                 </div>
             </div>
             <v-icon
                 color="blue-grey"
-                class="create-status-container_body-remove-all-media"
+                class="social-media-layout-editable-remove-all-media"
                 @click.stop="removeMedia(item)"
             >mdi-close-circle</v-icon>
         </div>
@@ -53,14 +53,14 @@
                 ></v-progress-circular>
             </v-row>
 
-            <div v-if="index === 3 && EditableMedias.length > 4" class="social-media-layout-editable-layout-5-last"  @click="handlePreview(3)">
+            <div v-if="index === 3 && EditableMedias.length > 4" :class="`social-media-layout-editable-layout-${layoutType}-last`"  @click="handlePreview(3)">
                 <div>
                     + {{EditableMedias.length - 4}}
                 </div>
             </div>
             <v-icon
                 color="blue-grey"
-                class="create-status-container_body-remove-all-media"
+                class="social-media-layout-editable-remove-all-media"
                 @click.stop="removeMedia(item)"
             >mdi-close-circle</v-icon>
         </div>

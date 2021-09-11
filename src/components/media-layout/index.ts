@@ -51,6 +51,9 @@ export default class MediaLayoutComponent extends Vue {
     @Prop({ type: String, default: null })
     postId
 
+    @Prop({type: Boolean, default: false})
+    tile
+
     player: any = null;
 
     get Medias() {
@@ -78,6 +81,8 @@ export default class MediaLayoutComponent extends Vue {
     }
 
     get layoutType () {
+        if (this.tile) return 'tile';
+        
         if (this.EditableMedias.length > 4) return 5;
         return this.EditableMedias.length;
     }
@@ -99,6 +104,8 @@ export default class MediaLayoutComponent extends Vue {
     }
 
     getRatio (index) {
+        if (this.tile) return 1;
+
         switch (this.EditableMedias.length) {
             case 1:
                 return 9/16
@@ -120,6 +127,8 @@ export default class MediaLayoutComponent extends Vue {
     }
 
     getImageHeight (index) {
+        if (this.tile) return 130;
+        
         switch (this.EditableMedias.length) {
             case 1:
                 return 400

@@ -1,0 +1,132 @@
+.social-list-edit-post-dialog {
+    &-container {
+        background-color: #FFFFFF;
+        margin: 20px;
+    }
+
+    &-title {
+        display: flex;
+        align-items: center;
+        padding: 10px 0;
+        font-weight: 600;
+        img {
+            margin-right: 10px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        .v-avatar {
+            margin-right: 10px;
+        }
+        
+    }
+
+    &-subtitle {
+        .post-date {
+            color: #A4A4A4;
+            font-weight: 400;
+        }
+    }
+
+    &-content {
+        padding-bottom: 0;
+        p {
+            margin-bottom: 0 !important;
+
+            &.hide {
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;  
+                overflow: hidden;
+            }
+        }
+    }
+
+    &-action {
+        background-color: #FFFFFF;
+        .v-btn {
+            width: 90px;
+        }
+    }
+    
+    &__status-content {
+        background: #fff;
+        padding: 20px;
+        padding-top: 0;
+        border-radius: 5px;
+        &-container {
+            &_header {
+                font-size: 15px;
+                font-weight: 600;
+                margin-bottom: 10px;
+            }
+            &_body {
+                margin-bottom: 10px;
+                background-color: #f1f1f1;
+                
+                textarea {
+                    min-width: 85px;
+                    max-height: 20vh;
+                    overflow-y: auto;
+                    margin-bottom: 5px;
+                    /* width */
+                    &::-webkit-scrollbar {
+                        width: 10px;
+                    }
+                    
+                    /* Track */
+                    &::-webkit-scrollbar-track {
+                        background: #ccc;
+                        border-radius: 10px;
+                    }
+                    
+                    /* Handle */
+                    &::-webkit-scrollbar-thumb {
+                        background: #888;
+                        border-radius: 10px;
+                    }
+                    
+                    /* Handle on hover */
+                    &::-webkit-scrollbar-thumb:hover {
+                        background: #555;
+                    }
+                }
+                
+    
+                &-remove-all-media {
+                    position: absolute !important;
+                    right: 10px;
+                    top: 10px;
+                    cursor: pointer;
+                }
+            }
+            &_footer {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                &__attach {
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                    &--item {
+                        display: flex;
+                        align-items: center;
+                        margin-right: 10px;
+                        cursor: pointer;
+                        padding: 5px;
+                        i {
+                            margin-right: 10px;
+                        }
+                        &:hover {
+                            color: #006FFF;
+                            i {
+                                color: #006FFF;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

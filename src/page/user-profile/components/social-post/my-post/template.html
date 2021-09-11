@@ -7,8 +7,31 @@
                 </template>
                 <span>{{$formatDateTime(item.createDate)}}</span>
             </v-tooltip>
-            <div class="social-post-item-header--status approve">
-                {{getStatus(item.statusId)}}
+            <div class="ml-auto d-flex">
+                <div class="social-post-item-header--status" :class="`social-post-item-header--status-${item.statusId}`">
+                    {{getStatus(item.statusId)}}
+                </div>
+                <v-menu transition="slide-x-transition" bottom left>
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn v-bind="attrs" v-on="on" dark icon class="mb-auto">
+                            <v-icon color="grey dark-2">
+                                mdi-dots-vertical
+                            </v-icon>
+                        </v-btn>
+                    </template>
+                    <v-list dense>
+                        <v-list-item-group color="primary">
+                          <v-list-item @click="handleSelectPost(item.id)">
+                            <v-list-item-icon> <v-icon>mdi-pencil-outline</v-icon> </v-list-item-icon>
+                            <v-list-item-content> <v-list-item-title>Chỉnh sửa</v-list-item-title> </v-list-item-content>
+                          </v-list-item>
+                          <v-list-item >
+                            <v-list-item-icon><v-icon color="error">mdi-trash-can-outline</v-icon> </v-list-item-icon>
+                            <v-list-item-content> <v-list-item-title>Xóa</v-list-item-title> </v-list-item-content>
+                          </v-list-item>
+                        </v-list-item-group>
+                    </v-list>
+                </v-menu>
             </div>
         </div>
         <div class="social-post-item-body">
@@ -56,4 +79,14 @@
         </v-skeleton-loader>
     </transition>
     <preview-image :data="selectedItem" :is-visible.sync="isPreview" :current="selectedIndex"/>
+    <v-dialog
+        transition="dialog-bottom-transition"
+        max-width="600"
+        v-model="viewEditPostDialog"
+        class="social-list-edit-post-dialog"
+    >
+        <template>
+            <edit-status v-if="selectedPostId" :post-id.sync="selectedPostId" @handle-close-modal="handleCloseEditModal"></edit-status>
+        </template>
+    </v-dialog>
 </div>

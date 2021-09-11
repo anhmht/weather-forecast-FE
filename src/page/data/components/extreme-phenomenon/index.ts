@@ -107,7 +107,7 @@ export default class EditLocalComponent extends Vue {
             GeneralLookupTypes.DISTRICT
         ];
         await this.getGeneralLookup(payload);
-        this.searchParams.provinceId = this.currentProvince.id;
+        this.searchParams.provinceId = this.currentProvince ? this.currentProvince.id : 86;
         this.searchParams.districtId = this.lookupDistrict[0] ? this.lookupDistrict[0].id : null;
 
         this.searchExtremePhenomenonDetail();
