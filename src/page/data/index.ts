@@ -130,7 +130,7 @@ export default class DataPageComponent extends Vue {
             return false;
         });
         console.log("current province", province);
-        
+
         return province ? province : MAP_PROVINCE[0];
     }
 
